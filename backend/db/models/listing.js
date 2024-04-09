@@ -39,6 +39,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       )
 
+      Listing.hasMany(
+        models.CartItem,
+        {
+          foreignKey: 'listingId',
+        }
+      )
     }
   }
   Listing.init({

@@ -34,6 +34,13 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       );
+
+      User.hasOne(
+        models.ShoppingCart,
+        {
+          foreignKey: 'buyerId'
+        }
+      )
     }
   };
 

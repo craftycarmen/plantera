@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
           len: [4, 30],
           isNotEmail(value) {
             if (Validator.isEmail(value)) {
-              throw new Error("Cannot be an email.");
+              throw new Error("Username cannot be an email");
             }
           }
         }
@@ -55,14 +55,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
-          len: [30, 250]
+          len: {
+            args: [30, 250],
+            msg: 'Bio must be between 30-250 characters'
+          }
         }
       },
       favoritePlant: {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
-          len: [5, 100]
+          len: {
+            args: [5, 100],
+            msg: 'Favorite plant must be between 5-100 characters'
+          }
         }
       },
       accountType: {
@@ -76,7 +82,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
-          len: [30, 250]
+          len: {
+            args: [30, 250],
+            msg: 'Shop description must be between 30-250 characters'
+          }
         }
       },
       paymentMethod: {

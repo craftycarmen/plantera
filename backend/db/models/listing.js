@@ -11,6 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Listing.belongsTo(
+        models.User,
+        {
+          foreignKey: 'sellerId'
+        }
+      );
+
+      Listing.hasMany(
+        models.Image,
+        {
+          foreignKey: 'imageableId',
+          constraints: false,
+          scope: {
+            imageableType: 'Listing'
+          }
+        }
+      );
+
     }
   }
   Listing.init({

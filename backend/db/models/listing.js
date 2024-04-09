@@ -30,10 +30,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       );
 
-      Listing.hasMany(
-        models.Guides,
+      Listing.belongsToMany(
+        models.Guide,
         {
-          foreignKey: 'guideId'
+          through: 'ListingGuide',
+          foreignKey: 'listingId',
+          otherKey: 'guideId'
         }
       )
 

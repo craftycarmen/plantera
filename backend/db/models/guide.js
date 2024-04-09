@@ -22,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       Guide.belongsToMany(
         models.Listing,
         {
-          foreignKey: 'listingId'
+          through: 'ListingGuide',
+          foreignKey: 'guideId',
+          otherKey: 'listingId'
         }
       )
 

@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 const listingsList = [
   {
     sellerId: 1,
+    guideId: 1,
     plantName: 'Monstera',
     description: 'This is a full grown monstera in an 8.5-inch pot in soil, comes with the pot. It has unfortunately getting too large for my home, so it needs a new home!',
     price: 75,
@@ -19,6 +20,7 @@ const listingsList = [
   {
     sellerId: 2,
     plantName: 'Ficus Tineke',
+    guideId: 3,
     description: 'Grew these from cuttings to 4" plants. Came from a luscious mother plant',
     price: 10,
     potSize: 4,

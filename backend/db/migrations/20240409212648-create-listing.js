@@ -10,10 +10,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       sellerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       guideId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Guides',
+          key: 'id'
+        }
       },
       plantName: {
         type: Sequelize.STRING(100)

@@ -23,19 +23,43 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      username: {
-        type: Sequelize.STRING(30),
+      email: {
+        type: Sequelize.STRING(256),
         allowNull: false,
         unique: true
       },
-      email: {
-        type: Sequelize.STRING(256),
+      username: {
+        type: Sequelize.STRING(30),
         allowNull: false,
         unique: true
       },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,
         allowNull: false
+      },
+      bio: {
+        type: Sequelize.STRING(250),
+        allowNull: true,
+      },
+      favoritePlant: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+      },
+      accountType: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      shopDescription: {
+        type: Sequelize.STRING(250),
+        allowNull: true,
+      },
+      paymentMethod: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      paymentDetails: {
+        type: Sequelize.STRING(4),
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

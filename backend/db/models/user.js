@@ -24,6 +24,14 @@ module.exports = (sequelize, DataTypes) => {
           len: [1, 100]
         }
       },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [3, 256],
+          isEmail: true
+        }
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -36,28 +44,59 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [3, 256],
-          isEmail: true
-        }
-      },
       hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
         validate: {
           len: [60, 60]
         }
-      }
+      },
+      bio: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [30, 250]
+        }
+      },
+      favoritePlant: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [5, 100]
+        }
+      },
+      accountType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [1, 50]
+        }
+      },
+      shopDescription: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [30, 250]
+        }
+      },
+      paymentMethod: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: [1, 50]
+        }
+      },
+      paymentDetails: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
     },
     {
       sequelize,
       modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", "email", "createdAt", "updatedAt"]
+          exclude: ["hashedPassword", "createdAt", "updatedAt"]
         }
       }
     }

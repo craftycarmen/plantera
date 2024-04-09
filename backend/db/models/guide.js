@@ -15,9 +15,16 @@ module.exports = (sequelize, DataTypes) => {
       Guide.belongsTo(
         models.User,
         {
-          foreignKey: 'guideId'
+          foreignKey: 'userId'
         }
       );
+
+      Guide.belongsToMany(
+        models.Listing,
+        {
+          foreignKey: 'listingId'
+        }
+      )
 
       Guide.hasMany(
         models.Image,
@@ -41,6 +48,10 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'User ID is required'
         }
       }
+    },
+    listingId: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     title: {
       type: DataTypes.STRING,

@@ -30,6 +30,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       );
 
+      Listing.hasMany(
+        models.Guides,
+        {
+          foreignKey: 'guideId'
+        }
+      )
+
     }
   }
   Listing.init({

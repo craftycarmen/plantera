@@ -18,14 +18,14 @@ module.exports = {
         },
         onDelete: 'cascade'
       },
-      listingId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'Listings',
-          key: 'id'
-        }
-      },
+      // listingId: {
+      //   type: Sequelize.INTEGER,
+      //   allowNull: true,
+      //   references: {
+      //     model: 'Listings',
+      //     key: 'id'
+      //   }
+      // },
       title: {
         type: Sequelize.STRING(30),
         allowNull: false

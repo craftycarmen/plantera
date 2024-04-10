@@ -13,7 +13,7 @@ const usersList = [
     firstName: 'Demo',
     lastName: 'User',
     email: 'demo@user.io',
-    username: 'Demo-lition',
+    username: 'PlanteraDemo',
     hashedPassword: bcrypt.hashSync('password'),
     bio: 'My room is a jungle filled with plants.',
     favoritePlant: 'Monstera',
@@ -55,6 +55,6 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, { [Op.or]: usersList }, {});
+    return queryInterface.bulkDelete(options, { [Op.or]: listOfUsers }, {});
   }
 };

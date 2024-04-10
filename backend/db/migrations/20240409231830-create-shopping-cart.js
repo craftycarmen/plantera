@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       buyerId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users',

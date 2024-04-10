@@ -1,3 +1,17 @@
+.navigation {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+}
+
+.navLinks {
+    font-size: 18px;
+}
+
+/* .navLinks a {
+    color: #28635A
+} */
+
 .profile-dropdown {
     position: absolute;
 }

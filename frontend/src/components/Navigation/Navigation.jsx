@@ -7,17 +7,18 @@ function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
     return (
-        <>
-            <img style={{ width: "350px" }} src='logo.png' />
-            <li>Testing Some test
-                <NavLink to="/"> Home</NavLink>
-            </li>
+        <div className='navigation'>
+            <NavLink to="/"><img style={{ width: "350px" }} src='logo.png' /></NavLink>
+            <div className='navLinks'>
+                <NavLink to="/">SHOP&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL</NavLink>
+            </div>
+
             {isLoaded && (
-                <li>
+                <>
                     <ProfileButton user={sessionUser} />
-                </li>
+                </>
             )}
-        </>
+        </div>
     );
 }
 

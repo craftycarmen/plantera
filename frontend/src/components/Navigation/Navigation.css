@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(3, auto);
     align-items: center;
+    padding-bottom: 20px;
 }
 
 .navLinks {

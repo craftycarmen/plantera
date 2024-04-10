@@ -13,6 +13,7 @@
 
 .rightNav {
     cursor: default;
+    position: relative;
 }
 
 .rightNav i {
@@ -26,8 +27,39 @@
 
 .profile-dropdown {
     position: absolute;
+    border: #28635A solid 1.5px;
+    /* box-shadow: 2px 2px 0px #f9ddd2; */
+    border-radius: 3px;
+    padding: 15px;
+    background-color: #F2DCCB;
+    width: auto;
+    margin-top: 5px;
+    margin-right: -2px;
+    right: 0;
+    z-index: 1;
 }
 
 .hidden {
     display: none;
+}
+
+.profileLink {
+    transition: padding 0.3s ease;
+    padding: 5px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.profileLink:hover {
+    /* background-color: #fdd8d6; */
+    border-radius: 5px;
+    padding: 5px;
+    width: max-content;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.profileButtonWrapper {
+    position: relative;
+    display: inline-block;
 }

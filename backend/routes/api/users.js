@@ -33,16 +33,36 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-        const { email, firstName, lastName, password, username } = req.body;
+        const { email, firstName, lastName, password, username,
+            bio,
+            favoritePlant,
+            accountType,
+            shopDescription,
+            paymentMethod,
+            paymentDetails } = req.body;
         const hashedPassword = bcrypt.hashSync(password);
-        const user = await User.create({ email, username, firstName, lastName, hashedPassword });
+        const user = await User.create({
+            email, username, firstName, lastName, hashedPassword,
+            bio,
+            favoritePlant,
+            accountType,
+            shopDescription,
+            paymentMethod,
+            paymentDetails
+        });
 
         const safeUser = {
             id: user.id,
             email: user.email,
             username: user.username,
             firstName: user.firstName,
-            lastName: user.lastName
+            lastName: user.lastName,
+            bio: user.bio,
+            favoritePlant: user.favoritePlant,
+            accountType: user.accountType,
+            shopDescription: user.shopDescription,
+            paymentMethod: user.paymentMethod,
+            paymentDetails: user.paymentDetails
         };
 
         await setTokenCookie(res, safeUser);

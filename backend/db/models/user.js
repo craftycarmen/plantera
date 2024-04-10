@@ -109,7 +109,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       accountType: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           len: [1, 50]
         }

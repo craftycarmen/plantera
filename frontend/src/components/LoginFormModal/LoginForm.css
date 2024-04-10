@@ -1,0 +1,21 @@
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    flex-basis: auto;
+    padding: 15px 25px 40px 25px;
+    width: 100%;
+    background-color: #8EBAA8;
+    border-radius: 5px;
+    /* border: 2px #e2725a solid; */
+    /* outline: 4px solid #FDD8D6; */
+    /* box-shadow: 3px 3px 0px #FDD8D6; */
+}
+
+.modal input,
+.modal textarea {
+    background-color: #8EBAA8;
+    border-bottom: 1px solid #28635A;
+    border-left: 1px solid #28635A;
+}

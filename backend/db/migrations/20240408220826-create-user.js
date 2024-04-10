@@ -47,7 +47,7 @@ module.exports = {
       },
       accountType: {
         type: Sequelize.STRING(50),
-        allowNull: false,
+        allowNull: true,
       },
       shopDescription: {
         type: Sequelize.STRING(250),

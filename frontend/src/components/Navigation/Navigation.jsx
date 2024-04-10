@@ -9,8 +9,8 @@ function Navigation({ isLoaded }) {
     return (
         <>
             <img style={{ width: "350px" }} src='logo.png' />
-            <li>
-                <NavLink to="/">Home</NavLink>
+            <li>Testing Some test
+                <NavLink to="/"> Home</NavLink>
             </li>
             {isLoaded && (
                 <li>

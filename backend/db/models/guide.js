@@ -51,10 +51,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    listingId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
+    // listingId: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: true
+    // },
     title: {
       type: DataTypes.STRING,
       allowNull: false,

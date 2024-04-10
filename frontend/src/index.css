@@ -5,19 +5,22 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: 14px;
-    letter-spacing: -0.5px;
+    /* letter-spacing: -0.5px; */
     padding: 40px;
     margin: 0;
 }
 
-h1 {
+h1,
+h2,
+h3 {
     font-family: "Comfortaa", sans-serif;
     font-optical-sizing: auto;
     font-weight: 800;
     font-style: normal;
-    letter-spacing: 0px;
+    /* letter-spacing: 0px; */
 }
 
+.modalMenuItem,
 a {
     color: #E38251;
     font-weight: 800;
@@ -26,7 +29,31 @@ a {
     letter-spacing: 0px;
 }
 
+.modalMenuItem:hover,
 a:hover {
     text-decoration: underline;
+    cursor: pointer;
+}
+
+input,
+textarea {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    /* letter-spacing: -0.5px; */
+    color: #28635A;
+}
+
+button {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    /* letter-spacing: -0.5px; */
+    color: #28635A;
+}
+
+button:hover {
     cursor: pointer;
 }

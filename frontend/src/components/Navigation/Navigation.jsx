@@ -12,12 +12,16 @@ function Navigation({ isLoaded }) {
             <div className='navLinks'>
                 <NavLink to="/">SHOP&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL</NavLink>
             </div>
+            <div className='rightNav'>
+                <i className="fa-solid fa-magnifying-glass" />&nbsp;&nbsp;&nbsp;
 
-            {isLoaded && (
-                <>
-                    <ProfileButton user={sessionUser} />
-                </>
-            )}
+                {isLoaded && (
+                    <>
+                        <ProfileButton user={sessionUser} />
+                    </>
+                )}&nbsp;&nbsp;&nbsp;
+                <i className="fa-solid fa-cart-shopping" />
+            </div>
         </div>
     );
 }

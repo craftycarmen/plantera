@@ -1,12 +1,23 @@
 .navigation {
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 50px;
+    justify-items: center;
     align-items: center;
     padding-bottom: 20px;
 }
 
 .navLinks {
     font-size: 18px;
+}
+
+.rightNav {
+    cursor: default;
+}
+
+.rightNav i {
+    font-size: x-large;
+    cursor: pointer;
 }
 
 /* .navLinks a {

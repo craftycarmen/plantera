@@ -54,11 +54,11 @@ module.exports = {
         allowNull: true,
       },
       paymentMethod: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(100),
         allowNull: true,
       },
       paymentDetails: {
-        type: Sequelize.STRING(4),
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       createdAt: {

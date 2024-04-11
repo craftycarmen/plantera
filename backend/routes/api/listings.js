@@ -198,4 +198,17 @@ router.put('/:listingId', requireAuth, async (req, res) => {
     return res.json(listing)
 });
 
+router.delete('/:listingId', requireAuth, async (req, res) => {
+    const listingId = Number(req.params.listingId);
+    const listing = await Listing.findByPk(listingId)
+
+    if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
+
+    if (req.user.id !== listing.sellerId) return res.status(403).json({ message: "Forbidden" });
+
+    await listing.destroy();
+
+    return res.json({ message: "Successfully deleted" })
+});
+
 module.exports = router;

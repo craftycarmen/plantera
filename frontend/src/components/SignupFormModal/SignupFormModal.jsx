@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 import './SignupForm.css';
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import LoginFormModal from "../LoginFormModal";
 
 function SignupFormModal() {
     const dispatch = useDispatch();
@@ -247,6 +249,12 @@ function SignupFormModal() {
                         type="submit">Sign Up</button>
                 </div>
             </form>
+            <p>Already a Plantera user?&nbsp;
+                <OpenModalMenuItem
+                    itemText={<span className="modalLink">Log in</span>}
+                    modalComponent={<LoginFormModal />}
+                />
+            </p>
         </section >
     );
 }

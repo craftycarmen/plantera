@@ -15,7 +15,7 @@ function ListingPage() {
     ))
 
     let stockQty = listing?.stockQty || 1;
-    let [quantity, setQuantity] = useState(stockQty)
+    let [quantity, setQuantity] = useState(1)
 
     let addQty = () => {
         if (quantity >= 1 && quantity < stockQty) {

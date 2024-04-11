@@ -27,7 +27,6 @@ router.get('/', async (req, res) => {
 
     let listingsList = [];
 
-
     listings.forEach(listing => {
         listingsList.push(listing.toJSON());
     });
@@ -40,6 +39,44 @@ router.get('/', async (req, res) => {
 
     return res.json({ Listings: listingsList });
 
+});
+
+router.get('/:listingId', async (req, res) => {
+    const listing = await Listing.findByPk(req.params.listingId, {
+        include: [
+            {
+                model: Image,
+                as: 'ListingImages',
+                attributes: {
+                    exclude: ['avatar']
+                }
+            },
+            {
+                model: User,
+                as: 'Seller',
+                attributes: ['id', 'username', 'shopDescription']
+            },
+            {
+                model: Guide,
+                attributes: ['id', 'title', 'userId'],
+                include: {
+                    model: Image,
+                    as: 'GuideImages',
+                    attributes: {
+                        exclude: ['avatar']
+                    }
+                }
+            }
+        ]
+    })
+
+    if (listing) {
+        return res.json(listing)
+    } else {
+        return res.status(404).json({
+            message: "Listing couldn't be found"
+        });
+    }
 })
 
 module.exports = router;

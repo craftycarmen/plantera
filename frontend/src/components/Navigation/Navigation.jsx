@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
         <div className='navigation'>
             <NavLink to="/"><img style={{ width: "350px" }} src='../../logo.png' /></NavLink>
             <div className='navLinks'>
-                <NavLink to="/">SHOP&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL</NavLink>
+                <Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL
             </div>
             <div className='rightNav'>
                 <i className="fa-solid fa-magnifying-glass" />&nbsp;&nbsp;&nbsp;

@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         models.Image,
         {
           foreignKey: 'imageableId',
+          as: 'UserImages',
           constraints: false,
           scope: {
             imageableType: 'User'

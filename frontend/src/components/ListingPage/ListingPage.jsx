@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { fetchOneListing } from "../../store/listings";
 import { useEffect, useState } from "react";
 import './ListingPage.css';
+import LinkedGuides from "./LinkedGuides";
+import MeetTheSeller from "./MeetTheSeller";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -82,6 +84,11 @@ function ListingPage() {
                     </form>
                 </div>
             </div>
+            <br />
+            <br />
+            <LinkedGuides guides={listing.Guides} />
+            <br />
+            <MeetTheSeller sellerInfo={listing.Seller} />
         </>
     )
 }

@@ -54,18 +54,28 @@ router.get('/:listingId', async (req, res) => {
             {
                 model: User,
                 as: 'Seller',
-                attributes: ['id', 'username', 'shopDescription']
+                attributes: ['id', 'username', 'shopDescription'],
+                include: {
+                    model: Image,
+                    as: 'UserImages'
+                }
             },
             {
                 model: Guide,
                 attributes: ['id', 'title', 'userId'],
-                include: {
-                    model: Image,
-                    as: 'GuideImages',
-                    attributes: {
-                        exclude: ['avatar']
+                include: [
+                    {
+                        model: Image,
+                        as: 'GuideImages',
+                        attributes: {
+                            exclude: ['avatar']
+                        }
+                    },
+                    {
+                        model: User,
+                        attributes: ['id', 'username']
                     }
-                }
+                ]
             }
         ]
     })

@@ -13,6 +13,10 @@ const listingGuidesList = [
     guideId: 1
   },
   {
+    listingId: 1,
+    guideId: 2
+  },
+  {
     listingId: 2,
     guideId: 3
   }

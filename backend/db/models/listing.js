@@ -99,7 +99,8 @@ module.exports = (sequelize, DataTypes) => {
         min: {
           args: [1],
           msg: 'Price is invalid'
-        }
+        },
+        isFloat: true
       }
     },
     potSize: {
@@ -112,7 +113,8 @@ module.exports = (sequelize, DataTypes) => {
         min: {
           args: [2],
           msg: 'Pot size must be 2 inches or greater'
-        }
+        },
+        isFloat: true
       }
     },
     stockQty: {
@@ -125,7 +127,8 @@ module.exports = (sequelize, DataTypes) => {
         min: {
           args: [1],
           msg: 'Stock quantity must be greater than 0'
-        }
+        },
+        isInt: true
       }
     },
   }, {

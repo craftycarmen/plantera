@@ -49,10 +49,10 @@ function SignupFormModal() {
                     firstName,
                     lastName,
                     password,
-                    bio,
+                    // bio,
                     favoritePlant,
                     accountType,
-                    shopDescription,
+                    // shopDescription,
                     paymentMethod,
                     paymentDetails
                 })

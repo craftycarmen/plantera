@@ -17,16 +17,25 @@ router.get('/', async (req, res) => {
             {
                 model: User,
                 as: 'Seller',
+                attributes: ['id', 'username', 'shopDescription']
+            },
+            {
+                model: Guide
             }
         ]
     });
 
-    console.log(listings);
-
     let listingsList = [];
+
 
     listings.forEach(listing => {
         listingsList.push(listing.toJSON());
+    });
+
+    listingsList.forEach(listing => {
+        if (listing.Guides.length === 0) {
+            listing.Guides = null
+        }
     });
 
     return res.json({ Listings: listingsList });

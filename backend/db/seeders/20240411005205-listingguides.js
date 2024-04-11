@@ -14,7 +14,7 @@ const listingGuidesList = [
   },
   {
     listingId: 1,
-    guideId: 2
+    guideId: 3
   },
   {
     listingId: 2,

@@ -1,5 +1,5 @@
 const express = require('express')
-const { Listing, Image, User, Guide } = require('../../db/models');
+const { Listing, Image, User, Guide, ListingGuide } = require('../../db/models');
 
 const router = express.Router();
 
@@ -32,6 +32,7 @@ router.get('/', async (req, res) => {
     });
 
     listingsList.forEach(listing => {
+        console.log(listing.Guides);
         if (listing.Guides.length === 0) {
             listing.Guides = null
         }
@@ -54,7 +55,7 @@ router.get('/:listingId', async (req, res) => {
             {
                 model: User,
                 as: 'Seller',
-                attributes: ['id', 'username', 'shopDescription'],
+                attributes: ['id', 'username', 'shopDescription', 'createdAt'],
                 include: {
                     model: Image,
                     as: 'UserImages'
@@ -62,6 +63,9 @@ router.get('/:listingId', async (req, res) => {
             },
             {
                 model: Guide,
+                through: {
+                    model: ListingGuide,
+                },
                 attributes: ['id', 'title', 'userId'],
                 include: [
                     {

@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       Listing.belongsTo(
         models.User,
         {
-          foreignKey: 'sellerId'
+          foreignKey: 'sellerId',
+          as: 'Seller'
         }
       );
 
@@ -23,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         models.Image,
         {
           foreignKey: 'imageableId',
+          as: 'ListingImages',
           constraints: false,
           scope: {
             imageableType: 'Listing'

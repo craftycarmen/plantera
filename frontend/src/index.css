@@ -18,6 +18,7 @@ h3 {
     font-optical-sizing: auto;
     font-weight: 800;
     font-style: normal;
+    margin: 5px 0px;
     /* letter-spacing: 0px; */
 }
 
@@ -38,12 +39,29 @@ a:hover {
 
 input,
 textarea {
+    display: block;
+    border: none;
+    width: 300px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    padding: 10px 10px 5px 10px;
     font-family: "Space Mono", monospace;
     font-weight: 400;
     font-style: normal;
     font-size: 14px;
     /* letter-spacing: -0.5px; */
     color: #28635A;
+    line-height: 1.25;
+}
+
+input[type=radio] {
+    accent-color: #E38251;
+}
+
+textarea {
+    resize: none;
+    height: 75px;
 }
 
 button {
@@ -57,4 +75,41 @@ button {
 
 button:hover {
     cursor: pointer;
+}
+
+.inputContainer {
+    position: relative;
+}
+
+.inputContainer input:focus~label,
+.inputContainer input:not([placeholder=''])~label,
+.inputContainer input:not(:placeholder-shown)~label,
+.inputContainer textarea:focus~label,
+.inputContainer textarea:not([placeholder=''])~label,
+.inputContainer textarea:not(:placeholder-shown)~label {
+    top: -12px;
+    font-size: 12px;
+    cursor: default;
+}
+
+.floating-label {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    transition: 300ms ease all;
+    cursor: text;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+.error {
+    font-size: 12px;
+    color: rgb(215, 0, 0);
+}
+
+button:disabled {
+    color: gray;
 }

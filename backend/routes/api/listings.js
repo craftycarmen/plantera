@@ -1,6 +1,7 @@
 const express = require('express')
 const { Listing, Image, User, Guide, ListingGuide } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const listing = require('../../db/models/listing');
 
 const router = express.Router();
 
@@ -170,6 +171,31 @@ router.post('/', requireAuth, async (req, res) => {
     } catch (err) {
         return res.json(err.message);
     }
-})
+});
+
+router.put('/:listingId', requireAuth, async (req, res) => {
+    const listingId = Number(req.params.listingId);
+    const listing = await Listing.findByPk(listingId);
+
+    if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
+
+    if (req.user.id !== listing.sellerId) return res.status(403).json({ message: "Forbidden" });
+
+    const { plantName, description, price, potSize, stockQty, guideId } = req.body;
+
+    listing.set({
+        sellerId: req.user.id,
+        plantName: plantName,
+        description: description,
+        price: Number.parseFloat(price),
+        potSize: potSize,
+        stockQty: stockQty,
+        guideId: guideId
+    });
+
+    await listing.save();
+
+    return res.json(listing)
+});
 
 module.exports = router;

@@ -13,21 +13,19 @@ function SignupFormModal() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     // const [bio, setBio] = useState("");
-    // const [favoritePlant, setFavoritePlant] = useState("");
+    const [favoritePlant, setFavoritePlant] = useState("");
     const [accountType, setAccountType] = useState("");
     // const [shopDescription, setShopDescription] = useState("");
-    // const [paymentMethod, setPaymentMethod] = useState("");
-    // const [paymentDetails, setPaymentDetails] = useState("");
+    const [paymentMethod, setPaymentMethod] = useState("");
+    const [paymentDetails, setPaymentDetails] = useState("");
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
-    // const banks = ['Bank of Americano', 'Pursuit', 'Fells Wargo']
+    const banks = ['Bank of Americano', 'Pursuit', 'Fells Wargo']
 
     useEffect(() => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const errs = {};
         if (!email) errs.email = '';
-        if (email && !emailRegex.test(email)) errs.email = "Email format is invalid"
         if (!username) errs.username = '';
         if (!firstName) errs.firstName = '';
         if (!lastName) errs.lastName = '';
@@ -36,10 +34,9 @@ function SignupFormModal() {
         if (username && username.length < 4) errs.username = 'Username must be 4 characters at minimum';
         if (password && password.length < 6) errs.password = 'Password must be 6 characters at minimum';
         if (confirmPassword && password !== confirmPassword) errs.confirmPassword = 'Password and confirm password must match';
-        if (accountType !== "buyer" && accountType !== "seller") errs.accountType = '';
 
         setErrors(errs);
-    }, [email, username, firstName, lastName, password, confirmPassword, accountType])
+    }, [email, username, firstName, lastName, password, confirmPassword])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,12 +49,12 @@ function SignupFormModal() {
                     firstName,
                     lastName,
                     password,
-                    // bio,
-                    // favoritePlant,
+                    bio,
+                    favoritePlant,
                     accountType,
-                    // shopDescription,
-                    // paymentMethod,
-                    // paymentDetails
+                    shopDescription,
+                    paymentMethod,
+                    paymentDetails
                 })
             )
                 .then(closeModal)
@@ -164,7 +161,7 @@ function SignupFormModal() {
                     <div className="error">{errors.bio &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.bio}</>}</div>
                 </div> */}
-                {/* <div className="inputContainer">
+                <div className="inputContainer">
                     <input
                         type="text"
                         value={favoritePlant}
@@ -172,10 +169,10 @@ function SignupFormModal() {
                         placeholder=""
                         id="favoritePlant"
                     />
-                    <label htmlFor="favoritePlant" className="floating-label">What's your favorite plant?</label>
+                    <label htmlFor="favoritePlant" className="floating-label">What&apos;s your favorite plant?</label>
                     <div className="error">{errors.favoritePlant &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.favoritePlant}</>}</div>
-                </div> */}
+                </div>
                 <div className="inputContainer accountType">
                     Would you like to sell plants on Plantera?*
                     <div className='radioInput'>
@@ -210,7 +207,7 @@ function SignupFormModal() {
                     <div className="error">{errors.shopDescription &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.shopDescription}</>}</div>
                 </div> */}
-                {/* <div className="inputContainer">
+                <div className="inputContainer">
                     Where do you want us to send your earnings?*
                     <div>
                         <select className="inputFields"
@@ -240,7 +237,7 @@ function SignupFormModal() {
                     <label htmlFor="paymentDetails" className="floating-label">Last 4 Digits of Payment Method*</label>
                     <div className="error">{errors.paymentDetails &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
-                </div> */}
+                </div>
                 <div>
                     <button style={{ marginTop: "15px" }}
                         disabled={Object.values(errors).length}

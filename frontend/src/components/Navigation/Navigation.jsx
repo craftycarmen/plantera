@@ -8,7 +8,7 @@ function Navigation({ isLoaded }) {
 
     return (
         <div className='navigation'>
-            <NavLink to="/"><img style={{ width: "350px" }} src='logo.png' /></NavLink>
+            <NavLink to="/"><img style={{ width: "350px" }} src='../../logo.png' /></NavLink>
             <div className='navLinks'>
                 <NavLink to="/">SHOP&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL</NavLink>
             </div>

@@ -15,7 +15,7 @@ function ListingForm({ listing, formType }) {
     const [price, setPrice] = useState(listing?.price);
     const [potSize, setPotSize] = useState(listing?.potSize);
     const [stockQty, setStockQty] = useState(listing?.stockQty);
-    // const [guideId, setGuideId] = useState(listing?.guideId);
+    const [guideId, setGuideId] = useState(listing?.guideId);
     const [errors, setErrors] = useState({});
 
     const updatePlantName = (e) => setPlantName(e.target.value);
@@ -23,7 +23,7 @@ function ListingForm({ listing, formType }) {
     const updatePrice = (e) => setPrice(e.target.value);
     const updatePotSize = (e) => setPotSize(e.target.value);
     const updateStockQty = (e) => setStockQty(e.target.value);
-    // const updateGuideId = (e) => setGuideId(e.target.value);
+    const updateGuideId = (e) => setGuideId(e.target.value);
     const createForm = formType === 'Create Listing';
 
     useEffect(() => {
@@ -60,10 +60,10 @@ function ListingForm({ listing, formType }) {
             price,
             potSize,
             stockQty,
-            // guideId
+            guideId
         }
 
-        if (formType === "Create Listing") {
+        if (createForm) {
             const newListing = await dispatch(addListing(listing))
             listing = newListing
         }
@@ -158,6 +158,18 @@ function ListingForm({ listing, formType }) {
                 </div>
                 <div className='error'>{errors.stockQty &&
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
+                <div className='inputContainer'>
+                    <input
+                        type='number'
+                        step='1'
+                        min='1'
+                        value={guideId}
+                        onChange={updateGuideId}
+                        placeholder=''
+                        id='guideId'
+                    />
+                    <label htmlFor='guideId' className='floating-label'>Guide ID</label>
+                </div>
                 <button
                     type='submit'
                     disabled={!!Object.values(errors).length}

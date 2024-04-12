@@ -45,23 +45,43 @@ export const signup = (user) => async (dispatch) => {
         accountType,
         shopDescription,
         paymentMethod,
-        paymentDetails } = user;
+        paymentDetails, image } = user;
+
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("email", email);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("bio", bio);
+    formData.append("favoritePlant", favoritePlant);
+    formData.append("accountType", accountType);
+    formData.append("shopDescription", shopDescription);
+    formData.append("paymentMethod", paymentMethod);
+    formData.append("paymentDetails", paymentDetails);
+
+    if (image) {
+        formData.append("image", image)
+        formData.append("imageable_id", user.id)
+        formData.append("imageable_type", "User")
+    }
 
     const res = await csrfFetch("/api/users", {
         method: "POST",
-        body: JSON.stringify({
-            email,
-            username,
-            firstName,
-            lastName,
-            password,
-            bio,
-            favoritePlant,
-            accountType,
-            shopDescription,
-            paymentMethod,
-            paymentDetails
-        })
+        body: formData
+        // body: JSON.stringify({
+        //     email,
+        //     username,
+        //     firstName,
+        //     lastName,
+        //     password,
+        //     bio,
+        //     favoritePlant,
+        //     accountType,
+        //     shopDescription,
+        //     paymentMethod,
+        //     paymentDetails
+        // })
     })
 
     const data = await res.json();

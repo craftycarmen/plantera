@@ -53,6 +53,9 @@ textarea {
     /* letter-spacing: -0.5px; */
     color: #28635A;
     line-height: 1.25;
+    background-color: transparent;
+    border-bottom: 1px solid #28635A;
+    border-left: 1px solid #28635A;
 }
 
 input[type=radio] {

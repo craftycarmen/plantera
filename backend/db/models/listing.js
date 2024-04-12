@@ -71,8 +71,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Plant name is required'
         },
         len: {
-          args: [5, 100],
-          msg: 'Plant name must be between 5-100 characters'
+          args: [3, 100],
+          msg: 'Plant name must be between 3-100 characters'
         }
       }
     },

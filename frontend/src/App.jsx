@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Listings from './components/Listings';
 import ListingPage from './components/ListingPage';
+import CreateListingForm from './components/ListingForm/CreateListingForm';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: '/listings/:listingId',
         element: <ListingPage />
+      },
+      {
+        path: '/listings/new',
+        element: <CreateListingForm />
       }
     ]
   }

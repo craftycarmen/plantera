@@ -154,7 +154,7 @@ router.get('/:listingId', async (req, res) => {
 
 router.post('/', requireAuth, async (req, res) => {
     try {
-        const { plantName, description, price, potSize, stockQty, guideId } = req.body;
+        const { plantName, description, price, potSize, stockQty } = req.body;
 
         const listing = await Listing.create({
             sellerId: req.user.id,
@@ -163,7 +163,7 @@ router.post('/', requireAuth, async (req, res) => {
             price: price,
             potSize: potSize,
             stockQty: stockQty,
-            guideId: guideId
+            // guideId: guideId
         });
 
         return res.status(201).json(listing)

@@ -1,5 +1,8 @@
+import { csrfFetch } from './csrf';
+
 const LOAD_ALL_LISTINGS = 'listings/LOAD_ALL_LISTINGS';
 const LOAD_ONE_LISTING = 'listings/LOAD_ONE_LISTING';
+const CREATE_LISTING = 'listings/CREATE_LISTING';
 
 export const loadAllListings = (listings) => ({
     type: LOAD_ALL_LISTINGS,
@@ -9,7 +12,12 @@ export const loadAllListings = (listings) => ({
 export const loadOneListing = (listing) => ({
     type: LOAD_ONE_LISTING,
     listing
-})
+});
+
+export const createListing = (listing) => ({
+    type: CREATE_LISTING,
+    listing
+});
 
 export const fetchAllListings = () => async (dispatch) => {
     const res = await fetch('/api/listings');
@@ -37,6 +45,22 @@ export const fetchOneListing = (listingId) => async (dispatch) => {
     }
 }
 
+export const addListing = (listing) => async (dispatch) => {
+    const res = await csrfFetch('/api/listings', {
+        method: 'POST',
+        body: JSON.stringify(listing)
+    });
+
+    if (res.ok) {
+        const listing = await res.json();
+        dispatch(createListing(listing));
+        return listing;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 const listingsReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_ALL_LISTINGS: {
@@ -52,6 +76,11 @@ const listingsReducer = (state = {}, action) => {
             return { ...state, [action.listing.id]: action.listing }
         }
 
+        case CREATE_LISTING: {
+            const listingState = {}
+            listingState[action.listing.id] = action.listing
+            return listingState
+        }
         default:
             return { ...state }
     }

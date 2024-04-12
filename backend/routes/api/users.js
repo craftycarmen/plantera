@@ -1,5 +1,6 @@
 const express = require('express')
 const bcrypt = require('bcryptjs');
+const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
@@ -31,6 +32,7 @@ const validateSignup = [
 // Sign up
 router.post(
     '/',
+    singleMulterUpload("image"),
     validateSignup,
     async (req, res) => {
         const { email, firstName, lastName, password, username,
@@ -40,6 +42,9 @@ router.post(
             shopDescription,
             paymentMethod,
             paymentDetails } = req.body;
+        const profileImageUrl = req.file ?
+            await singleFileUpload({ file: req.file, public: true }) :
+            null;
         const hashedPassword = bcrypt.hashSync(password);
         const user = await User.create({
             email, username, firstName, lastName, hashedPassword,
@@ -48,7 +53,8 @@ router.post(
             accountType,
             shopDescription,
             paymentMethod,
-            paymentDetails
+            paymentDetails,
+            profileImageUrl
         });
 
         const safeUser = {
@@ -57,12 +63,12 @@ router.post(
             username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
-            bio: user.bio,
-            favoritePlant: user.favoritePlant,
-            accountType: user.accountType,
-            shopDescription: user.shopDescription,
-            paymentMethod: user.paymentMethod,
-            paymentDetails: user.paymentDetails
+            // bio: user.bio,
+            // favoritePlant: user.favoritePlant,
+            // accountType: user.accountType,
+            // shopDescription: user.shopDescription,
+            // paymentMethod: user.paymentMethod,
+            // paymentDetails: user.paymentDetails
         };
 
         await setTokenCookie(res, safeUser);

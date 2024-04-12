@@ -91,22 +91,22 @@ module.exports = (sequelize, DataTypes) => {
       bio: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-          len: {
-            args: [30, 250],
-            msg: 'Bio must be between 30-250 characters'
-          }
-        }
+        // validate: {
+        //   len: {
+        //     args: [30, 250],
+        //     msg: 'Bio must be between 30-250 characters'
+        //   }
+        // }
       },
       favoritePlant: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-          len: {
-            args: [5, 100],
-            msg: 'Favorite plant must be between 5-100 characters'
-          }
-        }
+        // validate: {
+        //   len: {
+        //     args: [5, 100],
+        //     msg: 'Favorite plant must be between 5-100 characters'
+        //   }
+        // }
       },
       accountType: {
         type: DataTypes.STRING,
@@ -118,22 +118,23 @@ module.exports = (sequelize, DataTypes) => {
       shopDescription: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-          len: {
-            args: [30, 250],
-            msg: 'Shop description must be between 30-250 characters'
-          }
-        }
+        // validate: {
+        //   len: {
+        //     args: [30, 250],
+        //     msg: 'Shop description must be between 30-250 characters'
+        //   }
+        // }
       },
       paymentMethod: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-          len: [1, 50]
-        }
+        // validate: {
+        //   len: [1, 50]
+        // }
       },
       paymentDetails: {
-        type: DataTypes.INTEGER,
+        // type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true
       },
     },

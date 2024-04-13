@@ -6,6 +6,7 @@ import Listings from './components/Listings';
 import ListingPage from './components/ListingPage';
 import CreateListingForm from './components/ListingForm/CreateListingForm';
 import * as sessionActions from './store/session';
+import UpdateListingForm from './components/ListingForm/UpdateListingForm';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/listings/new',
         element: <CreateListingForm />
+      },
+      {
+        path: '/listings/:listingId/edit',
+        element: <UpdateListingForm />
       }
     ]
   }

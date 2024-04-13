@@ -3,7 +3,8 @@ import { csrfFetch } from './csrf';
 const LOAD_ALL_LISTINGS = 'listings/LOAD_ALL_LISTINGS';
 const LOAD_ONE_LISTING = 'listings/LOAD_ONE_LISTING';
 const CREATE_LISTING = 'listings/CREATE_LISTING';
-const CREATE_LISTING_IMAGE = 'listings/CREATE_LISTING_IMAGE';
+// const CREATE_LISTING_IMAGE = 'listings/CREATE_LISTING_IMAGE';
+const UPDATE_LISTING = 'listings/UPDATE_LISTING';
 
 export const loadAllListings = (listings) => ({
     type: LOAD_ALL_LISTINGS,
@@ -20,9 +21,14 @@ export const createListing = (listing) => ({
     listing: listing
 });
 
-export const createListingImage = (post) => ({
-    type: CREATE_LISTING_IMAGE,
-    post
+// export const createListingImage = (post) => ({
+//     type: CREATE_LISTING_IMAGE,
+//     post
+// });
+
+export const updateListing = (listing) => ({
+    type: UPDATE_LISTING,
+    listing
 });
 
 export const fetchAllListings = () => async (dispatch) => {
@@ -60,7 +66,6 @@ export const addListing = (listing) => async (dispatch) => {
     formData.append("price", price);
     formData.append("potSize", potSize);
     formData.append("stockQty", stockQty);
-
     formData.append("image", image)
     formData.append("imageable_id", listing.id)
     formData.append("imageable_type", "Listing")
@@ -95,49 +100,22 @@ export const addListing = (listing) => async (dispatch) => {
     }
 };
 
+export const editListing = (listing) => async (dispatch) => {
+    const res = await csrfFetch(`/api/listings/${listing.id}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...listing })
+    });
 
-// export const addListing = (listing) => async (dispatch) => {
-//     const { plantName, description, price, potSize, stockQty, guideId, image } = listing;
-
-//     const formData = new FormData();
-//     formData.append("plantName", plantName);
-//     formData.append("description", description);
-//     formData.append("price", price);
-//     formData.append("potSize", potSize);
-//     formData.append("stockQty", stockQty);
-//     formData.append("guideId", guideId);
-
-//     if (image) {
-//         formData.append("image", image)
-//         formData.append("imageable_id", listing.id)
-//         formData.append("imageable_type", "Listing")
-//     }
-
-//     const res = await csrfFetch('/api/listings', {
-//         method: 'POST',
-//         body: formData
-//         // body: JSON.stringify(listing)
-//     });
-
-//     const data = await res.json();
-//     dispatch(createListing(data.listing));
-//     return res;
-
-// }
-
-// export const addImage = (images, userId) => async (dispatch) => {
-//     const formData = new FormData();
-//     Array.from(images).forEach(image => formData.append("images", image));
-//     const response = await csrfFetch(`/api/images/${userId}`, {
-//         method: "POST",
-//         body: formData
-//     });
-//     if (response.ok) {
-//         const data = await response.json();
-//         dispatch(receiveImages(data));
-//     }
-//     return response;
-// };
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateListing(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
 
 const listingsReducer = (state = {}, action) => {
     switch (action.type) {
@@ -156,18 +134,18 @@ const listingsReducer = (state = {}, action) => {
 
         case CREATE_LISTING: {
             console.log("ACTION!!!!", action.listing);
-            // const listingState = {}
-            // listingState[action.listing.id] = action.listing
-            // return listingState
-
             return { ...state, [action.listing.id]: action.listing };
         }
 
-        case CREATE_LISTING_IMAGE: {
-            const imageState = { "images": [] }
-            imageState["images"] = [action.post.image]
-            return imageState
+        case UPDATE_LISTING: {
+            return { ...state, [action.listing.id]: action.listing }
         }
+
+        // case CREATE_LISTING_IMAGE: {
+        //     const imageState = { "images": [] }
+        //     imageState["images"] = [action.post.image]
+        //     return imageState
+        // }
         default:
             return { ...state }
     }

@@ -201,7 +201,7 @@ router.put('/:listingId', requireAuth, async (req, res) => {
         price: Number.parseFloat(price),
         potSize: potSize,
         stockQty: stockQty,
-        guideId: guideId
+        guideId: guideId,
     });
 
     await listing.save();

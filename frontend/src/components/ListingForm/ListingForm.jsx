@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { addListing, loadOneListing } from '../../store/listings';
+import { addListing, editListing, fetchOneListing } from '../../store/listings';
 import { Audio } from 'react-loader-spinner'
 
 function ListingForm({ listing, formType }) {
@@ -33,12 +33,19 @@ function ListingForm({ listing, formType }) {
     };
 
     const createForm = formType === 'Create Listing';
-
+    const updateForm = formType === 'Update Listing';
 
     useEffect(() => {
-        async () => {
-            await dispatch(loadOneListing(listingId))
-        }
+        const runDispatches = async () => {
+            dispatch(fetchOneListing(listingId)
+            );
+
+        };
+        runDispatches();
+    }, [dispatch, listingId])
+
+    useEffect(() => {
+
         const errs = {};
 
         if (!plantName) errs.plantName = '';
@@ -51,9 +58,11 @@ function ListingForm({ listing, formType }) {
         if (price && price <= 0) errs.price = 'Price must be greater than $0';
         if (potSize && potSize < 2) errs.potSize = 'Pot size must be 2 inches or greater';
         if (stockQty && stockQty <= 0) errs.stockQty = 'Stock quantity must be greater than 0';
+        // if (!image && formType === 'Create Listing') errs.image = "Image is required."
+        // if (guideId && guideId > 10) errs.imag = "Guide is invalid"
 
         setErrors(errs);
-    }, [plantName, description, price, potSize, stockQty, dispatch, listingId])
+    }, [plantName, description, price, potSize, stockQty, image, guideId])
 
 
     const handleSubmit = async (e) => {
@@ -69,66 +78,30 @@ function ListingForm({ listing, formType }) {
             price,
             potSize,
             stockQty,
-            guideId
+            guideId,
+            image
         }
 
-        // if (createForm) {
-        //     const newListing = await dispatch(addListing(listing))
-        //     listing = newListing
+        if (createForm) {
+            try {
+                const newListing = await dispatch(addListing(listing));
 
-        //     const listingId = listing.id;
+                const { id } = newListing
 
-        // const formData = new FormData();
-        // formData.append("image", image);
-        // formData.append("imageable_id", listingId);
-        // formData.append("imageable_type", "Listing");
-        //     const formData = new FormData();
-        //     formData.append("image", image);
-        //     formData.append("imageable_id", listingId);
-        //     formData.append("imageable_type", "Listing");
+                navigate(`/listings/${id}`);
+            } catch (error) {
+                console.error('Error creating listing:', error);
+            }
+        } else if (updateForm) {
+            try {
+                await dispatch(editListing(listing));
 
-        // setImageLoading(true);
-        //     setImageLoading(true);
-
-        // await dispatch(addImage(formData))
-        //     .then(() => {
-        //         dispatch(loadOneListing(listingId))
-        //             .then(() => navigate(`/listings/${listingId}`))
-        //     }).catch((error) => {
-        //         console.error("Error uploading image:", error);
-        //         setImageLoading(false);
-        //     })
+                navigate(`/listings/${listingId}`);
+            } catch (error) {
+                console.error('Error updating listing:', error);
+            }
+        }
     }
-    //     await dispatch(addImage(formData))
-    //         .then(() => {
-    //             dispatch(loadOneListing(listingId))
-    //                 .then(() => navigate(`/listings/${listingId}`))
-    //         }).catch((error) => {
-    //             console.error("Error uploading image:", error);
-    //             setImageLoading(false);
-    //         })
-    // }
-
-    // if (formType === 'Create Listing') {
-    //     const newListing = await dispatch(addListing(listing));
-    //     listing = newListing
-    // }
-    // else if (formType === 'Update Listing') {
-    //     const updatedListing = await dispatch(updateListing(listing));
-    // listing = updatedListing
-    // }
-
-    if (listing.errors) {
-        setErrors(listing.errors);
-    } else {
-        navigate(`/listings/${listing.id}`)
-    }
-    // if (formType === 'Add Listing') {
-    //     const listingId = listing.id;
-
-
-    // }
-
 
     return (sessionUser &&
         <>
@@ -201,6 +174,18 @@ function ListingForm({ listing, formType }) {
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
                 <div className='inputContainer'>
                     <input
+                        type="file"
+                        accept=".jpg, .jpeg, .png"
+                        // multiple
+                        onChange={updateFile}
+                        id='image'
+                    />
+                    <label htmlFor='image' className='floating-label'>Image*</label>
+                </div>
+                <div className='error'>{errors.image &&
+                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                <div className='inputContainer'>
+                    <input
                         type='number'
                         step='1'
                         min='1'
@@ -211,24 +196,6 @@ function ListingForm({ listing, formType }) {
                     />
                     <label htmlFor='guideId' className='floating-label'>Guide ID</label>
                 </div>
-                <div className='inputContainer'>
-                    <input
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        multiple
-                        onChange={updateFile} />
-                </div>
-                <div className='error'>{errors.image &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
-                {(imageLoading) && <Audio
-                    height="80"
-                    width="80"
-                    radius="9"
-                    color="green"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle
-                    wrapperClass
-                />}
                 <button
                     type='submit'
                     disabled={!!Object.values(errors).length}

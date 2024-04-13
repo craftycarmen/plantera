@@ -1,7 +1,7 @@
 const express = require('express')
 const { Listing, Image, User, Guide, ListingGuide } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const listing = require('../../db/models/listing');
+const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
 const router = express.Router();
 
@@ -152,18 +152,23 @@ router.get('/:listingId', async (req, res) => {
     }
 });
 
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
     try {
         const { plantName, description, price, potSize, stockQty, guideId } = req.body;
 
+        const listingImageUrl = req.file ?
+            await singleFileUpload({ file: req.file, public: true }) :
+            null;
+
         const listing = await Listing.create({
             sellerId: req.user.id,
-            plantName: plantName,
-            description: description,
-            price: price,
-            potSize: potSize,
-            stockQty: stockQty,
-            guideId: guideId
+            plantName,
+            description,
+            price,
+            potSize,
+            stockQty,
+            guideId,
+            listingImageUrl
         });
 
         return res.status(201).json(listing)

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { addListing, loadOneListing, addImage } from '../../store/listings';
+import { addListing, loadOneListing } from '../../store/listings';
 import { Audio } from 'react-loader-spinner'
 
 function ListingForm({ listing, formType }) {
@@ -78,21 +78,21 @@ function ListingForm({ listing, formType }) {
 
             const listingId = listing.id;
 
-            const formData = new FormData();
-            formData.append("image", image);
-            formData.append("imageable_id", listingId);
-            formData.append("imageable_type", "Listing");
+            // const formData = new FormData();
+            // formData.append("image", image);
+            // formData.append("imageable_id", listingId);
+            // formData.append("imageable_type", "Listing");
 
-            setImageLoading(true);
+            // setImageLoading(true);
 
-            await dispatch(addImage(formData))
-                .then(() => {
-                    dispatch(loadOneListing(listingId))
-                        .then(() => navigate(`/listings/${listingId}`))
-                }).catch((error) => {
-                    console.error("Error uploading image:", error);
-                    setImageLoading(false);
-                })
+            // await dispatch(addImage(formData))
+            //     .then(() => {
+            //         dispatch(loadOneListing(listingId))
+            //             .then(() => navigate(`/listings/${listingId}`))
+            //     }).catch((error) => {
+            //         console.error("Error uploading image:", error);
+            //         setImageLoading(false);
+            //     })
         }
 
         // if (formType === 'Create Listing') {

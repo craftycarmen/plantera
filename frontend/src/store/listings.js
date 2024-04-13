@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const LOAD_ALL_LISTINGS = 'listings/LOAD_ALL_LISTINGS';
 const LOAD_ONE_LISTING = 'listings/LOAD_ONE_LISTING';
 const CREATE_LISTING = 'listings/CREATE_LISTING';
+const CREATE_LISTING_IMAGE = 'listings/CREATE_LISTING_IMAGE';
 
 export const loadAllListings = (listings) => ({
     type: LOAD_ALL_LISTINGS,
@@ -17,6 +18,11 @@ export const loadOneListing = (listing) => ({
 export const createListing = (listing) => ({
     type: CREATE_LISTING,
     listing
+});
+
+export const createListingImage = (post) => ({
+    type: CREATE_LISTING_IMAGE,
+    post
 });
 
 export const fetchAllListings = () => async (dispatch) => {
@@ -61,6 +67,23 @@ export const addListing = (listing) => async (dispatch) => {
     }
 }
 
+export const addImage = (post) => async (dispatch) => {
+
+    const res = await csrfFetch('/api/images/', {
+        method: 'POST',
+        body: post
+    });
+
+    if (res.ok) {
+        const post = await res.json();
+        dispatch(createListingImage(post));
+        return post;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 const listingsReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_ALL_LISTINGS: {
@@ -80,6 +103,12 @@ const listingsReducer = (state = {}, action) => {
             const listingState = {}
             listingState[action.listing.id] = action.listing
             return listingState
+        }
+
+        case CREATE_LISTING_IMAGE: {
+            const imageState = { "images": [] }
+            imageState["images"] = [action.post.image]
+            return imageState
         }
         default:
             return { ...state }

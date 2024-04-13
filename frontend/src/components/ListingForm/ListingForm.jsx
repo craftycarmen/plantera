@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { addListing, loadOneListing } from '../../store/listings';
+import { addListing, loadOneListing, addImage } from '../../store/listings';
+import { Audio } from 'react-loader-spinner'
 
 function ListingForm({ listing, formType }) {
     const dispatch = useDispatch();
@@ -16,6 +17,8 @@ function ListingForm({ listing, formType }) {
     const [potSize, setPotSize] = useState(listing?.potSize);
     const [stockQty, setStockQty] = useState(listing?.stockQty);
     const [guideId, setGuideId] = useState(listing?.guideId);
+    const [image, setImage] = useState("");
+    const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
     const updatePlantName = (e) => setPlantName(e.target.value);
@@ -24,7 +27,13 @@ function ListingForm({ listing, formType }) {
     const updatePotSize = (e) => setPotSize(e.target.value);
     const updateStockQty = (e) => setStockQty(e.target.value);
     const updateGuideId = (e) => setGuideId(e.target.value);
+    const updateFile = e => {
+        const file = e.target.files[0];
+        if (file) setImage(file);
+    };
+
     const createForm = formType === 'Create Listing';
+
 
     useEffect(() => {
         async () => {
@@ -66,6 +75,24 @@ function ListingForm({ listing, formType }) {
         if (createForm) {
             const newListing = await dispatch(addListing(listing))
             listing = newListing
+
+            const listingId = listing.id;
+
+            const formData = new FormData();
+            formData.append("image", image);
+            formData.append("imageable_id", listingId);
+            formData.append("imageable_type", "Listing");
+
+            setImageLoading(true);
+
+            await dispatch(addImage(formData))
+                .then(() => {
+                    dispatch(loadOneListing(listingId))
+                        .then(() => navigate(`/listings/${listingId}`))
+                }).catch((error) => {
+                    console.error("Error uploading image:", error);
+                    setImageLoading(false);
+                })
         }
 
         // if (formType === 'Create Listing') {
@@ -170,6 +197,22 @@ function ListingForm({ listing, formType }) {
                     />
                     <label htmlFor='guideId' className='floating-label'>Guide ID</label>
                 </div>
+                <div className='inputContainer'>
+                    <input
+                        type="file"
+                        onChange={updateFile} />
+                </div>
+                <div className='error'>{errors.image &&
+                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                {(imageLoading) && <Audio
+                    height="80"
+                    width="80"
+                    radius="9"
+                    color="green"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle
+                    wrapperClass
+                />}
                 <button
                     type='submit'
                     disabled={!!Object.values(errors).length}

@@ -168,7 +168,13 @@ router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
             potSize,
             stockQty,
             guideId,
-            listingImageUrl
+            // listingImageUrl
+        });
+
+        await Image.create({
+            imageableId: listing.id,
+            imageableType: 'Listing',
+            url: listingImageUrl
         });
 
         return res.status(201).json(listing)

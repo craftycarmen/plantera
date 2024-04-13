@@ -3,7 +3,7 @@ function MeetTheSeller({ sellerInfo }) {
         const newDate = new Date(createdAt)
         return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
     }
-    return (
+    return (sellerInfo &&
         <div className="meetTheSeller">
             <h2>Meet {sellerInfo.username}</h2>
             <div className="meetTheSellerContainer">

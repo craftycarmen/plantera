@@ -53,10 +53,10 @@ function ListingPage() {
         <>
             <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/listings">Shop</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;{listing.plantName}</h3>
             <div className="listingPageContainer">
-                <img className="listingPageImage" src={listing.ListingImages[0].url} />
+                <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
                 <div>
                     <h1>{listing.plantName}</h1>
-                    <div>from {listing.Seller.username}</div>
+                    <div>from {listing.Seller?.username}</div>
                     <p className="price">${listing.price}</p>
                     <p>{listing.description}</p>
                     <p>Pot Size: {listing.potSize}&ldquo;</p>

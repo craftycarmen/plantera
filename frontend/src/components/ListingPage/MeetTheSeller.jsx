@@ -21,10 +21,10 @@ function MeetTheSeller({ sellerInfo }) {
                         <span style={{ fontWeight: "800" }}>Location:</span>
                         <div>San Francisco, CA ***</div>
                     </div>
-                    <p>
+                    <div>
                         <span style={{ fontWeight: "800" }}>Member Since:</span>
                         <div>{sellerInfo.createdAt && memberSince(sellerInfo.createdAt)}</div>
-                    </p>
+                    </div>
                     <p>{sellerInfo.shopDescription}</p>
                 </div>
             </div>

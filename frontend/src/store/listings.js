@@ -60,12 +60,12 @@ export const addListing = (listing) => async (dispatch) => {
     formData.append("price", price);
     formData.append("potSize", potSize);
     formData.append("stockQty", stockQty);
-    formData.append("guideId", guideId);
 
-    if (image) {
-        formData.append("image", image)
-        formData.append("imageable_id", listing.id)
-        formData.append("imageable_type", "Listing")
+    formData.append("image", image)
+    formData.append("imageable_id", listing.id)
+    formData.append("imageable_type", "Listing")
+    if (guideId >= 1) {
+        formData.append("guideId", guideId);
     }
 
     try {

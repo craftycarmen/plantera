@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { addListing, loadOneListing } from '../../store/listings';
+import { addListing } from '../../store/listings';
 // import { Audio } from 'react-loader-spinner'
 
 function CreateListingForm() {
@@ -158,6 +158,18 @@ function CreateListingForm() {
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
                 <div className='inputContainer'>
                     <input
+                        type="file"
+                        accept=".jpg, .jpeg, .png"
+                        // multiple
+                        onChange={updateFile}
+                        id='image'
+                    />
+                    <label htmlFor='image' className='floating-label'>Image*</label>
+                </div>
+                <div className='error'>{errors.image &&
+                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                <div className='inputContainer'>
+                    <input
                         type='number'
                         step='1'
                         min='1'
@@ -168,15 +180,6 @@ function CreateListingForm() {
                     />
                     <label htmlFor='guideId' className='floating-label'>Guide ID</label>
                 </div>
-                <div className='inputContainer'>
-                    <input
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        multiple
-                        onChange={updateFile} />
-                </div>
-                <div className='error'>{errors.image &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
                 <button
                     type='submit'
                     disabled={!!Object.values(errors).length}

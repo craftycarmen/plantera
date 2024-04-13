@@ -67,22 +67,19 @@ export const addListing = (listing) => async (dispatch) => {
     }
 }
 
-export const addImage = (post) => async (dispatch) => {
-
-    const res = await csrfFetch('/api/images/', {
-        method: 'POST',
-        body: post
+export const addImage = (images, userId) => async (dispatch) => {
+    const formData = new FormData();
+    Array.from(images).forEach(image => formData.append("images", image));
+    const response = await csrfFetch(`/api/images/${userId}`, {
+        method: "POST",
+        body: formData
     });
-
-    if (res.ok) {
-        const post = await res.json();
-        dispatch(createListingImage(post));
-        return post;
-    } else {
-        const errors = await res.json();
-        return errors;
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(receiveImages(data));
     }
-}
+    return response;
+};
 
 const listingsReducer = (state = {}, action) => {
     switch (action.type) {

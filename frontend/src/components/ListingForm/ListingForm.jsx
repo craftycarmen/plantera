@@ -200,6 +200,8 @@ function ListingForm({ listing, formType }) {
                 <div className='inputContainer'>
                     <input
                         type="file"
+                        accept=".jpg, .jpeg, .png"
+                        multiple
                         onChange={updateFile} />
                 </div>
                 <div className='error'>{errors.image &&

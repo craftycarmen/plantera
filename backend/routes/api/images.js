@@ -14,10 +14,10 @@ const router = express.Router();
 // );
 
 router.post('/:imageId', multipleMulterUpload("images"), async (req, res) => {
-    const { imageId, imageableType } = req.params;
+    const { imageId, imageableId, imageableType } = req.params;
     const keys = await multipleFilesUpload({ files: req.files });
     const images = await Promise.all(
-        keys.map(key => Image.create({ key, imageId, imageableType }))
+        keys.map(key => Image.create({ key, imageId, imageableId, imageableType }))
     );
     const imageUrls = images.map(image => retrievePrivateFile(image.key));
     return res.json(imageUrls);

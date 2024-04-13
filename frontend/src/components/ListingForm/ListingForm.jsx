@@ -58,11 +58,11 @@ function ListingForm({ listing, formType }) {
         if (price && price <= 0) errs.price = 'Price must be greater than $0';
         if (potSize && potSize < 2) errs.potSize = 'Pot size must be 2 inches or greater';
         if (stockQty && stockQty <= 0) errs.stockQty = 'Stock quantity must be greater than 0';
-        // if (!image && formType === 'Create Listing') errs.image = "Image is required."
+        if (createForm && !image) errs.image = ""
         // if (guideId && guideId > 10) errs.imag = "Guide is invalid"
 
         setErrors(errs);
-    }, [plantName, description, price, potSize, stockQty, image, guideId])
+    }, [plantName, description, price, potSize, stockQty, createForm, image])
 
 
     const handleSubmit = async (e) => {
@@ -154,7 +154,7 @@ function ListingForm({ listing, formType }) {
                         placeholder=''
                         id='potSize'
                     />
-                    <label htmlFor='potSize' className='floating-label'>Pot Size*</label>
+                    <label htmlFor='potSize' className='floating-label'>Pot Size (inches)*</label>
                 </div>
                 <div className='error'>{errors.potSize &&
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.potSize}</>}</div>
@@ -172,18 +172,21 @@ function ListingForm({ listing, formType }) {
                 </div>
                 <div className='error'>{errors.stockQty &&
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        // multiple
-                        onChange={updateFile}
-                        id='image'
-                    />
-                    <label htmlFor='image' className='floating-label'>Image*</label>
-                </div>
-                <div className='error'>{errors.image &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                {createForm &&
+                    <>
+                        <div className='inputContainer'>
+                            <input
+                                type="file"
+                                accept=".jpg, .jpeg, .png"
+                                // multiple
+                                onChange={updateFile}
+                                id='image'
+                            />
+                            <label htmlFor='image' className='floating-label'>Image*</label>
+                        </div>
+                        <div className='error'>{errors.image &&
+                            <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                    </>}
                 <div className='inputContainer'>
                     <input
                         type='number'

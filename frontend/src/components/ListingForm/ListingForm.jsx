@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { addListing, loadOneListing } from '../../store/listings';
+import { addListing, loadOneListing } from '../../store/listings';
 import { Audio } from 'react-loader-spinner'
 
 function ListingForm({ listing, formType }) {
@@ -72,157 +73,171 @@ function ListingForm({ listing, formType }) {
             guideId
         }
 
-        if (createForm) {
-            const newListing = await dispatch(addListing(listing))
-            listing = newListing
-
-            const listingId = listing.id;
-
-            // const formData = new FormData();
-            // formData.append("image", image);
-            // formData.append("imageable_id", listingId);
-            // formData.append("imageable_type", "Listing");
-
-            // setImageLoading(true);
-
-            // await dispatch(addImage(formData))
-            //     .then(() => {
-            //         dispatch(loadOneListing(listingId))
-            //             .then(() => navigate(`/listings/${listingId}`))
-            //     }).catch((error) => {
-            //         console.error("Error uploading image:", error);
-            //         setImageLoading(false);
-            //     })
-        }
-
-        // if (formType === 'Create Listing') {
-        //     const newListing = await dispatch(addListing(listing));
+        // if (createForm) {
+        //     const newListing = await dispatch(addListing(listing))
         //     listing = newListing
-        // }
-        // else if (formType === 'Update Listing') {
-        //     const updatedListing = await dispatch(updateListing(listing));
-        // listing = updatedListing
-        // }
 
-        if (listing.errors) {
-            setErrors(listing.errors);
-        } else {
-            navigate(`/listings/${listing.id}`)
-        }
-        // if (formType === 'Add Listing') {
         //     const listingId = listing.id;
 
+        // const formData = new FormData();
+        // formData.append("image", image);
+        // formData.append("imageable_id", listingId);
+        // formData.append("imageable_type", "Listing");
+        //     const formData = new FormData();
+        //     formData.append("image", image);
+        //     formData.append("imageable_id", listingId);
+        //     formData.append("imageable_type", "Listing");
 
-        // }
+        // setImageLoading(true);
+        //     setImageLoading(true);
+
+        // await dispatch(addImage(formData))
+        //     .then(() => {
+        //         dispatch(loadOneListing(listingId))
+        //             .then(() => navigate(`/listings/${listingId}`))
+        //     }).catch((error) => {
+        //         console.error("Error uploading image:", error);
+        //         setImageLoading(false);
+        //     })
     }
+    //     await dispatch(addImage(formData))
+    //         .then(() => {
+    //             dispatch(loadOneListing(listingId))
+    //                 .then(() => navigate(`/listings/${listingId}`))
+    //         }).catch((error) => {
+    //             console.error("Error uploading image:", error);
+    //             setImageLoading(false);
+    //         })
+    // }
 
-    return (sessionUser &&
-        <>
-            <form onSubmit={handleSubmit}>
-                <h1>{formType}</h1>
-                <div className='inputContainer'>
-                    <input
-                        type='text'
-                        value={plantName}
-                        onChange={updatePlantName}
-                        placeholder=''
-                        id='plantName'
-                    />
-                    <label htmlFor='plantName' className='floating-label'>Plant Name*</label>
-                </div>
-                <div className='error'>{errors.plantName &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.plantName}</>}</div>
-                <div className='inputContainer'>
-                    <textarea
-                        value={description}
-                        onChange={updateDescription}
-                        placeholder=''
-                        id='description'
-                    />
-                    <label htmlFor='description' className='floating-label'>Description*</label>
-                </div>
-                <div className='error'>{errors.description &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.description}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='0.01'
-                        min='1'
-                        value={price}
-                        onChange={updatePrice}
-                        placeholder=''
-                        id='price'
-                    />
-                    <label htmlFor='price' className='floating-label'>Price*</label>
-                </div>
-                <div className='error'>{errors.price &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.price}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='0.25'
-                        min='2'
-                        value={potSize}
-                        onChange={updatePotSize}
-                        placeholder=''
-                        id='potSize'
-                    />
-                    <label htmlFor='potSize' className='floating-label'>Pot Size*</label>
-                </div>
-                <div className='error'>{errors.potSize &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.potSize}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='1'
-                        min='1'
-                        value={stockQty}
-                        onChange={updateStockQty}
-                        placeholder=''
-                        id='stockQty'
-                    />
-                    <label htmlFor='stockQty' className='floating-label'>Stock Quantity*</label>
-                </div>
-                <div className='error'>{errors.stockQty &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='1'
-                        min='1'
-                        value={guideId}
-                        onChange={updateGuideId}
-                        placeholder=''
-                        id='guideId'
-                    />
-                    <label htmlFor='guideId' className='floating-label'>Guide ID</label>
-                </div>
-                <div className='inputContainer'>
-                    <input
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        multiple
-                        onChange={updateFile} />
-                </div>
-                <div className='error'>{errors.image &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
-                {(imageLoading) && <Audio
-                    height="80"
-                    width="80"
-                    radius="9"
-                    color="green"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle
-                    wrapperClass
-                />}
-                <button
-                    type='submit'
-                    disabled={!!Object.values(errors).length}
-                >
-                    {formType}
-                </button>
-            </form>
-        </>)
+    // if (formType === 'Create Listing') {
+    //     const newListing = await dispatch(addListing(listing));
+    //     listing = newListing
+    // }
+    // else if (formType === 'Update Listing') {
+    //     const updatedListing = await dispatch(updateListing(listing));
+    // listing = updatedListing
+    // }
+
+    if (listing.errors) {
+        setErrors(listing.errors);
+    } else {
+        navigate(`/listings/${listing.id}`)
+    }
+    // if (formType === 'Add Listing') {
+    //     const listingId = listing.id;
+
+
+    // }
+}
+
+return (sessionUser &&
+    <>
+        <form onSubmit={handleSubmit}>
+            <h1>{formType}</h1>
+            <div className='inputContainer'>
+                <input
+                    type='text'
+                    value={plantName}
+                    onChange={updatePlantName}
+                    placeholder=''
+                    id='plantName'
+                />
+                <label htmlFor='plantName' className='floating-label'>Plant Name*</label>
+            </div>
+            <div className='error'>{errors.plantName &&
+                <><i className="fa-solid fa-circle-exclamation" /> {errors.plantName}</>}</div>
+            <div className='inputContainer'>
+                <textarea
+                    value={description}
+                    onChange={updateDescription}
+                    placeholder=''
+                    id='description'
+                />
+                <label htmlFor='description' className='floating-label'>Description*</label>
+            </div>
+            <div className='error'>{errors.description &&
+                <><i className="fa-solid fa-circle-exclamation" /> {errors.description}</>}</div>
+            <div className='inputContainer'>
+                <input
+                    type='number'
+                    step='0.01'
+                    min='1'
+                    value={price}
+                    onChange={updatePrice}
+                    placeholder=''
+                    id='price'
+                />
+                <label htmlFor='price' className='floating-label'>Price*</label>
+            </div>
+            <div className='error'>{errors.price &&
+                <><i className="fa-solid fa-circle-exclamation" /> {errors.price}</>}</div>
+            <div className='inputContainer'>
+                <input
+                    type='number'
+                    step='0.25'
+                    min='2'
+                    value={potSize}
+                    onChange={updatePotSize}
+                    placeholder=''
+                    id='potSize'
+                />
+                <label htmlFor='potSize' className='floating-label'>Pot Size*</label>
+            </div>
+            <div className='error'>{errors.potSize &&
+                <><i className="fa-solid fa-circle-exclamation" /> {errors.potSize}</>}</div>
+            <div className='inputContainer'>
+                <input
+                    type='number'
+                    step='1'
+                    min='1'
+                    value={stockQty}
+                    onChange={updateStockQty}
+                    placeholder=''
+                    id='stockQty'
+                />
+                <label htmlFor='stockQty' className='floating-label'>Stock Quantity*</label>
+            </div>
+            <div className='error'>{errors.stockQty &&
+                <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
+            <div className='inputContainer'>
+                <input
+                    type='number'
+                    step='1'
+                    min='1'
+                    value={guideId}
+                    onChange={updateGuideId}
+                    placeholder=''
+                    id='guideId'
+                />
+                <label htmlFor='guideId' className='floating-label'>Guide ID</label>
+            </div>
+            <div className='inputContainer'>
+                <input
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    multiple
+                    onChange={updateFile} />
+            </div>
+            <div className='error'>{errors.image &&
+                <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+            {(imageLoading) && <Audio
+                height="80"
+                width="80"
+                radius="9"
+                color="green"
+                ariaLabel="three-dots-loading"
+                wrapperStyle
+                wrapperClass
+            />}
+            <button
+                type='submit'
+                disabled={!!Object.values(errors).length}
+            >
+                {formType}
+            </button>
+        </form>
+    </>)
 
 }
 

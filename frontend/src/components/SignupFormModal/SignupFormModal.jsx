@@ -20,14 +20,14 @@ function SignupFormModal() {
     // const [shopDescription, setShopDescription] = useState("");
     // const [paymentMethod, setPaymentMethod] = useState("");
     // const [paymentDetails, setPaymentDetails] = useState("");
-    // const [image, setImage] = useState("")
+    const [image, setImage] = useState("")
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
-    // const updateFile = e => {
-    //     const file = e.target.files[0];
-    //     if (file) setImage(file);
-    // };
+    const updateFile = e => {
+        const file = e.target.files[0];
+        if (file) setImage(file);
+    };
 
     // const banks = ['Bank of Americano', 'Pursuit', 'Fells Wargo']
 
@@ -63,7 +63,7 @@ function SignupFormModal() {
                     // bio,
                     // favoritePlant,
                     accountType,
-                    // image
+                    image
                     // shopDescription,
                     // paymentMethod,
                     // paymentDetails
@@ -250,10 +250,10 @@ function SignupFormModal() {
                     <div className="error">{errors.paymentDetails &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
                 </div> */}
-                {/* <label>
+                <label>
                     Avatar
                     <input type="file" onChange={updateFile} />
-                </label> */}
+                </label>
                 <div>
                     <button style={{ marginTop: "15px" }}
                         disabled={Object.values(errors).length}

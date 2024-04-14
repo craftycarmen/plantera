@@ -60,27 +60,31 @@ function ListingPage() {
                     <p className="price">${listing.price}</p>
                     <p>{listing.description}</p>
                     <p>Pot Size: {listing.potSize}&ldquo;</p>
-                    <form onSubmit={handleSubmit}>
+                    {listing.stockQty && listing.stockQty > 0 ? (
+                        <form onSubmit={handleSubmit}>
 
-                        <div className="quantityContainer">
-                            <span className="qtylabel">Quantity:</span>
-                            <div className="quantityInput">
-                                <button onClick={addQty}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
-                                <input
-                                    className="inputBox"
-                                    type="number" step="1"
-                                    min="1"
-                                    max={listing.stockQty}
-                                    value={quantity}
-                                    name="quantity"
-                                    onChange={handleQty} />
+                            <div className="quantityContainer">
+                                <span className="qtylabel">Quantity:</span>
+                                <div className="quantityInput">
+                                    <button onClick={addQty}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                    <input
+                                        className="inputBox"
+                                        type="number" step="1"
+                                        min="1"
+                                        max={listing.stockQty}
+                                        value={quantity}
+                                        name="quantity"
+                                        onChange={handleQty} />
 
-                                <button onClick={removeQty}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                    <button onClick={removeQty}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
 
+                                </div>
                             </div>
-                        </div>
-                        <div><button className="quantityButton" type="submit">Add to Cart</button></div>
-                    </form>
+                            <div><button className="quantityButton" type="submit">Add to Cart</button></div>
+                        </form>
+                    ) : (<div>SOLD OUT</div>)
+                    }
+
                 </div>
             </div>
             <div>

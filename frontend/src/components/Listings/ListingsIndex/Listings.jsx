@@ -6,11 +6,8 @@ import { Link } from "react-router-dom";
 
 function Listings() {
     const dispatch = useDispatch();
-    const listings = Object.values(useSelector((state) => state.listings))
-    listings.map((listing) => {
-        console.log(listing.ListingImages)
+    const listings = Object.values(useSelector((state) => state.listings)).filter(listing => listing.stockQty > 0)
 
-    })
     useEffect(() => {
         dispatch(fetchAllListings())
     }, [dispatch])

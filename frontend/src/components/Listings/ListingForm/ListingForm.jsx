@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { addListing, editListing, fetchOneListing } from '../../store/listings';
+import { addListing, editListing, fetchOneListing } from '../../../store/listings';
 import { Audio } from 'react-loader-spinner'
 
 function ListingForm({ listing, formType }) {

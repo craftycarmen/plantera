@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { fetchOneListing } from "../../store/listings";
+import { fetchOneListing } from "../../../store/listings";
 import { useEffect, useState } from "react";
 import './ListingPage.css';
 import LinkedGuides from "./LinkedGuides";

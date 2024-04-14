@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import Listings from './components/Listings';
-import ListingPage from './components/ListingPage';
-import CreateListingForm from './components/ListingForm/CreateListingForm';
+import Listings from './components/Listings/ListingsIndex';
+import ListingPage from './components/Listings/ListingPage';
+import CreateListingForm from './components/Listings/ListingForm/CreateListingForm';
 import * as sessionActions from './store/session';
-import UpdateListingForm from './components/ListingForm/UpdateListingForm';
+import UpdateListingForm from './components/Listings/ListingForm/UpdateListingForm';
 
 function Layout() {
   const dispatch = useDispatch();

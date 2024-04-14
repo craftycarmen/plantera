@@ -7,6 +7,7 @@ import ListingPage from './components/Listings/ListingPage';
 import CreateListingForm from './components/Listings/ListingForm/CreateListingForm';
 import * as sessionActions from './store/session';
 import UpdateListingForm from './components/Listings/ListingForm/UpdateListingForm';
+import ManageListings from './components/listings/ManageListings';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
         element: <Listings />
       },
       {
+        path: '/listings/current',
+        element: <ManageListings />
+      },
+      {
         path: '/listings/:listingId',
         element: <ListingPage />
       },
@@ -49,7 +54,7 @@ const router = createBrowserRouter([
       {
         path: '/listings/:listingId/edit',
         element: <UpdateListingForm />
-      }
+      },
     ]
   }
 ]);

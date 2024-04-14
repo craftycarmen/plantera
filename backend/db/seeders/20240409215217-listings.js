@@ -33,6 +33,14 @@ const listingsList = [
     price: 5,
     potSize: 4,
     stockQty: 5
+  },
+  {
+    sellerId: 1,
+    plantName: 'Rhaphidophora Tetresperma',
+    description: 'My first plant! It has grown a whole bunch, so I\'ve some to share with you all! This is an easy plant, too.',
+    price: 15,
+    potSize: 4,
+    stockQty: 0
   }
 ]
 /** @type {import('sequelize-cli').Migration} */

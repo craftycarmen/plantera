@@ -44,7 +44,7 @@ const imagesList = [
   {
     imageableId: 4,
     imageableType: 'Listing',
-    url: 'https://weareplantlovers.com/cdn/shop/files/99022EDA-F5BF-46EE-A167-099FD93B4BCF.jpg',
+    url: 'https://www.epicgardening.com/wp-content/uploads/2020/02/Rhaphidophora-tetrasperma-1200x667.jpg',
   },
   {
     imageableId: 1,

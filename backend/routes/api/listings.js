@@ -34,7 +34,6 @@ router.get('/', async (req, res) => {
     });
 
     listingsList.forEach(listing => {
-        console.log(listing.Guides);
         if (listing.Guides.length === 0) {
             listing.Guides = null
         }
@@ -87,7 +86,6 @@ router.get('/current', requireAuth, async (req, res) => {
         });
 
         listingsList.forEach(listing => {
-            console.log(listing.Guides);
             if (listing.Guides.length === 0) {
                 listing.Guides = null
             }

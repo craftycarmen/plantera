@@ -1,5 +1,5 @@
 export const soldOut = (qty) => {
-    if (qty === 1) {
+    if (qty === 0) {
         return "Sold Out"
     }
 }

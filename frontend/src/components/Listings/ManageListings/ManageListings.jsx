@@ -3,6 +3,7 @@ import { fetchOwnedListings } from "../../../store/listings";
 import { useEffect } from "react";
 import DeleteListingModal from "../DeleteListingModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import { Link } from "react-router-dom";
 
 function ManageListings() {
     const dispatch = useDispatch();
@@ -22,13 +23,16 @@ function ManageListings() {
                     {listings.map(listing => (
                         <div key={listing.id}>
                             {listing.plantName}
+                            <div>
+                                <Link to={`/listings/${listing.id}/edit`}>Edit</Link>
+                            </div>
                             <OpenModalMenuItem
                                 itemText={<span>Delete</span>}
                                 modalComponent={<DeleteListingModal listingId={listing.id} />}
                             />
                         </div>
                     ))}
-                </div>}
+                </div >}
         </>
     )
 }

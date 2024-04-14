@@ -20,9 +20,13 @@ function ManageListings() {
             <h1>Manage Your Listings</h1>
             {listings &&
                 <div>
+                    <h2>Active Listings</h2>
                     {listings.map(listing => (
+                        listing.stockQty > 4 &&
                         <div key={listing.id}>
+
                             {listing.plantName}
+                            <div>Quantity: {listing.stockQty}</div>
                             <div>
                                 <Link to={`/listings/${listing.id}/edit`}>Edit</Link>
                             </div>
@@ -32,7 +36,22 @@ function ManageListings() {
                             />
                         </div>
                     ))}
-                </div >}
+                    <h2>Sold Listings</h2>
+                    {listings.map(listing => (
+                        listing.stockQty === 1 &&
+                        <div key={listing.id}>
+
+                            {listing.plantName}
+                            <div>Quantity: {listing.stockQty}</div>
+                            <div>
+                                <Link to={`/listings/${listing.id}/edit`}>Edit</Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+            }
+
         </>
     )
 }

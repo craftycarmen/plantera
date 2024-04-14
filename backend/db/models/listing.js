@@ -124,10 +124,10 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           msg: 'Stock quantity is required'
         },
-        min: {
-          args: [1],
-          msg: 'Stock quantity must be greater than 0'
-        },
+        // min: {
+        //   args: [1],
+        //   msg: 'Stock quantity must be greater than 0'
+        // },
         isInt: true
       }
     },

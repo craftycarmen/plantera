@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import DeleteListingModal from "../DeleteListingModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { Link } from "react-router-dom";
+import { soldOut } from "../../../../utils";
 
 function ManageListings() {
     const dispatch = useDispatch();
@@ -42,10 +43,7 @@ function ManageListings() {
                         <div key={listing.id}>
 
                             {listing.plantName}
-                            <div>Quantity: {listing.stockQty}</div>
-                            <div>
-                                <Link to={`/listings/${listing.id}/edit`}>Edit</Link>
-                            </div>
+                            <div>Quantity: {listing.stockQty && soldOut(listing.stockQty)}</div>
                         </div>
                     ))}
                 </div>

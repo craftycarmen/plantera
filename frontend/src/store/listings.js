@@ -5,6 +5,7 @@ const LOAD_ONE_LISTING = 'listings/LOAD_ONE_LISTING';
 const CREATE_LISTING = 'listings/CREATE_LISTING';
 // const CREATE_LISTING_IMAGE = 'listings/CREATE_LISTING_IMAGE';
 const UPDATE_LISTING = 'listings/UPDATE_LISTING';
+const DELETE_LISTING = 'listings/DELETE_LISTING';
 
 export const loadAllListings = (listings) => ({
     type: LOAD_ALL_LISTINGS,
@@ -30,6 +31,11 @@ export const updateListing = (listing) => ({
     type: UPDATE_LISTING,
     listing
 });
+
+export const deleteListing = (listingId) => ({
+    type: DELETE_LISTING,
+    listingId
+})
 
 export const fetchAllListings = () => async (dispatch) => {
     const res = await fetch('/api/listings');
@@ -79,24 +85,16 @@ export const addListing = (listing) => async (dispatch) => {
             body: formData
         });
 
-        console.log("RES", res);
         if (!res.ok) {
             throw new Error('Failed to create listing');
         }
 
-        // Extract the newly created listing data from the response
         const data = await res.json();
-        // const newListing = data.listing; // Assuming the response contains the listing object
-
-        console.log("DATA", data);
-        // console.log("NEWLISTING", newListing);
-        // Dispatch action with the newly created listing including the ID
         dispatch(createListing(data));
-
-        return data; // Return the response if needed
+        return data;
     } catch (error) {
         console.error('Error creating listing:', error);
-        throw error; // Rethrow the error for further handling
+        throw error;
     }
 };
 
@@ -114,6 +112,16 @@ export const editListing = (listing) => async (dispatch) => {
     } else {
         const errors = await res.json();
         return errors;
+    }
+}
+
+export const removeListing = (listingId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/listings/${listingId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        dispatch(deleteListing(listingId))
     }
 }
 
@@ -139,6 +147,12 @@ const listingsReducer = (state = {}, action) => {
 
         case UPDATE_LISTING: {
             return { ...state, [action.listing.id]: action.listing }
+        }
+
+        case DELETE_LISTING: {
+            const newState = { ...state };
+            delete newState[action.listingId];
+            return newState
         }
 
         // case CREATE_LISTING_IMAGE: {

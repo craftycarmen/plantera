@@ -2,6 +2,7 @@ const router = require("express").Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const listingsRouter = require('./listings.js');
+const cartRouter = require('./cart.js');
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -14,5 +15,7 @@ router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 
 router.use('/listings', listingsRouter);
+
+router.use('/cart', cartRouter);
 
 module.exports = router;

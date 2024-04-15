@@ -1,6 +1,9 @@
 const AWS = require("aws-sdk");
 const multer = require("multer");
-AWS.config.loadFromPath('./AwsConfig.json');
+if (process.env.NODE_ENV === 'development') {
+    AWS.config.loadFromPath('./AwsConfig.json');
+}
+
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 const NAME_OF_BUCKET = "plantera"; // <-- Use your bucket name here
 

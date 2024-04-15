@@ -5,6 +5,7 @@ import DeleteListingModal from "../DeleteListingModal";
 import OpenModalButton from "../../OpenModalButton";
 import { Link } from "react-router-dom";
 import './ManageListings.css';
+import ErrorHandling from "../../ErrorHandling";
 
 function ManageListings() {
     const dispatch = useDispatch();
@@ -20,79 +21,74 @@ function ManageListings() {
     }, [dispatch])
 
     return (
-        !sessionUser ? (
-            <>
-                <div>To access this page, you must log in or sign up first.</div>
-                <img src='../../ohno.png' />
-            </>
-        ) : (
-            <>
-                <h1>Manage Your Listings</h1>
-                <div className="currentListings"><Link to={`/listings/new`}><button>Create New Listing</button></Link></div>
+        <>
+            <h1>Manage Your Listings</h1>
+            {!sessionUser ? (
+                <ErrorHandling />
+            ) : (
+                <>
+                    <div className="currentListings"><Link to={`/listings/new`}><button>Create New Listing</button></Link></div>
 
-                <h2>Active Listings</h2>
-                <div className="listingsContainer">
-                    {listings && activeListings?.length === 0 ? (
-                        <div>No active listings!</div>
-                    ) : (
-                        activeListings.map(listing => (
-                            <div className="currentListings" key={listing.id}>
-                                <Link to={`/listings/${listing.id}`}>
-                                    <div className="listingImageContainer">
-                                        <img
-                                            className="listingImage"
-                                            src={listing.ListingImages[0].url} />
-                                    </div>
+                    <h2>Active Listings</h2>
+                    <div className="listingsContainer">
+                        {listings && activeListings?.length === 0 ? (
+                            <div>No active listings!</div>
+                        ) : (
+                            activeListings.map(listing => (
+                                <div className="currentListings" key={listing.id}>
+                                    <Link to={`/listings/${listing.id}`}>
+                                        <div className="listingImageContainer">
+                                            <img
+                                                className="listingImage"
+                                                src={listing.ListingImages[0].url} />
+                                        </div>
+                                        <div className="listingInfo">
+                                            <h3>{listing.plantName}</h3>
+                                            <span>${listing.price}</span>
+                                        </div>
+                                    </Link>
                                     <div className="listingInfo">
-                                        <h3>{listing.plantName}</h3>
-                                        <span>${listing.price}</span>
-                                    </div>
-                                </Link>
-                                <div className="listingInfo">
-                                    <div>In Stock: {listing.stockQty}</div>
-                                    <div>
-                                        <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>&nbsp;
-                                        <OpenModalButton
-                                            buttonText="Delete"
-                                            modalComponent={<DeleteListingModal listingId={listing.id} />}
-                                        />
+                                        <div>In Stock: {listing.stockQty}</div>
+                                        <div>
+                                            <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>&nbsp;
+                                            <OpenModalButton
+                                                buttonText="Delete"
+                                                modalComponent={<DeleteListingModal listingId={listing.id} />}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
-                    )
-                    }
-                </div>
+                            ))
+                        )
+                        }
+                    </div>
 
-                <h2>Sold Listings</h2>
-                <div className="listingsContainer">
-                    {listings && soldListings?.length === 0 ? (
-                        <div>No sold listings!</div>
-                    ) : (
-                        soldListings.map(listing => (
-                            <div className="currentListings" key={listing.id}>
-                                <Link to={`/listings/${listing.id}`}>
-                                    <div className="listingImageContainer soldOutImage">
-                                        <img
-                                            className="listingImage"
-                                            src={listing.ListingImages[0].url} />
-                                    </div>
-                                    <div className="listingInfo">
-                                        <h2>{listing.plantName}</h2>
-                                        <span>${listing.price}</span>
-                                    </div>
-                                </Link>
-                            </div>
-                        ))
-                    )
-                    }
-                </div>
-
-
-
-
-            </>
-        )
+                    <h2>Sold Listings</h2>
+                    <div className="listingsContainer">
+                        {listings && soldListings?.length === 0 ? (
+                            <div>No sold listings!</div>
+                        ) : (
+                            soldListings.map(listing => (
+                                <div className="currentListings" key={listing.id}>
+                                    <Link to={`/listings/${listing.id}`}>
+                                        <div className="listingImageContainer soldOutImage">
+                                            <img
+                                                className="listingImage"
+                                                src={listing.ListingImages[0].url} />
+                                        </div>
+                                        <div className="listingInfo">
+                                            <h2>{listing.plantName}</h2>
+                                            <span>${listing.price}</span>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))
+                        )
+                        }
+                    </div>
+                </>
+            )}
+        </>
     )
 }
 

@@ -1,9 +1,28 @@
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
+
 function ErrorHandling() {
     return (
-        <>
-            <div>To access this page, you must log in or sign up for Plantera.</div>
-            <div><img src='../../ohno.png' /></div>
-        </>
+        <section className="errorHandlingContainer">
+            <div>To access this page, you must <OpenModalMenuItem
+                itemText="log in"
+                modalComponent={<LoginFormModal />}
+            /> or <OpenModalMenuItem
+                    itemText="sign up"
+                    modalComponent={<SignupFormModal />}
+                /> for Plantera.</div>
+            <br />
+            <div><img
+                style={
+                    {
+                        display: 'block',
+                        width: '200px',
+                        margin: 'auto'
+                    }
+                }
+                src='../../ohno.png' /></div>
+        </section>
     )
 }
 

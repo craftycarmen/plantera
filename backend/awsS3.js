@@ -1,7 +1,16 @@
 const AWS = require("aws-sdk");
 const multer = require("multer");
+const config = {
+    apiVersion: "2006-03-01",
+    accessKeyId: process.env.S3_KEY,
+    accessSecretKey: process.env.S3_BUCKET,
+    region: "us-west-1"
+}
+
 if (process.env.NODE_ENV === 'development') {
     AWS.config.loadFromPath('./AwsConfig.json');
+} else {
+    AWS.config.update(config);
 }
 
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });

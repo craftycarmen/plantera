@@ -25,7 +25,7 @@ function ManageListings() {
             <h1>Manage Your Listings</h1>
             {!sessionUser ? (
                 <ErrorHandling />
-            ) : (
+            ) : (listings && activeListings && soldListings &&
                 <>
                     <div className="currentListings"><Link to={`/listings/new`}><button>Create New Listing</button></Link></div>
 

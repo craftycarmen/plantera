@@ -4,11 +4,7 @@ import SignupFormModal from '../SignupFormModal';
 
 function ErrorHandling() {
     return (
-<<<<<<< HEAD
-        <section style={{ marginTop: '35px' }}>
-=======
-        <section className="errorHandlingContainer">
->>>>>>> listings
+        <section style={{ marginTop: '20px' }}>
             <div>To access this page, you must <OpenModalMenuItem
                 itemText="log in"
                 modalComponent={<LoginFormModal />}

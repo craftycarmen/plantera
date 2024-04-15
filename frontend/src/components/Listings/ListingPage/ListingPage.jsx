@@ -15,17 +15,17 @@ function ListingPage() {
     ))
 
     let stockQty = listing?.stockQty || 1;
-    let [quantity, setQuantity] = useState(1)
+    let [cartQty, setCartQty] = useState(1)
 
     let addQty = () => {
-        if (quantity >= 1 && quantity < stockQty) {
-            setQuantity(prevQuantity => prevQuantity + 1)
+        if (cartQty >= 1 && cartQty < stockQty) {
+            setCartQty(prevCartQty => prevCartQty + 1)
         }
     }
 
     let removeQty = () => {
-        if (quantity > 1) {
-            setQuantity(prevQuantity => prevQuantity - 1)
+        if (cartQty > 1) {
+            setCartQty(prevCartQty => prevCartQty - 1)
         }
     }
 
@@ -41,12 +41,13 @@ function ListingPage() {
     const handleQty = (e) => {
         const newQty = parseInt(e.target.value);
         if (!isNaN(newQty) && newQty >= 1 && newQty <= stockQty) {
-            setQuantity(newQty);
+            setCartQty(newQty);
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
     }
 
     return (listing &&
@@ -72,8 +73,8 @@ function ListingPage() {
                                         type="number" step="1"
                                         min="1"
                                         max={listing.stockQty}
-                                        value={quantity}
-                                        name="quantity"
+                                        value={cartQty}
+                                        name="cartQty"
                                         onChange={handleQty} />
 
                                     <button onClick={removeQty}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>

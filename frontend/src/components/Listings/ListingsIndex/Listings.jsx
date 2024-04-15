@@ -27,7 +27,7 @@ function Listings() {
                                         className="listingImage"
                                         src={listing.ListingImages[0].url} />
                                 </div>
-                                <div className="listingNamePrice">
+                                <div className="listingInfo">
                                     <h2>{listing.plantName}</h2>
                                     <span>${listing.price}</span>
                                 </div>

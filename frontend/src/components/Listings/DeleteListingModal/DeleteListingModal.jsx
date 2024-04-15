@@ -14,12 +14,13 @@ function DeleteListingModal({ listingId }) {
     return (
         <section className="modal">
             <h1>Confirm Delete</h1>
-            <p>Are you sure you want to dlete this listing?</p>
+            <p>Are you sure you want to delete this listing?</p>
             <button
                 id="yes"
                 onClick={yes}>
                 Yes, Delete Listing
             </button>
+            <br />
             <button
                 id="no"
                 onClick={closeModal}>

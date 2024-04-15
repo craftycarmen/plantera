@@ -17,13 +17,13 @@
     border-radius: 5px;
 }
 
-.listingNamePrice {
+.listingInfo {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.listingNamePrice span {
+.listingInfo span {
     font-size: 16px;
 }
 

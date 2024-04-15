@@ -110,7 +110,7 @@ function ListingForm({ listing, formType }) {
                 <ErrorHandling />
             ) : (
                 <form onSubmit={handleSubmit}>
-                    <div className='inputContainer'>
+                    <div className='inputContainer' style={{ marginTop: '20px' }}>
                         <input
                             type='text'
                             value={plantName}

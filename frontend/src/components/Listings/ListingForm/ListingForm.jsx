@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { addListing, editListing, fetchOneListing } from '../../../store/listings';
-import { Audio } from 'react-loader-spinner'
+import { addListing, editListing } from '../../../store/listings';
 
 function ListingForm({ listing, formType }) {
     const dispatch = useDispatch();
@@ -35,14 +34,14 @@ function ListingForm({ listing, formType }) {
     const createForm = formType === 'Create Listing';
     const updateForm = formType === 'Update Listing';
 
-    useEffect(() => {
-        const runDispatches = async () => {
-            dispatch(fetchOneListing(listingId)
-            );
+    // useEffect(() => {
+    //     const runDispatches = async () => {
+    //         dispatch(fetchOneListing(listingId)
+    //         );
 
-        };
-        runDispatches();
-    }, [dispatch, listingId])
+    //     };
+    //     runDispatches();
+    // }, [dispatch, listingId])
 
     useEffect(() => {
 

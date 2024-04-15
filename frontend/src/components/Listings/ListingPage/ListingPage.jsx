@@ -5,14 +5,15 @@ import { useEffect, useState } from "react";
 import './ListingPage.css';
 import LinkedGuides from "./LinkedGuides";
 import MeetTheSeller from "./MeetTheSeller";
+import { addCart } from "../../../store/cart";
 
 function ListingPage() {
     const { listingId } = useParams();
     const dispatch = useDispatch();
 
-    const listing = useSelector(state => (
-        state.listings[listingId]
-    ))
+    const listing = useSelector(state => (state.listings[listingId]))
+
+    const sessionUser = useSelector(state => state.session.user);
 
     let stockQty = listing?.stockQty || 1;
     let [cartQty, setCartQty] = useState(1)
@@ -48,6 +49,11 @@ function ListingPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        const cart = {
+            buyerId: sessionUser.id
+        }
+
+        return dispatch(addCart({}))
     }
 
     return (listing &&

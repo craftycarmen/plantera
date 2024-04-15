@@ -1,17 +1,18 @@
 const AWS = require("aws-sdk");
 const multer = require("multer");
+
 const config = {
     apiVersion: "2006-03-01",
-    accessKeyId: process.env.S3_KEY,
-    accessSecretKey: process.env.S3_BUCKET,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    accessSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: "us-west-1"
 }
 
 if (process.env.NODE_ENV === 'development') {
     AWS.config.loadFromPath('./AwsConfig.json');
-} else {
-    AWS.config.update(config);
 }
+
+AWS.config.update(config);
 
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 const NAME_OF_BUCKET = "plantera"; // <-- Use your bucket name here

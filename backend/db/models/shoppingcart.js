@@ -30,12 +30,12 @@ module.exports = (sequelize, DataTypes) => {
   ShoppingCart.init({
     buyerId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Buyer ID is required'
-        }
-      }
+      allowNull: true,
+      // validate: {
+      //   notNull: {
+      //     msg: 'Buyer ID is required'
+      //   }
+      // }
     },
   }, {
     sequelize,

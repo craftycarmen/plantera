@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import './ListingPage.css';
 import LinkedGuides from "./LinkedGuides";
 import MeetTheSeller from "./MeetTheSeller";
-import { addCart } from "../../../store/cart";
+import { addCart, addItemToCart, fetchCart, fetchCartItems } from "../../../store/cart";
+import OpenModalButton from "../../OpenModalButton";
+import ShoppingCartModal from "../../Cart/CartModal";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -13,10 +15,27 @@ function ListingPage() {
 
     const listing = useSelector(state => (state.listings[listingId]))
 
-    const sessionUser = useSelector(state => state.session.user);
+    // const sessionUser = useSelector(state => state.session.user);
+
+    const cart = useSelector(state => state.cart)
+    console.log("CART", cart.cartId);
+    let [cartId, setCartId] = useState(JSON.parse(localStorage.getItem('cartId')) || null);
+    let [items, setItems] = useState(JSON.parse(localStorage.getItem('items')) || []);
+
+    useEffect(() => {
+        localStorage.setItem('cartId', JSON.stringify(cartId));
+        console.log(`saved items to cart ${cartId}`);
+    }, [cartId])
+
+    useEffect(() => {
+        localStorage.setItem('items', JSON.stringify(items));
+        console.log(`saved ${items.length} items to localstorage`);
+    }, [items, items.length])
 
     let stockQty = listing?.stockQty || 1;
     let [cartQty, setCartQty] = useState(1)
+
+    console.log("CARTID OUTSIDE", cartId)
 
     let addQty = () => {
         if (cartQty >= 1 && cartQty < stockQty) {
@@ -32,12 +51,18 @@ function ListingPage() {
 
     useEffect(() => {
         const runDispatches = async () => {
-            dispatch(fetchOneListing(listingId)
-            );
-
+            await dispatch(fetchOneListing(listingId));
+            if (cart.cartId)
+                dispatch(fetchCart(cart.cartId))
         };
         runDispatches();
-    }, [dispatch, listingId])
+    }, [dispatch, listingId, cart.cartId])
+
+    // useEffect(() => {
+    //     if (cart.id)
+    //         dispatch(fetchCart(cart.id))
+    // })
+
 
     const handleQty = (e) => {
         const newQty = parseInt(e.target.value);
@@ -46,15 +71,140 @@ function ListingPage() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        await handleAddToCart();
+        updateLocalStorage();
+    }
 
-        const cart = {
-            buyerId: sessionUser.id
+    const handleAddToCart = async () => {
+
+        let cartIdUpdated = false;
+
+        if (cartId === null) {
+            const res = await dispatch(addCart());
+
+            if (res) {
+                const newCartId = res.id;
+                localStorage.setItem('cartId', newCartId);
+                setCartId(newCartId);
+                cartIdUpdated = true;
+            } else {
+                console.error('Error creating cart:', res);
+                return;
+            }
+        } else {
+            cartIdUpdated = true
         }
 
-        return dispatch(addCart({}))
+        // Set cart ID in local storage before fetching the listing
+        // localStorage.setItem('cartId', cartId);
+
+        await dispatch(fetchOneListing(listingId));
+
+        // if (cart.cartId) {
+        //     dispatch(fetchCart(cart.cartId));
+        // }
+
+        // Fetch cart if cartId exists
+        if (cartIdUpdated) {
+            await dispatch(fetchCart(cartId));
+        }
+
+        const newCartItem = {
+            cartId: Number(cartId), // Ensure cartId is valid here
+            listingId: Number(listingId),
+            cartQty: Number(cartQty)
+        }
+
+        console.log("Dispatching CREATE_CART_ITEM action with newCartItem:", newCartItem);
+
+        // Ensure cartId is valid when making the POST request
+        await dispatch(addItemToCart(cartId, newCartItem))
+        console.log("CREATE_CART_ITEM action dispatched.");
+        await dispatch(fetchCartItems(cartId))
+
+        let updatedItems = JSON.parse(localStorage.getItem('items')) || [];
+        let existingItemIndex = updatedItems.findIndex(item => item.includes(`listingId: ${listingId}`));
+
+        if (existingItemIndex !== -1) {
+            updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${cartQty}`;
+        } else {
+            updatedItems.push(`listingId: ${listingId}; cartQty: ${cartQty}`);
+        }
+
+        localStorage.setItem('items', JSON.stringify(updatedItems));
+
+
+        // const updatedItems = [...items, `Listing ID: ${listingId}; Cart Qty: ${cartQty}`]
+        // setItems(updatedItems);
+        // localStorage.setItem('items', JSON.stringify(updatedItems))
+
+        return cartIdUpdated;
     }
+
+    const updateLocalStorage = () => {
+        let existingItemIndex = items.findIndex(item => item.includes(`listingId: ${listingId}`))
+
+        console.log("EXISTINGITEMINDEX", existingItemIndex);
+        if (existingItemIndex !== -1) {
+            let updatedItems = [...items]
+            updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${cartQty}`;
+            setItems(updatedItems)
+            localStorage.setItem('items', JSON.stringify(updatedItems));
+        } else {
+
+            const updatedItems = [...items, `listingId: ${listingId}; cartQty: ${cartQty}`]
+            setItems(updatedItems);
+            localStorage.setItem('items', JSON.stringify(updatedItems))
+        }
+    }
+
+    // if (cartIdStorage.length === 1) {
+    //     setCardIdStorage(cartIdStorage)
+    // }
+
+    // setItems([...items, `Listing ID: ${listingId}`])
+
+    // if (!cart.cartId) {
+    //     const res = await dispatch(addCart({ buyerId: sessionUser.id }))
+
+    //     if (res && res.id && res.buyerId) {
+    //         console.log("RES!", res)
+    //         const cartId = res.id
+
+    //         let newCartItem = {
+    //             cartId: cartId,
+    //             listingId: Number(listingId),
+    //             cartQty: cartQty
+    //         }
+
+
+    //         console.log("Dispatching CREATE_CART_ITEM action with newCartItem:", newCartItem);
+    //         await dispatch(addItemToCart(cartId, newCartItem))
+    //         console.log("CREATE_CART_ITEM action dispatched.");
+    //         await dispatch(fetchCartItems(cartId))
+    //     } else {
+    //         // Handle error case
+    //         console.error('Error creating cart:', res);
+    //     }
+
+    // } else {
+    //     let newCartItem = {
+    //         cartId: cart.cartId,
+    //         listingId: Number(listingId),
+    //         cartQty: cartQty
+    //     }
+
+    //     console.log("New Cart Item for Existing Cart:", newCartItem); //
+    //     console.log("Dispatching CREATE_CART_ITEM action with newCartItem IN EXISTING CARTS:", newCartItem);
+    //     await dispatch(addItemToCart(cart.cartId, newCartItem))
+    //     console.log("CREATE_CART_ITEM action IN EXISTING CARTS dispatched.");
+    //     await dispatch(fetchCartItems(cart.cartId))
+    // }
+
+
+
 
     return (listing &&
         <>
@@ -87,7 +237,13 @@ function ListingPage() {
 
                                 </div>
                             </div>
-                            <div><button className="quantityButton" type="submit">Add to Cart</button></div>
+                            <button type="submit">Add to Cart</button>
+                            <div>
+                                {/* <OpenModalButton
+                                    buttonText="Add to Cart"
+                                    modalComponent={<ShoppingCartModal listing={listing} cartQty={cartQty} />}
+                                /> */}
+                            </div>
                         </form>
                     ) : (<div>SOLD OUT</div>)
                     }

@@ -6,8 +6,6 @@ import './ListingPage.css';
 import LinkedGuides from "./LinkedGuides";
 import MeetTheSeller from "./MeetTheSeller";
 import { addCart, addItemToCart, fetchCart, fetchCartItems } from "../../../store/cart";
-import OpenModalButton from "../../OpenModalButton";
-import ShoppingCartModal from "../../Cart/CartModal";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -20,30 +18,32 @@ function ListingPage() {
     const cart = useSelector(state => state.cart)
     console.log("CART", cart.cartId);
     let [cartId, setCartId] = useState(JSON.parse(localStorage.getItem('cartId')) || null);
-    let [items, setItems] = useState(JSON.parse(localStorage.getItem('items')) || []);
+    // let [items, setItems] = useState(JSON.parse(localStorage.getItem('items')) || []);
 
     useEffect(() => {
         localStorage.setItem('cartId', JSON.stringify(cartId));
         console.log(`saved items to cart ${cartId}`);
     }, [cartId])
 
-    useEffect(() => {
-        localStorage.setItem('items', JSON.stringify(items));
-        console.log(`saved ${items.length} items to localstorage`);
-    }, [items, items.length])
+    // useEffect(() => {
+    //     localStorage.setItem('items', JSON.stringify(items));
+    //     console.log(`saved ${items.length} items to localstorage`);
+    // }, [items, items.length])
 
     let stockQty = listing?.stockQty || 1;
     let [cartQty, setCartQty] = useState(1)
 
     console.log("CARTID OUTSIDE", cartId)
 
-    let addQty = () => {
+    let addQty = (e) => {
+        e.preventDefault();
         if (cartQty >= 1 && cartQty < stockQty) {
             setCartQty(prevCartQty => prevCartQty + 1)
         }
     }
 
-    let removeQty = () => {
+    let removeQty = (e) => {
+        e.preventDefault();
         if (cartQty > 1) {
             setCartQty(prevCartQty => prevCartQty - 1)
         }
@@ -66,16 +66,12 @@ function ListingPage() {
 
     const handleQty = (e) => {
         const newQty = parseInt(e.target.value);
-        if (!isNaN(newQty) && newQty >= 1 && newQty <= stockQty) {
-            setCartQty(newQty);
-        }
+        // if (!isNaN(newQty) && newQty >= 1 && newQty <= stockQty) {
+        //     setCartQty(newQty);
+        // }
+        setCartQty(newQty > 1 ? newQty : 1)
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await handleAddToCart();
-        updateLocalStorage();
-    }
 
     const handleAddToCart = async () => {
 
@@ -94,7 +90,14 @@ function ListingPage() {
                 return;
             }
         } else {
-            cartIdUpdated = true
+            const currentCartId = localStorage.getItem('cartId');
+            if (currentCartId !== cartId) {
+                cartIdUpdated = true;
+            }
+        }
+
+        if (cartIdUpdated) {
+            await dispatch(fetchCart(cartId));
         }
 
         // Set cart ID in local storage before fetching the listing
@@ -107,9 +110,7 @@ function ListingPage() {
         // }
 
         // Fetch cart if cartId exists
-        if (cartIdUpdated) {
-            await dispatch(fetchCart(cartId));
-        }
+
 
         const newCartItem = {
             cartId: Number(cartId), // Ensure cartId is valid here
@@ -134,31 +135,33 @@ function ListingPage() {
         }
 
         localStorage.setItem('items', JSON.stringify(updatedItems));
+        // updateLocalStorage();
 
-
-        // const updatedItems = [...items, `Listing ID: ${listingId}; Cart Qty: ${cartQty}`]
-        // setItems(updatedItems);
-        // localStorage.setItem('items', JSON.stringify(updatedItems))
-
+        // // const updatedItems = [...items, `Listing ID: ${listingId}; Cart Qty: ${cartQty}`]
+        // // setItems(updatedItems);
+        // // localStorage.setItem('items', JSON.stringify(updatedItems))
+        // console.log("cartIdUpdated:", cartIdUpdated); // Add this console log
         return cartIdUpdated;
     }
 
-    const updateLocalStorage = () => {
-        let existingItemIndex = items.findIndex(item => item.includes(`listingId: ${listingId}`))
+    // const updateLocalStorage = () => {
+    //     if (cartId != null) {
+    //         let existingItemIndex = items.findIndex(item => item.includes(`listingId: ${listingId}`))
 
-        console.log("EXISTINGITEMINDEX", existingItemIndex);
-        if (existingItemIndex !== -1) {
-            let updatedItems = [...items]
-            updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${cartQty}`;
-            setItems(updatedItems)
-            localStorage.setItem('items', JSON.stringify(updatedItems));
-        } else {
+    //         console.log("EXISTINGITEMINDEX", existingItemIndex);
+    //         if (existingItemIndex !== -1) {
+    //             let updatedItems = [...items]
+    //             updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${cartQty}`;
+    //             setItems(updatedItems)
+    //             localStorage.setItem('items', JSON.stringify(updatedItems));
+    //         } else {
 
-            const updatedItems = [...items, `listingId: ${listingId}; cartQty: ${cartQty}`]
-            setItems(updatedItems);
-            localStorage.setItem('items', JSON.stringify(updatedItems))
-        }
-    }
+    //             const updatedItems = [...items, `listingId: ${listingId}; cartQty: ${cartQty}`]
+    //             setItems(updatedItems);
+    //             localStorage.setItem('items', JSON.stringify(updatedItems))
+    //         }
+    //     }
+    // }
 
     // if (cartIdStorage.length === 1) {
     //     setCardIdStorage(cartIdStorage)
@@ -205,6 +208,25 @@ function ListingPage() {
 
 
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const cartIdUpdated = await handleAddToCart();
+    //     // console.log("cartIdUpdated:", cartIdUpdated); // Add this console log
+    //     // if (cartIdUpdated) {
+    //     // updateLocalStorage();
+    //     // }
+    //     if (cartIdUpdated) {
+    //         let updatedItems = JSON.parse(localStorage.getItem('items')) || [];
+    //         let existingItemIndex = updatedItems.findIndex(item => item.includes(`listingId: ${listingId}`));
+    //         if (existingItemIndex !== -1) {
+    //             updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${cartQty}`;
+    //         } else {
+    //             updatedItems.push(`listingId: ${listingId}; cartQty: ${cartQty}`);
+    //         }
+    //         localStorage.setItem('items', JSON.stringify(updatedItems));
+    //     }
+    // }
+
 
     return (listing &&
         <>
@@ -218,7 +240,7 @@ function ListingPage() {
                     <p>{listing.description}</p>
                     <p>Pot Size: {listing.potSize}&ldquo;</p>
                     {listing.stockQty && listing.stockQty > 0 ? (
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={(e) => { e.preventDefault(); handleAddToCart(); }}>
 
                             <div className="quantityContainer">
                                 <span className="qtylabel">Quantity:</span>

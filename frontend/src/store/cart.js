@@ -35,7 +35,7 @@ export const updateCartItem = (cartItem) => ({
 
 
 export const fetchCart = () => async (dispatch) => {
-    const cartId = localStorage.getItem('cartId');
+    const cartId = Number(localStorage.getItem('cartId'));
 
     if (!cartId) {
         dispatch(createCart(null));

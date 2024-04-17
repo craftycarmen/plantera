@@ -12,12 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      ShoppingCart.belongsTo(
-        models.User,
-        {
-          foreignKey: 'buyerId'
-        }
-      );
+      if (models.User) {
+        ShoppingCart.belongsTo(
+          models.User,
+          {
+            foreignKey: 'buyerId'
+          }
+        );
+      }
 
       ShoppingCart.hasMany(
         models.CartItem,
@@ -30,12 +32,12 @@ module.exports = (sequelize, DataTypes) => {
   ShoppingCart.init({
     buyerId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Buyer ID is required'
-        }
-      }
+      allowNull: true,
+      // validate: {
+      //   notNull: {
+      //     msg: 'Buyer ID is required'
+      //   }
+      // }
     },
   }, {
     sequelize,

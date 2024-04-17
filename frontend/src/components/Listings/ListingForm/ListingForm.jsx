@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { addListing, editListing } from '../../../store/listings';
+import ErrorHandling from "../../ErrorHandling";
 
 function ListingForm({ listing, formType }) {
     const dispatch = useDispatch();
@@ -102,109 +103,113 @@ function ListingForm({ listing, formType }) {
         }
     }
 
-    return (sessionUser &&
+    return (
         <>
-            <form onSubmit={handleSubmit}>
-                <h1>{formType}</h1>
-                <div className='inputContainer'>
-                    <input
-                        type='text'
-                        value={plantName}
-                        onChange={updatePlantName}
-                        placeholder=''
-                        id='plantName'
-                    />
-                    <label htmlFor='plantName' className='floating-label'>Plant Name*</label>
-                </div>
-                <div className='error'>{errors.plantName &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.plantName}</>}</div>
-                <div className='inputContainer'>
-                    <textarea
-                        value={description}
-                        onChange={updateDescription}
-                        placeholder=''
-                        id='description'
-                    />
-                    <label htmlFor='description' className='floating-label'>Description*</label>
-                </div>
-                <div className='error'>{errors.description &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.description}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='0.01'
-                        min='1'
-                        value={price}
-                        onChange={updatePrice}
-                        placeholder=''
-                        id='price'
-                    />
-                    <label htmlFor='price' className='floating-label'>Price*</label>
-                </div>
-                <div className='error'>{errors.price &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.price}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='0.25'
-                        min='2'
-                        value={potSize}
-                        onChange={updatePotSize}
-                        placeholder=''
-                        id='potSize'
-                    />
-                    <label htmlFor='potSize' className='floating-label'>Pot Size (inches)*</label>
-                </div>
-                <div className='error'>{errors.potSize &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.potSize}</>}</div>
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='1'
-                        min='1'
-                        value={stockQty}
-                        onChange={updateStockQty}
-                        placeholder=''
-                        id='stockQty'
-                    />
-                    <label htmlFor='stockQty' className='floating-label'>Stock Quantity*</label>
-                </div>
-                <div className='error'>{errors.stockQty &&
-                    <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
-                {createForm &&
-                    <>
-                        <div className='inputContainer'>
-                            <input
-                                type="file"
-                                accept=".jpg, .jpeg, .png"
-                                // multiple
-                                onChange={updateFile}
-                                id='image'
-                            />
-                            <label htmlFor='image' className='floating-label'>Image*</label>
-                        </div>
-                        <div className='error'>{errors.image &&
-                            <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
-                    </>}
-                <div className='inputContainer'>
-                    <input
-                        type='number'
-                        step='1'
-                        min='1'
-                        value={guideId}
-                        onChange={updateGuideId}
-                        placeholder=''
-                        id='guideId'
-                    />
-                    <label htmlFor='guideId' className='floating-label'>Guide ID</label>
-                </div>
-                <button
-                    type='submit'
-                    disabled={!!Object.values(errors).length}
-                >
-                    {formType}
-                </button>
-            </form>
+            <h1>{formType}</h1>
+            {!sessionUser ? (
+                <ErrorHandling />
+            ) : (
+                <form onSubmit={handleSubmit}>
+                    <div className='inputContainer' style={{ marginTop: '20px' }}>
+                        <input
+                            type='text'
+                            value={plantName}
+                            onChange={updatePlantName}
+                            placeholder=''
+                            id='plantName'
+                        />
+                        <label htmlFor='plantName' className='floating-label'>Plant Name*</label>
+                    </div>
+                    <div className='error'>{errors.plantName &&
+                        <><i className="fa-solid fa-circle-exclamation" /> {errors.plantName}</>}</div>
+                    <div className='inputContainer'>
+                        <textarea
+                            value={description}
+                            onChange={updateDescription}
+                            placeholder=''
+                            id='description'
+                        />
+                        <label htmlFor='description' className='floating-label'>Description*</label>
+                    </div>
+                    <div className='error'>{errors.description &&
+                        <><i className="fa-solid fa-circle-exclamation" /> {errors.description}</>}</div>
+                    <div className='inputContainer'>
+                        <input
+                            type='number'
+                            step='0.01'
+                            min='1'
+                            value={price}
+                            onChange={updatePrice}
+                            placeholder=''
+                            id='price'
+                        />
+                        <label htmlFor='price' className='floating-label'>Price*</label>
+                    </div>
+                    <div className='error'>{errors.price &&
+                        <><i className="fa-solid fa-circle-exclamation" /> {errors.price}</>}</div>
+                    <div className='inputContainer'>
+                        <input
+                            type='number'
+                            step='0.25'
+                            min='2'
+                            value={potSize}
+                            onChange={updatePotSize}
+                            placeholder=''
+                            id='potSize'
+                        />
+                        <label htmlFor='potSize' className='floating-label'>Pot Size (inches)*</label>
+                    </div>
+                    <div className='error'>{errors.potSize &&
+                        <><i className="fa-solid fa-circle-exclamation" /> {errors.potSize}</>}</div>
+                    <div className='inputContainer'>
+                        <input
+                            type='number'
+                            step='1'
+                            min='1'
+                            value={stockQty}
+                            onChange={updateStockQty}
+                            placeholder=''
+                            id='stockQty'
+                        />
+                        <label htmlFor='stockQty' className='floating-label'>Stock Quantity*</label>
+                    </div>
+                    <div className='error'>{errors.stockQty &&
+                        <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
+                    {createForm &&
+                        <>
+                            <div className='inputContainer'>
+                                <input
+                                    type="file"
+                                    accept=".jpg, .jpeg, .png"
+                                    // multiple
+                                    onChange={updateFile}
+                                    id='image'
+                                />
+                                <label htmlFor='image' className='floating-label'>Image*</label>
+                            </div>
+                            <div className='error'>{errors.image &&
+                                <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                        </>}
+                    <div className='inputContainer'>
+                        <input
+                            type='number'
+                            step='1'
+                            min='1'
+                            value={guideId}
+                            onChange={updateGuideId}
+                            placeholder=''
+                            id='guideId'
+                        />
+                        <label htmlFor='guideId' className='floating-label'>Guide ID</label>
+                    </div>
+                    <button
+                        type='submit'
+                        disabled={!!Object.values(errors).length}
+                    >
+                        {formType}
+                    </button>
+                </form>
+            )}
         </>)
 
 }

@@ -168,7 +168,6 @@ const listingsReducer = (state = {}, action) => {
         }
 
         case CREATE_LISTING: {
-            console.log("ACTION!!!!", action.listing);
             return { ...state, [action.listing.id]: action.listing };
         }
 

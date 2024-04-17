@@ -31,8 +31,10 @@ export const createCartItem = (cartItem, cartId) => ({
 export const fetchCart = () => async (dispatch) => {
     const cartId = localStorage.getItem('cartId');
 
-    if (!cartId) return;
-
+    if (!cartId) {
+        dispatch(createCart(null));
+        return;
+    }
     const res = await fetch(`/api/cart/${cartId}`);
 
     if (res.ok) {
@@ -55,7 +57,9 @@ export const addCart = (cart) => async (dispatch) => {
     });
 
     if (res.ok) {
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!", res)
         const newCart = await res.json();
+        console.log('NEWCART', newCart)
         dispatch(createCart(newCart.id))
         return newCart
     } else {

@@ -42,9 +42,7 @@ router.post('/', async (req, res) => {
         const existingCart = await ShoppingCart.findByPk(cartId);
 
         if (!existingCart) {
-            const newCart = await ShoppingCart.create({
-                buyerId: req.user.id,
-            })
+            const newCart = await ShoppingCart.create()
             return res.status(201).json(newCart);
         } else {
             return res.status(200).json(existingCart);

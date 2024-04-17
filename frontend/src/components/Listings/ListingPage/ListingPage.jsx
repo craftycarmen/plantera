@@ -76,6 +76,7 @@ function ListingPage() {
     const handleAddToCart = async () => {
 
         let cartIdUpdated = false;
+        let newCartId = null;
 
         if (cartId === null) {
             const res = await dispatch(addCart());
@@ -85,6 +86,7 @@ function ListingPage() {
                 localStorage.setItem('cartId', newCartId);
                 setCartId(newCartId);
                 cartIdUpdated = true;
+                console.log("New cart created with ID:", newCartId);
             } else {
                 console.error('Error creating cart:', res);
                 return;
@@ -93,11 +95,13 @@ function ListingPage() {
             const currentCartId = localStorage.getItem('cartId');
             if (currentCartId !== cartId) {
                 cartIdUpdated = true;
+                console.log("Cart ID updated:", cartId);
+                setCartId(currentCartId);
             }
         }
 
         if (cartIdUpdated) {
-            await dispatch(fetchCart(cartId));
+            await dispatch(fetchCart(newCartId || cartId));
         }
 
         // Set cart ID in local storage before fetching the listing
@@ -113,7 +117,7 @@ function ListingPage() {
 
 
         const newCartItem = {
-            cartId: Number(cartId), // Ensure cartId is valid here
+            cartId: Number(newCartId || cartId), // Ensure cartId is valid here
             listingId: Number(listingId),
             cartQty: Number(cartQty)
         }

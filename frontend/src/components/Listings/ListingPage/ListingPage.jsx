@@ -36,11 +36,15 @@ function ListingPage() {
                 try {
                     const fetchedItems = await dispatch(fetchCartItems(cart.cartId));
 
-                    const updatedCartItems = fetchedItems.ShoppingCart.CartItems;
+                    console.log("FETCHITEMS", fetchedItems)
 
-                    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+                    if (fetchedItems !== undefined) {
+                        const updatedCartItems = fetchedItems.ShoppingCart.CartItems;
 
-                    dispatch({ type: 'cart/setCartItems', payload: updatedCartItems });
+                        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+
+                        dispatch({ type: 'cart/setCartItems', payload: updatedCartItems });
+                    }
                 } catch (error) {
                     console.error("Error fetching cart items:", error);
                 }

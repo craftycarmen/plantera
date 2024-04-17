@@ -82,6 +82,11 @@ router.put('/:cartId/items/:cartItemListingId', async (req, res) => {
     try {
         const cartId = Number(req.params.cartId);
         const listingId = Number(req.params.cartItemListingId)
+        const listing = Listing.findOne({
+            where: {
+                id: listingId
+            }
+        })
 
         const cart = await ShoppingCart.findOne({
             where: {
@@ -102,7 +107,11 @@ router.put('/:cartId/items/:cartItemListingId', async (req, res) => {
 
         if (cartItem) {
             cartItem.cartQty += cartQty;
+            // if (cartQty <= listing.stockQty) {
             await cartItem.save();
+            // } else {
+            //     return res.status(400).json({ error: "Cart quantity exceeds stock quantity" })
+            // }
         }
 
         await cart.reload();

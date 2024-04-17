@@ -63,18 +63,16 @@ function ListingPage() {
         runDispatches();
     }, [dispatch, listingId, cart.cartId])
 
-    // useEffect(() => {
-    //     if (cart.id)
-    //         dispatch(fetchCart(cart.id))
-    // })
-
 
     const handleQty = (e) => {
-        const newQty = parseInt(e.target.value);
+        // const newQty = parseInt(e.target.value);
         // if (!isNaN(newQty) && newQty >= 1 && newQty <= stockQty) {
         //     setCartQty(newQty);
         // }
-        setCartQty(newQty > 1 ? newQty : 1)
+        // setCartQty(newQty > 1 ? newQty : 1)
+
+        const newQty = parseInt(e.target.value);
+        setCartQty(newQty)
     };
 
 
@@ -98,37 +96,66 @@ function ListingPage() {
 
         const existingCartItem = cart.cartItems.find(item => item.listingId === Number(listingId));
 
-        if (existingCartItem) {
-            cartItemExists = true;
-            const updatedCartItem = { ...existingCartItem, cartQty };
-            await dispatch(updateCartItemInCart(cartId, updatedCartItem));
-        }
+        const totalQty = existingCartItem ? existingCartItem.cartQty + cartQty : cartQty;
 
-        if (!cartItemExists) {
-            const newCartItem = {
-                cartId: Number(newCartId),
-                listingId: Number(listingId),
-                cartQty: Number(cartQty)
-            };
-
-            await dispatch(addItemToCart(newCartId, newCartItem))
-        }
-
-        await dispatch(fetchCartItems(newCartId))
-
-        let updatedItems = JSON.parse(localStorage.getItem('items')) || [];
-        let existingItemIndex = updatedItems.findIndex(item => item.includes(`listingId: ${listingId}`));
-
-        if (existingItemIndex !== -1) {
-            updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${existingCartItem ? existingCartItem.cartQty + cartQty : 1}`;
+        if (totalQty > stockQty) {
+            console.error('Exceeded stock')
         } else {
-            updatedItems.push(`listingId: ${listingId}; cartQty: ${existingCartItem ? existingCartItem.cartQty + cartQty : 1}`);
+
+
+
+            if (existingCartItem) {
+                cartItemExists = true;
+                const updatedCartItem = { ...existingCartItem, cartQty };
+                await dispatch(updateCartItemInCart(cartId, updatedCartItem));
+            }
+
+            if (!cartItemExists) {
+                const newCartItem = {
+                    cartId: Number(newCartId),
+                    listingId: Number(listingId),
+                    cartQty: Number(cartQty)
+                };
+
+                await dispatch(addItemToCart(newCartId, newCartItem))
+            }
+
+            await dispatch(fetchCartItems(newCartId))
+
+            let updatedItems = JSON.parse(localStorage.getItem('items')) || [];
+            // let existingItemIndex = updatedItems.findIndex(item => item.includes(`listingId: ${listingId}`));
+
+            let existingItemIndex = updatedItems.findIndex(item => item.listingId === Number(listingId))
+            console.log("Existing item index:", existingItemIndex);
+
+            if (existingItemIndex !== -1) {
+                updatedItems[existingItemIndex].cartQty += cartQty; // Increment the existing cartQty
+            } else {
+                updatedItems.push({
+                    listingId: Number(listingId),
+                    cartQty: Number(cartQty) // Set the cartQty to the current quantity
+                });
+            }
+
+
+            // if (existingItemIndex !== -1) {
+            //     // updatedItems[existingItemIndex] = {
+            //     //     listingId: listingId,
+            //     //     cartQty: existingCartItem ? existingCartItem.cartQty + cartQty : 1
+            //     // };
+            //     updatedItems[existingItemIndex].cartQty = existingCartItem ? existingCartItem.cartQty : 1;
+            // } else {
+            //     updatedItems.push(
+            //         {
+            //             listingId: listingId,
+            //             cartQty: existingCartItem ? existingCartItem.cartQty + cartQty : 1
+            //         });
+            // }
+
+            localStorage.setItem('items', JSON.stringify(updatedItems));
+            setItems(updatedItems)
+            return true;
         }
-
-        localStorage.setItem('items', JSON.stringify(updatedItems));
-
-        return true;
-
         // let cartIdUpdated = false;
         // let newCartId = null;
 

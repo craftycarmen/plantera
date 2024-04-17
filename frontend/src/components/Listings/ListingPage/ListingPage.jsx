@@ -86,6 +86,7 @@ function ListingPage() {
 
 
 
+
     let existingItemId = null;
 
     useEffect(() => {
@@ -186,21 +187,14 @@ function ListingPage() {
             setError("")
 
             if (cartItemExists) {
-                // const updatedCartItem = { ...existingCartItem, cartQty: totalQty };
-                // console.log("UPDATEDCARTITEMTHING", updatedCartItem);
-                // const updatedCartItems = cartItems.map(item =>
-                //     item.id === existingCartItem.id ? updatedCartItem : item
-                // );
-                // localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-                // await dispatch(updateCartItemInCart(cartId, updatedCartItem));
-
                 const updatedCartItem = { ...existingCartItem, cartQty: totalQty };
-                // Update the quantity in local storage
+
                 const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item =>
                     item.id === existingCartItem.id ? { ...item, cartQty: totalQty } : item
                 );
-                console.log("updatedCartItemsLocalStorage", updatedCartItemsLocalStorage);
+
                 localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
+
                 await dispatch(updateCartItemInCart(cartId, updatedCartItem));
 
             } else {
@@ -211,6 +205,7 @@ function ListingPage() {
                 };
 
                 const newItemRes = await dispatch(addItemToCart(newCartId, newCartItem))
+
                 if (newItemRes) {
                     newCartItemId = newItemRes.id
                     setNewCartItemId(newCartItemId);
@@ -218,29 +213,27 @@ function ListingPage() {
 
                 await dispatch(fetchCartItems(newCartId))
 
-
-                let updatedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                let updatedItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
 
                 // let existingItemIndex = updatedItems.findIndex(item => item.id === newCartItemId)
 
                 let existingItemIndex = updatedItems.findIndex(item => item.listingId === Number(listingId))
-                console.log("Existing item index:", existingItemIndex);
 
                 if (existingItemIndex !== -1) {
-                    updatedItems[existingItemIndex].cartQty = totalQty;
+                    updatedItemsLocalStorage[existingItemIndex].cartQty = totalQty;
                 } else {
-                    updatedItems.push({
+                    updatedItemsLocalStorage.push({
                         id: newCartItemId,
                         listingId: Number(listingId),
-                        cartQty: Number(totalQty) // Set the cartQty to the current quantity
+                        cartQty: Number(totalQty)
                     });
                 }
 
-                const updatedItemsLocalStorage = cartItemsLocalStorage.map(item =>
-                    item.listingId === Number(listingId)
-                        ? { ...item, cartQty: totalQty }
-                        : item
-                );
+                // const updatedItemsLocalStorage = cartItemsLocalStorage.map(item =>
+                //     item.listingId === Number(listingId)
+                //         ? { ...item, cartQty: totalQty }
+                //         : item
+                // );
                 localStorage.setItem('cartItems', JSON.stringify(updatedItemsLocalStorage));
 
                 // localStorage.setItem('cartItems', JSON.stringify(updatedItems));

@@ -76,6 +76,41 @@ router.post('/:cartId/items', async (req, res) => {
     } catch (err) {
         return res.status(500).json(err.message)
     }
+});
+
+router.put('/:cartId/items/:cartItemListingId', async (req, res) => {
+    try {
+        const cartId = Number(req.params.cartId);
+        const listingId = Number(req.params.cartItemListingId)
+
+        const cart = await ShoppingCart.findOne({
+            where: {
+                id: cartId
+            }
+        })
+
+        const cartItem = await CartItem.findOne({
+            where: {
+                cartId: cart.id,
+                listingId
+            }
+        })
+
+        const { cartQty } = req.body
+        // cartItem.cartQty = cartQty;
+        // await cartItem.save();
+
+        if (cartItem) {
+            cartItem.cartQty += cartQty;
+            await cartItem.save();
+        }
+
+        await cart.reload();
+
+        return res.json(cartItem)
+    } catch (err) {
+        return res.status(500).json(err.message)
+    }
 })
 
 module.exports = router;

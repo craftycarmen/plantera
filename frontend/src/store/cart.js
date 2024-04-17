@@ -4,6 +4,7 @@ const LOAD_CART = 'cart/LOAD_CART';
 const CREATE_CART = 'cart/CREATE_CART';
 const LOAD_CART_ITEMS = 'cart/LOAD_CART_ITEMS';
 const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
+const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 
 export const loadCart = (cartId, cartItems) => ({
     type: LOAD_CART,
@@ -25,6 +26,11 @@ export const createCartItem = (cartItem, cartId) => ({
     type: CREATE_CART_ITEM,
     cartItem,
     cartId
+});
+
+export const updateCartItem = (cartItem) => ({
+    type: UPDATE_CART_ITEM,
+    cartItem
 })
 
 
@@ -83,40 +89,69 @@ export const fetchCartItems = (cartId) => async (dispatch) => {
     }
 }
 
-export const addItemToCart = (cartId, cartItem) => async (dispatch) => {
-    let newCartId = cartId;
+export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) => {
+    const state = getState();
+    const existingCartItem = state.cart.cartItems.find(item => item.listingId === cartItem.listingId);
 
-    if (!cartId) {
-        const res = await csrfFetch('/api/cart', {
+    if (existingCartItem) {
+        const updatedCartItem = { ...existingCartItem, cartQty: existingCartItem.cartQty + cartItem.cartQty };
+        dispatch(updateCartItemInCart(cartId, updatedCartItem));
+        return updatedCartItem;
+    } else {
+        let newCartId = cartId;
+
+        if (!cartId) {
+            const res = await csrfFetch('/api/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cartItem })
+            });
+
+            if (res.ok) {
+                const newCart = await res.json();
+                newCartId = newCart.id;
+                dispatch(createCart(newCartId));
+            } else {
+                const errors = await res.json();
+                return errors;
+            }
+        }
+
+        const res = await csrfFetch(`/api/cart/${newCartId}/items`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ cartItem })
+            body: JSON.stringify(cartItem)
         });
 
         if (res.ok) {
-            const newCart = await res.json();
-            newCartId = newCart.id;
-            dispatch(createCart(newCartId));
+            const newCartItem = await res.json();
+            dispatch(createCartItem(newCartItem, newCartId));
+            return newCartItem;
         } else {
             const errors = await res.json();
             return errors;
         }
     }
+}
 
-    const res = await csrfFetch(`/api/cart/${newCartId}/items`, {
-        method: 'POST',
+export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
+    console.log("UPDATECART", cartId, cartItem);
+    const res = await csrfFetch(`/api/cart/${cartId}/items/${cartItem.listingId}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(cartItem)
-    });
+    })
 
     if (res.ok) {
-        const newCartItem = await res.json();
-        dispatch(createCartItem(newCartItem, newCartId));
-        return newCartItem;
+        const updatedCartItem = await res.json();
+        dispatch(updateCartItem(updatedCartItem));
+        return updatedCartItem;
     } else {
         const errors = await res.json();
         return errors;
@@ -165,7 +200,7 @@ const cartReducer = (state = initialState, action) => {
         case LOAD_CART_ITEMS: {
             return { ...state, cartItems: action.cartItems }
         }
-        case CREATE_CART_ITEM:
+        case CREATE_CART_ITEM: {
             // const updatedCartItems = [...state.cartItems, action.cartItem];
 
             return {
@@ -174,6 +209,28 @@ const cartReducer = (state = initialState, action) => {
                 cartItems: [...state.cartItems, action.cartItem]
                 // cartItems: updatedCartItems
             }
+        }
+
+        case UPDATE_CART_ITEM: {
+            const { cartItem } = action;
+            if (!cartItem) {
+                return state;
+            }
+
+            const updatedCartItems = state.cartItems.map(item => {
+                if (item.listingId === cartItem.listingId) {
+                    return cartItem;
+                }
+                return item;
+            })
+
+            console.log('UPDATEDCARTREDUCER', updatedCartItems);
+
+            return {
+                ...state,
+                cartItems: updatedCartItems
+            }
+        }
         default:
             return { ...state }
     }

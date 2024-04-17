@@ -45,8 +45,10 @@ export const fetchCart = () => async (dispatch) => {
 
     if (res.ok) {
         const cart = await res.json();
-        dispatch(loadCart(cartId, cart.ShoppingCart.CartItems));
-        return cart
+        if (cart.ShoppingCart !== null) {
+            dispatch(loadCart(cartId, cart.ShoppingCart.CartItems));
+            return cart
+        }
     } else {
         const errors = await res.json();
         return errors;
@@ -83,8 +85,11 @@ export const fetchCartItems = () => async (dispatch) => {
 
     if (res.ok) {
         const cartItems = await res.json();
-        dispatch(loadCartItems(cartItems.ShoppingCart.CartItems));
-        return cartItems
+        console.log("CARTITEMS", cartItems.ShoppingCart)
+        if (cartItems.ShoppingCart !== null) {
+            dispatch(loadCartItems(cartItems.ShoppingCart.CartItems));
+            return cartItems
+        }
     } else {
         const errors = await res.json();
         return errors;

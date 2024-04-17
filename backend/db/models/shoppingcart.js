@@ -12,12 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      ShoppingCart.belongsTo(
-        models.User,
-        {
-          foreignKey: 'buyerId'
-        }
-      );
+      if (models.User) {
+        ShoppingCart.belongsTo(
+          models.User,
+          {
+            foreignKey: 'buyerId'
+          }
+        );
+      }
 
       ShoppingCart.hasMany(
         models.CartItem,

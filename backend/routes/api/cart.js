@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/:cartId', async (req, res) => {
     const { user } = req;
+    const cartId = Number(req.params.cartId);
 
     if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -26,7 +27,7 @@ router.get('/:cartId', async (req, res) => {
                 },
             },
             where: {
-                buyerId: user.id
+                id: cartId
             }
         })
 
@@ -37,12 +38,12 @@ router.get('/:cartId', async (req, res) => {
 router.post('/', async (req, res) => {
 
     try {
-        const { cartId } = req.body;
+        const { buyerId, cartId } = req.body;
 
         const existingCart = await ShoppingCart.findByPk(cartId);
 
         if (!existingCart) {
-            const newCart = await ShoppingCart.create()
+            const newCart = await ShoppingCart.create({ buyerId, cartId })
             return res.status(201).json(newCart);
         } else {
             return res.status(200).json(existingCart);

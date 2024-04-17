@@ -17,18 +17,23 @@ function ListingPage() {
 
     const cart = useSelector(state => state.cart)
     console.log("CART", cart.cartId);
-    let [cartId, setCartId] = useState(JSON.parse(localStorage.getItem('cartId')) || null);
-    // let [items, setItems] = useState(JSON.parse(localStorage.getItem('items')) || []);
+    // let [cartId, setCartId] = useState(JSON.parse(localStorage.getItem('cartId')) || null);
+    let [cartId, setCartId] = useState(() => {
+        const storedCartId = localStorage.getItem('cartId');
+        return storedCartId ? parseInt(storedCartId, 10) : null;
+    });
+    let [items, setItems] = useState(JSON.parse(localStorage.getItem('items')) || []);
 
     useEffect(() => {
-        localStorage.setItem('cartId', JSON.stringify(cartId));
+        // localStorage.setItem('cartId', JSON.stringify(cartId));
+        localStorage.setItem('cartId', cartId);
         console.log(`saved items to cart ${cartId}`);
     }, [cartId])
 
-    // useEffect(() => {
-    //     localStorage.setItem('items', JSON.stringify(items));
-    //     console.log(`saved ${items.length} items to localstorage`);
-    // }, [items, items.length])
+    useEffect(() => {
+        localStorage.setItem('items', JSON.stringify(items));
+        console.log(`saved ${items.length} items to localstorage`);
+    }, [items, items.length])
 
     let stockQty = listing?.stockQty || 1;
     let [cartQty, setCartQty] = useState(1)

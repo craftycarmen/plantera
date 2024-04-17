@@ -39,6 +39,7 @@ export const fetchCart = () => async (dispatch) => {
 
     if (res.ok) {
         const cart = await res.json();
+        console.log("CART IN FETCHCART", cart);
         dispatch(loadCart(cartId, cart.ShoppingCart.CartItems));
         return cart
     } else {

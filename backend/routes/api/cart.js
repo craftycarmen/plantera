@@ -1,20 +1,47 @@
 const express = require('express');
-const { ShoppingCart, CartItem, Listing, Image } = require('../../db/models');
+const { User, ShoppingCart, CartItem, Listing, Image } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
+router.get('/', async (req, res) => {
+    // const { user } = req;
+    const cartId = Number(req.query.cartId);
+
+    // if (!user) {
+    //     return res.status(404).json({ message: "User not found" });
+    // }
+
+    const shoppingCart = await ShoppingCart.findOne({
+        include: {
+            model: CartItem,
+            include: {
+                model: Listing,
+                attributes: ['id', 'plantName', 'price', 'stockQty'],
+                include: {
+                    model: Image,
+                    as: 'ListingImages',
+                    attributes: ['id', 'url']
+                }
+            },
+        },
+        where: {
+            id: cartId
+        }
+    })
+
+    return res.json({ ShoppingCart: shoppingCart })
+
+});
+
 router.get('/:cartId', async (req, res) => {
-    const { user } = req;
     const cartId = Number(req.params.cartId);
 
-    if (!user) {
-        return res.status(404).json({ message: "User not found" });
-    }
+    const { user } = req;
 
-    if (user) {
-        const shoppingCart = await ShoppingCart.findOne({
-            include: {
+    const shoppingCart = await ShoppingCart.findOne({
+        include: [
+            {
                 model: CartItem,
                 include: {
                     model: Listing,
@@ -24,15 +51,16 @@ router.get('/:cartId', async (req, res) => {
                         as: 'ListingImages',
                         attributes: ['id', 'url']
                     }
-                },
+                }
             },
-            where: {
-                id: cartId
-            }
-        })
+        ],
+        where: {
+            id: cartId
+        }
+    })
 
-        return res.json({ ShoppingCart: shoppingCart })
-    }
+    return res.json({ ShoppingCart: shoppingCart })
+
 });
 
 router.post('/', async (req, res) => {
@@ -77,6 +105,44 @@ router.post('/:cartId/items', async (req, res) => {
         return res.status(500).json(err.message)
     }
 });
+
+router.put('/:cartId/item/:itemId', async (req, res) => {
+    try {
+        const cartId = Number(req.params.cartId);
+        const itemId = Number(req.params.itemId)
+
+        const cart = await ShoppingCart.findOne({
+            where: {
+                id: cartId
+            }
+        })
+
+        const cartItem = await CartItem.findOne({
+            where: {
+                id: itemId
+            }
+        })
+
+        const { cartQty } = req.body
+        // cartItem.cartQty = cartQty;
+        // await cartItem.save();
+
+        if (cartItem) {
+            cartItem.cartQty += cartQty;
+            // if (cartQty <= listing.stockQty) {
+            await cartItem.save();
+            // } else {
+            //     return res.status(400).json({ error: "Cart quantity exceeds stock quantity" })
+            // }
+        }
+
+        await cart.reload();
+
+        return res.json(cartItem)
+    } catch (err) {
+        return res.status(500).json(err.message)
+    }
+})
 
 router.put('/:cartId/items/:cartItemListingId', async (req, res) => {
     try {

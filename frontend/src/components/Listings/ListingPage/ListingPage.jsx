@@ -16,29 +16,90 @@ function ListingPage() {
     // const sessionUser = useSelector(state => state.session.user);
 
     const cart = useSelector(state => state.cart)
-    console.log("CARTID ONTOP", cart.cartId);
-    // let [cartId, setCartId] = useState(JSON.parse(localStorage.getItem('cartId')) || null);
+    const cartItems = useSelector(state => state.cart.cartItems)
+
     let [cartId, setCartId] = useState(() => {
         const storedCartId = localStorage.getItem('cartId');
-        return storedCartId ? parseInt(storedCartId, 10) : null;
+        return storedCartId ? parseInt(storedCartId) : null;
     });
-    let [items, setItems] = useState(JSON.parse(localStorage.getItem('items')) || []);
 
     useEffect(() => {
-        // localStorage.setItem('cartId', JSON.stringify(cartId));
-        localStorage.setItem('cartId', cartId);
-        console.log(`saved items to cart ${cartId}`);
-    }, [cartId])
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        if (storedCartItems) dispatch(fetchCartItems(storedCartItems)); // Dispatch action to update Redux store with loaded cart items
+    }, [dispatch]);
+
+    const [newCartItemId, setNewCartItemId] = useState(null);
+
+
+    // useEffect(() => {
+    //     if (cart.cartId) {
+    //         dispatch(fetchCartItems(cart.cartId))
+    //             .then(() => {
+    //                 // After fetching cart items, set the newCartItemId if it's not already set
+    //                 if (!newCartItemId) {
+    //                     JSON.parse(localStorage.getItem('cartItems')) || [];
+    //                     // const lastItem = storedItems[storedItems.length - 1];
+    //                     // if (lastItem) {
+    //                     //     setNewCartItemId(lastItem.id);
+    //                     // }
+    //                 }
+    //             });
+    //     }
+    // }, [dispatch, cart.cartId, newCartItemId]);
+
+    // useEffect(() => {
+    //     if (cart.cartId) {
+    //         dispatch(fetchCartItems(cart.cartId))
+    //             .then((fetchedItems) => {
+    //                 console.log("Fetched cart items from DB:", fetchedItems); // Log fetched items
+    //                 localStorage.setItem('cartItems', JSON.stringify(fetchedItems.ShoppingCart.CartItems));
+    //                 console.log("Updated local storage with fetched items:", fetchedItems.ShoppingCart.CartItems); // Log updated local storage
+    //             });
+    //     }
+    // }, [dispatch, cart.cartId]);
 
     useEffect(() => {
-        localStorage.setItem('items', JSON.stringify(items));
-        console.log(`saved ${items.length} items to localstorage`);
-    }, [items, items.lengfth])
+        const fetchDataAndLocalStorageUpdate = async () => {
+            if (cart.cartId) {
+                try {
+                    const fetchedItems = await dispatch(fetchCartItems(cart.cartId));
+                    console.log("Fetched cart items from DB:", fetchedItems);
+
+                    const updatedCartItems = fetchedItems.ShoppingCart.CartItems;
+
+                    // Update local storage with fetched items
+                    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+                    console.log("Updated local storage with fetched items:", updatedCartItems);
+
+                    // Dispatch action to update cart items in Redux store
+                    dispatch({ type: 'cart/setCartItems', payload: updatedCartItems });
+                } catch (error) {
+                    console.error("Error fetching cart items:", error);
+                }
+            }
+        };
+
+        fetchDataAndLocalStorageUpdate();
+    }, [dispatch, cart.cartId]);
+
+
+
+
+
+    let existingItemId = null;
+
+    useEffect(() => {
+        if (cart.cartItems) {
+            const existingCartItem = cart.cartItems.find(item => item.id === existingItemId)
+            if (existingCartItem) {
+                setCartQty(existingCartItem.cartQty);
+            }
+        }
+    }, [cart.cartItems, listingId, existingItemId])
 
     let stockQty = listing?.stockQty || 1;
-    let [cartQty, setCartQty] = useState(1)
-
-    console.log("CARTID OUTSIDE", cartId)
+    let [cartQty, setCartQty] = useState(1);
+    const [error, setError] = useState("")
 
     let addQty = (e) => {
         e.preventDefault();
@@ -51,6 +112,9 @@ function ListingPage() {
         e.preventDefault();
         if (cartQty > 1) {
             setCartQty(prevCartQty => prevCartQty - 1)
+            if (error) {
+                setError("");
+            }
         }
     }
 
@@ -65,14 +129,10 @@ function ListingPage() {
 
 
     const handleQty = (e) => {
-        // const newQty = parseInt(e.target.value);
-        // if (!isNaN(newQty) && newQty >= 1 && newQty <= stockQty) {
-        //     setCartQty(newQty);
-        // }
-        // setCartQty(newQty > 1 ? newQty : 1)
+        e.preventDefault();
 
         const newQty = parseInt(e.target.value);
-        setCartQty(newQty)
+        setCartQty(newQty);
     };
 
 
@@ -94,145 +154,100 @@ function ListingPage() {
             }
         }
 
-        const existingCartItem = cart.cartItems.find(item => item.listingId === Number(listingId));
+        let newCartItemId = null;
 
-        const totalQty = existingCartItem ? existingCartItem.cartQty + cartQty : cartQty;
+        // const existingCartItem = cartItems.find(item => item.id === Number(newCartItemId));
+
+        console.log("CARTITEMS", cartItems)
+
+        const existingCartItem = cartItems.find(item => item.listingId === Number(listingId))
+
+        console.log("EXISTING CART ITEM:", existingCartItem);
+        if (existingCartItem) {
+            console.log("second", newCartItemId);
+            cartItemExists = true;
+            newCartItemId = existingCartItem.id;
+        }
+
+        // const totalQty = existingCartItem ? existingCartItem.cartQty + cartQty : cartQty;
+
+        const totalQty = cartQty;
+
+        const remainingStock = stockQty - (existingCartItem ? existingCartItem.cartQty : 0)
+
+        const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+
 
         if (totalQty > stockQty) {
-            console.error('Exceeded stock')
+            setError("Quantity exceeded")
+        } else if (totalQty > remainingStock) {
+            setError(`Only ${remainingStock} left in stock`)
         } else {
+            setError("")
 
+            if (cartItemExists) {
+                // const updatedCartItem = { ...existingCartItem, cartQty: totalQty };
+                // console.log("UPDATEDCARTITEMTHING", updatedCartItem);
+                // const updatedCartItems = cartItems.map(item =>
+                //     item.id === existingCartItem.id ? updatedCartItem : item
+                // );
+                // localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+                // await dispatch(updateCartItemInCart(cartId, updatedCartItem));
 
-
-            if (existingCartItem) {
-                cartItemExists = true;
-                const updatedCartItem = { ...existingCartItem, cartQty };
+                const updatedCartItem = { ...existingCartItem, cartQty: totalQty };
+                // Update the quantity in local storage
+                const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item =>
+                    item.id === existingCartItem.id ? { ...item, cartQty: totalQty } : item
+                );
+                console.log("updatedCartItemsLocalStorage", updatedCartItemsLocalStorage);
+                localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
                 await dispatch(updateCartItemInCart(cartId, updatedCartItem));
-            }
 
-            if (!cartItemExists) {
+            } else {
                 const newCartItem = {
                     cartId: Number(newCartId),
                     listingId: Number(listingId),
                     cartQty: Number(cartQty)
                 };
 
-                await dispatch(addItemToCart(newCartId, newCartItem))
+                const newItemRes = await dispatch(addItemToCart(newCartId, newCartItem))
+                if (newItemRes) {
+                    newCartItemId = newItemRes.id
+                    setNewCartItemId(newCartItemId);
+                }
+
+                await dispatch(fetchCartItems(newCartId))
+
+
+                let updatedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+                // let existingItemIndex = updatedItems.findIndex(item => item.id === newCartItemId)
+
+                let existingItemIndex = updatedItems.findIndex(item => item.listingId === Number(listingId))
+                console.log("Existing item index:", existingItemIndex);
+
+                if (existingItemIndex !== -1) {
+                    updatedItems[existingItemIndex].cartQty = totalQty;
+                } else {
+                    updatedItems.push({
+                        id: newCartItemId,
+                        listingId: Number(listingId),
+                        cartQty: Number(totalQty) // Set the cartQty to the current quantity
+                    });
+                }
+
+                const updatedItemsLocalStorage = cartItemsLocalStorage.map(item =>
+                    item.listingId === Number(listingId)
+                        ? { ...item, cartQty: totalQty }
+                        : item
+                );
+                localStorage.setItem('cartItems', JSON.stringify(updatedItemsLocalStorage));
+
+                // localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+                // setItems(updatedItems)
             }
-
-            await dispatch(fetchCartItems(newCartId))
-
-            let updatedItems = JSON.parse(localStorage.getItem('items')) || [];
-            // let existingItemIndex = updatedItems.findIndex(item => item.includes(`listingId: ${listingId}`));
-
-            let existingItemIndex = updatedItems.findIndex(item => item.listingId === Number(listingId))
-            console.log("Existing item index:", existingItemIndex);
-
-            if (existingItemIndex !== -1) {
-                updatedItems[existingItemIndex].cartQty += cartQty; // Increment the existing cartQty
-            } else {
-                updatedItems.push({
-                    listingId: Number(listingId),
-                    cartQty: Number(cartQty) // Set the cartQty to the current quantity
-                });
-            }
-
-
-            // if (existingItemIndex !== -1) {
-            //     // updatedItems[existingItemIndex] = {
-            //     //     listingId: listingId,
-            //     //     cartQty: existingCartItem ? existingCartItem.cartQty + cartQty : 1
-            //     // };
-            //     updatedItems[existingItemIndex].cartQty = existingCartItem ? existingCartItem.cartQty : 1;
-            // } else {
-            //     updatedItems.push(
-            //         {
-            //             listingId: listingId,
-            //             cartQty: existingCartItem ? existingCartItem.cartQty + cartQty : 1
-            //         });
-            // }
-
-            localStorage.setItem('items', JSON.stringify(updatedItems));
-            setItems(updatedItems)
             return true;
         }
-        // let cartIdUpdated = false;
-        // let newCartId = null;
-
-        // if (cartId === null) {
-        //     const res = await dispatch(addCart());
-
-        //     if (res) {
-        //         const newCartId = res.id;
-        //         localStorage.setItem('cartId', newCartId);
-        //         setCartId(newCartId);
-        //         cartIdUpdated = true;
-        //         console.log("New cart created with ID:", newCartId);
-        //     } else {
-        //         console.error('Error creating cart:', res);
-        //         return;
-        //     }
-        // } else {
-        //     const currentCartId = localStorage.getItem('cartId');
-        //     if (currentCartId !== cartId.toString()) {
-        //         console.log("Cart ID updated:", currentCartId);
-        //         setCartId(parseInt(currentCartId, 10));
-        //     } else {
-        //         console.log("Cart ID already up-to-date:", currentCartId);
-        //     }
-        // }
-
-        // if (cartIdUpdated) {
-        //     await dispatch(fetchCart(newCartId));
-        // } else {
-        //     await dispatch(fetchCart(cartId));
-        // }
-
-        // // Set cart ID in local storage before fetching the listing
-        // // localStorage.setItem('cartId', cartId);
-
-        // await dispatch(fetchOneListing(listingId));
-
-        // // if (cart.cartId) {
-        // //     dispatch(fetchCart(cart.cartId));
-        // // }
-
-        // // Fetch cart if cartId exists
-
-
-        // const newCartItem = {
-        //     cartId: Number(newCartId || cartId), // Ensure cartId is valid here
-        //     listingId: Number(listingId),
-        //     cartQty: Number(cartQty)
-        // }
-
-        // console.log("Dispatching CREATE_CART_ITEM action with newCartItem:", newCartItem);
-
-        // // Ensure cartId is valid when making the POST request
-        // await dispatch(addItemToCart(cartId, newCartItem))
-
-
-        // const existingCartItem = cart.cartItems.find(item => item.listingId === newCartItem.listingId);
-
-        // if (existingCartItem) {
-        //     const updatedCartItem = { ...newCartItem, cartQty };
-        //     await dispatch(updateCartItemInCart(cartId, updatedCartItem))
-        // }
-
-        // await dispatch(fetchCartItems(cartId))
-
-        // let updatedItems = JSON.parse(localStorage.getItem('items')) || [];
-        // let existingItemIndex = updatedItems.findIndex(item => item.includes(`listingId: ${listingId}`));
-
-        // if (existingItemIndex !== -1) {
-        //     updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${cartQty}`;
-        // } else {
-        //     updatedItems.push(`listingId: ${listingId}; cartQty: ${cartQty}`);
-        // }
-
-        // localStorage.setItem('items', JSON.stringify(updatedItems));
-
-        // return cartIdUpdated;
     }
 
     return (listing &&
@@ -266,7 +281,12 @@ function ListingPage() {
 
                                 </div>
                             </div>
-                            <button type="submit">Add to Cart</button>
+                            <div className='error'>{error &&
+                                <><i className="fa-solid fa-circle-exclamation" /> {error}</>}</div>
+                            <button
+                                type="submit"
+                                disabled={error}
+                            >Add to Cart</button>
                             <div>
                                 {/* <OpenModalButton
                                     buttonText="Add to Cart"

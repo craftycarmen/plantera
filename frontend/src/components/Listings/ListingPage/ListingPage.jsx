@@ -25,53 +25,21 @@ function ListingPage() {
 
     useEffect(() => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        if (storedCartItems) dispatch(fetchCartItems(storedCartItems)); // Dispatch action to update Redux store with loaded cart items
+        if (storedCartItems) dispatch(fetchCartItems(storedCartItems));
     }, [dispatch]);
 
-    const [newCartItemId, setNewCartItemId] = useState(null);
-
-
-    // useEffect(() => {
-    //     if (cart.cartId) {
-    //         dispatch(fetchCartItems(cart.cartId))
-    //             .then(() => {
-    //                 // After fetching cart items, set the newCartItemId if it's not already set
-    //                 if (!newCartItemId) {
-    //                     JSON.parse(localStorage.getItem('cartItems')) || [];
-    //                     // const lastItem = storedItems[storedItems.length - 1];
-    //                     // if (lastItem) {
-    //                     //     setNewCartItemId(lastItem.id);
-    //                     // }
-    //                 }
-    //             });
-    //     }
-    // }, [dispatch, cart.cartId, newCartItemId]);
-
-    // useEffect(() => {
-    //     if (cart.cartId) {
-    //         dispatch(fetchCartItems(cart.cartId))
-    //             .then((fetchedItems) => {
-    //                 console.log("Fetched cart items from DB:", fetchedItems); // Log fetched items
-    //                 localStorage.setItem('cartItems', JSON.stringify(fetchedItems.ShoppingCart.CartItems));
-    //                 console.log("Updated local storage with fetched items:", fetchedItems.ShoppingCart.CartItems); // Log updated local storage
-    //             });
-    //     }
-    // }, [dispatch, cart.cartId]);
+    let [newCartItemId, setNewCartItemId] = useState(null);
 
     useEffect(() => {
         const fetchDataAndLocalStorageUpdate = async () => {
             if (cart.cartId) {
                 try {
                     const fetchedItems = await dispatch(fetchCartItems(cart.cartId));
-                    console.log("Fetched cart items from DB:", fetchedItems);
 
                     const updatedCartItems = fetchedItems.ShoppingCart.CartItems;
 
-                    // Update local storage with fetched items
                     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-                    console.log("Updated local storage with fetched items:", updatedCartItems);
 
-                    // Dispatch action to update cart items in Redux store
                     dispatch({ type: 'cart/setCartItems', payload: updatedCartItems });
                 } catch (error) {
                     console.error("Error fetching cart items:", error);
@@ -81,10 +49,6 @@ function ListingPage() {
 
         fetchDataAndLocalStorageUpdate();
     }, [dispatch, cart.cartId]);
-
-
-
-
 
 
     let existingItemId = null;
@@ -155,22 +119,12 @@ function ListingPage() {
             }
         }
 
-        let newCartItemId = null;
-
-        // const existingCartItem = cartItems.find(item => item.id === Number(newCartItemId));
-
-        console.log("CARTITEMS", cartItems)
-
         const existingCartItem = cartItems.find(item => item.listingId === Number(listingId))
 
-        console.log("EXISTING CART ITEM:", existingCartItem);
         if (existingCartItem) {
-            console.log("second", newCartItemId);
             cartItemExists = true;
             newCartItemId = existingCartItem.id;
         }
-
-        // const totalQty = existingCartItem ? existingCartItem.cartQty + cartQty : cartQty;
 
         const totalQty = cartQty;
 
@@ -178,11 +132,10 @@ function ListingPage() {
 
         const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-
         if (totalQty > stockQty) {
             setError("Quantity exceeded")
         } else if (totalQty > remainingStock) {
-            setError(`Only ${remainingStock} left in stock`)
+            setError(`${remainingStock} left in stock`)
         } else {
             setError("")
 
@@ -215,9 +168,7 @@ function ListingPage() {
 
                 let updatedItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-                // let existingItemIndex = updatedItems.findIndex(item => item.id === newCartItemId)
-
-                let existingItemIndex = updatedItems.findIndex(item => item.listingId === Number(listingId))
+                let existingItemIndex = updatedItemsLocalStorage.findIndex(item => item.listingId === Number(listingId))
 
                 if (existingItemIndex !== -1) {
                     updatedItemsLocalStorage[existingItemIndex].cartQty = totalQty;
@@ -229,15 +180,8 @@ function ListingPage() {
                     });
                 }
 
-                // const updatedItemsLocalStorage = cartItemsLocalStorage.map(item =>
-                //     item.listingId === Number(listingId)
-                //         ? { ...item, cartQty: totalQty }
-                //         : item
-                // );
                 localStorage.setItem('cartItems', JSON.stringify(updatedItemsLocalStorage));
 
-                // localStorage.setItem('cartItems', JSON.stringify(updatedItems));
-                // setItems(updatedItems)
             }
             return true;
         }
@@ -281,10 +225,6 @@ function ListingPage() {
                                 disabled={error}
                             >Add to Cart</button>
                             <div>
-                                {/* <OpenModalButton
-                                    buttonText="Add to Cart"
-                                    modalComponent={<ShoppingCartModal listing={listing} cartQty={cartQty} />}
-                                /> */}
                             </div>
                         </form>
                     ) : (<div>SOLD OUT</div>)

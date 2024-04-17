@@ -45,7 +45,6 @@ export const fetchCart = () => async (dispatch) => {
 
     if (res.ok) {
         const cart = await res.json();
-        console.log("CART IN FETCHCART", cart);
         dispatch(loadCart(cartId, cart.ShoppingCart.CartItems));
         return cart
     } else {
@@ -64,9 +63,7 @@ export const addCart = (cart) => async (dispatch) => {
     });
 
     if (res.ok) {
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!", res)
         const newCart = await res.json();
-        console.log('NEWCART', newCart)
         dispatch(createCart(newCart.id))
         return newCart
     } else {
@@ -75,12 +72,17 @@ export const addCart = (cart) => async (dispatch) => {
     }
 }
 
-export const fetchCartItems = (cartId) => async (dispatch) => {
+export const fetchCartItems = () => async (dispatch) => {
+    const cartId = Number(localStorage.getItem('cartId'));
+
+    if (!cartId) {
+        return;
+    }
+
     const res = await fetch(`/api/cart/${cartId}`);
 
     if (res.ok) {
         const cartItems = await res.json();
-        console.log("FETCHCART", cartItems);
         dispatch(loadCartItems(cartItems.ShoppingCart.CartItems));
         return cartItems
     } else {
@@ -154,65 +156,7 @@ export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) =>
     }
 };
 
-
-// export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) => {
-//     const state = getState();
-//     console.log("Cart Item:", cartItem);
-//     let updatedCartItem = null;
-//     const existingCartItem = state.cart.cartItems.find(item => item.listingId === cartItem.listingId);
-
-//     console.log("EXISTING cart item in reducer", state.cart.cartItems);
-//     console.log("CARTITEMID?", cartItem);
-
-//     if (existingCartItem) {
-//         cartItem.id = existingCartItem.id;
-//         updatedCartItem = { ...existingCartItem, cartQty: existingCartItem.cartQty + cartItem.cartQty };
-//         dispatch(updateCartItemInCart(cartId, updatedCartItem));
-//         return updatedCartItem;
-//     } else {
-//         let newCartId = cartId;
-
-//         if (!cartId) {
-//             const res = await csrfFetch('/api/cart', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({ cartItem })
-//             });
-
-//             if (res.ok) {
-//                 const newCart = await res.json();
-//                 newCartId = newCart.id;
-//                 dispatch(createCart(newCartId));
-//             } else {
-//                 const errors = await res.json();
-//                 return errors;
-//             }
-//         }
-
-//         const res = await csrfFetch(`/api/cart/${newCartId}/items`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(cartItem)
-//         });
-
-//         if (res.ok) {
-//             const newCartItem = await res.json();
-//             dispatch(createCartItem(newCartItem, newCartId));
-//             return newCartItem;
-//         } else {
-//             const errors = await res.json();
-//             return errors;
-//         }
-//     }
-// }
-
 export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
-    console.log("UpdateCartItemInCart Action Dispatched with cartId:", cartId);
-    console.log("UpdateCartItemInCart Action Dispatched with cartItem:", cartItem);
     const res = await csrfFetch(`/api/cart/${cartId}/item/${cartItem.id}`, {
         method: 'PUT',
         headers: {
@@ -232,28 +176,6 @@ export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
         return errors;
     }
 }
-// try {
-//     const res = await csrfFetch(`/api/cart/${cartId}/items`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(cartItem)
-//     });
-
-//     if (res.ok) {
-//         const newCartItem = await res.json();
-//         dispatch(createCartItem(newCartItem, cartId));
-//         return newCartItem
-//     } else {
-//         const errors = await res.json();
-//         throw new Error(errors.message);
-//     }
-// } catch (error) {
-//     console.error('Error adding item to cart:', error);
-//     throw error;
-// }
-// }
 
 const initialState = {
     cart: null,
@@ -261,10 +183,9 @@ const initialState = {
 }
 
 const cartReducer = (state = initialState, action) => {
-    console.log('CARTACTION', action);
+
     switch (action.type) {
         case LOAD_CART: {
-            console.log("CART ACTION", action)
             return { ...state, cartId: action.cartId, cartItems: action.cartItems }
         }
         case CREATE_CART: {
@@ -276,29 +197,20 @@ const cartReducer = (state = initialState, action) => {
             return { ...state, cartItems: action.cartItems }
         }
         case CREATE_CART_ITEM: {
-            // const updatedCartItems = [...state.cartItems, action.cartItem];
-
             return {
                 ...state,
-                // cartId: action.cartId,
                 cartItems: [...state.cartItems, action.cartItem]
-                // cartItems: updatedCartItems
             }
         }
 
         case UPDATE_CART_ITEM: {
-            console.log("UPDATE_CART_ITEM Action Received:", action);
-            console.log("UPDATE_CART_ITEM Action Received cartItem:", action.cartItem);
             const { cartItem } = action;
             if (!cartItem) {
                 return state;
             }
 
-            // Find the index of the cart item in the cartItems array
             const updatedCartItemIndex = state.cartItems.findIndex(item => item.id === cartItem.id);
 
-            // If the cart item is found, update it; otherwise, return the current state
-            console.log('UPDATEDCARTREDUCER', updatedCartItemIndex);
             if (updatedCartItemIndex !== -1) {
                 const updatedCartItems = [...state.cartItems];
                 updatedCartItems[updatedCartItemIndex] = cartItem;
@@ -309,26 +221,6 @@ const cartReducer = (state = initialState, action) => {
             } else {
                 return state;
             }
-
-            // const { cartItem } = action;
-            // if (!cartItem) {
-            //     return state;
-            // }
-
-
-            // const updatedCartItems = state.cartItems.map(item => {
-            //     if (item.id === cartItem.id) {
-            //         return cartItem;
-            //     }
-            //     return item;
-            // })
-
-            // console.log('UPDATEDCARTREDUCER', updatedCartItems);
-
-            // return {
-            //     ...state,
-            //     cartItems: updatedCartItems
-            // }
         }
         default:
             return { ...state }

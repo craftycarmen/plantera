@@ -80,6 +80,7 @@ function ListingPage() {
 
     const handleAddToCart = async () => {
         let newCartId = cartId;
+        let cartItemExists = false;
 
         if (cartId === null) {
             const res = await dispatch(addCart());
@@ -95,41 +96,38 @@ function ListingPage() {
             }
         }
 
-        await dispatch(fetchCart(newCartId));
-        await dispatch(fetchOneListing(listingId));
-
-        const newCartItem = {
-            cartId: Number(newCartId),
-            listingId: Number(listingId),
-            cartQty: Number(cartQty)
-        };
-
-        console.log("Dispatching CREATE_CART_ITEM action with newCartItem:", newCartItem);
-
-        await dispatch(addItemToCart(newCartId, newCartItem));
-
-        const existingCartItem = cart.cartItems.find(item => item.listingId === newCartItem.listingId);
+        const existingCartItem = cart.cartItems.find(item => item.listingId === Number(listingId));
 
         if (existingCartItem) {
-            const updatedCartItem = { ...newCartItem, cartQty };
-            await dispatch(updateCartItemInCart(newCartId, updatedCartItem));
+            cartItemExists = true;
+            const updatedCartItem = { ...existingCartItem, cartQty };
+            await dispatch(updateCartItemInCart(cartId, updatedCartItem));
         }
 
-        await dispatch(fetchCartItems(newCartId));
+        if (!cartItemExists) {
+            const newCartItem = {
+                cartId: Number(newCartId),
+                listingId: Number(listingId),
+                cartQty: Number(cartQty)
+            };
 
-        let updatedItems = [...items];
+            await dispatch(addItemToCart(newCartId, newCartItem))
+        }
+
+        await dispatch(fetchCartItems(newCartId))
+
+        let updatedItems = JSON.parse(localStorage.getItem('items')) || [];
         let existingItemIndex = updatedItems.findIndex(item => item.includes(`listingId: ${listingId}`));
 
         if (existingItemIndex !== -1) {
-            updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${cartQty}`;
+            updatedItems[existingItemIndex] = `listingId: ${listingId}; cartQty: ${existingCartItem ? existingCartItem.cartQty + cartQty : 1}`;
         } else {
-            updatedItems.push(`listingId: ${listingId}; cartQty: ${cartQty}`);
+            updatedItems.push(`listingId: ${listingId}; cartQty: ${existingCartItem ? existingCartItem.cartQty + cartQty : 1}`);
         }
 
-        setItems(updatedItems);
         localStorage.setItem('items', JSON.stringify(updatedItems));
 
-        return newCartId;
+        return true;
 
         // let cartIdUpdated = false;
         // let newCartId = null;

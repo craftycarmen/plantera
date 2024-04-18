@@ -41,6 +41,7 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
                         </div>
                     ))
                     }
+                    <div>Subtotal: </div>
                     <button>Checkout</button>
                 </div>
             )}

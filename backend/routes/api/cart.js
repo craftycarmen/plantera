@@ -59,7 +59,31 @@ router.get('/:cartId', async (req, res) => {
         }
     })
 
-    return res.json({ ShoppingCart: shoppingCart })
+    const cartItemsList = []
+
+    shoppingCart.CartItems.forEach(item => {
+        cartItemsList.push(item.toJSON())
+    })
+
+    let cartTotalArray = []
+    cartItemsList.forEach(item => {
+        itemSubTotal = item.cartQty * item.Listing.price
+        item.subTotal = itemSubTotal
+        cartTotalArray.push(itemSubTotal)
+    })
+
+    let cartTotal = cartTotalArray.reduce((total, amount) => total + amount)
+
+    let getCartById = {
+        id: shoppingCart.id,
+        buyerId: user.Id || null,
+        createdAt: shoppingCart.createdAt,
+        updatedAt: shoppingCart.updatedAt,
+        cartTotal: cartTotal,
+        CartItems: cartItemsList
+    }
+
+    return res.json({ ShoppingCart: getCartById })
 
 });
 

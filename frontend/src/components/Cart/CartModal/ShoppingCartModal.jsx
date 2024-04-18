@@ -17,7 +17,7 @@ function ShoppingCartModal({ cartId }) {
         runDispatches();
     }, [dispatch, cartId])
 
-    const handleRemoveItem = async (cartId, itemId) => {
+    const handleRemoveItem = async (itemId) => {
         await dispatch(removeCartItem(cartId, itemId));
         dispatch(fetchCartItems());
         dispatch(fetchCart(cartId))

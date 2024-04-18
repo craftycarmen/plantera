@@ -190,12 +190,17 @@ export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
 }
 
 export const removeCartItem = (cartId, cartItemId) => async (dispatch) => {
+    if (cartId === null) {
+        cartId = localStorage.getItem('cartId')
+    }
+
     const res = await csrfFetch(`/api/cart/${cartId}/item/${cartItemId}`, {
         method: 'DELETE'
     });
 
     if (res.ok) {
-        dispatch(deleteCartItem(cartItemId))
+        dispatch(deleteCartItem(cartItemId));
+        dispatch(fetchCart(cartId));
     }
 }
 
@@ -257,6 +262,11 @@ const cartReducer = (state = initialState, action) => {
             const newState = { ...state };
             delete newState[action.cartItemId];
             return newState;
+
+            // return {
+            //     ...state,
+            //     cartItems: state.cartItems.filter(item => item.id !== action.cartItemId)
+            // }
         }
         default:
             return { ...state }

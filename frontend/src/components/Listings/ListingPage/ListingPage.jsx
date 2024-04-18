@@ -6,6 +6,8 @@ import './ListingPage.css';
 import LinkedGuides from "./LinkedGuides";
 import MeetTheSeller from "./MeetTheSeller";
 import { addCart, addItemToCart, fetchCart, fetchCartItems, updateCartItemInCart } from "../../../store/cart";
+import ShoppingCartModal from "../../Cart/CartModal";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -152,7 +154,7 @@ function ListingPage() {
 
                 localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
 
-                await dispatch(updateCartItemInCart(cartId, updatedCartItem));
+                await dispatch(updateCartItemInCart(cartId, updatedCartItem))
 
             } else {
                 const newCartItem = {
@@ -227,9 +229,10 @@ function ListingPage() {
                             <button
                                 type="submit"
                                 disabled={error}
-                            >Add to Cart</button>
-                            <div>
-                            </div>
+                            >                            <OpenModalMenuItem
+                                    itemText="Add to Cart"
+                                    modalComponent={<ShoppingCartModal />}
+                                /></button>
                         </form>
                     ) : (<div>SOLD OUT</div>)
                     }

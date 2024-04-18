@@ -14,28 +14,37 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
         dispatch(fetchCart(cartId))
     }, [dispatch, cartId])
 
-    return (cartItems &&
+    return (
         <section className="shoppingModal">
             <h1>Shopping Cart</h1>
-            {cartItems.map((item) => (
+            {cartItems && cartItems.length === 0 &&
+                (
+                    <div>Your cart is empty!</div>
+                )
+            }
 
-                <div key={item.id} className="shoppingModalListing">
-                    <div className="shoppingModalImgContainer"><img src={item.Listing?.ListingImages?.[0]?.url} /></div>
-                    <div className="smInfo">
-                        <div className="smQtyPrice">
-                            <h3>{item.Listing?.plantName}</h3>
-                            <h3>${item.Listing?.price}</h3>
+            {cartItems && cartItems.length > 0 && (
+                <div>
+                    {cartItems.map((item) => (
+
+                        <div key={item.id} className="shoppingModalListing">
+                            <div className="shoppingModalImgContainer"><img src={item.Listing?.ListingImages?.[0]?.url} /></div>
+                            <div className="smInfo">
+                                <div className="smQtyPrice">
+                                    <h3>{item.Listing?.plantName}</h3>
+                                    <h3>${item.Listing?.price}</h3>
+                                </div>
+                                <div>Pot Size: {item.Listing?.potSize} 8.5" *</div>
+                                <span>Quantity: {item.cartQty}</span>
+
+                            </div>
                         </div>
-                        <div>Pot Size: {item.Listing?.potSize} 8.5" *</div>
-                        <span>Quantity: {item.cartQty}</span>
-
-                    </div>
+                    ))
+                    }
+                    <button>Checkout</button>
                 </div>
-            ))}
-
-            <button>Checkout</button>
-
-        </section>
+            )}
+        </section >
     )
 
 }

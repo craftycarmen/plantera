@@ -138,7 +138,7 @@ router.post('/:cartId/items', async (req, res) => {
 router.put('/:cartId/item/:itemId', async (req, res) => {
     try {
         const cartId = Number(req.params.cartId);
-        const itemId = Number(req.params.itemId)
+        const itemId = Number(req.params.itemId);
 
         const cart = await ShoppingCart.findOne({
             where: {
@@ -173,48 +173,22 @@ router.put('/:cartId/item/:itemId', async (req, res) => {
     }
 })
 
-router.put('/:cartId/items/:cartItemListingId', async (req, res) => {
-    try {
-        const cartId = Number(req.params.cartId);
-        const listingId = Number(req.params.cartItemListingId)
-        const listing = Listing.findOne({
-            where: {
-                id: listingId
-            }
-        })
+router.delete('/:cartId/item/:itemId', async (req, res) => {
+    const cartId = Number(req.params.cartId);
+    const itemId = Number(req.params.itemId);
 
-        const cart = await ShoppingCart.findOne({
-            where: {
-                id: cartId
-            }
-        })
+    const item = await CartItem.findByPk(itemId)
 
-        const cartItem = await CartItem.findOne({
-            where: {
-                cartId: cart.id,
-                listingId
-            }
-        })
+    if (!cartId) return res.status(404).json({ message: "Cart couldn't be found" })
 
-        const { cartQty } = req.body
-        // cartItem.cartQty = cartQty;
-        // await cartItem.save();
+    if (!itemId) return res.status(404).json({ message: "Cart item couldn't be found" })
 
-        if (cartItem) {
-            cartItem.cartQty += cartQty;
-            // if (cartQty <= listing.stockQty) {
-            await cartItem.save();
-            // } else {
-            //     return res.status(400).json({ error: "Cart quantity exceeds stock quantity" })
-            // }
-        }
+    await item.destroy();
 
-        await cart.reload();
+    return res.json({ message: "Successfully deleted" })
 
-        return res.json(cartItem)
-    } catch (err) {
-        return res.status(500).json(err.message)
-    }
-})
+});
+
+
 
 module.exports = router;

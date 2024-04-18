@@ -8,7 +8,7 @@ import CreateListingForm from './components/Listings/ListingForm/CreateListingFo
 import * as sessionActions from './store/session';
 import UpdateListingForm from './components/Listings/ListingForm/UpdateListingForm';
 import ManageListings from './components/listings/ManageListings';
-import ShoppingCartModal from './components/Cart/CartModal';
+// import ShoppingCartModal from './components/Cart/CartModal';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -56,10 +56,10 @@ export const router = createBrowserRouter([
         path: '/listings/:listingId/edit',
         element: <UpdateListingForm />
       },
-      {
-        path: '/cart/:cartId',
-        element: <ShoppingCartModal />
-      },
+      // {
+      //   path: '/cart/:cartId',
+      //   element: <ShoppingCartModal />
+      // },
     ]
   }
 ]);

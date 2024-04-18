@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, ShoppingCart } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -53,6 +53,15 @@ router.post(
         };
 
         await setTokenCookie(res, safeUser);
+
+        // const { cartId } = req.body
+        // if (cartId) {
+        //     const cart = await ShoppingCart.findByPk(cartId);
+        //     if (cart) {
+        //         cart.buyerId = user.id;
+        //         await cart.save();
+        //     }
+        // }
 
         return res.json({
             user: safeUser

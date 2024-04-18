@@ -2,8 +2,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-import ShoppingCartModal from '../Cart/CartModal';
-import OpenModalMenuItem from './OpenModalMenuItem';
+import ShoppingCartButton from './ShoppingCartButton';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -24,10 +23,12 @@ function Navigation({ isLoaded }) {
                         <ProfileButton user={sessionUser} />
                     </>
                 )}&nbsp;&nbsp;&nbsp;
-                <OpenModalMenuItem
+                {/* <OpenModalMenuItem
                     itemText={<><i className="fa-solid fa-cart-shopping" /></>}
                     modalComponent={<ShoppingCartModal cartId={cartId} />}
-                />
+                /> */}
+
+                <ShoppingCartButton cartId={cartId} />
             </div>
         </div>
     );

@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useModal } from "../../../context/Modal";
 import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
-import { Link } from "react-router-dom";
 
-function ShoppingCartModal({ listing, cartQty, cartId }) {
-    const { closeModal } = useModal();
+function ShoppingCartModal({ cartId }) {
     const dispatch = useDispatch();
 
     // const cart = useSelector(state => state.cart)
@@ -24,6 +21,7 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
     const handleRemoveItem = async (itemId) => {
         await dispatch(removeCartItem(cartId, itemId));
         dispatch(fetchCartItems());
+        dispatch(fetchCart(cartId))
     };
 
     return (
@@ -50,7 +48,7 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
                                     <h3>{item.Listing?.plantName}</h3>
                                     <h3>${item.Listing?.price}</h3>
                                 </div>
-                                <div>Pot Size: {item.Listing?.potSize} 8.5" *</div>
+                                <div>Pot Size: {item.Listing?.potSize} 8.5&#34; *</div>
                                 <div className="shoppigModalRow">
                                     <span>Quantity: {item.cartQty}</span>
                                     <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>

@@ -52,3 +52,34 @@
     position: relative;
     display: inline-block;
 }
+
+.shoppingCartIconWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.cartCircle {
+    position: absolute;
+    color: #FDAC8A;
+    margin-top: 10px;
+    margin-left: -10px;
+    width: fit-content;
+}
+
+.cartNum {
+    position: absolute;
+    color: #F2DCCB;
+    font-weight: 100;
+    font-size: 11px;
+    /* margin-top: 10px;
+    margin-left: -1px; */
+    margin-top: 1px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+}

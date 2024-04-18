@@ -2,11 +2,14 @@
     padding: 25px 35px 25px 35px;
     margin-top: 0px;
     width: 400px;
-    height: calc(100vh - 56px);
+    height: calc(100vh - 50px);
+    position: fixed;
+    top: 0;
     right: 0;
     background-color: #8EBAA8;
     justify-content: flex-end;
     border-radius: 5px;
+    overflow-y: auto;
 
 }
 

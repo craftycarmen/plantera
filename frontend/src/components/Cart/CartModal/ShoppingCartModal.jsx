@@ -6,7 +6,6 @@ import './ShoppingCart.css';
 function ShoppingCartModal({ cartId }) {
     const dispatch = useDispatch();
 
-    // const cart = useSelector(state => state.cart)
     const cartItems = useSelector(state => state.cart.cartItems)
     const cartTotal = useSelector(state => state.cart.cartTotal);
 
@@ -39,9 +38,9 @@ function ShoppingCartModal({ cartId }) {
 
                         <div key={item.id} className="shoppingModalListing">
                             <div className="shoppingModalImgContainer">
-
-                                <img src={item.Listing?.ListingImages?.[0]?.url} />
-
+                                <img
+                                    src={item.Listing?.ListingImages?.[0]?.url}
+                                />
                             </div>
                             <div className="smInfo">
                                 <div className="shoppigModalRow">

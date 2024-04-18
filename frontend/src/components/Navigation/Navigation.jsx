@@ -23,10 +23,6 @@ function Navigation({ isLoaded }) {
                         <ProfileButton user={sessionUser} />
                     </>
                 )}&nbsp;&nbsp;&nbsp;
-                {/* <OpenModalMenuItem
-                    itemText={<><i className="fa-solid fa-cart-shopping" /></>}
-                    modalComponent={<ShoppingCartModal cartId={cartId} />}
-                /> */}
 
                 <ShoppingCartButton cartId={cartId} />
             </div>

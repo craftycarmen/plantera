@@ -38,8 +38,6 @@ function ListingPage() {
                 try {
                     const fetchedItems = await dispatch(fetchCartItems(cart.cartId));
 
-                    console.log("FETCHITEMS", fetchedItems)
-
                     if (fetchedItems !== undefined) {
                         const updatedCartItems = fetchedItems.ShoppingCart.CartItems;
 
@@ -226,13 +224,15 @@ function ListingPage() {
                             </div>
                             <div className='error'>{error &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {error}</>}</div>
-                            <button
-                                type="submit"
-                                disabled={error}
-                            >                            <OpenModalMenuItem
-                                    itemText="Add to Cart"
-                                    modalComponent={<ShoppingCartModal cartId={cartId} />}
-                                /></button>
+
+                            <OpenModalMenuItem
+                                itemText={<>
+                                    <button
+                                        type="submit"
+                                        disabled={error}>Add to Cart</button>
+                                </>}
+                                modalComponent={<ShoppingCartModal cartId={cartId} />}
+                            />
                         </form>
                     ) : (<div>SOLD OUT</div>)
                     }

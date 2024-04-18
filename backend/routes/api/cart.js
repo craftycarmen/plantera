@@ -39,13 +39,18 @@ router.get('/:cartId', async (req, res) => {
 
     const { user } = req;
 
+    let buyerId = null;
+    if (user) {
+        buyerId = user.id;
+    }
+
     const shoppingCart = await ShoppingCart.findOne({
         include: [
             {
                 model: CartItem,
                 include: {
                     model: Listing,
-                    attributes: ['id', 'plantName', 'price', 'stockQty'],
+                    attributes: ['id', 'plantName', 'price', 'stockQty', 'potSize'],
                     include: {
                         model: Image,
                         as: 'ListingImages',
@@ -59,7 +64,36 @@ router.get('/:cartId', async (req, res) => {
         }
     })
 
-    return res.json({ ShoppingCart: shoppingCart })
+    const cartItemsList = []
+
+    shoppingCart.CartItems.forEach(item => {
+        cartItemsList.push(item.toJSON())
+    })
+
+    let cartTotalArray = [0]
+    let numCartItemsArray = [0]
+    cartItemsList.forEach(item => {
+        itemSubTotal = item.cartQty * item.Listing.price
+        item.subTotal = itemSubTotal
+        cartTotalArray.push(itemSubTotal)
+        numCartItemsArray.push(item.cartQty)
+    })
+
+    let cartTotal = cartTotalArray.reduce((total, amount) => total + amount)
+    console.log(cartTotal);
+    let numCartItems = numCartItemsArray.reduce((total, amount) => total + amount)
+
+    let getCartById = {
+        id: shoppingCart.id,
+        buyerId: buyerId,
+        createdAt: shoppingCart.createdAt,
+        updatedAt: shoppingCart.updatedAt,
+        cartTotal: cartTotal,
+        numCartItems: numCartItems,
+        CartItems: cartItemsList
+    }
+
+    return res.json({ ShoppingCart: getCartById })
 
 });
 
@@ -109,7 +143,7 @@ router.post('/:cartId/items', async (req, res) => {
 router.put('/:cartId/item/:itemId', async (req, res) => {
     try {
         const cartId = Number(req.params.cartId);
-        const itemId = Number(req.params.itemId)
+        const itemId = Number(req.params.itemId);
 
         const cart = await ShoppingCart.findOne({
             where: {
@@ -144,48 +178,22 @@ router.put('/:cartId/item/:itemId', async (req, res) => {
     }
 })
 
-router.put('/:cartId/items/:cartItemListingId', async (req, res) => {
-    try {
-        const cartId = Number(req.params.cartId);
-        const listingId = Number(req.params.cartItemListingId)
-        const listing = Listing.findOne({
-            where: {
-                id: listingId
-            }
-        })
+router.delete('/:cartId/item/:itemId', async (req, res) => {
+    const cartId = Number(req.params.cartId);
+    const itemId = Number(req.params.itemId);
 
-        const cart = await ShoppingCart.findOne({
-            where: {
-                id: cartId
-            }
-        })
+    const item = await CartItem.findByPk(itemId)
 
-        const cartItem = await CartItem.findOne({
-            where: {
-                cartId: cart.id,
-                listingId
-            }
-        })
+    if (!cartId) return res.status(404).json({ message: "Cart couldn't be found" })
 
-        const { cartQty } = req.body
-        // cartItem.cartQty = cartQty;
-        // await cartItem.save();
+    if (!itemId) return res.status(404).json({ message: "Cart item couldn't be found" })
 
-        if (cartItem) {
-            cartItem.cartQty += cartQty;
-            // if (cartQty <= listing.stockQty) {
-            await cartItem.save();
-            // } else {
-            //     return res.status(400).json({ error: "Cart quantity exceeds stock quantity" })
-            // }
-        }
+    await item.destroy();
 
-        await cart.reload();
+    return res.json({ message: "Successfully deleted" })
 
-        return res.json(cartItem)
-    } catch (err) {
-        return res.status(500).json(err.message)
-    }
-})
+});
+
+
 
 module.exports = router;

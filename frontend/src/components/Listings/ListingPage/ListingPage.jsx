@@ -6,6 +6,8 @@ import './ListingPage.css';
 import LinkedGuides from "./LinkedGuides";
 import MeetTheSeller from "./MeetTheSeller";
 import { addCart, addItemToCart, fetchCart, fetchCartItems, updateCartItemInCart } from "../../../store/cart";
+import ShoppingCartModal from "../../Cart/CartModal";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -35,8 +37,6 @@ function ListingPage() {
             if (cart.cartId) {
                 try {
                     const fetchedItems = await dispatch(fetchCartItems(cart.cartId));
-
-                    console.log("FETCHITEMS", fetchedItems)
 
                     if (fetchedItems !== undefined) {
                         const updatedCartItems = fetchedItems.ShoppingCart.CartItems;
@@ -152,7 +152,7 @@ function ListingPage() {
 
                 localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
 
-                await dispatch(updateCartItemInCart(cartId, updatedCartItem));
+                await dispatch(updateCartItemInCart(cartId, updatedCartItem))
 
             } else {
                 const newCartItem = {
@@ -224,12 +224,15 @@ function ListingPage() {
                             </div>
                             <div className='error'>{error &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {error}</>}</div>
-                            <button
-                                type="submit"
-                                disabled={error}
-                            >Add to Cart</button>
-                            <div>
-                            </div>
+
+                            <OpenModalMenuItem
+                                itemText={<>
+                                    <button
+                                        type="submit"
+                                        disabled={error}>Add to Cart</button>
+                                </>}
+                                modalComponent={<ShoppingCartModal cartId={cartId} />}
+                            />
                         </form>
                     ) : (<div>SOLD OUT</div>)
                     }

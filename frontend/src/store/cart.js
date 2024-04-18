@@ -7,11 +7,12 @@ const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
 
-export const loadCart = (cartId, cartItems, cartTotal) => ({
+export const loadCart = (cartId, cartItems, cartTotal, numCartItems) => ({
     type: LOAD_CART,
     cartId,
     cartItems,
-    cartTotal
+    cartTotal,
+    numCartItems
 });
 
 export const createCart = (cartId) => ({
@@ -56,7 +57,8 @@ export const fetchCart = () => async (dispatch) => {
         console.log("CARTRES", cart);
         if (cart.ShoppingCart !== null) {
             const cartTotal = cart.ShoppingCart.cartTotal;
-            dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal));
+            const numCartItems = cart.ShoppingCart.numCartItems
+            dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
             // dispatch(loadCart(cart));
             return cart
         }
@@ -200,7 +202,8 @@ export const removeCartItem = (cartId, cartItemId) => async (dispatch) => {
 const initialState = {
     cart: null,
     cartItems: [],
-    cartTotal: 0
+    cartTotal: 0,
+    numCartItems: 0
 }
 
 const cartReducer = (state = initialState, action) => {
@@ -212,7 +215,8 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 cartId: action.cartId,
                 cartItems: action.cartItems,
-                cartTotal: action.cartTotal
+                cartTotal: action.cartTotal,
+                numCartItems: action.numCartItems
             }
         }
         case CREATE_CART: {

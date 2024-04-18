@@ -71,14 +71,17 @@ router.get('/:cartId', async (req, res) => {
     })
 
     let cartTotalArray = [0]
+    let numCartItemsArray = [0]
     cartItemsList.forEach(item => {
         itemSubTotal = item.cartQty * item.Listing.price
         item.subTotal = itemSubTotal
         cartTotalArray.push(itemSubTotal)
+        numCartItemsArray.push(item.cartQty)
     })
 
     let cartTotal = cartTotalArray.reduce((total, amount) => total + amount)
     console.log(cartTotal);
+    let numCartItems = numCartItemsArray.reduce((total, amount) => total + amount)
 
     let getCartById = {
         id: shoppingCart.id,
@@ -86,6 +89,7 @@ router.get('/:cartId', async (req, res) => {
         createdAt: shoppingCart.createdAt,
         updatedAt: shoppingCart.updatedAt,
         cartTotal: cartTotal,
+        numCartItems: numCartItems,
         CartItems: cartItemsList
     }
 

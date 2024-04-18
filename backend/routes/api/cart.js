@@ -70,7 +70,7 @@ router.get('/:cartId', async (req, res) => {
         cartItemsList.push(item.toJSON())
     })
 
-    let cartTotalArray = []
+    let cartTotalArray = [0]
     cartItemsList.forEach(item => {
         itemSubTotal = item.cartQty * item.Listing.price
         item.subTotal = itemSubTotal
@@ -78,6 +78,7 @@ router.get('/:cartId', async (req, res) => {
     })
 
     let cartTotal = cartTotalArray.reduce((total, amount) => total + amount)
+    console.log(cartTotal);
 
     let getCartById = {
         id: shoppingCart.id,

@@ -5,6 +5,7 @@ const CREATE_CART = 'cart/CREATE_CART';
 const LOAD_CART_ITEMS = 'cart/LOAD_CART_ITEMS';
 const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
+const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
 
 export const loadCart = (cartId, cartItems, cartTotal) => ({
     type: LOAD_CART,
@@ -32,6 +33,12 @@ export const createCartItem = (cartItem, cartId) => ({
 export const updateCartItem = (cartItem) => ({
     type: UPDATE_CART_ITEM,
     cartItem
+});
+
+export const deleteCartItem = (cartId, cartItemId) => ({
+    type: DELETE_CART_ITEM,
+    cartId,
+    cartItemId
 })
 
 
@@ -100,26 +107,21 @@ export const fetchCartItems = () => async (dispatch) => {
     }
 }
 
-// Action creator for adding a new item to the cart
 export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) => {
     try {
         const state = getState();
 
-        // Check if the item already exists in the cart
         const existingCartItem = state.cart.cartItems.find(item => item.listingId === cartItem.listingId);
 
         if (existingCartItem) {
-            // If the item already exists, update its quantity
             cartItem.id = existingCartItem.id;
             cartItem.cartQty += existingCartItem.cartQty;
-            dispatch(updateCartItemInCart(cartId, cartItem)); // Update the item in the cart
+            dispatch(updateCartItemInCart(cartId, cartItem));
             return cartItem;
         } else {
-            // If the item does not exist, add it to the cart
             let newCartId = cartId;
 
             if (!cartId) {
-                // If there's no cart ID, create a new cart
                 const res = await csrfFetch('/api/cart', {
                     method: 'POST',
                     headers: {
@@ -138,7 +140,6 @@ export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) =>
                 }
             }
 
-            // Add the item to the cart
             const res = await csrfFetch(`/api/cart/${newCartId}/items`, {
                 method: 'POST',
                 headers: {
@@ -149,10 +150,10 @@ export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) =>
 
             if (res.ok) {
                 const newCartItem = await res.json();
-                dispatch(createCartItem(newCartItem, newCartId)); // Add the item to the Redux store
-                const updatedCartItems = [...state.cart.cartItems, newCartItem]; // Add the new item to the cartItems array
-                dispatch(loadCartItems(updatedCartItems)); // Update the cartItems in the Redux store
-                localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // Update local storage with the latest cart items data
+                dispatch(createCartItem(newCartItem, newCartId));
+                const updatedCartItems = [...state.cart.cartItems, newCartItem];
+                dispatch(loadCartItems(updatedCartItems));
+                localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
                 return newCartItem;
             } else {
                 const errors = await res.json();
@@ -183,6 +184,16 @@ export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
     } else {
         const errors = await res.json();
         return errors;
+    }
+}
+
+export const removeCartItem = (cartId, cartItemId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/cart/${cartId}/item/${cartItemId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        dispatch(deleteCartItem(cartItemId))
     }
 }
 
@@ -237,6 +248,11 @@ const cartReducer = (state = initialState, action) => {
             } else {
                 return state;
             }
+        }
+        case DELETE_CART_ITEM: {
+            const newState = { ...state };
+            delete newState[action.cartItemId];
+            return newState;
         }
         default:
             return { ...state }

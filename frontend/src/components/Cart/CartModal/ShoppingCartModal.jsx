@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useCartModal } from "../../../context/CartModal/Modal";
-import { fetchCart } from "../../../store/cart";
+import { useModal } from "../../../context/Modal";
+import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
+import { Link } from "react-router-dom";
 
 function ShoppingCartModal({ listing, cartQty, cartId }) {
-    const closeModal = useCartModal();
+    const { closeModal } = useModal();
     const dispatch = useDispatch();
 
     // const cart = useSelector(state => state.cart)
     const cartItems = useSelector(state => state.cart.cartItems)
     const cartTotal = useSelector(state => state.cart.cartTotal);
 
-    console.log("CARTUSESELECTOR", cartTotal);
+    console.log("CARTUSESELECTOR", cartItems);
     useEffect(() => {
-        dispatch(fetchCart(cartId))
+        const runDispatches = async () => {
+            await dispatch(fetchCart(cartId))
+        }
+        runDispatches();
     }, [dispatch, cartId])
+
+    const handleRemoveItem = async (itemId) => {
+        await dispatch(removeCartItem(cartId, itemId));
+        dispatch(fetchCartItems());
+    };
 
     return (
         <section className="shoppingModal">
@@ -31,15 +40,21 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
                     {cartItems.map((item) => (
 
                         <div key={item.id} className="shoppingModalListing">
-                            <div className="shoppingModalImgContainer"><img src={item.Listing?.ListingImages?.[0]?.url} /></div>
+                            <div className="shoppingModalImgContainer">
+
+                                <img src={item.Listing?.ListingImages?.[0]?.url} />
+
+                            </div>
                             <div className="smInfo">
-                                <div className="smQtyPrice">
+                                <div className="shoppigModalRow">
                                     <h3>{item.Listing?.plantName}</h3>
                                     <h3>${item.Listing?.price}</h3>
                                 </div>
                                 <div>Pot Size: {item.Listing?.potSize} 8.5" *</div>
-                                <span>Quantity: {item.cartQty}</span>
-
+                                <div className="shoppigModalRow">
+                                    <span>Quantity: {item.cartQty}</span>
+                                    <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
+                                </div>
                             </div>
                         </div>
                     ))
@@ -52,7 +67,8 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
                     <button style={{ width: "100%" }}>Checkout</button>
 
                 </div>
-            )}
+            )
+            }
         </section >
     )
 

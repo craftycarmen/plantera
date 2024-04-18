@@ -231,7 +231,7 @@ function ListingPage() {
                                 disabled={error}
                             >                            <OpenModalMenuItem
                                     itemText="Add to Cart"
-                                    modalComponent={<ShoppingCartModal />}
+                                    modalComponent={<ShoppingCartModal cartId={cartId} />}
                                 /></button>
                         </form>
                     ) : (<div>SOLD OUT</div>)

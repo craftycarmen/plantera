@@ -1,6 +1,7 @@
 import { useRef, useState, useContext, createContext } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
+import ShoppingCartModal from '../../components/Cart/CartModal';
 
 const ModalContext = createContext();
 
@@ -46,9 +47,10 @@ export function CartModal() {
 
     // Render the following component to the div referenced by the modalRef
     return ReactDOM.createPortal(
-        <div id="modal">
-            <div id="modal-background" onClick={closeModal} />
-            <div id="modal-content">{modalContent}</div>
+        <div className="cartModal">
+            <div className="cartModal-background" onClick={closeModal} />
+            {/* <div className="cartModal-content">{modalContent}</div> */}
+            {modalContent}
         </div>,
         modalRef.current
     );

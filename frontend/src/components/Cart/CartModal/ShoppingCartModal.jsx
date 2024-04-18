@@ -1,21 +1,41 @@
-// // import { useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { useCartModal } from "../../../context/CartModal/Modal";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useCartModal } from "../../../context/CartModal/Modal";
+import { fetchCart } from "../../../store/cart";
+import './ShoppingCart.css';
 
-function ShoppingCartModal({ listing, cartQty }) {
-    // const closeModal = useCartModal();
-    // const dispatch = useDispatch();
+function ShoppingCartModal({ listing, cartQty, cartId }) {
+    const closeModal = useCartModal();
+    const dispatch = useDispatch();
 
-    return (listing &&
-        <>
+    const cartItems = useSelector(state => state.cart.cartItems)
+    console.log(cartItems);
+    useEffect(() => {
+        dispatch(fetchCart(cartId))
+    }, [dispatch, cartId])
+
+    return (cartItems &&
+        <section className="shoppingModal">
             <h1>Shopping Cart</h1>
-            <div>
-                <div>{listing.plantName}</div>
-                <div>Pot Size: {listing.potSize}</div>
-                <div>Qty: {cartQty}</div>
-                <div>${listing.price}</div>
-            </div>
-        </>
+            {cartItems.map((item) => (
+
+                <div key={item.id} className="shoppingModalListing">
+                    <div className="shoppingModalImgContainer"><img src={item.Listing?.ListingImages?.[0]?.url} /></div>
+                    <div className="smInfo">
+                        <div className="smQtyPrice">
+                            <h3>{item.Listing?.plantName}</h3>
+                            <h3>${item.Listing?.price}</h3>
+                        </div>
+                        <div>Pot Size: {item.Listing?.potSize} 8.5" *</div>
+                        <span>Quantity: {item.cartQty}</span>
+
+                    </div>
+                </div>
+            ))}
+
+            <button>Checkout</button>
+
+        </section>
     )
 
 }

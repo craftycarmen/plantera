@@ -8,6 +8,8 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
+    const cartId = localStorage.getItem('cartId')
+
     return (
         <div className='navigation'>
             <NavLink to="/"><img style={{ width: "350px" }} src='../../logo.png' /></NavLink>
@@ -24,9 +26,8 @@ function Navigation({ isLoaded }) {
                 )}&nbsp;&nbsp;&nbsp;
                 <OpenModalMenuItem
                     itemText={<><i className="fa-solid fa-cart-shopping" /></>}
-                    modalComponent={<ShoppingCartModal />}
+                    modalComponent={<ShoppingCartModal cartId={cartId} />}
                 />
-                <ShoppingCartModal />
             </div>
         </div>
     );

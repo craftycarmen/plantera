@@ -1,24 +1,36 @@
-#modal {
+/* CartModal CSS */
+.cartModal {
     position: fixed;
     top: 0;
     right: 0;
-    left: 0;
     bottom: 0;
+    left: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
+    justify-content: flex-end;
+    align-items: flex-start;
+    z-index: 999;
+    /* Adjust z-index if needed */
 }
 
-#modal-background {
-    position: fixed;
+.cartModal-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow-y: auto;
+    /* Enable vertical scrolling if content exceeds modal height */
+    padding: 20px;
+    /* Add padding for better appearance */
+    box-sizing: border-box;
+    /* Ensure padding doesn't affect the total width */
+}
+
+.cartModal-background {
+    position: absolute;
     top: 0;
     right: 0;
-    left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-#modal-content {
-    position: absolute;
+    left: 0;
 }

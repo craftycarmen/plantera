@@ -6,10 +6,11 @@ const LOAD_CART_ITEMS = 'cart/LOAD_CART_ITEMS';
 const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 
-export const loadCart = (cartId, cartItems) => ({
+export const loadCart = (cartId, cartItems, cartTotal) => ({
     type: LOAD_CART,
     cartId,
-    cartItems
+    cartItems,
+    cartTotal
 });
 
 export const createCart = (cartId) => ({
@@ -36,17 +37,20 @@ export const updateCartItem = (cartItem) => ({
 
 export const fetchCart = () => async (dispatch) => {
     const cartId = Number(localStorage.getItem('cartId'));
-
+    console.log("CARTID", cartId);
     if (!cartId) {
         dispatch(createCart(null));
         return;
     }
     const res = await fetch(`/api/cart/${cartId}`);
-
+    console.log("RES", res);
     if (res.ok) {
         const cart = await res.json();
+        console.log("CARTRES", cart);
         if (cart.ShoppingCart !== null) {
-            dispatch(loadCart(cartId, cart.ShoppingCart.CartItems));
+            const cartTotal = cart.ShoppingCart.cartTotal;
+            dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal));
+            // dispatch(loadCart(cart));
             return cart
         }
     } else {
@@ -184,14 +188,21 @@ export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
 
 const initialState = {
     cart: null,
-    cartItems: []
+    cartItems: [],
+    cartTotal: 0
 }
 
 const cartReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case LOAD_CART: {
-            return { ...state, cartId: action.cartId, cartItems: action.cartItems }
+            console.log("CARTTOTAL", action);
+            return {
+                ...state,
+                cartId: action.cartId,
+                cartItems: action.cartItems,
+                cartTotal: action.cartTotal
+            }
         }
         case CREATE_CART: {
             localStorage.setItem('cartId', action.cartId);

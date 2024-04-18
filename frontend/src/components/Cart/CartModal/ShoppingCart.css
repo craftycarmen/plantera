@@ -1,5 +1,5 @@
 .shoppingModal {
-    padding: 15px 25px 40px 25px;
+    padding: 25px 35px 25px 35px;
     margin-top: 0px;
     width: 400px;
     height: calc(100vh - 56px);
@@ -47,4 +47,10 @@
 .smQtyPrice {
     display: flex;
     justify-content: space-between;
+}
+
+.subTotal {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
 }

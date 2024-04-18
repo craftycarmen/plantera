@@ -39,6 +39,11 @@ router.get('/:cartId', async (req, res) => {
 
     const { user } = req;
 
+    let buyerId = null;
+    if (user) {
+        buyerId = user.id;
+    }
+
     const shoppingCart = await ShoppingCart.findOne({
         include: [
             {
@@ -76,7 +81,7 @@ router.get('/:cartId', async (req, res) => {
 
     let getCartById = {
         id: shoppingCart.id,
-        buyerId: user.Id || null,
+        buyerId: buyerId,
         createdAt: shoppingCart.createdAt,
         updatedAt: shoppingCart.updatedAt,
         cartTotal: cartTotal,

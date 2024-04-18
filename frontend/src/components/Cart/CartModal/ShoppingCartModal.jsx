@@ -8,23 +8,26 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
     const closeModal = useCartModal();
     const dispatch = useDispatch();
 
+    // const cart = useSelector(state => state.cart)
     const cartItems = useSelector(state => state.cart.cartItems)
-    console.log(cartItems);
+    const cartTotal = useSelector(state => state.cart.cartTotal);
+
+    console.log("CARTUSESELECTOR", cartTotal);
     useEffect(() => {
         dispatch(fetchCart(cartId))
     }, [dispatch, cartId])
 
     return (
         <section className="shoppingModal">
-            <h1>Shopping Cart</h1>
+            <h1>Your Shopping Cart</h1>
             {cartItems && cartItems.length === 0 &&
                 (
-                    <div>Your cart is empty!</div>
+                    <div style={{ marginTop: "35px" }}>Your cart is empty!</div>
                 )
             }
 
             {cartItems && cartItems.length > 0 && (
-                <div>
+                <div style={{ marginTop: "35px" }}>
                     {cartItems.map((item) => (
 
                         <div key={item.id} className="shoppingModalListing">
@@ -41,8 +44,13 @@ function ShoppingCartModal({ listing, cartQty, cartId }) {
                         </div>
                     ))
                     }
-                    <div>Subtotal: </div>
-                    <button>Checkout</button>
+                    {cartTotal && <div className="subTotal">
+                        <h3>Subtotal:</h3>
+                        <h3>${cartTotal}</h3>
+                    </div>}
+
+                    <button style={{ width: "100%" }}>Checkout</button>
+
                 </div>
             )}
         </section >

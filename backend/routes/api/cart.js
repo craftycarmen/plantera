@@ -62,26 +62,40 @@ router.get('/:cartId', async (req, res) => {
         where: {
             id: cartId
         }
-    })
+    });
 
+    if (!shoppingCart) {
+        return res.status(404).json({ error: 'Shopping cart not found' });
+    }
+
+    const cartItems = shoppingCart.CartItems
     const cartItemsList = []
 
-    shoppingCart.CartItems.forEach(item => {
+    cartItems.forEach(item => {
         cartItemsList.push(item.toJSON())
-    })
+    });
 
-    let cartTotalArray = [0]
-    let numCartItemsArray = [0]
+    let cartTotal = 0;
+    let numCartItems = 0;
+
     cartItemsList.forEach(item => {
-        itemSubTotal = item.cartQty * item.Listing.price
-        item.subTotal = itemSubTotal
-        cartTotalArray.push(itemSubTotal)
-        numCartItemsArray.push(item.cartQty)
+        cartTotal += item.cartQty * item.Listing.price
+        numCartItems += item.cartQty
     })
 
-    let cartTotal = cartTotalArray.reduce((total, amount) => total + amount)
-    console.log(cartTotal);
-    let numCartItems = numCartItemsArray.reduce((total, amount) => total + amount)
+
+    // let cartTotalArray = [0]
+    // let numCartItemsArray = [0]
+    // cartItemsList.forEach(item => {
+    //     itemSubTotal = item.cartQty * item.Listing.price
+    //     item.subTotal = itemSubTotal
+    //     cartTotalArray.push(itemSubTotal)
+    //     numCartItemsArray.push(item.cartQty)
+    // })
+
+    // let cartTotal = cartTotalArray.reduce((total, amount) => total + amount)
+    // console.log(cartTotal);
+    // let numCartItems = numCartItemsArray.reduce((total, amount) => total + amount)
 
     let getCartById = {
         id: shoppingCart.id,

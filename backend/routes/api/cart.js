@@ -50,7 +50,7 @@ router.get('/:cartId', async (req, res) => {
                 model: CartItem,
                 include: {
                     model: Listing,
-                    attributes: ['id', 'plantName', 'price', 'stockQty'],
+                    attributes: ['id', 'plantName', 'price', 'stockQty', 'potSize'],
                     include: {
                         model: Image,
                         as: 'ListingImages',

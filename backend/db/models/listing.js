@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
         {
           through: 'ListingGuide',
           foreignKey: 'listingId',
-          otherKey: 'guideId'
+          otherKey: 'guideId',
+          optional: true
         }
       )
 
@@ -61,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     guideId: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      // allowNull: true
     },
     plantName: {
       type: DataTypes.STRING,

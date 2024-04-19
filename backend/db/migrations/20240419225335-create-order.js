@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'ShoppingCart',
+          model: 'ShoppingCarts',
           key: 'id'
         },
       },
@@ -79,6 +79,6 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Orders";
-    await queryInterface.dropTable('options');
+    await queryInterface.dropTable(options);
   }
 };

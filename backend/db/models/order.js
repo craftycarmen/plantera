@@ -11,6 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Order.belongsTo(
+        models.User,
+        {
+          foreignKey: 'buyerId'
+        }
+      )
+
+      Order.belongsTo(
+        models.ShoppingCart,
+        {
+          foreignKey: 'cartId'
+        }
+      )
     }
   }
   Order.init({
@@ -98,6 +112,7 @@ module.exports = (sequelize, DataTypes) => {
     orderStatus: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: "Processing",
       validate: {
         notNull: {
           msg: 'Order status is required'

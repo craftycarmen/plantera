@@ -33,6 +33,12 @@ function ShoppingCartPage() {
         return 0;
     };
 
+    const showListingPrice = (item) => {
+        if (localCartQty[item.id] > 1) {
+            return `$${item.Listing.price} each`
+        }
+    }
+
     const addQty = (itemId) => {
         const updatedQty = localCartQty[itemId] + 1;
         if (updatedQty <= cartItems.find(item => item.id === itemId).Listing.stockQty) {
@@ -87,7 +93,12 @@ function ShoppingCartPage() {
                                     <div className="smInfo">
                                         <div className="shoppingCartRow">
                                             <h2>{item.Listing?.plantName}</h2>
-                                            <h2>${calculateCartItemTotal(item)}</h2>
+                                            <div>
+
+                                                <h2>${calculateCartItemTotal(item)}</h2>
+                                                <div>{showListingPrice(item)}
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>Pot Size: {item.Listing?.potSize}&#34;</div>
                                         <div className="shoppingCartRow">

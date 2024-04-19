@@ -32,8 +32,9 @@
 }
 
 .shoppingCartRow {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 30px;
 }
 
 .subTotal {

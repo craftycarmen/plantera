@@ -1,7 +1,7 @@
 .shoppingCartPageContainer {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 35px;
+    grid-template-columns: 2fr 1fr;
+    gap: 75px;
     margin-top: 35px;
 }
 
@@ -33,7 +33,7 @@
 
 .shoppingCartRow {
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 4fr auto;
     gap: 30px;
 }
 

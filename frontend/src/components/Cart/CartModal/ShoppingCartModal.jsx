@@ -29,8 +29,6 @@ function ShoppingCartModal({ cartId, navigate }) {
     const checkout = () => {
         closeModal()
         navigate('/cart')
-
-
     }
 
     return (

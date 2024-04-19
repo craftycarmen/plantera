@@ -7,6 +7,7 @@ function ShoppingCartPage() {
     const dispatch = useDispatch();
     const cartId = localStorage.getItem("cartId")
     const cartItems = useSelector(state => state.cart.cartItems)
+    const cartTotal = useSelector(state => state.cart.cartTotal);
     const [localCartQty, setLocalCartQty] = useState({});
 
     useEffect(() => {
@@ -39,37 +40,77 @@ function ShoppingCartPage() {
         }
     }
 
-    const addQty = (itemId) => {
+    // const addQty = (itemId) => {
+    //     const updatedQty = localCartQty[itemId] + 1;
+    //     if (updatedQty <= cartItems.find(item => item.id === itemId).Listing.stockQty) {
+    //         setLocalCartQty(prevCartQty => ({
+    //             ...prevCartQty,
+    //             [itemId]: updatedQty
+    //         }));
+    // }
+
+    const addQty = async (itemId) => {
         const updatedQty = localCartQty[itemId] + 1;
-        if (updatedQty <= cartItems.find(item => item.id === itemId).Listing.stockQty) {
+        const item = cartItems.find(item => item.id === itemId);
+        if (updatedQty <= item.Listing.stockQty) {
             setLocalCartQty(prevCartQty => ({
                 ...prevCartQty,
                 [itemId]: updatedQty
             }));
-        }
-    };
 
-    const removeQty = (itemId) => {
-        if (localCartQty[itemId] > 1) {
-            const updatedQty = localCartQty[itemId] - 1;
-            setLocalCartQty(prevCartQty => ({
-                ...prevCartQty,
-                [itemId]: updatedQty
-            }));
-        }
-    };
-
-    const handleUpdateCart = async () => {
-        await Promise.all(cartItems.map(async (item) => {
             const updatedItem = {
                 ...item,
-                cartQty: localCartQty[item.id]
-            };
-            await dispatch(updateCartItemInCart(cartId, updatedItem));
-        }));
+                cartQty: updatedQty
+            }
 
-        await dispatch(fetchCartItems());
+            await dispatch(updateCartItemInCart(cartId, updatedItem))
+            await dispatch(fetchCartItems(cartId))
+            await dispatch(fetchCart(cartId))
+        }
     }
+
+    const removeQty = async (itemId) => {
+        const updatedQty = localCartQty[itemId] - 1;
+        const item = cartItems.find(item => item.id === itemId);
+        if (updatedQty <= item.Listing.stockQty) {
+            setLocalCartQty(prevCartQty => ({
+                ...prevCartQty,
+                [itemId]: updatedQty
+            }));
+
+            const updatedItem = {
+                ...item,
+                cartQty: updatedQty
+            }
+
+            await dispatch(updateCartItemInCart(cartId, updatedItem))
+            await dispatch(fetchCartItems(cartId))
+            await dispatch(fetchCart(cartId))
+        }
+    }
+
+    // const removeQty = (itemId) => {
+    //     if (localCartQty[itemId] > 1) {
+    //         const updatedQty = localCartQty[itemId] - 1;
+    //         setLocalCartQty(prevCartQty => ({
+    //             ...prevCartQty,
+    //             [itemId]: updatedQty
+    //         }));
+    //     }
+    // };
+
+    // const handleUpdateCart = async () => {
+    //     await Promise.all(cartItems.map(async (item) => {
+    //         const updatedItem = {
+    //             ...item,
+    //             cartQty: localCartQty[item.id]
+    //         };
+    //         await dispatch(updateCartItemInCart(cartId, updatedItem));
+    //     }));
+
+    //     await dispatch(fetchCartItems());
+    //     await dispatch(fetchCart(cartId))
+    // }
 
     return (
         <>
@@ -91,10 +132,10 @@ function ShoppingCartPage() {
                                     </div>
                                     <div className="smInfo">
                                         <div className="shoppingCartRow">
-                                            <h2>{item.Listing?.plantName}</h2>
+                                            <h3>{item.Listing?.plantName}</h3>
                                             <div>
 
-                                                <h2>${calculateCartItemTotal(item)}</h2>
+                                                <h3>${calculateCartItemTotal(item)}</h3>
                                                 <div>{showListingPrice(item)}
                                                 </div>
                                             </div>
@@ -123,9 +164,17 @@ function ShoppingCartPage() {
                                 </div>
                             ))}
                         </div>
-                        <button onClick={handleUpdateCart}>Update Cart</button>
+                        {/* <button onClick={handleUpdateCart}>Update Cart</button> */}
                     </div>
-                    <div>Summary</div>
+                    <div>
+                        <h2>Order Summary</h2>
+                        <div>
+                            {cartTotal && <div className="subTotal">
+                                <h3>Subtotal:</h3>
+                                <h3>${cartTotal}</h3>
+                            </div>}
+                        </div>
+                    </div>
                 </div>
             )}
         </>

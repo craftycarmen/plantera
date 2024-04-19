@@ -74,7 +74,7 @@ function ShoppingCartModal({ cartId, navigate }) {
                         <h3>${cartTotal}</h3>
                     </div>}
 
-                    <button onClick={checkout}>Checkout</button>
+                    <button style={{ width: '100%' }} onClick={checkout}>View Cart & Checkout</button>
 
                 </div>
             )

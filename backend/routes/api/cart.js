@@ -179,7 +179,7 @@ router.put('/:cartId/item/:itemId', async (req, res) => {
         const { cartQty } = req.body
 
         if (cartItem) {
-            cartItem.cartQty += cartQty;
+            cartItem.cartQty = cartQty;
 
             await cartItem.save();
         }

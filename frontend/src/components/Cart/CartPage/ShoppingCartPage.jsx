@@ -1,45 +1,69 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { addCart, addItemToCart, fetchCart, fetchCartItems, updateCartItemInCart } from "../../../store/cart";
+import { fetchCart, fetchCartItems, updateCartItemInCart } from "../../../store/cart";
 import './ShoppingCartPage.css';
 
 function ShoppingCartPage() {
     const dispatch = useDispatch();
     const cartId = localStorage.getItem("cartId")
-    // const cart = useSelector(state => (state.cart[cartId]))
     const cartItems = useSelector(state => state.cart.cartItems)
-    const cartTotal = useSelector(state => state.cart.cartTotal);
-    console.log(cartItems);
+    const [localCartQty, setLocalCartQty] = useState({});
+
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
+            await dispatch(fetchCartItems())
         }
         runDispatches();
     }, [dispatch, cartId])
 
-    const handleRemoveItem = async (itemId) => {
-        await dispatch(removeCartItem(cartId, itemId));
-        dispatch(fetchCartItems());
-        dispatch(fetchCart(cartId))
+    useEffect(() => {
+        const initialCartQty = {};
+        cartItems.forEach(item => {
+            const storedQty = localStorage.getItem(`cartQty_${item.id}`);
+            initialCartQty[item.id] = storedQty ? parseInt(storedQty) : item.cartQty;
+        });
+        setLocalCartQty(initialCartQty)
+    }, [cartItems])
+
+    const calculateCartItemTotal = (item) => {
+        if (item.Listing && item.Listing.price) {
+            return item.Listing.price * localCartQty[item.id];
+        }
+        return 0;
     };
 
-    let [cartQty, setCartQty] = useState(1);
-
-    let addQty = (e) => {
-        e.preventDefault();
-        if (cartQty >= 1 && cartQty < stockQty) {
-            setCartQty(prevCartQty => prevCartQty + 1)
+    const addQty = (itemId) => {
+        const updatedQty = localCartQty[itemId] + 1;
+        if (updatedQty <= cartItems.find(item => item.id === itemId).Listing.stockQty) {
+            setLocalCartQty(prevCartQty => ({
+                ...prevCartQty,
+                [itemId]: updatedQty
+            }));
         }
-    }
+    };
 
-    let removeQty = (e) => {
-        e.preventDefault();
-        if (cartQty > 1) {
-            setCartQty(prevCartQty => prevCartQty - 1)
-            if (error) {
-                setError("");
-            }
+    const removeQty = (itemId) => {
+        if (localCartQty[itemId] > 1) {
+            const updatedQty = localCartQty[itemId] - 1;
+            setLocalCartQty(prevCartQty => ({
+                ...prevCartQty,
+                [itemId]: updatedQty
+            }));
         }
+    };
+
+    const handleUpdateCart = async () => {
+        // Dispatch the action to update cart items with the localCartQty state
+        await Promise.all(cartItems.map(async (item) => {
+            const updatedItem = {
+                ...item,
+                cartQty: localCartQty[item.id]
+            };
+            await dispatch(updateCartItemInCart(cartId, updatedItem));
+        }));
+
+        await dispatch(fetchCartItems());
     }
 
     return (
@@ -54,56 +78,48 @@ function ShoppingCartPage() {
             {cartItems && cartItems.length > 0 && (
                 <div className="shoppingCartPageContainer">
                     <div>
-                        <form>
+                        <div>
                             {cartItems.map((item) => (
-
                                 <div key={item.id} className="shoppingCartListing">
                                     <div className="shoppingCartImgContainer">
-                                        <img
-                                            src={item.Listing?.ListingImages?.[0]?.url}
-                                        />
+                                        <img src={item.Listing?.ListingImages?.[0]?.url} alt={item.Listing?.plantName} />
                                     </div>
                                     <div className="smInfo">
                                         <div className="shoppingCartRow">
                                             <h2>{item.Listing?.plantName}</h2>
-                                            <h2>${item.cartItemsTotal}</h2>
+                                            <h2>${calculateCartItemTotal(item)}</h2>
                                         </div>
                                         <div>Pot Size: {item.Listing?.potSize}&#34;</div>
                                         <div className="shoppingCartRow">
                                             <div className="quantityContainer">
                                                 <span className="qtylabel">Quantity:</span>
                                                 <div className="quantityInput">
-                                                    <button onClick={addQty}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                                    <button onClick={() => addQty(item.id)}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
                                                     <input
                                                         className="inputBox"
-                                                        type="number" step="1"
+                                                        type="number"
+                                                        step="1"
                                                         min="1"
                                                         max={item.Listing?.stockQty}
-                                                        value={cartQty}
+                                                        value={localCartQty[item.id]}
                                                         name="cartQty"
-                                                    // onChange={handleQty} 
+                                                        readOnly
                                                     />
-
-                                                    <button onClick={removeQty}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
-
-
+                                                    <button onClick={() => removeQty(item.id)}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
                                                 </div>
-                                                <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer", marginLeft: "10px" }} onClick={() => handleRemoveItem(item.id)} /></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            ))
-                            }
-
-                        </form>
+                            ))}
+                        </div>
+                        <button onClick={handleUpdateCart}>Update Cart</button>
                     </div>
                     <div>Summary</div>
                 </div>
-            )
-            }
+            )}
         </>
     )
 }
 
-export default ShoppingCartPage
+export default ShoppingCartPage;

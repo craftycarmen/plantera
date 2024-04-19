@@ -168,26 +168,52 @@ export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) =>
     }
 };
 
-export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
-    const res = await csrfFetch(`/api/cart/${cartId}/item/${cartItem.id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(cartItem)
-    })
+// export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
+//     const res = await csrfFetch(`/api/cart/${cartId}/item/${cartItem.id}`, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(cartItem)
+//     })
 
-    if (res.ok) {
-        const updatedCartItem = await res.json();
-        dispatch(updateCartItem(updatedCartItem));
-        const cartItems = await dispatch(fetchCartItems(cartId));
-        localStorage.setItem('cartItems', JSON.stringify(cartItems.ShoppingCart.CartItems));
-        return updatedCartItem;
-    } else {
-        const errors = await res.json();
-        return errors;
+//     if (res.ok) {
+//         const updatedCartItem = await res.json();
+//         console.log("Updated cart item:", updatedCartItem);
+//         dispatch(updateCartItem(updatedCartItem));
+//         const cartItems = await dispatch(fetchCartItems(cartId));
+//         localStorage.setItem('cartItems', JSON.stringify(cartItems.ShoppingCart.CartItems));
+//         return updatedCartItem;
+//     } else {
+//         const errors = await res.json();
+//         return errors;
+//     }
+// }
+
+export const updateCartItemInCart = (cartId, cartItem) => async (dispatch) => {
+    try {
+        const res = await csrfFetch(`/api/cart/${cartId}/item/${cartItem.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cartItem)
+        });
+
+        if (res.ok) {
+            const updatedCartItem = await res.json();
+            dispatch(updateCartItem(updatedCartItem)); // Dispatch action to update Redux state
+            return updatedCartItem;
+        } else {
+            const errors = await res.json();
+            return errors;
+        }
+    } catch (error) {
+        console.error('Error updating cart item:', error);
+        throw error;
     }
-}
+};
+
 
 export const removeCartItem = (cartId, cartItemId) => async (dispatch) => {
     if (cartId === null) {
@@ -239,25 +265,59 @@ const cartReducer = (state = initialState, action) => {
             }
         }
 
+        // case UPDATE_CART_ITEM: {
+        //     const { cartItem } = action;
+        //     if (!cartItem) {
+        //         return state;
+        //     }
+
+        //     const updatedCartItemIndex = state.cartItems.findIndex(item => item.id === cartItem.id);
+
+        //     if (updatedCartItemIndex !== -1) {
+        //         const updatedCartItems = [...state.cartItems];
+        //         updatedCartItems[updatedCartItemIndex] = cartItem;
+        //         return {
+        //             ...state,
+        //             cartItems: updatedCartItems
+        //         };
+        //     } else {
+        //         return state;
+        //     }
+        // }
+
+        // case UPDATE_CART_ITEM: {
+        //     const { cartItem } = action;
+        //     if (!cartItem) {
+        //         return state;
+        //     }
+
+        //     return {
+        //         ...state,
+        //         cartItems: state.cartItems.map(item =>
+        //             item.id === cartItem.id ? { ...item, cartQty: cartItem.cartQty } : item
+        //         )
+        //     };
+        // }
+
         case UPDATE_CART_ITEM: {
             const { cartItem } = action;
             if (!cartItem) {
                 return state;
             }
 
-            const updatedCartItemIndex = state.cartItems.findIndex(item => item.id === cartItem.id);
+            // Calculate the new numCartItems based on the updated cart items
+            const numCartItems = state.cartItems.reduce((total, item) => total + item.cartQty, 0);
 
-            if (updatedCartItemIndex !== -1) {
-                const updatedCartItems = [...state.cartItems];
-                updatedCartItems[updatedCartItemIndex] = cartItem;
-                return {
-                    ...state,
-                    cartItems: updatedCartItems
-                };
-            } else {
-                return state;
-            }
+            return {
+                ...state,
+                cartItems: state.cartItems.map(item =>
+                    item.id === cartItem.id ? { ...item, cartQty: cartItem.cartQty } : item
+                ),
+                numCartItems: numCartItems // Update numCartItems with the new value
+            };
         }
+
+
         case DELETE_CART_ITEM: {
             const newState = { ...state };
             delete newState[action.cartItemId];

@@ -8,6 +8,8 @@ router.get('/', async (req, res) => {
     // const { user } = req;
     const cartId = Number(req.query.cartId);
 
+    // const cartId = localStorage.getItem("cartId");
+
     // if (!user) {
     //     return res.status(404).json({ message: "User not found" });
     // }
@@ -77,12 +79,15 @@ router.get('/:cartId', async (req, res) => {
 
     let cartTotal = 0;
     let numCartItems = 0;
-
     cartItemsList.forEach(item => {
         cartTotal += item.cartQty * item.Listing.price
         numCartItems += item.cartQty
     })
 
+    cartItemsList.forEach(item => {
+        item.cartItemsTotal = item.cartQty * item.Listing.price
+    })
+    console.log(cartItemsList);
 
     // let cartTotalArray = [0]
     // let numCartItemsArray = [0]
@@ -172,16 +177,11 @@ router.put('/:cartId/item/:itemId', async (req, res) => {
         })
 
         const { cartQty } = req.body
-        // cartItem.cartQty = cartQty;
-        // await cartItem.save();
 
         if (cartItem) {
             cartItem.cartQty += cartQty;
-            // if (cartQty <= listing.stockQty) {
+
             await cartItem.save();
-            // } else {
-            //     return res.status(400).json({ error: "Cart quantity exceeds stock quantity" })
-            // }
         }
 
         await cart.reload();

@@ -1,0 +1,43 @@
+.shoppingCartPageContainer {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 35px;
+    margin-top: 35px;
+}
+
+.shoppingCartImgContainer {
+    width: 100%;
+}
+
+
+.shoppingCartListing {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 20px;
+}
+
+.shoppingCartListing img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.smInfo {
+    display: grid;
+    grid-template-rows: 3fr 1fr 1fr;
+    padding: 5px 0px 10px 0px;
+}
+
+.shoppingCartRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.subTotal {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}

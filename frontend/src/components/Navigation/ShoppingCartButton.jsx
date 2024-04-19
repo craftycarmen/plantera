@@ -4,9 +4,11 @@ import './Navigation.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchCartItems } from '../../store/cart';
+import { useNavigate } from 'react-router-dom';
 
 function ShoppingCartButton({ cartId }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const numCartItems = useSelector(state => state.cart.numCartItems);
 
     useEffect(() => {
@@ -40,7 +42,7 @@ function ShoppingCartButton({ cartId }) {
 
 
                 </>}
-                modalComponent={<ShoppingCartModal cartId={cartId} />}
+                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} />}
             />
 
 

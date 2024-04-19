@@ -24,7 +24,9 @@ function Navigation({ isLoaded }) {
                     </>
                 )}&nbsp;&nbsp;&nbsp;
 
-                <ShoppingCartButton cartId={cartId} />
+                {isLoaded && (
+                    <ShoppingCartButton cartId={cartId} />
+                )}
             </div>
         </div>
     );

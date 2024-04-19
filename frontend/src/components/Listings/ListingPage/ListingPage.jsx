@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchOneListing } from "../../../store/listings";
 import { useEffect, useState } from "react";
 import './ListingPage.css';
@@ -12,6 +12,7 @@ import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 function ListingPage() {
     const { listingId } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const listing = useSelector(state => (state.listings[listingId]))
 
@@ -229,10 +230,12 @@ function ListingPage() {
                                 itemText={<>
                                     <button
                                         type="submit"
-                                        disabled={error}>Add to Cart</button>
+                                        disabled={error}
+                                    >Add to Cart</button>
                                 </>}
-                                modalComponent={<ShoppingCartModal cartId={cartId} />}
+                                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} />}
                             />
+
                         </form>
                     ) : (<div>SOLD OUT</div>)
                     }

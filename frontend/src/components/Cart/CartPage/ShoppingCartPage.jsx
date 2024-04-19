@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchCart, fetchCartItems, updateCartItemInCart } from "../../../store/cart";
+import { fetchCart, fetchCartItems, updateCartItemInCart, removeCartItem } from "../../../store/cart";
 import './ShoppingCartPage.css';
+import { Link } from "react-router-dom";
 
 function ShoppingCartPage() {
     const dispatch = useDispatch();
@@ -33,6 +34,15 @@ function ShoppingCartPage() {
         }
         return 0;
     };
+
+    const estimatedTax = (total) => {
+        let tax = (total * 0.0825).toFixed(2)
+        return tax
+    }
+
+    const orderTotal = (subtotal, tax) => {
+        return (subtotal + parseFloat(tax)).toFixed(2);
+    }
 
     const showListingPrice = (item) => {
         if (localCartQty[item.id] > 1) {
@@ -72,7 +82,7 @@ function ShoppingCartPage() {
     const removeQty = async (itemId) => {
         const updatedQty = localCartQty[itemId] - 1;
         const item = cartItems.find(item => item.id === itemId);
-        if (updatedQty <= item.Listing.stockQty) {
+        if (localCartQty[itemId] > 1) {
             setLocalCartQty(prevCartQty => ({
                 ...prevCartQty,
                 [itemId]: updatedQty
@@ -88,6 +98,12 @@ function ShoppingCartPage() {
             await dispatch(fetchCart(cartId))
         }
     }
+
+    const handleRemoveItem = async (itemId) => {
+        await dispatch(removeCartItem(cartId, itemId));
+        dispatch(fetchCartItems());
+        dispatch(fetchCart(cartId))
+    };
 
     // const removeQty = (itemId) => {
     //     if (localCartQty[itemId] > 1) {
@@ -128,7 +144,7 @@ function ShoppingCartPage() {
                             {cartItems.map((item) => (
                                 <div key={item.id} className="shoppingCartListing">
                                     <div className="shoppingCartImgContainer">
-                                        <img src={item.Listing?.ListingImages?.[0]?.url} alt={item.Listing?.plantName} />
+                                        <Link to={`/listings/${item.Listing?.id}`}><img src={item.Listing?.ListingImages?.[0]?.url} alt={item.Listing?.plantName} /></Link>
                                     </div>
                                     <div className="smInfo">
                                         <div className="shoppingCartRow">
@@ -159,20 +175,34 @@ function ShoppingCartPage() {
                                                     <button onClick={() => removeQty(item.id)}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
                                                 </div>
                                             </div>
+                                            <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        {/* <button onClick={handleUpdateCart}>Update Cart</button> */}
                     </div>
                     <div>
                         <h2>Order Summary</h2>
                         <div>
-                            {cartTotal && <div className="subTotal">
-                                <h3>Subtotal:</h3>
-                                <h3>${cartTotal}</h3>
-                            </div>}
+                            {cartTotal &&
+                                <div className="subTotal">
+                                    <h3>Subtotal:</h3>
+                                    <h3>${cartTotal}</h3>
+                                </div>}
+                            <div className="subTotal">
+                                <span>Shipping:</span>
+                                <span>Free &#128522;</span>
+                            </div>
+                            <div className="subTotal">
+                                <span>Estimated Tax:</span>
+                                <span>${estimatedTax(cartTotal)}</span>
+                            </div>
+                            <div className="subTotal">
+                                <h2>Total:</h2>
+                                <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
+                            </div>
+                            <button style={{ width: "100%" }}>Check Out</button>
                         </div>
                     </div>
                 </div>

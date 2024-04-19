@@ -20,7 +20,6 @@ function ListingPage() {
 
     const cart = useSelector(state => state.cart)
     const cartItems = useSelector(state => state.cart.cartItems)
-    const [qtyExceeded, setQtyExceeded] = useState(false);
 
     let [cartId, setCartId] = useState(() => {
         const storedCartId = localStorage.getItem('cartId');

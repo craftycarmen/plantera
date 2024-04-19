@@ -68,12 +68,12 @@
 
 .cartNum {
     position: absolute;
-    color: #F2DCCB;
+    color: #28635A;
     font-weight: 100;
     font-size: 11px;
     /* margin-top: 10px;
     margin-left: -1px; */
-    margin-top: 1px;
+    margin-top: 0px;
     top: 0;
     right: 0;
     bottom: 0;

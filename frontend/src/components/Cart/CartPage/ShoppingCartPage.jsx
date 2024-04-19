@@ -60,7 +60,6 @@ function ShoppingCartPage() {
     };
 
     const handleUpdateCart = async () => {
-        // Dispatch the action to update cart items with the localCartQty state
         await Promise.all(cartItems.map(async (item) => {
             const updatedItem = {
                 ...item,

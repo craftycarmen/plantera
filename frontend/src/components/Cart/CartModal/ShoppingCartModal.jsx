@@ -25,6 +25,7 @@ function ShoppingCartModal({ cartId, navigate }) {
         dispatch(fetchCart(cartId))
     };
 
+
     const checkout = () => {
         closeModal()
         navigate('/cart')
@@ -74,7 +75,7 @@ function ShoppingCartModal({ cartId, navigate }) {
                         <h3>${cartTotal}</h3>
                     </div>}
 
-                    <button style={{ width: '100%' }} onClick={checkout}>View Cart & Checkout</button>
+                    <button style={{ width: '100%' }} onClick={checkout}>View Cart & Check Out</button>
 
                 </div>
             )

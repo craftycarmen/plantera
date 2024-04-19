@@ -20,6 +20,7 @@ function ListingPage() {
 
     const cart = useSelector(state => state.cart)
     const cartItems = useSelector(state => state.cart.cartItems)
+    const [qtyExceeded, setQtyExceeded] = useState(false);
 
     let [cartId, setCartId] = useState(() => {
         const storedCartId = localStorage.getItem('cartId');
@@ -103,6 +104,12 @@ function ListingPage() {
 
         const newQty = parseInt(e.target.value);
         setCartQty(newQty);
+        console.log("STOCKQTY", stockQty);
+        // if (newQty >= stockQty) {
+        //     setQtyExceeded(true);
+        // } else {
+        //     setQtyExceeded(false)
+        // }
     };
 
 
@@ -133,64 +140,59 @@ function ListingPage() {
 
         const totalQty = cartQty;
 
-        const remainingStock = stockQty - (existingCartItem ? existingCartItem.cartQty : 0)
+        if (totalQty >= stockQty) {
+            setError("You've added the maximum quantity to your cart!")
+        }
 
         const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-        if (totalQty > stockQty) {
-            setError("Quantity exceeded")
-        } else if (totalQty > remainingStock) {
-            setError(`${remainingStock} left in stock`)
+        if (cartItemExists) {
+            const updatedCartItem = { ...existingCartItem, cartQty: totalQty };
+
+            const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item =>
+                item.id === existingCartItem.id ? { ...item, cartQty: totalQty } : item
+            );
+
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
+
+            await dispatch(updateCartItemInCart(cartId, updatedCartItem))
+
         } else {
-            setError("")
+            const newCartItem = {
+                cartId: Number(newCartId),
+                listingId: Number(listingId),
+                cartQty: Number(cartQty)
+            };
 
-            if (cartItemExists) {
-                const updatedCartItem = { ...existingCartItem, cartQty: totalQty };
+            const newItemRes = await dispatch(addItemToCart(newCartId, newCartItem))
 
-                const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item =>
-                    item.id === existingCartItem.id ? { ...item, cartQty: totalQty } : item
-                );
-
-                localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
-
-                await dispatch(updateCartItemInCart(cartId, updatedCartItem))
-
-            } else {
-                const newCartItem = {
-                    cartId: Number(newCartId),
-                    listingId: Number(listingId),
-                    cartQty: Number(cartQty)
-                };
-
-                const newItemRes = await dispatch(addItemToCart(newCartId, newCartItem))
-
-                if (newItemRes) {
-                    newCartItemId = newItemRes.id
-                    setNewCartItemId(newCartItemId);
-                }
-
-                await dispatch(fetchCartItems(newCartId))
-
-                let updatedItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-                let existingItemIndex = updatedItemsLocalStorage.findIndex(item => item.listingId === Number(listingId))
-
-                if (existingItemIndex !== -1) {
-                    updatedItemsLocalStorage[existingItemIndex].cartQty = totalQty;
-                } else {
-                    updatedItemsLocalStorage.push({
-                        id: newCartItemId,
-                        listingId: Number(listingId),
-                        cartQty: Number(totalQty)
-                    });
-                }
-
-                localStorage.setItem('cartItems', JSON.stringify(updatedItemsLocalStorage));
-
+            if (newItemRes) {
+                newCartItemId = newItemRes.id
+                setNewCartItemId(newCartItemId);
             }
-            return true;
+
+            await dispatch(fetchCartItems(newCartId))
+
+            let updatedItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            let existingItemIndex = updatedItemsLocalStorage.findIndex(item => item.listingId === Number(listingId))
+
+            if (existingItemIndex !== -1) {
+                updatedItemsLocalStorage[existingItemIndex].cartQty = totalQty;
+            } else {
+                updatedItemsLocalStorage.push({
+                    id: newCartItemId,
+                    listingId: Number(listingId),
+                    cartQty: Number(totalQty)
+                });
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(updatedItemsLocalStorage));
+
         }
+        return true;
     }
+
 
     return (listing &&
         <>

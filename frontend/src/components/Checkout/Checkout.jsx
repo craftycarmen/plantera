@@ -57,11 +57,13 @@ function Checkout() {
         if (!zipCode) errs.zipCode = '';
         if (!paymentMethod) errs.paymentMethod = '';
         if (!paymentDetails) errs.paymentDetails = '';
-        if (paymentDetails && isNaN(paymentDetails) && paymentDetails.length !== 4) errs.paymentDetails = 'Payment details must be 4 digits';
+        if (paymentDetails && isNaN(paymentDetails)) errs.paymentDetails = 'Payment details must be 4 digits';
+        if (paymentDetails && paymentDetails.length !== 4) errs.paymentDetails = 'Payment details must be 4 digits';
 
         setErrors(errs);
     }, [firstName, lastName, address, city, state, zipCode, paymentMethod, paymentDetails])
 
+    console.log(paymentDetails.length)
     const cartTotal = (cart.cartTotal * 1.0825).toFixed(2);
 
     const handleSubmit = async (e) => {
@@ -222,6 +224,8 @@ function Checkout() {
                             onChange={updatePaymentDetails}
                             placeholder=''
                             id='paymentDetails'
+                            minLength="4"
+                            maxLength="4"
                         />
                         <label htmlFor='paymentDetails' className='floating-label'>*Payment Details (4 digits)</label>
                     </div>

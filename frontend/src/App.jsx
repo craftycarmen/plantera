@@ -10,6 +10,7 @@ import UpdateListingForm from './components/Listings/ListingForm/UpdateListingFo
 import ManageListings from './components/listings/ManageListings';
 import ShoppingCartPage from './components/Cart/CartPage';
 import Checkout from './components/Checkout';
+import OrderConfirmation from './components/Checkout/OrderConfirmation';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
       {
         path: '/checkout',
         element: <Checkout />
+      },
+      {
+        path: '/orderconfirmation',
+        element: <OrderConfirmation />
       },
     ]
   }

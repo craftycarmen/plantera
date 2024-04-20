@@ -84,14 +84,19 @@ function Checkout() {
         }
 
         console.log("ORDER", order);
-
-        await dispatch(addOrder(order))
-            .then(() => {
-                localStorage.removeItem('cartId');
-                localStorage.removeItem('cartItems');
-                dispatch(clearCart());
-            })
-            .then(navigate('/'))
+        let orderId = null;
+        const res = await dispatch(addOrder(order))
+        if (res) {
+            orderId = res.id
+            console.log("ORDERID", orderId);
+            localStorage.removeItem('cartId');
+            localStorage.removeItem('cartItems');
+            dispatch(clearCart());
+            navigate('/orderconfirmation', { state: { orders: orderId } })
+        } else {
+            console.error('Error creating order:', res);
+            return;
+        }
     }
 
     return (

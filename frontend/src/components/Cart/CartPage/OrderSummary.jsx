@@ -40,7 +40,7 @@ function OrderSummary({ cartId, checkout }) {
                     </div>}
                 <div className="subTotalSummary">
                     <span>Shipping:</span>
-                    <span>Free &#128522;</span>
+                    <span>Free <i className="fa-regular fa-face-laugh-wink" /></span>
                 </div>
                 <div className="subTotalSummary">
                     <span>Estimated Tax:</span>

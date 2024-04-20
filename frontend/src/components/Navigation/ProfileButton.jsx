@@ -56,7 +56,7 @@ function ProfileButton({ user }) {
     return (
         <div className='profileButtonWrapper'>
             <span onClick={toggleMenu}>
-                <i className="fa-solid fa-user" />
+                <i className="fa-regular fa-face-smile" />
             </span>
             <div className={ulClassName} ref={ulRef}>
                 {user ? (

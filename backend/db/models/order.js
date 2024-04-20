@@ -101,7 +101,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     orderTotal: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         notNull: {

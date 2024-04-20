@@ -54,14 +54,17 @@ router.post(
 
         await setTokenCookie(res, safeUser);
 
-        // const { cartId } = req.body
-        // if (cartId) {
-        //     const cart = await ShoppingCart.findByPk(cartId);
-        //     if (cart) {
-        //         cart.buyerId = user.id;
-        //         await cart.save();
-        //     }
-        // }
+        const { cartId } = req.body
+
+        console.log("REQUSER", req.user)
+        if (cartId) {
+            const cart = await ShoppingCart.findByPk(cartId);
+
+            if (cart) {
+                cart.buyerId = user ? user.id : null;
+                await cart.save();
+            }
+        }
 
         return res.json({
             user: safeUser

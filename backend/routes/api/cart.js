@@ -66,6 +66,8 @@ router.get('/:cartId', async (req, res) => {
         }
     });
 
+    if (buyerId !== null && shoppingCart.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
+
     if (!shoppingCart) {
         return res.status(404).json({ error: 'Shopping cart not found' });
     }

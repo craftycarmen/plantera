@@ -160,7 +160,7 @@ function ShoppingCartPage() {
                                                         step="1"
                                                         min="1"
                                                         max={item.Listing?.stockQty}
-                                                        value={localCartQty[item.id]}
+                                                        value={localCartQty[item.id] || 0}
                                                         name="cartQty"
                                                         readOnly
                                                     />

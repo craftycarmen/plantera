@@ -17,12 +17,13 @@ const removeUser = () => {
 };
 
 export const login = (user) => async (dispatch) => {
-    const { credential, password } = user;
+    const { credential, password, cartId } = user;
     const res = await csrfFetch("/api/session", {
         method: "POST",
         body: JSON.stringify({
             credential,
-            password
+            password,
+            cartId
         })
     });
 
@@ -97,14 +98,14 @@ export const logout = () => async (dispatch) => {
     return res;
 }
 
-const initialState = { user: null };
+const initialState = { user: null, cartId: null };
 
 const sessionReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER:
             return { ...state, user: action.payload };
         case REMOVE_USER:
-            return { ...state, user: null };
+            return { ...state, user: null, cartId: null };
         default:
             return state;
     }

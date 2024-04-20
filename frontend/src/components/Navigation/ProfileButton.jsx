@@ -4,11 +4,15 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { clearCart, resetCartId } from '../../store/cart';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
+    const cartId = localStorage.getItem('cartId')
+    const navigate = useNavigate()
 
     const toggleMenu = (e) => {
         e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -34,7 +38,17 @@ function ProfileButton({ user }) {
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.logout());
+
+        if (user && cartId) {
+            localStorage.removeItem('cartId');
+            console.log('CartId cleared from localStorage');
+
+            localStorage.removeItem('cartItems')
+            dispatch(resetCartId())
+            dispatch(clearCart())
+        }
         closeMenu();
+        navigate('/')
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

@@ -12,6 +12,12 @@ function LoginFormModal() {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
+    let cartId = null;
+
+    if (localStorage.getItem('cartId')) {
+        cartId = localStorage.getItem('cartId')
+    }
+
     useEffect(() => {
         const char = {}
         if (credential.length < 4) char.credential = 'Not enough characters'
@@ -23,7 +29,7 @@ function LoginFormModal() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
-        return dispatch(sessionActions.login({ credential, password }))
+        return dispatch(sessionActions.login({ credential, password, cartId }))
             .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
@@ -35,15 +41,20 @@ function LoginFormModal() {
 
     const demoUser = (e) => {
         e.preventDefault();
-
+        console.log("CARTID", cartId);
         return dispatch(
             sessionActions.login({
                 credential: "PlanteraDemo",
-                password: "password"
+                password: "password",
+                cartId: cartId
             })
         )
             .then(closeModal)
     };
+
+
+
+
 
     return (
         <section className='modal'>
@@ -75,6 +86,7 @@ function LoginFormModal() {
                     <label htmlFor="password" className="floating-label">Password
                     </label>
                 </div>
+                <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button
                         disabled={Object.values(charCount).length}

@@ -33,6 +33,18 @@ function ListingPage() {
 
     let [newCartItemId, setNewCartItemId] = useState(null);
 
+    console.log("CARTID ON LOAD", cartId);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await dispatch(fetchOneListing(listingId));
+            if (cart.cartId) {
+                dispatch(fetchCartItems(cart.cartId));
+            }
+        };
+        fetchData();
+    }, [dispatch, listingId, cart.cartId]);
+
     useEffect(() => {
         const fetchDataAndLocalStorageUpdate = async () => {
             if (cart.cartId) {
@@ -115,7 +127,7 @@ function ListingPage() {
     const handleAddToCart = async () => {
         let newCartId = cartId;
         let cartItemExists = false;
-        console.log("CARTSTUFF", cartId);
+        console.log("CARTSTUFF", newCartId);
         if (cartId === null) {
             const res = await dispatch(addCart());
             console.log("CARTRESINHERE", res);

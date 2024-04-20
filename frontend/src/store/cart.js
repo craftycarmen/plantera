@@ -7,6 +7,7 @@ const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
 const CLEAR_CART = 'cart/CLEAR_CART';
+const RESET_CART_ID = 'cart/RESET_CART_ID';
 
 export const loadCart = (cartId, cartItems, cartTotal, numCartItems) => ({
     type: LOAD_CART,
@@ -45,16 +46,20 @@ export const deleteCartItem = (cartId, cartItemId) => ({
 
 export const clearCart = () => ({
     type: CLEAR_CART
+});
+
+export const resetCartId = () => ({
+    type: RESET_CART_ID
 })
 
 
 export const fetchCart = () => async (dispatch) => {
     const cartId = Number(localStorage.getItem('cartId'));
-    console.log("CARTID", cartId);
-    if (!cartId) {
-        dispatch(createCart(null));
-        return;
-    }
+    console.log('CartId fetched from localStorage:', cartId);
+    // if (!cartId || (isNaN(cartId) && cartId <= 0)) {
+    //     dispatch(createCart(null));
+    //     return;
+    // }
     const res = await fetch(`/api/cart/${cartId}`);
     console.log("RES", res);
     if (res.ok) {
@@ -64,7 +69,6 @@ export const fetchCart = () => async (dispatch) => {
             const cartTotal = cart.ShoppingCart.cartTotal;
             const numCartItems = cart.ShoppingCart.numCartItems
             dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
-            // dispatch(loadCart(cart));
             return cart
         }
     } else {
@@ -238,6 +242,7 @@ export const removeCartItem = (cartId, cartItemId) => async (dispatch) => {
 const initialState = {
     cart: null,
     cartItems: [],
+    cartId: null,
     cartTotal: 0,
     numCartItems: 0
 }
@@ -299,6 +304,15 @@ const cartReducer = (state = initialState, action) => {
             return initialState;
         }
 
+        case RESET_CART_ID: {
+            return {
+                ...state,
+                cartId: null,
+                cartItems: [],
+                cartTotal: 0,
+                numCartItems: 0
+            }
+        }
         default:
             return { ...state }
     }

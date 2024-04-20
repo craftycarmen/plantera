@@ -11,7 +11,6 @@ function ShoppingCartModal({ cartId, navigate }) {
     const cartItems = useSelector(state => state.cart.cartItems)
     const cartTotal = useSelector(state => state.cart.cartTotal);
 
-    console.log("CARTUSESELECTOR", cartItems);
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))

@@ -6,6 +6,7 @@ const LOAD_CART_ITEMS = 'cart/LOAD_CART_ITEMS';
 const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
+const CLEAR_CART = 'cart/CLEAR_CART';
 
 export const loadCart = (cartId, cartItems, cartTotal, numCartItems) => ({
     type: LOAD_CART,
@@ -40,6 +41,10 @@ export const deleteCartItem = (cartId, cartItemId) => ({
     type: DELETE_CART_ITEM,
     cartId,
     cartItemId
+});
+
+export const clearCart = () => ({
+    type: CLEAR_CART
 })
 
 
@@ -265,47 +270,13 @@ const cartReducer = (state = initialState, action) => {
             }
         }
 
-        // case UPDATE_CART_ITEM: {
-        //     const { cartItem } = action;
-        //     if (!cartItem) {
-        //         return state;
-        //     }
-
-        //     const updatedCartItemIndex = state.cartItems.findIndex(item => item.id === cartItem.id);
-
-        //     if (updatedCartItemIndex !== -1) {
-        //         const updatedCartItems = [...state.cartItems];
-        //         updatedCartItems[updatedCartItemIndex] = cartItem;
-        //         return {
-        //             ...state,
-        //             cartItems: updatedCartItems
-        //         };
-        //     } else {
-        //         return state;
-        //     }
-        // }
-
-        // case UPDATE_CART_ITEM: {
-        //     const { cartItem } = action;
-        //     if (!cartItem) {
-        //         return state;
-        //     }
-
-        //     return {
-        //         ...state,
-        //         cartItems: state.cartItems.map(item =>
-        //             item.id === cartItem.id ? { ...item, cartQty: cartItem.cartQty } : item
-        //         )
-        //     };
-        // }
-
         case UPDATE_CART_ITEM: {
             const { cartItem } = action;
             if (!cartItem) {
                 return state;
             }
 
-            // Calculate the new numCartItems based on the updated cart items
+
             const numCartItems = state.cartItems.reduce((total, item) => total + item.cartQty, 0);
 
             return {
@@ -317,17 +288,17 @@ const cartReducer = (state = initialState, action) => {
             };
         }
 
-
         case DELETE_CART_ITEM: {
             const newState = { ...state };
             delete newState[action.cartItemId];
             return newState;
 
-            // return {
-            //     ...state,
-            //     cartItems: state.cartItems.filter(item => item.id !== action.cartItemId)
-            // }
         }
+
+        case CLEAR_CART: {
+            return initialState;
+        }
+
         default:
             return { ...state }
     }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OrderSummary from "../Cart/CartPage/OrderSummary"
 import { addOrder } from "../../store/order";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../../store/cart";
 
 function Checkout() {
     const dispatch = useDispatch();
@@ -85,6 +86,11 @@ function Checkout() {
         console.log("ORDER", order);
 
         await dispatch(addOrder(order))
+            .then(() => {
+                localStorage.removeItem('cartId');
+                localStorage.removeItem('cartItems');
+                dispatch(clearCart());
+            })
             .then(navigate('/'))
     }
 

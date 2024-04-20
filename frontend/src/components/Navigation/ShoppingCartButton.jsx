@@ -11,7 +11,7 @@ function ShoppingCartButton({ cartId }) {
     const navigate = useNavigate();
     const numCartItems = useSelector(state => state.cart.numCartItems);
 
-    console.log(numCartItems);
+
     useEffect(() => {
         const runDispatches = async () => {
             dispatch(fetchCartItems())

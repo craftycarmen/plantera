@@ -1,7 +1,13 @@
+import OrderSummary from "../Cart/CartPage/OrderSummary"
+
 function Checkout() {
     return (
         <>
-            Checkout
+            <h1>Checkout</h1>
+            <div className="shoppingCartPageContainer">
+                <div>fdsfsdf</div>
+                <OrderSummary />
+            </div>
         </>
     )
 }

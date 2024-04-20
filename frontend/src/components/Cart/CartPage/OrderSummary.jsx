@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart, fetchCartItems } from "../../../store/cart";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function OrderSummary({ cartId }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const cartTotal = useSelector(state => state.cart.cartTotal);
 
     useEffect(() => {
@@ -21,6 +23,10 @@ function OrderSummary({ cartId }) {
 
     const orderTotal = (subtotal, tax) => {
         return (subtotal + parseFloat(tax)).toFixed(2);
+    }
+
+    const handleCheckOut = () => {
+        navigate('/checkout')
     }
 
     return (
@@ -44,7 +50,7 @@ function OrderSummary({ cartId }) {
                     <h2>Total:</h2>
                     <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
                 </div>
-                <button style={{ width: "100%" }}>Check Out</button>
+                <button style={{ width: "100%" }} onClick={handleCheckOut}>Check Out</button>
             </div>
         </div>
     )

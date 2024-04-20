@@ -4,6 +4,17 @@ const { ShoppingCart, Order } = require('../../db/models');
 
 const router = express.Router();
 
+router.get('/', async (req, res) => {
+    const { user } = req;
+
+    const orders = await Order.findAll({
+        where: {
+            buyerId: user.id
+        }
+    });
+
+    return res.json(orders)
+})
 router.post('/', requireAuth, async (req, res) => {
     try {
 
@@ -27,6 +38,8 @@ router.post('/', requireAuth, async (req, res) => {
             paymentDetails,
             orderTotal
         })
+
+        console.log("RESORER", res);
 
         return res.status(201).json(order)
     } catch (err) {

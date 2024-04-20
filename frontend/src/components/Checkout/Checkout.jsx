@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OrderSummary from "../Cart/CartPage/OrderSummary"
+import { addOrder } from "../../store/order";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
-    const cart = useSelector(state => state.cart);
-    const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const cart = useSelector(state => state.cart);
+
+    const sessionUser = useSelector(state => state.session.user);
+    console.log(cart);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [address, setAddress] = useState("");
@@ -72,18 +78,21 @@ function Checkout() {
             zipCode,
             paymentMethod,
             paymentDetails,
-            cartId,
-            cartTotal
+            cartId: cart.cartId,
+            orderTotal: Number(cartTotal)
         }
 
-        await dispatchEvent()
+        console.log("ORDER", order);
+
+        await dispatch(addOrder(order))
+            .then(navigate('/'))
     }
 
     return (
         <>
             <h1>Checkout</h1>
             <div className="shoppingCartPageContainer">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <h3>Shipping Address</h3>
                     <div className='inputContainer'>
                         <input
@@ -207,17 +216,10 @@ function Checkout() {
                     </div>
                     <div className='error'>{errors.paymentDetails &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
-                    <input
-                        type="hidden"
-                        name="cartId"
-                        value={cart.id}
-                    />
-                    <input
-                        type="hidden"
-                        name="orderTotal"
-                        value={cartTotal}
-                    />
-                    <button type="submit">Place My Order</button>
+                    <button
+                        type="submit"
+                        disabled={!!Object.values(errors).length}
+                    >Place My Order</button>
                 </form>
                 <OrderSummary />
             </div>

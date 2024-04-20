@@ -232,7 +232,7 @@ function Checkout() {
                         disabled={!!Object.values(errors).length}
                     >Place My Order</button>
                 </form>
-                <OrderSummary />
+                <OrderSummary checkout={true} />
             </div>
         </>
     )

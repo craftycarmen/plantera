@@ -3,7 +3,7 @@ import { fetchCart, fetchCartItems } from "../../../store/cart";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function OrderSummary({ cartId }) {
+function OrderSummary({ cartId, checkout }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const cartTotal = useSelector(state => state.cart.cartTotal);
@@ -50,9 +50,9 @@ function OrderSummary({ cartId }) {
                     <h2>Total:</h2>
                     <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
                 </div>
-                <button style={{ width: "100%" }} onClick={handleCheckOut}>Check Out</button>
-            </div>
-        </div>
+                {checkout ? (<div></div>) : (<><button style={{ width: "100%" }} onClick={handleCheckOut}>Check Out</button></>)}
+            </div >
+        </div >
     )
 }
 

@@ -238,7 +238,7 @@ function ListingPage() {
                             />
 
                         </form>
-                    ) : (<div>SOLD OUT</div>)
+                    ) : (<div className="soldOutText">SOLD OUT</div>)
                     }
 
                 </div>

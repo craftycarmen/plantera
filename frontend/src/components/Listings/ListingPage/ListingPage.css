@@ -165,3 +165,10 @@
     object-position: center;
     border-radius: 5px;
 }
+
+.soldOutText {
+    width: fit-content;
+    background-color: #FDAC8A;
+    color: #F2DCCB;
+    padding: 5px;
+}

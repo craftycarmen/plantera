@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
-const { ShoppingCart, Order } = require('../../db/models');
+const { ShoppingCart, Order, Listing, CartItem } = require('../../db/models');
 
 const router = express.Router();
 
@@ -15,15 +15,59 @@ router.get('/', async (req, res) => {
 
     return res.json(orders)
 })
+
+router.get('/:orderId', async (req, res) => {
+    const orderId = Number(req.params.orderId);
+    console.log(orderId);
+
+    const order = await Order.findOne({
+        where: {
+            id: orderId
+        }
+    });
+
+    const cartItems = await CartItem.findAll({
+        include: {
+            model: Listing
+        },
+        where: {
+            cartId: order.cartId
+        }
+    })
+
+    cartItems.forEach(async (cartItem) => {
+        let listingId = cartItem.listingId
+        let cartQty = cartItem.cartQty
+
+        const listing = await Listing.findByPk(listingId)
+
+        let updatedQty = cartQty - listing.stockQty
+        listing.set({
+            stockQty: updatedQty
+        })
+
+        await listing.save();
+    })
+
+
+
+    return res.json({ Order: order, CartItems: cartItems })
+})
+
+
 router.post('/', requireAuth, async (req, res) => {
     try {
 
         const { user } = req
         const { cartId, address, city, state, zipCode, paymentMethod, paymentDetails, orderTotal } = req.body;
 
-        if (!cartId) return res.status(404).json({ message: "Cart couldn't be found" })
+        const cart = await ShoppingCart.findOne({
+            where: {
+                id: cartId
+            }
+        })
 
-        const cart = await ShoppingCart.findByPk(cartId)
+        if (!cartId) return res.status(404).json({ message: "Cart couldn't be found" })
 
         if (user.id !== cart.buyerId) return res.status(403).json({ message: "Forbidden" })
 
@@ -37,9 +81,31 @@ router.post('/', requireAuth, async (req, res) => {
             paymentMethod,
             paymentDetails,
             orderTotal
+        });
+
+        const cartItems = await CartItem.findAll({
+            include: {
+                model: Listing
+            },
+            where: {
+                cartId: cartId
+            }
         })
 
-        console.log("RESORER", res);
+        cartItems.forEach(async (cartItem) => {
+            let listingId = cartItem.listingId
+            let cartQty = cartItem.cartQty
+
+            const listing = await Listing.findByPk(listingId)
+
+            let updatedQty = listing.stockQty - cartQty
+            listing.set({
+                stockQty: updatedQty
+            })
+
+            await listing.save();
+        })
+
 
         return res.status(201).json(order)
     } catch (err) {

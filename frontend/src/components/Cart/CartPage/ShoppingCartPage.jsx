@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { fetchCart, fetchCartItems, updateCartItemInCart, removeCartItem } from "../../../store/cart";
 import './ShoppingCartPage.css';
 import { Link } from "react-router-dom";
+import OrderSummary from "./OrderSummary";
 
 function ShoppingCartPage() {
     const dispatch = useDispatch();
     const cartId = localStorage.getItem("cartId")
     const cartItems = useSelector(state => state.cart.cartItems)
-    const cartTotal = useSelector(state => state.cart.cartTotal);
+    // const cartTotal = useSelector(state => state.cart.cartTotal);
     const [localCartQty, setLocalCartQty] = useState({});
 
     useEffect(() => {
@@ -34,15 +35,6 @@ function ShoppingCartPage() {
         }
         return 0;
     };
-
-    const estimatedTax = (total) => {
-        let tax = (total * 0.0825).toFixed(2)
-        return tax
-    }
-
-    const orderTotal = (subtotal, tax) => {
-        return (subtotal + parseFloat(tax)).toFixed(2);
-    }
 
     const showListingPrice = (item) => {
         if (localCartQty[item.id] > 1) {
@@ -182,29 +174,7 @@ function ShoppingCartPage() {
                             ))}
                         </div>
                     </div>
-                    <div>
-                        <h2>Order Summary</h2>
-                        <div>
-                            {cartTotal &&
-                                <div className="subTotalSummary">
-                                    <span>Subtotal:</span>
-                                    <span>${cartTotal.toFixed(2)}</span>
-                                </div>}
-                            <div className="subTotalSummary">
-                                <span>Shipping:</span>
-                                <span>Free &#128522;</span>
-                            </div>
-                            <div className="subTotalSummary">
-                                <span>Estimated Tax:</span>
-                                <span>${estimatedTax(cartTotal)}</span>
-                            </div>
-                            <div className="subTotalSummary">
-                                <h2>Total:</h2>
-                                <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
-                            </div>
-                            <button style={{ width: "100%" }}>Check Out</button>
-                        </div>
-                    </div>
+                    <OrderSummary cartId={cartId} />
                 </div>
             )}
         </>

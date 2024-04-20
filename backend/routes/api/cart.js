@@ -119,7 +119,13 @@ router.get('/:cartId', async (req, res) => {
 router.post('/', async (req, res) => {
 
     try {
-        const { buyerId, cartId } = req.body;
+        const { user } = req;
+
+        let buyerId = null;
+        if (user) {
+            buyerId = user.id;
+        }
+        const { cartId } = req.body;
 
         const existingCart = await ShoppingCart.findByPk(cartId);
 

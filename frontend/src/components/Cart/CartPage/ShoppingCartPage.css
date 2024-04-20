@@ -42,3 +42,9 @@
     justify-content: space-between;
     padding-bottom: 20px;
 }
+
+.shoppingCartPrice {
+    display: grid;
+    justify-items: end;
+    height: fit-content
+}

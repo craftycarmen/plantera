@@ -149,7 +149,7 @@ function ShoppingCartPage() {
                                     <div className="smInfo">
                                         <div className="shoppingCartRow">
                                             <h3>{item.Listing?.plantName}</h3>
-                                            <div>
+                                            <div className="shoppingCartPrice">
 
                                                 <h3>${calculateCartItemTotal(item)}</h3>
                                                 <div>{showListingPrice(item)}
@@ -186,19 +186,19 @@ function ShoppingCartPage() {
                         <h2>Order Summary</h2>
                         <div>
                             {cartTotal &&
-                                <div className="subTotal">
-                                    <h3>Subtotal:</h3>
-                                    <h3>${cartTotal}</h3>
+                                <div className="subTotalSummary">
+                                    <span>Subtotal:</span>
+                                    <span>${cartTotal.toFixed(2)}</span>
                                 </div>}
-                            <div className="subTotal">
+                            <div className="subTotalSummary">
                                 <span>Shipping:</span>
                                 <span>Free &#128522;</span>
                             </div>
-                            <div className="subTotal">
+                            <div className="subTotalSummary">
                                 <span>Estimated Tax:</span>
                                 <span>${estimatedTax(cartTotal)}</span>
                             </div>
-                            <div className="subTotal">
+                            <div className="subTotalSummary">
                                 <h2>Total:</h2>
                                 <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
                             </div>

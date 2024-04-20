@@ -115,10 +115,10 @@ function ListingPage() {
     const handleAddToCart = async () => {
         let newCartId = cartId;
         let cartItemExists = false;
-
+        console.log("CARTSTUFF", cartId);
         if (cartId === null) {
             const res = await dispatch(addCart());
-
+            console.log("CARTRESINHERE", res);
             if (res) {
                 newCartId = res.id;
                 localStorage.setItem('cartId', newCartId);

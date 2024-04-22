@@ -21,13 +21,23 @@ function ShoppingCartPage() {
     }, [dispatch, cartId])
 
     useEffect(() => {
-        const initialCartQty = {};
-        cartItems.forEach(item => {
-            const storedQty = localStorage.getItem(`cartQty_${item.id}`);
-            initialCartQty[item.id] = storedQty ? parseInt(storedQty) : item.cartQty;
+        const initialQty = {};
+
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || []);
+
+        storedCartItems.forEach(item => {
+            initialQty[item.id] = item.cartQty;
         });
-        setLocalCartQty(initialCartQty)
-    }, [cartItems])
+        setLocalCartQty(initialQty)
+    }, [])
+    // useEffect(() => {
+    //     const initialCartQty = {};
+    //     cartItems.forEach(item => {
+    //         const storedQty = localStorage.getItem(`cartQty_${item.id}`);
+    //         initialCartQty[item.id] = storedQty ? parseInt(storedQty) : item.cartQty;
+    //     });
+    //     setLocalCartQty(initialCartQty)
+    // }, [cartItems])
 
     const calculateCartItemTotal = (item) => {
         if (item.Listing && item.Listing.price) {
@@ -66,8 +76,26 @@ function ShoppingCartPage() {
             }
 
             await dispatch(updateCartItemInCart(cartId, updatedItem))
+
+            const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item => {
+                if (item.id === itemId) {
+                    return {
+                        ...item,
+                        cartQty: updatedQty
+                    }
+                }
+                return item
+            }
+            );
+
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
+
+
             await dispatch(fetchCartItems(cartId))
             await dispatch(fetchCart(cartId))
+
         }
     }
 
@@ -86,6 +114,20 @@ function ShoppingCartPage() {
             }
 
             await dispatch(updateCartItemInCart(cartId, updatedItem))
+            const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item => {
+                if (item.id === itemId) {
+                    return {
+                        ...item,
+                        cartQty: updatedQty
+                    }
+                }
+                return item
+            }
+            );
+
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
             await dispatch(fetchCartItems(cartId))
             await dispatch(fetchCart(cartId))
         }
@@ -167,7 +209,7 @@ function ShoppingCartPage() {
                                                     <button onClick={() => removeQty(item.id)}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
                                                 </div>
                                             </div>
-                                            <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
+                                            <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer", marginTop: "8px" }} onClick={() => handleRemoveItem(item.id)} /></span>
                                         </div>
                                     </div>
                                 </div>

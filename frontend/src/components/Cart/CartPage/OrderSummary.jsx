@@ -7,6 +7,7 @@ function OrderSummary({ cartId, checkout }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const cartTotal = useSelector(state => state.cart.cartTotal);
+    const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
         const runDispatches = async () => {
@@ -26,7 +27,11 @@ function OrderSummary({ cartId, checkout }) {
     }
 
     const handleCheckOut = () => {
-        navigate('/checkout')
+        if (sessionUser) {
+            navigate('/checkout')
+        } else {
+            navigate('/checkout/user')
+        }
     }
 
     return (

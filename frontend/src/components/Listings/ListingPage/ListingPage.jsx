@@ -26,14 +26,18 @@ function ListingPage() {
         return storedCartId ? parseInt(storedCartId) : null;
     });
 
+
+    let [newCartItemId, setNewCartItemId] = useState(null);
+    let existingItemId = null;
+    let stockQty = listing?.stockQty || 1;
+    let [cartQty, setCartQty] = useState(1);
+    const [error, setError] = useState("");
+    const [updatedQty, setUpdateQty] = useState({})
+
     useEffect(() => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         if (storedCartItems) dispatch(fetchCartItems(storedCartItems));
     }, [dispatch]);
-
-    let [newCartItemId, setNewCartItemId] = useState(null);
-
-    console.log("CARTID ON LOAD", cartId);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -67,9 +71,6 @@ function ListingPage() {
         fetchDataAndLocalStorageUpdate();
     }, [dispatch, cart.cartId]);
 
-
-    let existingItemId = null;
-
     useEffect(() => {
         if (cart.cartItems) {
             const existingCartItem = cart.cartItems.find(item => item.id === existingItemId)
@@ -78,10 +79,6 @@ function ListingPage() {
             }
         }
     }, [cart.cartItems, listingId, existingItemId])
-
-    let stockQty = listing?.stockQty || 1;
-    let [cartQty, setCartQty] = useState(1);
-    const [error, setError] = useState("")
 
     let addQty = (e) => {
         e.preventDefault();
@@ -112,16 +109,16 @@ function ListingPage() {
 
     const handleQty = (e) => {
         e.preventDefault();
-
         const newQty = parseInt(e.target.value);
+        console.log("New Quantity:", newQty);
         setCartQty(newQty);
-        console.log("STOCKQTY", stockQty);
-        // if (newQty >= stockQty) {
-        //     setQtyExceeded(true);
-        // } else {
-        //     setQtyExceeded(false)
-        // }
+        setUpdateQty(prevUpdatedQty => ({ ...prevUpdatedQty, [listingId]: newQty }));
+        console.log("Updated Quantity:", updatedQty);
     };
+
+    useEffect(() => {
+        console.log("Updated Quantity:", updatedQty);
+    }, [updatedQty]);
 
 
     const handleAddToCart = async () => {
@@ -246,7 +243,7 @@ function ListingPage() {
                                         disabled={error}
                                     >Add to Cart</button>
                                 </>}
-                                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} />}
+                                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}
                             />
 
                         </form>

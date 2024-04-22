@@ -4,7 +4,7 @@ import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
 import { useModal } from "../../../context/Modal";
 
-function ShoppingCartModal({ cartId, navigate }) {
+function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
@@ -17,6 +17,8 @@ function ShoppingCartModal({ cartId, navigate }) {
         }
         runDispatches();
     }, [dispatch, cartId])
+
+    console.log("Updated Quantity in ShoppingCartModal:", updatedQty);
 
     const handleRemoveItem = async (itemId) => {
         await dispatch(removeCartItem(cartId, itemId));
@@ -47,6 +49,7 @@ function ShoppingCartModal({ cartId, navigate }) {
                             <div className="shoppingModalImgContainer">
                                 <img
                                     src={item.Listing?.ListingImages?.[0]?.url}
+                                    style={{ cursor: "pointer" }}
                                     onClick={() => {
                                         closeModal();
                                         navigate(`/listings/${item.Listing.id}`);
@@ -60,7 +63,8 @@ function ShoppingCartModal({ cartId, navigate }) {
                                 </div>
                                 <div>Pot Size: {item.Listing?.potSize}&#34;</div>
                                 <div className="shoppigModalRow">
-                                    <span>Quantity: {item.cartQty}</span>
+                                    <span>Quantity: {(item && updatedQty[item.id]) || (item && item.cartQty)}</span>
+
                                     <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
                                 </div>
                             </div>

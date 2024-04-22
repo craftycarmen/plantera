@@ -1,4 +1,5 @@
 import { csrfFetch } from './csrf';
+import { fetchCart } from './cart';
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -18,6 +19,7 @@ const removeUser = () => {
 
 export const login = (user) => async (dispatch) => {
     const { credential, password, cartId } = user;
+    console.log("CREDENTIAL", credential, password, cartId);
     const res = await csrfFetch("/api/session", {
         method: "POST",
         body: JSON.stringify({
@@ -28,8 +30,13 @@ export const login = (user) => async (dispatch) => {
     });
 
     const data = await res.json();
-    dispatch(setUser(data.user));
-    return res;
+    if (res.ok) {
+        dispatch(setUser(data.user));
+        if (data.cart) {
+            dispatch(fetchCart(cartId))
+        }
+    }
+    return data;
 };
 
 export const restoreUser = () => async (dispatch) => {

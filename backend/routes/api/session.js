@@ -66,8 +66,18 @@ router.post(
             }
         }
 
+        const cartByUser = await ShoppingCart.findOne({
+            where:
+            {
+                buyerId: user.id
+            }
+        })
+
+
         return res.json({
-            user: safeUser
+            user: safeUser,
+            cart: cartByUser,
+            cartId: cartByUser ? cartByUser.id : null
         });
     }
 );

@@ -3,6 +3,7 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
+import { fetchCart } from '../../store/cart';
 
 function LoginFormModal() {
     const dispatch = useDispatch();
@@ -11,12 +12,8 @@ function LoginFormModal() {
     const [charCount, setCharCount] = useState({});
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const [cartId, setCartId] = useState(null);
 
-    let cartId = null;
-
-    if (localStorage.getItem('cartId')) {
-        cartId = localStorage.getItem('cartId')
-    }
 
     useEffect(() => {
         const char = {}
@@ -25,35 +22,68 @@ function LoginFormModal() {
         setCharCount(char)
     }, [credential, password])
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
-        return dispatch(sessionActions.login({ credential, password, cartId }))
-            .then(closeModal)
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) {
-                    setErrors(data.errors);
+
+        try {
+            let localCartId = localStorage.getItem('cartId');
+
+            if (!localCartId) {
+                const data = await dispatch(sessionActions.login({ credential, password }));
+
+                if (data.cartId) {
+                    localCartId = data.cartId;
+                    localStorage.setItem('cartId', data.cartId);
                 }
-            });
+            }
+
+            if (localCartId) {
+                dispatch(fetchCart(localCartId));
+            }
+            closeModal();
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
-    const demoUser = (e) => {
+    const demoUser = async (e) => {
         e.preventDefault();
-        console.log("CARTID", cartId);
-        return dispatch(
-            sessionActions.login({
-                credential: "PlanteraDemo",
-                password: "password",
-                cartId: cartId
-            })
-        )
-            .then(closeModal)
+
+        try {
+            let localCartId = localStorage.getItem('cartId');
+
+            if (!localCartId) {
+                const data = await dispatch(sessionActions.login({
+                    credential: "PlanteraDemo",
+                    password: "password"
+                }));
+
+                if (data.cartId) {
+                    localCartId = data.cartId;
+                    localStorage.setItem('cartId', data.cartId);
+                }
+            }
+
+            if (localCartId) {
+                dispatch(fetchCart(localCartId));
+            }
+            closeModal();
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
-
-
+    // const demoUser = (e) => {
+    //     e.preventDefault();
+    //     return dispatch(
+    //         sessionActions.login({
+    //             credential: "PlanteraDemo",
+    //             password: "password",
+    //         })
+    //     )
+    //         .then(closeModal)
+    // };
 
 
     return (

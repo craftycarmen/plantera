@@ -1,13 +1,24 @@
 import { NavLink, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import ShoppingCartButton from './ShoppingCartButton';
+import { useEffect } from 'react';
+import { fetchCart } from '../../store/cart';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
-    const cartId = localStorage.getItem('cartId')
+    const userCartId = useSelector(state => state.cart.cartId)
+    console.log("USERCARTIDNAV", userCartId);
+    const dispatch = useDispatch();
+    const cartId = userCartId || localStorage.getItem('cartId')
+
+    useEffect(() => {
+        if (sessionUser) {
+            dispatch(fetchCart(userCartId))
+        }
+    }, [sessionUser, dispatch, userCartId])
 
     return (
         <div className='navigation'>

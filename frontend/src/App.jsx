@@ -11,7 +11,7 @@ import ManageListings from './components/listings/ManageListings';
 import ShoppingCartPage from './components/Cart/CartPage';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/Checkout/OrderConfirmation';
-import CheckoutUser from './components/Checkout/CheckoutUser';
+import CheckoutUser from './components/Checkout/CheckoutUser/CheckoutUser';
 
 function Layout() {
   const dispatch = useDispatch();

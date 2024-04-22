@@ -18,15 +18,18 @@ function ShoppingCartButton({ cartId }) {
         const runDispatches = async () => {
             dispatch(fetchCartItems())
 
-            const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || [])
+            const storedCartItems = localStorage.getItem('cartItems')
+            if (storedCartItems) {
+                const parsedStoredCartItems = JSON.parse(storedCartItems)
 
-            const qty = {};
+                const qty = {};
 
-            storedCartItems.forEach(item => {
-                qty[item.id] = item.cartQty
-            });
+                parsedStoredCartItems.forEach(item => {
+                    qty[item.id] = item.cartQty
+                });
 
-            setUpdatedQty(qty)
+                setUpdatedQty(qty)
+            }
         }
         runDispatches();
     }, [dispatch, numCartItems])

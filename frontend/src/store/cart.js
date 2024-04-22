@@ -53,27 +53,27 @@ export const resetCartId = () => ({
 })
 
 
-export const fetchCart = () => async (dispatch) => {
+export const fetchCart = (cartId) => async (dispatch) => {
     const cartId = Number(localStorage.getItem('cartId'));
     console.log('CartId fetched from localStorage:', cartId);
-    // if (!cartId || (isNaN(cartId) && cartId <= 0)) {
-    //     dispatch(createCart(null));
-    //     return;
-    // }
-    const res = await fetch(`/api/cart/${cartId}`);
-    console.log("RES", res);
-    if (res.ok) {
-        const cart = await res.json();
-        console.log("CARTRES", cart);
-        if (cart.ShoppingCart !== null) {
-            const cartTotal = cart.ShoppingCart.cartTotal;
-            const numCartItems = cart.ShoppingCart.numCartItems
-            dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
-            return cart
+
+    if (cartId > 0) {
+        const res = await fetch(`/api/cart/${cartId}`);
+        console.log("RES", res);
+        if (res.ok) {
+            const cart = await res.json();
+            console.log("CARTRES", cart);
+            if (cart.ShoppingCart !== null) {
+                const cartTotal = cart.ShoppingCart.cartTotal;
+                const numCartItems = cart.ShoppingCart.numCartItems
+                dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
+                return cart
+            }
+
+        } else {
+            const errors = await res.json();
+            return errors;
         }
-    } else {
-        const errors = await res.json();
-        return errors;
     }
 }
 

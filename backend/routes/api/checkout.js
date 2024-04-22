@@ -4,28 +4,34 @@ const { ShoppingCart, Order, Listing, CartItem } = require('../../db/models');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
     const { user } = req;
-
     const orders = await Order.findAll({
         where: {
             buyerId: user.id
         }
     });
+    console.log("USER", user);
+    console.log("ORERS", orders);
+    if (!user) return res.status(403).json({ message: "Forbidden" })
+    if (!orders || orders.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
 
     return res.json(orders)
 })
 
-router.get('/:orderId', async (req, res) => {
+router.get('/:orderId', requireAuth, async (req, res) => {
     const orderId = Number(req.params.orderId);
-    console.log(orderId);
 
+    const { user } = req;
     const order = await Order.findOne({
         where: {
             id: orderId
         }
     });
 
+    if (!user) return res.status(403).json({ message: "Forbidden" })
+    if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
+    console.log("USER", user);
     const cartItems = await CartItem.findAll({
         include: {
             model: Listing

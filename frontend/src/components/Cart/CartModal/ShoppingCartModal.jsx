@@ -57,12 +57,12 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                                 />
                             </div>
                             <div className="smInfo">
-                                <div className="shoppigModalRow">
+                                <div className="shoppingModalRow">
                                     <h3>{item.Listing?.plantName}</h3>
                                     <h3>${item.cartItemsTotal}</h3>
                                 </div>
                                 <div>Pot Size: {item.Listing?.potSize}&#34;</div>
-                                <div className="shoppigModalRow">
+                                <div className="shoppingModalRow">
                                     <span>Quantity: {(item && updatedQty[item.id]) || (item && item.cartQty)}</span>
 
                                     <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
@@ -75,9 +75,10 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                         <h3>Subtotal:</h3>
                         <h3>${cartTotal}</h3>
                     </div>}
-
-                    <button style={{ width: '100%' }} onClick={checkout}>View Cart & Check Out</button>
-
+                    <div style={{ display: "flex", gap: "8px" }}>
+                        <button onClick={closeModal}>Continue Shopping</button>
+                        <button style={{ width: '100%', flexWrap: "nowrap" }} onClick={checkout}>View Cart & Check Out</button>
+                    </div>
                 </div>
             )
             }

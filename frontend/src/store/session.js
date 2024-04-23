@@ -41,7 +41,7 @@ const removeUser = () => {
 
 export const login = (user) => async (dispatch) => {
     const { credential, password, orderId } = user;
-    console.log("CREDENTIAL", credential, password, orderId);
+
     const res = await csrfFetch("/api/session", {
         method: "POST",
         body: JSON.stringify({
@@ -54,6 +54,7 @@ export const login = (user) => async (dispatch) => {
     const data = await res.json();
     if (res.ok) {
         dispatch(setUser(data.user));
+        console.log("Logged in user:", data.user);
         if (!orderId && data.cartId) {
             dispatch(fetchCart(data.cartId));
         }

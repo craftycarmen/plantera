@@ -122,7 +122,7 @@ module.exports = (sequelize, DataTypes) => {
     orderStatus: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Processing",
+      defaultValue: "Received",
       validate: {
         notNull: {
           msg: 'Order status is required'

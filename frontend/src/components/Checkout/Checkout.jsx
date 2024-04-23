@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import OrderSummary from "../Cart/CartPage/OrderSummary"
 import { addOrder } from "../../store/order";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { clearCart } from "../../store/cart";
+import ErrorHandling from "../ErrorHandling";
 
 function Checkout() {
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function Checkout() {
     const cart = useSelector(state => state.cart);
 
     const sessionUser = useSelector(state => state.session.user);
-    const userId = sessionUser.id;
+    const userId = sessionUser?.id;
     console.log("USERIDHERE", userId);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -108,8 +109,10 @@ function Checkout() {
 
     return (
         <>
-            <h1>Checkout</h1>
-            {!sessionUser ? (<div>Nope</div>) :
+            <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/cart">Shopping Cart</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;Checkout</h3>
+
+            <h1 style={{ marginTop: "20px" }}>Checkout</h1>
+            {!sessionUser ? (<ErrorHandling />) :
                 (<>
                     <div className="shoppingCartPageContainer">
                         <form onSubmit={handleSubmit}>
@@ -244,10 +247,11 @@ function Checkout() {
                             >Place My Order</button>
                         </form >
                         <OrderSummary checkout={true} />
-                    </div >
+                    </div>
                 </>
-                )}
 
+                )
+            }
         </>
     )
 }

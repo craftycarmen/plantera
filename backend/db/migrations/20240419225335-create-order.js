@@ -63,7 +63,7 @@ module.exports = {
       orderStatus: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "Processing"
+        defaultValue: "Received"
       },
       createdAt: {
         allowNull: false,

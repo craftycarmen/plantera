@@ -53,11 +53,17 @@ router.get('/:cartId', async (req, res) => {
                 include: {
                     model: Listing,
                     attributes: ['id', 'plantName', 'price', 'stockQty', 'potSize'],
-                    include: {
+                    include: [{
                         model: Image,
                         as: 'ListingImages',
                         attributes: ['id', 'url']
-                    }
+                    },
+
+                    {
+                        model: User,
+                        as: 'Seller',
+                        attributes: ['username', 'id']
+                    }]
                 }
             },
         ],

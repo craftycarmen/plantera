@@ -11,7 +11,7 @@ function ShoppingCartPage() {
     const cartItems = useSelector(state => state.cart.cartItems)
     // const cartTotal = useSelector(state => state.cart.cartTotal);
     const [localCartQty, setLocalCartQty] = useState({});
-
+    console.log("CT", cartItems);
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
@@ -184,7 +184,9 @@ function ShoppingCartPage() {
                                     </div>
                                     <div className="smInfo">
                                         <div className="shoppingCartRow">
-                                            <h3>{item.Listing?.plantName}</h3>
+                                            <div><h3>{item.Listing?.plantName}</h3>
+                                                <div>from {item.Listing?.Seller?.username}</div>
+                                            </div>
                                             <div className="shoppingCartPrice">
 
                                                 <h3>${calculateCartItemTotal(item)}</h3>

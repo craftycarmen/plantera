@@ -3,7 +3,7 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
-import { fetchCart } from '../../store/cart';
+import { editCart, fetchCart } from '../../store/cart';
 
 function LoginFormModal() {
     const dispatch = useDispatch();
@@ -12,8 +12,7 @@ function LoginFormModal() {
     const [charCount, setCharCount] = useState({});
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
-    const [cartId, setCartId] = useState(null);
-
+    const [cartId] = useState(null);
 
     useEffect(() => {
         const char = {}
@@ -29,9 +28,9 @@ function LoginFormModal() {
         try {
             let localCartId = localStorage.getItem('cartId');
 
-            if (!localCartId) {
-                const data = await dispatch(sessionActions.login({ credential, password }));
+            const data = await dispatch(sessionActions.login({ credential, password }));
 
+            if (!localCartId) {
                 if (data.cartId) {
                     localCartId = data.cartId;
                     localStorage.setItem('cartId', data.cartId);
@@ -39,8 +38,10 @@ function LoginFormModal() {
             }
 
             if (localCartId) {
-                dispatch(fetchCart(localCartId));
+                await dispatch(fetchCart(localCartId));
+                await dispatch(editCart(localCartId))
             }
+
             closeModal();
         } catch (error) {
             console.error('Error during login:', error);
@@ -67,6 +68,7 @@ function LoginFormModal() {
 
             if (localCartId) {
                 dispatch(fetchCart(localCartId));
+                dispatch(editCart(localCartId))
             }
             closeModal();
         } catch (error) {

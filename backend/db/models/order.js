@@ -15,14 +15,16 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(
         models.User,
         {
-          foreignKey: 'buyerId'
+          foreignKey: 'buyerId',
         }
       )
 
       Order.belongsTo(
         models.ShoppingCart,
         {
-          foreignKey: 'cartId'
+          foreignKey: 'cartId',
+          onDelete: 'SET NULL',
+          allowNull: true
         }
       )
     }
@@ -39,12 +41,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     cartId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Cart ID is required'
-        }
-      }
+      allowNull: true,
+      // validate: {
+      //   notNull: {
+      //     msg: 'Cart ID is required'
+      //   }
+      // }
     },
     address: {
       type: DataTypes.STRING,

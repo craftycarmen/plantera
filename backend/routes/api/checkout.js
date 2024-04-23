@@ -112,8 +112,10 @@ router.post('/', requireAuth, async (req, res) => {
             await listing.save();
         })
 
+        // await cart.destroy()
 
-        return res.status(201).json(order)
+
+        return res.status(201).json({ order, deletedCartId: cartId })
     } catch (err) {
         return res.json(err.message)
     }

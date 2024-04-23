@@ -17,27 +17,50 @@ const removeUser = () => {
     };
 };
 
+// export const login = (user) => async (dispatch) => {
+//     const { credential, password, cartId } = user;
+//     console.log("CREDENTIAL", credential, password, cartId);
+//     const res = await csrfFetch("/api/session", {
+//         method: "POST",
+//         body: JSON.stringify({
+//             credential,
+//             password,
+//             cartId
+//         })
+//     });
+
+//     const data = await res.json();
+//     if (res.ok) {
+//         dispatch(setUser(data.user));
+//         if (data.cart) {
+//             dispatch(fetchCart(cartId))
+//         }
+//     }
+//     return data;
+// };
+
 export const login = (user) => async (dispatch) => {
-    const { credential, password, cartId } = user;
-    console.log("CREDENTIAL", credential, password, cartId);
+    const { credential, password, orderId } = user;
+    console.log("CREDENTIAL", credential, password, orderId);
     const res = await csrfFetch("/api/session", {
         method: "POST",
         body: JSON.stringify({
             credential,
             password,
-            cartId
+            orderId
         })
     });
 
     const data = await res.json();
     if (res.ok) {
         dispatch(setUser(data.user));
-        if (data.cart) {
-            dispatch(fetchCart(cartId))
+        if (!orderId && data.cartId) {
+            dispatch(fetchCart(data.cartId));
         }
     }
     return data;
 };
+
 
 export const restoreUser = () => async (dispatch) => {
     const res = await csrfFetch("/api/session");

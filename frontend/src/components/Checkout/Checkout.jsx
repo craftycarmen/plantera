@@ -12,7 +12,7 @@ function Checkout() {
     const cart = useSelector(state => state.cart);
 
     const sessionUser = useSelector(state => state.session.user);
-    console.log(cart);
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [address, setAddress] = useState("");
@@ -63,9 +63,8 @@ function Checkout() {
         setErrors(errs);
     }, [firstName, lastName, address, city, state, zipCode, paymentMethod, paymentDetails])
 
-    console.log(paymentDetails.length)
     const cartTotal = (cart.cartTotal * 1.0825).toFixed(2);
-
+    console.log("SESSIONID", sessionUser.id);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -85,11 +84,12 @@ function Checkout() {
             orderTotal: Number(cartTotal)
         }
 
+        console.log("BUYERID", order.buyerId);
+
         let orderId = null;
         const res = await dispatch(addOrder(order))
         if (res) {
             orderId = res.id
-            console.log("ORDERID", orderId);
             localStorage.removeItem('cartId');
             localStorage.removeItem('cartItems');
             dispatch(clearCart());
@@ -100,7 +100,7 @@ function Checkout() {
         }
     }
 
-    console.log(cart.id);
+
 
     return (
         <>

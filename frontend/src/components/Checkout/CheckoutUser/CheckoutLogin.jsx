@@ -2,53 +2,72 @@ import { useEffect, useState } from 'react';
 import * as sessionActions from '../../../store/session';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { fetchCart, editCart } from '../../../store/cart';
 
-function CheckoutLogin() {
+function CheckoutLogin({ cartId }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [credential, setCredential] = useState("");
-    const [loginPassword, setLoginPassword] = useState("");
+    const [password, setPassword] = useState("");
     const [charCount, setCharCount] = useState({});
     const [errors, setErrors] = useState({});
-
-    let cartId = null;
-
-    if (localStorage.getItem('cartId')) {
-        cartId = localStorage.getItem('cartId')
-    }
 
     useEffect(() => {
         const char = {}
         if (credential.length < 4) char.credential = 'Not enough characters'
-        if (loginPassword.length < 6) char.loginPassword = 'Not enough characters'
+        if (password.length < 6) char.password = 'Not enough characters'
         setCharCount(char)
-    }, [credential, loginPassword])
+    }, [credential, password])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
-        return dispatch(sessionActions.login({ credential, loginPassword, cartId }))
-            .then(navigate('/checkout'))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) {
-                    setErrors(data.errors);
-                }
-            });
+        try {
+            const data = await dispatch(sessionActions.login({ credential, password }));
+
+            if (!cartId && data.cartId) {
+                localStorage.setItem('cartId', data.cartId);
+                cartId = data.cartId;
+            }
+
+            if (cartId) {
+                await dispatch(fetchCart(cartId));
+                await dispatch(editCart(cartId))
+            }
+
+            navigate('/checkout')
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
-    const demoUser = (e) => {
+    const demoUser = async (e) => {
         e.preventDefault();
-        return dispatch(
-            sessionActions.login({
-                credential: "PlanteraDemo",
-                password: "password",
-                cartId: cartId
-            })
-        )
-            .then(navigate('/checkout'))
-    };
 
+        try {
+            let localCartId = localStorage.getItem('cartId');
+
+            if (!localCartId) {
+                const data = await dispatch(sessionActions.login({
+                    credential: "PlanteraDemo",
+                    password: "password"
+                }));
+
+                if (data.cartId) {
+                    localCartId = data.cartId;
+                    localStorage.setItem('cartId', data.cartId);
+                }
+            }
+
+            if (localCartId) {
+                dispatch(fetchCart(localCartId));
+                dispatch(editCart(localCartId))
+            }
+            navigate('/checkout')
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
 
     return (
         <div>
@@ -72,12 +91,12 @@ function CheckoutLogin() {
                 <div className="inputContainer">
                     <input
                         type="password"
-                        value={loginPassword}
-                        onChange={(e) => setLoginPassword(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder=""
-                        id="loginPassword"
+                        id="Password"
                     />
-                    <label htmlFor="loginPassword" className="floating-label">Password
+                    <label htmlFor="Password" className="floating-label">Password
                     </label>
                 </div>
                 <input type="hidden" name="cartId" value={cartId || ""} />

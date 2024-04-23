@@ -3,6 +3,8 @@ import { csrfFetch } from "./csrf";
 const LOAD_CART = 'cart/LOAD_CART';
 const CREATE_CART = 'cart/CREATE_CART';
 const LOAD_CART_ITEMS = 'cart/LOAD_CART_ITEMS';
+const UPDATE_CART = 'cart/UPDATE_CART';
+const DELETE_CART = 'cart/DELETE_CART';
 const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
@@ -19,6 +21,17 @@ export const loadCart = (cartId, cartItems, cartTotal, numCartItems) => ({
 
 export const createCart = (cartId) => ({
     type: CREATE_CART,
+    cartId
+});
+
+export const updateCart = (cartId, cart) => ({
+    type: UPDATE_CART,
+    cartId,
+    cart
+});
+
+export const deleteCart = (cartId) => ({
+    type: DELETE_CART,
     cartId
 });
 
@@ -50,7 +63,7 @@ export const clearCart = () => ({
 
 export const resetCartId = () => ({
     type: RESET_CART_ID
-})
+});
 
 
 export const fetchCart = (cartId) => async (dispatch) => {
@@ -59,10 +72,8 @@ export const fetchCart = (cartId) => async (dispatch) => {
 
     if (cartId > 0) {
         const res = await fetch(`/api/cart/${cartId}`);
-        console.log("RES", res);
         if (res.ok) {
             const cart = await res.json();
-            console.log("CARTRES", cart);
             if (cart.ShoppingCart !== null) {
                 const cartTotal = cart.ShoppingCart.cartTotal;
                 const numCartItems = cart.ShoppingCart.numCartItems
@@ -93,6 +104,33 @@ export const addCart = (cart) => async (dispatch) => {
     } else {
         const errors = await res.json();
         return errors;
+    }
+}
+
+export const editCart = (cartId, cart) => async (dispatch) => {
+    const res = await csrfFetch(`/api/cart/${cartId}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...cart })
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateCart(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
+export const removeCart = (cartId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/cart/${cartId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        dispatch(deleteCart(cartId))
     }
 }
 
@@ -237,7 +275,7 @@ export const removeCartItem = (cartId, cartItemId) => async (dispatch) => {
         dispatch(deleteCartItem(cartItemId));
         dispatch(fetchCart(cartId));
     }
-}
+};
 
 const initialState = {
     cart: null,
@@ -273,6 +311,16 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 cartItems: [...state.cartItems, action.cartItem]
             }
+        }
+
+        case UPDATE_CART: {
+            return { ...state, [action.cartId]: action.cart }
+        }
+
+        case DELETE_CART: {
+            const newState = { ...state };
+            delete newState[action.cartId];
+            return newState
         }
 
         case UPDATE_CART_ITEM: {
@@ -313,6 +361,7 @@ const cartReducer = (state = initialState, action) => {
                 numCartItems: 0
             }
         }
+
         default:
             return { ...state }
     }

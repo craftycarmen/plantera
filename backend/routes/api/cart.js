@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, ShoppingCart, CartItem, Listing, Image } = require('../../db/models');
+const { User, ShoppingCart, CartItem, Listing, Image, Order } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
@@ -66,7 +66,7 @@ router.get('/:cartId', async (req, res) => {
         }
     });
 
-    if (buyerId !== null && shoppingCart.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
+    // if (buyerId !== null && shoppingCart.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
 
     if (!shoppingCart) {
         return res.status(404).json({ error: 'Shopping cart not found' });
@@ -128,6 +128,57 @@ router.post('/', async (req, res) => {
         return res.json(err.message)
     }
 });
+
+router.put('/:cartId', requireAuth, async (req, res) => {
+    try {
+        const cartId = Number(req.params.cartId);
+        const cart = await ShoppingCart.findByPk(cartId)
+        const { user } = req
+
+        if (!cart) return res.status(404).json({ message: "Cart couldn't be found" })
+
+        await cart.update({
+            buyerId: user.id
+        })
+
+        return res.json(cart)
+    } catch (err) {
+        return res.status(500).json(err.message)
+    }
+});
+
+router.delete('/:cartId', requireAuth, async (req, res) => {
+    const cartId = Number(req.params.cartId);
+
+    const cart = await ShoppingCart.findByPk(cartId)
+
+    if (!cart) return res.status(404).json({ message: "Cart couldn't be found" })
+
+    await CartItem.update({
+        cartId: null
+    }, {
+        where:
+        {
+            cartId
+        }
+    })
+
+    await Order.update({
+        cartId: null
+    }, {
+        where:
+        {
+            cartId
+        }
+    })
+
+    await cart.destroy();
+
+
+    return res.json({ message: "Successfully deleted" })
+
+});
+
 
 router.post('/:cartId/items', async (req, res) => {
 

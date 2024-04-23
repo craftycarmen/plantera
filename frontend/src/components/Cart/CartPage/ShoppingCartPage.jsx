@@ -23,7 +23,9 @@ function ShoppingCartPage() {
     useEffect(() => {
         const initialQty = {};
 
-        const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || []);
+        const localStoredCartItems = localStorage.getItem('cartItems');
+        const storedCartItems = localStoredCartItems ? JSON.parse(localStoredCartItems) : [];
+        // const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || []);
 
         storedCartItems.forEach(item => {
             initialQty[item.id] = item.cartQty;

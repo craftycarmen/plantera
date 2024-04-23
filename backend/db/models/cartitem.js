@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       CartItem.belongsTo(
         models.ShoppingCart,
         {
-          foreignKey: 'cartId'
+          foreignKey: 'cartId',
+          onDelete: 'SET NULL',
+          allowNull: true
         }
       );
 
@@ -24,7 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         {
           foreignKey: 'listingId'
         }
-      )
+      );
+
+      // CartItem.belongsTo(models.Order, {
+      //   foreignKey: 'orderId',
+      //   onDelete: 'SET NULL',
+      //   allowNull: true
+      // });
+
     }
   }
   CartItem.init({
@@ -35,12 +44,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     cartId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Cart ID is required'
-        }
-      }
+      allowNull: true,
+      // validate: {
+      //   notNull: {
+      //     msg: 'Cart ID is required'
+      //   }
+      // }
     },
     listingId: {
       type: DataTypes.INTEGER,

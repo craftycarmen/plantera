@@ -11,54 +11,54 @@ router.get('/', requireAuth, async (req, res) => {
             buyerId: user.id
         }
     });
-    console.log("USER", user);
-    console.log("ORERS", orders);
     if (!user) return res.status(403).json({ message: "Forbidden" })
     if (!orders || orders.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
 
     return res.json(orders)
 })
 
-router.get('/:orderId', requireAuth, async (req, res) => {
-    const orderId = Number(req.params.orderId);
+// router.get('/:orderId', requireAuth, async (req, res) => {
+//     const orderId = Number(req.params.orderId);
 
-    const { user } = req;
-    const order = await Order.findOne({
-        where: {
-            id: orderId
-        }
-    });
+//     const { user } = req;
+//     const order = await Order.findOne({
+//         attributes: ['id', 'buyerId'],
+//         where: {
+//             id: orderId
+//         }
+//     });
 
-    if (!user) return res.status(403).json({ message: "Forbidden" })
-    if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
-    console.log("USER", user);
-    const cartItems = await CartItem.findAll({
-        include: {
-            model: Listing
-        },
-        where: {
-            cartId: order.cartId
-        }
-    })
+//     if (!user) return res.status(403).json({ message: "Forbidden" })
+//     if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
+//     const cartItems = await CartItem.findAll({
+//         include: {
+//             model: Listing,
+//             attributes: ['plantName'],
+//         },
+//         attributes: ['buyerId'],
+//         where: {
+//             cartId: order.cartId
+//         }
+//     })
 
-    cartItems.forEach(async (cartItem) => {
-        let listingId = cartItem.listingId
-        let cartQty = cartItem.cartQty
+//     cartItems.forEach(async (cartItem) => {
+//         let listingId = cartItem.listingId
+//         let cartQty = cartItem.cartQty
 
-        const listing = await Listing.findByPk(listingId)
+//         const listing = await Listing.findByPk(listingId)
 
-        let updatedQty = cartQty - listing.stockQty
-        listing.set({
-            stockQty: updatedQty
-        })
+//         let updatedQty = cartQty - listing.stockQty
+//         listing.set({
+//             stockQty: updatedQty
+//         })
 
-        await listing.save();
-    })
+//         await listing.save();
+//     })
 
 
 
-    return res.json({ Order: order, CartItems: cartItems })
-})
+//     return res.json({ Order: order, CartItems: cartItems })
+// })
 
 
 router.post('/', requireAuth, async (req, res) => {

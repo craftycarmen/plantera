@@ -4,13 +4,21 @@ const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
-router.get('/:orderId', async (req, res) => {
+router.get('/:orderId', requireAuth, async (req, res) => {
     const orderId = Number(req.params.orderId);
-    const order = Order.findByPk(orderId);
-
+    const order = await Order.findOne({
+        where: {
+            id: orderId
+        },
+        // attributes: ['buyerId']
+    });
+    console.log(order);
+    const { user } = req;
+    if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
     const orderItems = await CartItem.findAll({
         include: {
-            model: Listing
+            model: Listing,
+            attributes: ['plantName', 'price']
         },
         where: {
             orderId: orderId
@@ -19,7 +27,7 @@ router.get('/:orderId', async (req, res) => {
 
     if (!order) return res.json(404).json({ error: 'Order ID not found' })
 
-    return res.json(orderItems)
+    return res.json({ Order: order, OrderItems: orderItems })
 
 })
 

@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../../store/session';
+import { fetchCart, editCart } from '../../../store/cart';
+import { useNavigate } from 'react-router-dom';
 
 function CheckoutSignup() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -18,7 +21,7 @@ function CheckoutSignup() {
     // const [paymentDetails, setPaymentDetails] = useState("");
     const [image, setImage] = useState("")
     const [errors, setErrors] = useState({});
-
+    const [cartId] = useState(null);
 
     const updateFile = e => {
         const file = e.target.files[0];
@@ -45,40 +48,90 @@ function CheckoutSignup() {
         setErrors(errs);
     }, [email, username, firstName, lastName, password, confirmPassword, accountType])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (password === confirmPassword) {
             setErrors({});
-            return dispatch(
-                sessionActions.signup({
-                    email,
-                    username,
-                    firstName,
-                    lastName,
-                    password,
-                    // bio,
-                    // favoritePlant,
-                    accountType,
-                    image
-                    // shopDescription,
-                    // paymentMethod,
-                    // paymentDetails
-                })
-            )
-                .catch(async (res) => {
-                    console.log(res);
 
-                    const data = await res.json();
-                    console.log(data);
-                    if (data?.errors) {
-                        setErrors(data.errors);
-                    }
-                });
+            try {
+                const data = await dispatch(
+                    sessionActions.signup({
+                        email,
+                        username,
+                        firstName,
+                        lastName,
+                        password,
+                        accountType,
+                        image
+                    })
+                );
+
+                let localCartId = localStorage.getItem('cartId');
+                if (!localCartId && data.cartId) {
+                    localCartId = data.cartId;
+                    localStorage.setItem('cartId', data.cartId);
+                }
+
+                if (localCartId) {
+                    await dispatch(fetchCart(localCartId));
+                    await dispatch(editCart(localCartId));
+                }
+
+                navigate('/checkout');
+            } catch (res) {
+                console.error('Error during signup:', res);
+                const data = await res.json();
+                if (data?.errors) {
+                    setErrors(data.errors);
+                }
+            }
+        } else {
+            setErrors({
+                confirmPassword: "Confirm Password field must be the same as the Password field"
+            });
         }
-        return setErrors({
-            confirmPassword: "Confirm Password field must be the same as the Password field"
-        });
     };
+
+    // return setErrors({
+    //     confirmPassword: "Confirm Password field must be the same as the Password field"
+    // });
+
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     if (password === confirmPassword) {
+    //         setErrors({});
+    //         return dispatch(
+    //             sessionActions.signup({
+    //                 email,
+    //                 username,
+    //                 firstName,
+    //                 lastName,
+    //                 password,
+    //                 // bio,
+    //                 // favoritePlant,
+    //                 accountType,
+    //                 image
+    //                 // shopDescription,
+    //                 // paymentMethod,
+    //                 // paymentDetails
+    //             })
+    //         )
+    //             .catch(async (res) => {
+    //                 console.log(res);
+
+    //                 const data = await res.json();
+    //                 console.log(data);
+    //                 if (data?.errors) {
+    //                     setErrors(data.errors);
+    //                 }
+    //             });
+    //     }
+    //     return setErrors({
+    //         confirmPassword: "Confirm Password field must be the same as the Password field"
+    //     });
+    // };
 
     return (
         <div>
@@ -249,6 +302,7 @@ function CheckoutSignup() {
                     Avatar
                     <input type="file" onChange={updateFile} />
                 </label>
+                <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button style={{ marginTop: "15px" }}
                         disabled={Object.values(errors).length}

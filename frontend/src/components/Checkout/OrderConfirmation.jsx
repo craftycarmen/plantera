@@ -23,7 +23,7 @@ function OrderConfirmation() {
     return (
         <>
             <h1>Thank you for order {orderId} </h1>
-            {orderItems.map(item => (
+            {orderItems && orderItems.map(item => (
                 <div key={item.id}>
                     {item.Listing?.plantName}
                 </div>

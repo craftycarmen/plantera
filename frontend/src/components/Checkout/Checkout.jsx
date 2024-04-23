@@ -12,7 +12,8 @@ function Checkout() {
     const cart = useSelector(state => state.cart);
 
     const sessionUser = useSelector(state => state.session.user);
-
+    const userId = sessionUser.id;
+    console.log("USERIDHERE", userId);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [address, setAddress] = useState("");
@@ -64,14 +65,14 @@ function Checkout() {
     }, [firstName, lastName, address, city, state, zipCode, paymentMethod, paymentDetails])
 
     const cartTotal = (cart.cartTotal * 1.0825).toFixed(2);
-    console.log("SESSIONID", sessionUser.id);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         setErrors({});
 
         const order = {
-            buyerId: sessionUser.id,
+            buyerId: userId,
             firstName,
             lastName,
             address,
@@ -88,13 +89,15 @@ function Checkout() {
 
         let orderId = null;
         const res = await dispatch(addOrder(order))
+        console.log("RESORDERRES", res)
         if (res) {
-            orderId = res.id
+            orderId = res.order.id
+            console.log("RESORDERRESORDERID", orderId)
             localStorage.removeItem('cartId');
             localStorage.removeItem('cartItems');
             dispatch(clearCart());
             // navigate('/orderconfirmation', { state: { orders: orderId } })
-            navigate(`/cart/${orderId}`)
+            navigate(`/order/${orderId}`)
         } else {
             console.error('Error creating order:', res);
             return;

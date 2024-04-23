@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Image } = require('../../db/models');
+const { User, Image, ShoppingCart } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -13,19 +13,53 @@ const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.'),
+        .withMessage('Invalid email')
+        .bail()
+        .custom(async (value, { req }) => {
+            const user = await User.unscoped().findOne({
+                where: {
+                    email: value
+                }
+            });
+
+            if (user) {
+                throw new Error('Email already exists')
+            }
+        }),
     check('username')
         .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Username is required')
+        .bail()
         .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
+        .withMessage('Username must be 4 characters or more')
         .not()
         .isEmail()
-        .withMessage('Username cannot be an email.'),
+        .withMessage('Username cannot be an email')
+        .bail()
+        .custom(async (value, { req }) => {
+            const user = await User.findOne({
+                where: {
+                    username: value
+                }
+            })
+
+            if (user) {
+                throw new Error('Username already exists')
+            }
+        }),
+    check('firstName')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('First Name is required'),
+    check('lastName')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Last Name is required'),
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
+        .withMessage('Password must be 6 characters or more'),
     handleValidationErrors
 ];
 
@@ -67,10 +101,6 @@ router.post(
             url: profileImageUrl
         });
 
-
-
-        console.log("USER", user);
-
         const safeUser = {
             id: user.id,
             email: user.email,
@@ -87,8 +117,28 @@ router.post(
 
         await setTokenCookie(res, safeUser);
 
+        const { cartId } = req.body
+
+        if (cartId) {
+            const cart = await ShoppingCart.findByPk(cartId);
+
+            if (cart) {
+                cart.buyerId = user ? user.id : null;
+                await cart.save();
+            }
+        }
+
+        const cartByUser = await ShoppingCart.findOne({
+            where:
+            {
+                buyerId: user.id
+            }
+        })
+
         return res.json({
-            user: safeUser
+            user: safeUser,
+            cart: cartByUser,
+            cartId: cartByUser ? cartByUser.id : null
         });
     }
 );

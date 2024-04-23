@@ -5,6 +5,7 @@ import * as sessionActions from '../../store/session';
 import './SignupForm.css';
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
+import { fetchCart, editCart } from '../../store/cart';
 
 function SignupFormModal() {
     const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function SignupFormModal() {
     const [image, setImage] = useState("")
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const [cartId] = useState(null);
 
     const updateFile = e => {
         const file = e.target.files[0];
@@ -49,40 +51,49 @@ function SignupFormModal() {
         setErrors(errs);
     }, [email, username, firstName, lastName, password, confirmPassword, accountType])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (password === confirmPassword) {
             setErrors({});
-            return dispatch(
-                sessionActions.signup({
-                    email,
-                    username,
-                    firstName,
-                    lastName,
-                    password,
-                    // bio,
-                    // favoritePlant,
-                    accountType,
-                    image
-                    // shopDescription,
-                    // paymentMethod,
-                    // paymentDetails
-                })
-            )
-                .then(closeModal)
-                .catch(async (res) => {
-                    console.log(res);
 
-                    const data = await res.json();
-                    console.log(data);
-                    if (data?.errors) {
-                        setErrors(data.errors);
-                    }
-                });
+            try {
+                const data = await dispatch(
+                    sessionActions.signup({
+                        email,
+                        username,
+                        firstName,
+                        lastName,
+                        password,
+                        accountType,
+                        image
+                    })
+                );
+
+                let localCartId = localStorage.getItem('cartId');
+                if (!localCartId && data.cartId) {
+                    localCartId = data.cartId;
+                    localStorage.setItem('cartId', data.cartId);
+                }
+
+                if (localCartId) {
+                    await dispatch(fetchCart(localCartId));
+                    await dispatch(editCart(localCartId));
+                }
+
+                closeModal();
+            } catch (res) {
+                console.error('Error during signup:', res);
+                const data = await res.json();
+                if (data?.errors) {
+                    setErrors(data.errors);
+                }
+            }
+        } else {
+            setErrors({
+                confirmPassword: "Confirm Password field must be the same as the Password field"
+            });
         }
-        return setErrors({
-            confirmPassword: "Confirm Password field must be the same as the Password field"
-        });
     };
 
     return (
@@ -254,6 +265,7 @@ function SignupFormModal() {
                     Avatar
                     <input type="file" onChange={updateFile} />
                 </label>
+                <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button style={{ marginTop: "15px" }}
                         disabled={Object.values(errors).length}

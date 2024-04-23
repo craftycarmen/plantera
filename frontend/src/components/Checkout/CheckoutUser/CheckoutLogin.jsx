@@ -47,8 +47,10 @@ function CheckoutLogin({ cartId }) {
         try {
             let localCartId = localStorage.getItem('cartId');
 
+            let data;
+
             if (!localCartId) {
-                const data = await dispatch(sessionActions.login({
+                data = await dispatch(sessionActions.login({
                     credential: "PlanteraDemo",
                     password: "password"
                 }));
@@ -60,6 +62,10 @@ function CheckoutLogin({ cartId }) {
             }
 
             if (localCartId) {
+                await dispatch(sessionActions.login({
+                    credential: "PlanteraDemo",
+                    password: "password"
+                }));
                 dispatch(fetchCart(localCartId));
                 dispatch(editCart(localCartId))
             }

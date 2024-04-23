@@ -56,7 +56,6 @@ router.post(
 
         const { cartId } = req.body
 
-        console.log("REQUSER", req.user)
         if (cartId) {
             const cart = await ShoppingCart.findByPk(cartId);
 

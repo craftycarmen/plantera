@@ -45,6 +45,14 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: true,
       },
+      city: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+      },
+      state: {
+        type: Sequelize.STRING(2),
+        allowNull: true,
+      },
       accountType: {
         type: Sequelize.STRING(50),
         allowNull: true,

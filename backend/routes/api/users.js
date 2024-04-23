@@ -156,6 +156,8 @@ router.put('/:userId', singleMulterUpload("image"), async (req, res) => {
         favoritePlant,
         accountType,
         shopDescription,
+        city,
+        state,
         paymentMethod,
         paymentDetails } = req.body;
 
@@ -169,6 +171,8 @@ router.put('/:userId', singleMulterUpload("image"), async (req, res) => {
         favoritePlant: favoritePlant,
         accountType: accountType,
         shopDescription: shopDescription,
+        city: city,
+        state: state,
         paymentMethod: paymentMethod,
         paymentDetails: paymentDetails,
     });

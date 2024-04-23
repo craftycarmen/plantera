@@ -198,7 +198,7 @@ function SignupFormModal() {
                 </div> */}
                 <div className="inputContainer accountType">
                     Would you like to sell plants on Plantera?*
-                    <div className='radioInput'>
+                    <div className='radioInput' style={{ paddingBottom: '10px' }}>
                         <input
                             type="radio"
                             value="seller"
@@ -261,10 +261,15 @@ function SignupFormModal() {
                     <div className="error">{errors.paymentDetails &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
                 </div> */}
-                <label>
-                    Avatar
-                    <input type="file" onChange={updateFile} />
-                </label>
+                <div className='inputContainer'>
+                    <input
+                        type="file"
+                        onChange={updateFile}
+                        accept=".jpg, .jpeg, .png"
+                        id='image'
+                    />
+                    <label htmlFor='image' className='floating-label'>Profile Image*</label>
+                </div>
                 <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button style={{ marginTop: "15px" }}

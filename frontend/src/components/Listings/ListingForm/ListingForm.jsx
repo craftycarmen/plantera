@@ -205,6 +205,7 @@ function ListingForm({ listing, formType }) {
                     <button
                         type='submit'
                         disabled={!!Object.values(errors).length}
+                        style={{ width: "321px" }}
                     >
                         {formType}
                     </button>

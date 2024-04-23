@@ -5,7 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { clearCart, resetCartId } from '../../store/cart';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function ProfileButton({ user }) {
     const navigate = useNavigate()
 
     const toggleMenu = (e) => {
-        e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+        e.stopPropagation();
         setShowMenu(!showMenu);
     };
 
@@ -60,14 +60,15 @@ function ProfileButton({ user }) {
             </span>
             <div className={ulClassName} ref={ulRef}>
                 {user ? (
-                    <>
-                        <li>{user.username}</li>
-                        <li>{user.firstName} {user.lastName}</li>
-                        <li>{user.email}</li>
-                        <li>
-                            <button onClick={logout}>Log Out</button>
-                        </li>
-                    </>
+                    <div className='userInfo'>
+                        <div>Hey, {user.username}!</div>
+                        <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /> <Link to='/'>Profile</Link></div>
+                        {user.accountType === 'seller' &&
+                            <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /> <Link to='/listings/current'>Listings</Link></div>
+                        }
+                        <button onClick={logout}>Log Out</button>
+
+                    </div>
                 ) : (
                     <>
                         <div className='profileLink'>

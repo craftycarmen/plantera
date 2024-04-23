@@ -27,7 +27,7 @@ function ManageListings() {
                 <ErrorHandling />
             ) : (listings && activeListings && soldListings &&
                 <>
-                    <div className="currentListings"><Link to={`/listings/new`}><button>Create New Listing</button></Link></div>
+                    <div className="currentListings"><Link to={`/listings/new`}><button style={{ width: "fit-content" }}>Create New Listing</button></Link></div>
 
                     <h2>Active Listings</h2>
                     <div className="listingsContainer">
@@ -49,8 +49,8 @@ function ManageListings() {
                                     </Link>
                                     <div className="listingInfo">
                                         <div>In Stock: {listing.stockQty}</div>
-                                        <div>
-                                            <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>&nbsp;
+                                        <div className="listingButtons">
+                                            <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
                                             <OpenModalButton
                                                 buttonText="Delete"
                                                 modalComponent={<DeleteListingModal listingId={listing.id} />}
@@ -77,7 +77,7 @@ function ManageListings() {
                                                 src={listing.ListingImages[0].url} />
                                         </div>
                                         <div className="listingInfo">
-                                            <h2>{listing.plantName}</h2>
+                                            <h3>{listing.plantName}</h3>
                                             <span>${listing.price}</span>
                                         </div>
                                     </Link>

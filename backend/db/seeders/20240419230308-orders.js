@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 const ordersList = [
   {
     buyerId: 1,
-    cartId: 1,
+    orderId: 1,
     address: '123 Test St',
     city: 'San Francisco',
     state: 'CA',
@@ -21,7 +21,7 @@ const ordersList = [
   },
   {
     buyerId: 3,
-    cartId: 2,
+    orderId: 2,
     address: '456 Third St',
     city: 'New York',
     state: 'NY',
@@ -44,9 +44,15 @@ module.exports = {
     }
   },
 
+  // async down(queryInterface, Sequelize) {
+  //   options.tableName = 'Orders';
+  //   const Op = Sequelize.Op;
+  //   return queryInterface.bulkDelete(options, { [Op.or]: ordersList }, {})
+  // }
   async down(queryInterface, Sequelize) {
     options.tableName = 'Orders';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, { [Op.or]: ordersList }, {})
+    const ids = ordersList.map(order => order.id);
+    return queryInterface.bulkDelete(options, { id: ids }, {})
   }
+
 };

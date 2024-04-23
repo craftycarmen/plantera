@@ -24,6 +24,14 @@ module.exports = {
         },
         onDelete: 'SET NULL'
       },
+      orderId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Orders',
+          key: 'id'
+        },
+      },
       listingId: {
         type: Sequelize.INTEGER,
         allowNull: true,

@@ -4,6 +4,7 @@ const usersRouter = require('./users.js');
 const listingsRouter = require('./listings.js');
 const cartRouter = require('./cart.js');
 const checkoutRouter = require('./checkout.js');
+const orderRouter = require('./order.js');
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -20,5 +21,7 @@ router.use('/listings', listingsRouter);
 router.use('/cart', cartRouter);
 
 router.use('/checkout', checkoutRouter);
+
+router.use('/order', orderRouter);
 
 module.exports = router;

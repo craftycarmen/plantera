@@ -93,7 +93,8 @@ function Checkout() {
             localStorage.removeItem('cartId');
             localStorage.removeItem('cartItems');
             dispatch(clearCart());
-            navigate('/orderconfirmation', { state: { orders: orderId } })
+            // navigate('/orderconfirmation', { state: { orders: orderId } })
+            navigate(`/cart/${orderId}`)
         } else {
             console.error('Error creating order:', res);
             return;

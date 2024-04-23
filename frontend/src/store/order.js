@@ -2,11 +2,18 @@ import { removeCart } from "./cart";
 import { csrfFetch } from "./csrf";
 
 const CREATE_ORDER = 'orders/CREATE_ORDER';
+const LOAD_ORDER_ITEMS = 'orders/LOAD_ORDER_ITEMS';
 
 export const createOrder = (order) => ({
     type: CREATE_ORDER,
     order
 });
+
+export const loadOrderItems = (orderId, orderItems) => ({
+    type: LOAD_ORDER_ITEMS,
+    orderId,
+    orderItems
+})
 
 export const addOrder = (order) => async (dispatch) => {
     const res = await csrfFetch('/api/checkout', {
@@ -27,6 +34,19 @@ export const addOrder = (order) => async (dispatch) => {
     }
 }
 
+export const fetchOrderItems = (orderId) => async (dispatch) => {
+    const res = await fetch(`/api/order/${orderId}`)
+
+    if (res.ok) {
+        const items = await res.json();
+        dispatch(loadOrderItems(orderId, items))
+        return items;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 const ordersReducer = (state = {}, action) => {
     switch (action.type) {
         case CREATE_ORDER: {
@@ -39,6 +59,15 @@ const ordersReducer = (state = {}, action) => {
             }
         }
 
+        case LOAD_ORDER_ITEMS: {
+            return {
+                ...state,
+                [action.orderId]: {
+                    ...state[action.orderId],
+                    orderItems: action.orderItems
+                }
+            }
+        }
         default:
             return { ...state }
     }

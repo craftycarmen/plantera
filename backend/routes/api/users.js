@@ -80,8 +80,6 @@ router.post(
             await singleFileUpload({ file: req.file, public: true }) :
             null;
 
-        console.log("PROFILEIMG", profileImageUrl);
-
         const hashedPassword = bcrypt.hashSync(password);
         const user = await User.create({
             email, username, firstName, lastName, hashedPassword,
@@ -95,11 +93,13 @@ router.post(
         });
 
 
-        await Image.create({
-            imageableId: user.id,
-            imageableType: 'User',
-            url: profileImageUrl
-        });
+        if (profileImageUrl) {
+            await Image.create({
+                imageableId: user.id,
+                imageableType: 'User',
+                url: profileImageUrl
+            })
+        }
 
         const safeUser = {
             id: user.id,
@@ -143,85 +143,47 @@ router.post(
     }
 );
 
-// router.post('/', singleMulterUpload("image"), validateSignup, async (req, res) => {
-//     const { email, firstName, lastName, password, username, bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails } = req.body;
-//     const profileImageUrl = req.file ? req.file.location : null; // Assuming req.file.location contains the URL of the uploaded image
+router.put('/:userId', singleMulterUpload("image"), async (req, res) => {
+    const userId = Number(req.params.userId)
+    const user = await User.findByPk(userId);
 
-//     try {
-//         const user = await User.create({
-//             email, username, firstName, lastName, hashedPassword: bcrypt.hashSync(password),
-//             bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails, profileImageUrl
-//         });
+    if (!user) return res.status(404).json({ message: "User couldn't be found" });
 
-//         // If image was uploaded, associate it with the user
-//         if (req.file) {
-//             await Image.create({
-//                 imageableId: user.id,
-//                 imageableType: 'User',
-//                 url: profileImageUrl
-//             });
-//         }
+    if (req.user.id !== userId) return res.status(403).json({ message: "Forbidden" });
 
-//         // Respond with the created user
-//         return res.status(201).json({ user });
-//     } catch (error) {
-//         // Handle error
-//         console.error(error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
+    const {
+        bio,
+        favoritePlant,
+        accountType,
+        shopDescription,
+        paymentMethod,
+        paymentDetails } = req.body;
+
+    const profileImageUrl = req.file ?
+        await singleFileUpload({ file: req.file, public: true }) :
+        null;
 
 
-// router.post('/', singleMulterUpload("image"), validateSignup, async (req, res) => {
-//     const { email, firstName, lastName, password, username, bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails } = req.body;
-//     const profileImageUrl = req.file ? req.file.location : null;
+    user.set({
+        bio: bio,
+        favoritePlant: favoritePlant,
+        accountType: accountType,
+        shopDescription: shopDescription,
+        paymentMethod: paymentMethod,
+        paymentDetails: paymentDetails,
+    });
 
-//     console.log('req.file:', req.file);
-//     console.log('profileImageUrl:', profileImageUrl);
+    await Image.create({
+        imageableId: userId,
+        imageableType: 'User',
+        url: profileImageUrl
+    })
 
-//     try {
-//         let user, image;
 
-//         // Create the user without the profile image URL first
-//         user = await User.create({
-//             email, username, firstName, lastName, hashedPassword: bcrypt.hashSync(password),
-//             bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails, profileImageUrl: null // Set to null for now
-//         });
+    await user.save();
 
-//         // If image was uploaded, associate it with the user
-//         if (req.file) {
-//             // Check if profile image URL is available
-//             if (!profileImageUrl) {
-//                 return res.status(400).json({ error: 'Profile image URL is required' });
-//             }
-
-//             // Create the Image instance with the profile image URL
-//             image = await Image.create({
-//                 imageableId: user.id,
-//                 imageableType: 'User',
-//                 url: profileImageUrl
-//             });
-//         }
-
-//         // Update the user's profile image URL if it's available
-//         if (image) {
-//             await user.update({ profileImageUrl: profileImageUrl });
-//         }
-
-//         // Respond with the created user
-//         return res.status(201).json({ user });
-//     } catch (error) {
-//         // Handle validation error
-//         if (error.name === 'SequelizeValidationError') {
-//             const errors = error.errors.map(err => err.message);
-//             return res.status(400).json({ errors });
-//         }
-
-//         // Handle other errors
-//         console.error(error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
+    return res.json(user);
+});
 
 
 

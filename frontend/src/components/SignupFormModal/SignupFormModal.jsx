@@ -7,7 +7,7 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import { fetchCart, editCart } from '../../store/cart';
 
-function SignupFormModal() {
+function SignupFormModal({ navigate }) {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -21,15 +21,15 @@ function SignupFormModal() {
     // const [shopDescription, setShopDescription] = useState("");
     // const [paymentMethod, setPaymentMethod] = useState("");
     // const [paymentDetails, setPaymentDetails] = useState("");
-    const [image, setImage] = useState("")
+    // const [image, setImage] = useState("")
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const [cartId] = useState(null);
 
-    const updateFile = e => {
-        const file = e.target.files[0];
-        if (file) setImage(file);
-    };
+    // const updateFile = e => {
+    //     const file = e.target.files[0];
+    //     if (file) setImage(file);
+    // };
 
     // const banks = ['Bank of Americano', 'Pursuit', 'Fells Wargo']
 
@@ -66,7 +66,7 @@ function SignupFormModal() {
                         lastName,
                         password,
                         accountType,
-                        image
+                        // image
                     })
                 );
 
@@ -81,7 +81,12 @@ function SignupFormModal() {
                     await dispatch(editCart(localCartId));
                 }
 
+                const userId = data.id
+
                 closeModal();
+                if (!location.pathname.startsWith('/checkout/user')) {
+                    navigate(`/user/${userId}/complete`)
+                }
             } catch (res) {
                 console.error('Error during signup:', res);
                 const data = await res.json();
@@ -261,7 +266,7 @@ function SignupFormModal() {
                     <div className="error">{errors.paymentDetails &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
                 </div> */}
-                <div className='inputContainer'>
+                {/* <div className='inputContainer'>
                     <input
                         type="file"
                         onChange={updateFile}
@@ -269,7 +274,7 @@ function SignupFormModal() {
                         id='image'
                     />
                     <label htmlFor='image' className='floating-label'>Profile Image*</label>
-                </div>
+                </div> */}
                 <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button style={{ marginTop: "15px" }}

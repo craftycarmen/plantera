@@ -78,7 +78,6 @@ export const signup = (user) => async (dispatch) => {
         shopDescription,
         paymentMethod,
         paymentDetails, image } = user;
-    console.log('1 IMAGE', image);
 
     const formData = new FormData();
     formData.append("username", username);
@@ -92,13 +91,12 @@ export const signup = (user) => async (dispatch) => {
     formData.append("shopDescription", shopDescription);
     formData.append("paymentMethod", paymentMethod);
     formData.append("paymentDetails", paymentDetails);
-    console.log(" 2 IMAGE", image);
+
     if (image) {
         formData.append("image", image)
     }
-    console.log("FORM DATA", formData);
 
-    const res = await csrfFetch("/api/users", {
+    const res = await csrfFetch("/api/user", {
         method: "POST",
         body: formData
         // body: JSON.stringify({

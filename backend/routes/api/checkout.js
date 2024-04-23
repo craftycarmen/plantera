@@ -112,7 +112,13 @@ router.post('/', requireAuth, async (req, res) => {
             await listing.save();
         })
 
-        // await cart.destroy()
+        cartItems.forEach(async (cartItem) => {
+            cartItem.set({
+                orderId: order.id
+            })
+
+            await cartItem.save();
+        })
 
 
         return res.status(201).json({ order, deletedCartId: cartId })

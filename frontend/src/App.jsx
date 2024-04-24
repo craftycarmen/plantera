@@ -15,6 +15,7 @@ import CheckoutUser from './components/Checkout/CheckoutUser/CheckoutUser';
 import UserProfile from './components/User/UserProfile';
 import EditProfile from './components/User/EditProfile';
 import CompleteProfile from './components/User/CompleteProfile';
+import Shop from './components/User/Shop';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
       {
         path: '/user/:userId/completeprofile',
         element: <CompleteProfile />
+      },
+      {
+        path: '/user/:userId/shop',
+        element: <Shop />
       },
     ]
   }

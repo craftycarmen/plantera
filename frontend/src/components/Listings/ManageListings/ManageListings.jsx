@@ -25,7 +25,7 @@ function ManageListings() {
             <h1>Manage Your Listings</h1>
             {!sessionUser ? (
                 <ErrorHandling />
-            ) : (listings && activeListings && soldListings &&
+            ) : (listings &&
                 <>
                     <div className="currentListings"><Link to={`/listings/new`}><button style={{ width: "fit-content" }}>Create New Listing</button></Link></div>
 
@@ -34,7 +34,7 @@ function ManageListings() {
                         {listings && activeListings?.length === 0 ? (
                             <div>No active listings!</div>
                         ) : (
-                            activeListings.map(listing => (
+                            activeListings && activeListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>
                                     <Link to={`/listings/${listing.id}`}>
                                         <div className="listingImageContainer">
@@ -68,7 +68,7 @@ function ManageListings() {
                         {listings && soldListings?.length === 0 ? (
                             <div>No sold listings!</div>
                         ) : (
-                            soldListings.map(listing => (
+                            soldListings && soldListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>
                                     <Link to={`/listings/${listing.id}`}>
                                         <div className="listingImageContainer soldOutImage">

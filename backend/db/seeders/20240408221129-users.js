@@ -28,18 +28,23 @@ const usersList = [
     firstName: 'Kingston',
     lastName: 'Shmingston',
     email: 'user1@user.io',
-    username: 'Plants4Life',
+    username: 'PlantJungle',
     hashedPassword: bcrypt.hashSync('password'),
     city: 'New York',
     state: 'NY',
-    accountType: 'buyer'
+    accountType: 'seller',
+    shopDescription: 'Take a piece of my plant jungle home!',
+    paymentMethod: 'Bank of Americano',
+    paymentDetails: 1234
   },
   {
     firstName: 'Ellie',
     lastName: 'Bellie',
     email: 'user2@user.io',
-    username: 'PlantJungle',
+    username: 'Plants4Life',
     hashedPassword: bcrypt.hashSync('password'),
+    city: 'San Jose',
+    state: 'CA',
     bio: 'My thumb is the greenest of green!',
     favoritePlant: 'Hoya australis',
     accountType: 'buyer'

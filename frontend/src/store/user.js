@@ -15,7 +15,11 @@ export const updateProfile = (user) => ({
     user
 })
 
-
+export const loadShop = (userId, listings) => ({
+    type: LOAD_SHOP,
+    userId,
+    listings
+})
 
 export const fetchProfile = (userId) => async (dispatch) => {
     const res = await fetch(`/api/user/${userId}`)
@@ -47,6 +51,19 @@ export const editProfile = (userId, user) => async (dispatch) => {
     }
 }
 
+export const fetchShop = (userId) => async (dispatch) => {
+    const res = await fetch(`/api/user/${userId}/shop`)
+
+    if (res.ok) {
+        const listings = await res.json();
+        dispatch(loadShop(userId, listings));
+        return listings;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 const userReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_PROFILE: {
@@ -54,6 +71,12 @@ const userReducer = (state = {}, action) => {
         }
         case UPDATE_PROFILE: {
             return { ...state, [action.userId]: action.user }
+        }
+        case LOAD_SHOP: {
+            return {
+                ...state,
+                [action.userId]: { ...state[action.userId], shop: action.listings }
+            };
         }
         default: {
             return state;

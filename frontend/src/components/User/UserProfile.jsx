@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchProfile } from "../../store/user";
 import './User.css';
+import ProfileImage from "./ProfileImage";
 
 function UserProfile() {
     const { userId } = useParams();
@@ -10,7 +11,7 @@ function UserProfile() {
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId])
     const sessionUser = useSelector(state => state.session.user)
-    console.log(sessionUser.id);
+
     const memberSince = (createdAt) => {
         const newDate = new Date(createdAt)
         return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
@@ -21,25 +22,13 @@ function UserProfile() {
         return last + "."
     }
 
-    console.log("UZAH", user);
     useEffect(() => {
         dispatch(fetchProfile(userId));
     }, [dispatch, userId])
     return (user &&
         <>
             <div className="userProfilePageContainer">
-                <div className="userProfileLeft">
-                    <div className="userImageContainer">
-                        {user.UserImages?.[0] &&
-                            <img className="userImage" src={user.UserImages?.[0]?.url} />
-                        }
-                    </div>
-                    {user.accountType === "seller" && (
-                        <div className="profileShop">
-                            <Link to={`/user/${userId}`}>View Profile</Link> | <Link to={`/user/${userId}/shop`}>View Shop</Link>
-                        </div>
-                    )}
-                </div>
+                <ProfileImage userId={userId} />
                 <div className="userProfileInfo">
                     <div className="username">
                         <h1>{user.username}</h1>
@@ -86,8 +75,6 @@ function UserProfile() {
                             </div>
                         </div>
                     )}
-
-
                 </div>
             </div>
         </>

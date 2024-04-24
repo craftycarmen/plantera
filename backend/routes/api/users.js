@@ -165,6 +165,11 @@ router.get('/:userId', async (req, res) => {
 router.get('/:userId/shop', async (req, res) => {
     const userId = Number(req.params.userId)
     const shop = await Listing.findAll({
+        include: {
+            model: Image,
+            as: "ListingImages",
+            // attributes: ['url']
+        },
         where: {
             sellerId: userId
         }

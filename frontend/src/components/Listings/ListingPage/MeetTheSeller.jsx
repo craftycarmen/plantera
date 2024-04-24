@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function MeetTheSeller({ sellerInfo }) {
     const memberSince = (createdAt) => {
         const newDate = new Date(createdAt)
@@ -16,7 +18,7 @@ function MeetTheSeller({ sellerInfo }) {
                     </>
                 )}
                 </div>
-                <div>
+                <div className="listingsPageShop">
                     <div>
                         <span style={{ fontWeight: "800" }}>Location:</span>
                         <div>{sellerInfo.city}, {sellerInfo.state}</div>
@@ -25,7 +27,11 @@ function MeetTheSeller({ sellerInfo }) {
                         <span style={{ fontWeight: "800" }}>Member Since:</span>
                         <div>{sellerInfo.createdAt && memberSince(sellerInfo.createdAt)}</div>
                     </div>
-                    <p>{sellerInfo.shopDescription}</p>
+                    <div>
+                        <span style={{ fontWeight: "800" }}>Shop Description:</span>
+                        <div>{sellerInfo.shopDescription}</div>
+                    </div>
+                    <div><Link to={`/user/${sellerInfo.id}`}>View Profile</Link></div>
                 </div>
             </div>
         </div>

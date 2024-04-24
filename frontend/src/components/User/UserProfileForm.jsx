@@ -37,7 +37,7 @@ function UserProfileForm({ formType }) {
     // const updatePaymentDetails = (e) => setPaymentDetails(e.target.value);
 
     const isCompleteProfile = formType === 'Complete Profile';
-    const isEditProfile = formType === 'Edit Profile';
+    // const isEditProfile = formType === 'Edit Profile';
 
     const states = ['AL', 'AK', 'AZ', 'AR',
         'CA', 'CO', 'CT', 'DE', 'DC',

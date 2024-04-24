@@ -114,7 +114,7 @@ function UserProfileForm({ formType }) {
                         id="bio"
                     />
                     <label htmlFor="bio" className="floating-label">Tell us about yourself!*</label>
-                    <div className="error">{errors.bio &&
+                    <div className="error">{errors?.bio &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.bio}</>}</div>
                 </div>
                 <div className="inputContainer">
@@ -126,7 +126,7 @@ function UserProfileForm({ formType }) {
                         id="favoritePlant"
                     />
                     <label htmlFor="favoritePlant" className="floating-label">What&#39;s your favorite plant?*</label>
-                    <div className="error">{errors.favoritePlant &&
+                    <div className="error">{errors?.favoritePlant &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.favoritePlant}</>}</div>
                 </div>
                 <div className='inputContainer'>
@@ -139,7 +139,7 @@ function UserProfileForm({ formType }) {
                     />
                     <label htmlFor='city' className='floating-label'>City*</label>
                 </div>
-                <div className='error'>{errors.city &&
+                <div className='error'>{errors?.city &&
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.city}</>}
                 </div>
 
@@ -161,7 +161,7 @@ function UserProfileForm({ formType }) {
                     </select>
                     <label htmlFor='state' className='floating-label'>State*</label>
                 </div>
-                <div className='error'>{errors.state &&
+                <div className='error'>{errors?.state &&
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.state}</>}
                 </div>
                 <div className="inputContainer accountType">
@@ -183,7 +183,7 @@ function UserProfileForm({ formType }) {
                             onClick={() => setAccountType("buyer")}
                         /><span>No</span>
                     </div>
-                    <div className="error">{errors.accountType &&
+                    <div className="error">{errors?.accountType &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.accountType}</>}</div>
                 </div>
                 {accountType == "seller" &&
@@ -197,7 +197,7 @@ function UserProfileForm({ formType }) {
                                 id="shopDescription"
                             />
                             <label htmlFor="shopDescription" className="floating-label">Tell us about your shop!*</label>
-                            <div className="error">{errors.shopDescription &&
+                            <div className="error">{errors?.shopDescription &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.shopDescription}</>}</div>
                         </div>
 
@@ -220,7 +220,7 @@ function UserProfileForm({ formType }) {
                             </select>
                             <label htmlFor='paymentMethod' className='floating-label'>Bank*</label>
                         </div>
-                        <div className='error'>{errors.paymentMethod &&
+                        <div className='error'>{errors?.paymentMethod &&
                             <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentMethod}</>}</div>
 
                         <div className='inputContainer'>
@@ -235,13 +235,13 @@ function UserProfileForm({ formType }) {
                             />
                             <label htmlFor='paymentDetails' className='floating-label'>Bank Account # (4 digits)*</label>
                         </div>
-                        <div className='error'>{errors.paymentDetails &&
+                        <div className='error'>{errors?.paymentDetails &&
                             <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
                     </>
                 }
                 <button
                     type='submit'
-                    disabled={!!Object.values(errors).length}
+                    disabled={errors && !!Object.values(errors)?.length}
                     style={{ width: "321px" }}
                 >{formType}</button>
 

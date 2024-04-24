@@ -7,7 +7,7 @@ import './User.css';
 function ProfileImage({ userId }) {
     const dispatch = useDispatch();
 
-    const user = useSelector(state => state.user[userId].User)
+    const user = useSelector(state => state.user[userId]?.User)
 
 
     useEffect(() => {

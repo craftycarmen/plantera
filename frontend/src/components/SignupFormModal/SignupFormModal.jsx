@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 import './SignupForm.css';
@@ -288,11 +288,13 @@ function SignupFormModal({ navigate }) {
                         type="submit">Sign Up</button>
                 </div>
             </form>
-            <div style={{ marginTop: "20px" }}>Already a Plantera user?&nbsp;
-                <OpenModalMenuItem
-                    itemText={<span className="modalLink">Log in</span>}
-                    modalComponent={<LoginFormModal />}
-                />
+            <div className='demosignup'>
+                <div>Already a Plantera user?&nbsp;
+                    <OpenModalMenuItem
+                        itemText={<span className="modalLink">Log in</span>}
+                        modalComponent={<LoginFormModal />}
+                    />
+                </div>
             </div>
         </section >
     );

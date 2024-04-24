@@ -66,7 +66,7 @@ export const resetCartId = () => ({
 });
 
 
-export const fetchCart = (cartId) => async (dispatch) => {
+export const fetchCart = () => async (dispatch) => {
     const cartId = Number(localStorage.getItem('cartId'));
     console.log('CartId fetched from localStorage:', cartId);
 

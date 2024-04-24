@@ -9,8 +9,8 @@ function Shop() {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector(state => state.user[userId].User)
-    const shop = useSelector(state => state.user[userId].Shop)
+    const user = useSelector(state => state.user[userId]?.User)
+    const shop = useSelector(state => state.user[userId]?.Shop)
     const activeListings = shop?.filter(listing => listing.stockQty > 0)
     const soldListings = shop?.filter(listing => listing.stockQty === 0)
     console.log("hello", activeListings);

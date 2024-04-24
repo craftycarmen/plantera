@@ -127,7 +127,6 @@ function ListingPage() {
         console.log("CARTSTUFF", newCartId);
         if (cartId === null) {
             const res = await dispatch(addCart());
-            console.log("CARTRESINHERE", res);
             if (res) {
                 newCartId = res.id;
                 localStorage.setItem('cartId', newCartId);

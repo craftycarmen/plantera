@@ -5,10 +5,9 @@ import { useModal } from '../../context/Modal';
 import './LoginForm.css';
 import { editCart, fetchCart } from '../../store/cart';
 import SignupFormModal from '../SignupFormModal';
-// import { Link } from "react-router-dom";
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
-function LoginFormModal({ navigate }) {
+function LoginFormModal() {
     const dispatch = useDispatch();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");

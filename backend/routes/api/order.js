@@ -1,5 +1,5 @@
 const express = require('express');
-const { CartItem, Order, Listing } = require('../../db/models');
+const { CartItem, Order, Listing, Image } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
@@ -12,13 +12,18 @@ router.get('/:orderId', requireAuth, async (req, res) => {
         },
         // attributes: ['buyerId']
     });
-    console.log(order);
+
     const { user } = req;
     if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
     const orderItems = await CartItem.findAll({
         include: {
             model: Listing,
-            attributes: ['plantName', 'price']
+            attributes: ['plantName', 'price', 'potSize'],
+            include: {
+                model: Image,
+                as: 'ListingImages',
+                attributes: ['url']
+            }
         },
         where: {
             orderId: orderId

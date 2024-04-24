@@ -110,6 +110,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    subTotal: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Subtotal is required'
+        }
+      }
+    },
     orderTotal: {
       type: DataTypes.FLOAT,
       allowNull: false,

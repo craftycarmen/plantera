@@ -3,7 +3,7 @@ import { fetchCart, fetchCartItems } from "../../../store/cart";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function OrderSummary({ cartId, checkout, orderConfirmation }) {
+function OrderSummary({ cartId, checkout }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const cartTotal = useSelector(state => state.cart.cartTotal);
@@ -39,7 +39,7 @@ function OrderSummary({ cartId, checkout, orderConfirmation }) {
         <div>
             <h2>Order Summary</h2>
             <div>
-                {checkout || orderConfirmation ? (
+                {checkout ? (
                     <>
                         {cartItems && cartItems.map(item => (
                             <div className="orderSummaryItem" key={item.id}>
@@ -78,14 +78,14 @@ function OrderSummary({ cartId, checkout, orderConfirmation }) {
                     <span>Free <i className="fa-regular fa-face-laugh-wink" /></span>
                 </div>
                 <div className="subTotalSummary">
-                    {orderConfirmation ? (<span>Taxes:</span>) : (<span>Estimated Tax:</span>)}
+                    <span>Estimated Tax:</span>
                     <span>${estimatedTax(cartTotal)}</span>
                 </div>
                 <div className="subTotalSummary">
                     <h2>Total:</h2>
                     <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
                 </div>
-                {checkout || orderConfirmation ? (<div></div>) : (<><button style={{ width: "100%" }} onClick={handleCheckOut}>Check Out</button></>)}
+                {checkout ? (<div></div>) : (<><button style={{ width: "100%" }} onClick={handleCheckOut}>Check Out</button></>)}
             </div >
         </div >
     )

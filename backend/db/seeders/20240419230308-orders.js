@@ -17,6 +17,7 @@ const ordersList = [
     zipCode: '94016',
     paymentMethod: 'VIZZA',
     paymentDetails: '1234',
+    subTotal: 20.00,
     orderTotal: 21.65
   },
   {
@@ -28,6 +29,7 @@ const ordersList = [
     zipCode: '10001',
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
+    subTotal: 80.00,
     orderTotal: 86.66
   },
 ]

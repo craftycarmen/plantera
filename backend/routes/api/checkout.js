@@ -65,7 +65,7 @@ router.post('/', requireAuth, async (req, res) => {
     try {
 
         const { user } = req
-        const { cartId, address, city, state, zipCode, paymentMethod, paymentDetails, orderTotal } = req.body;
+        const { cartId, address, city, state, zipCode, paymentMethod, paymentDetails, subTotal, orderTotal } = req.body;
 
         const cart = await ShoppingCart.findOne({
             where: {
@@ -86,6 +86,7 @@ router.post('/', requireAuth, async (req, res) => {
             zipCode,
             paymentMethod,
             paymentDetails,
+            subTotal,
             orderTotal
         });
 

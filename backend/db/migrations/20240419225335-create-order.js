@@ -56,6 +56,10 @@ module.exports = {
         type: Sequelize.STRING(4),
         allowNull: false,
       },
+      subTotal: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
       orderTotal: {
         type: Sequelize.FLOAT,
         allowNull: false

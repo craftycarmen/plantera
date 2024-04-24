@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchOrderItems } from "../../store/order";
 import ErrorHandling from "../ErrorHandling";
-import OrderSummary from "../Cart/CartPage/OrderSummary";
 import './Checkout.css'
 
 function OrderConfirmation() {
@@ -13,6 +12,11 @@ function OrderConfirmation() {
     const order = useSelector(state => state.orders[orderId]?.orderItems?.Order)
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+
+    const estimatedTax = (total) => {
+        let tax = (total * 0.0825).toFixed(2)
+        return tax
+    }
 
     useEffect(() => {
         const runDispatches = async () => {
@@ -24,15 +28,15 @@ function OrderConfirmation() {
         };
         runDispatches();
     }, [dispatch, orderId]);
-    console.log("ORDERITEMS", order);
-    console.log(sessionUser.id);
+    console.log("ORDERITEMS", orderItems);
+
     return (
         <>
-            {!sessionUser.id &&
+            {!sessionUser?.id &&
                 <ErrorHandling />}
-            {sessionUser.id !== buyerId &&
+            {sessionUser?.id !== buyerId &&
                 <>This isn&apos;t your order!</>}
-            {sessionUser.id === buyerId &&
+            {sessionUser?.id === buyerId && order &&
                 <>
 
                     <h1>Thank you for your order! <i className="fa-regular fa-hand-peace" /></h1>
@@ -40,7 +44,7 @@ function OrderConfirmation() {
                     </div>
                     <div className="thankYouContainer">
                         <div>
-                            <h2>Order Details</h2>
+                            <h2 style={{ marginBottom: "20px" }}>Order Details</h2>
                             <div className="orderDetails">
                                 <div>
                                     <div>Order: #{orderId}</div>
@@ -59,12 +63,61 @@ function OrderConfirmation() {
                                 </div>
                             </div>
                         </div>
-                        <OrderSummary orderConfirmation={true} />
+                        <div>
+                            <h2>Order Summary</h2>
+                            <div>
+                                {orderItems && orderItems.map(item => (
+                                    <div className="orderSummaryItem" key={item.id}>
+                                        <div className="orderSummaryImgContainer">
+                                            <img src={item.Listing?.ListingImages?.[0]?.url} />
+                                            <span className="qtyCircle">
+                                                <i style={{ fontSize: "large" }} className="fa-solid fa-circle" />
+
+                                                <span className='cartQtyNum'>
+                                                    {item.cartQty}
+                                                </span>
+
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <div style={{ fontWeight: '600' }}>
+                                                {item.Listing?.plantName}
+                                            </div>
+                                            <div>{item.Listing?.potSize}&#34;</div>
+                                        </div>
+
+                                        <span className="orderSummaryItemSub">
+                                            {/* ${item.orderItemsTotal.toFixed(2)} */}
+                                        </span>
+
+                                    </div>
+                                ))}
+
+                                <div className="subTotalSummary">
+                                    <span>Subtotal:</span>
+                                    <span>${order.subTotal?.toFixed(2)}</span>
+                                </div>
+                                <div className="subTotalSummary">
+                                    <span>Shipping:</span>
+                                    <span>Free <i className="fa-regular fa-face-laugh-wink" /></span>
+                                </div>
+                                <div className="subTotalSummary">
+                                    <span>Taxes:</span>
+                                    <span>${estimatedTax(order.orderTotal)}</span>
+                                </div>
+                                <div className="subTotalSummary">
+                                    <h2>Total:</h2>
+                                    <h2>${order.orderTotal}</h2>
+                                </div>
+                            </div >
+                        </div>
                     </div>
+
                 </>
             }
         </>
     )
+
 }
 
 export default OrderConfirmation

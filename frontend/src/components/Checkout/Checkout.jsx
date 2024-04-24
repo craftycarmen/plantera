@@ -82,6 +82,7 @@ function Checkout() {
             paymentMethod,
             paymentDetails,
             cartId: cart.cartId,
+            subTotal: cart.cartTotal,
             orderTotal: Number(cartTotal)
         }
 

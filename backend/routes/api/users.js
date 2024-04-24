@@ -159,27 +159,39 @@ router.get('/:userId', async (req, res) => {
     })
 
     if (!user) return res.status(404).json({ message: 'User not found' });
+    let shop;
 
-    return res.json(user)
-})
-
-router.get('/:userId/shop', async (req, res) => {
-    const userId = Number(req.params.userId)
-    const shop = await Listing.findAll({
+    shop = await Listing.findAll({
         include: {
             model: Image,
             as: "ListingImages",
-            // attributes: ['url']
         },
         where: {
             sellerId: userId
         }
     })
 
-    if (!shop) return res.status(404).json({ message: 'Shop not found' });
+    if (shop.length === 0) return res.json({ User: user, Shop: null })
 
-    return res.json(shop)
+    return res.json({ User: user, Shop: shop })
 })
+
+// router.get('/:userId/shop', async (req, res) => {
+//     const userId = Number(req.params.userId)
+//     const shop = await Listing.findAll({
+//         include: {
+//             model: Image,
+//             as: "ListingImages",
+//         },
+//         where: {
+//             sellerId: userId
+//         }
+//     })
+
+//     if (!shop) return res.status(404).json({ message: 'Shop not found' });
+
+//     return res.json(shop)
+// })
 
 router.put('/:userId', singleMulterUpload("image"), requireAuth, async (req, res) => {
     const userId = Number(req.params.userId)

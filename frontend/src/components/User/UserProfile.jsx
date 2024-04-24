@@ -9,13 +9,14 @@ function UserProfile() {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector(state => state.user[userId]?.profile)
+    const user = useSelector(state => state.user[userId].User)
     const sessionUser = useSelector(state => state.session.user)
     console.log(user);
     const memberSince = (createdAt) => {
         const newDate = new Date(createdAt)
         return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
     }
+
 
     const lastInitial = (lastName) => {
         let last = lastName.charAt(0)

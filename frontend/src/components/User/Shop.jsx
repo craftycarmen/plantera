@@ -9,11 +9,11 @@ function Shop() {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector(state => state.user[userId])
-    const shop = user?.shop;
-    const activeListings = user?.shop?.filter(listing => listing.stockQty > 0)
-    const soldListings = user?.shop?.filter(listing => listing.stockQty === 0)
-    console.log("hello", user.shop);
+    const user = useSelector(state => state.user[userId].User)
+    const shop = useSelector(state => state.user[userId].Shop)
+    const activeListings = shop?.filter(listing => listing.stockQty > 0)
+    const soldListings = shop?.filter(listing => listing.stockQty === 0)
+    console.log("hello", activeListings);
     const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
@@ -33,15 +33,15 @@ function Shop() {
                 </div>
 
                 <div className="shopDescription">
-                    <span style={{ fontWeight: "800" }}>About {user.username}'s Shop:</span>
+                    <span style={{ fontWeight: "800" }}>About {user.username}&#39;s Shop:</span>
                     <div>{user.shopDescription}</div>
                 </div>
                 <div>
 
-                    {user.shop && user.shop.length > 0 && activeListings?.length === 0 &&
+                    {activeListings?.length === 0 &&
                         <div></div>
                     }
-                    {user.shop && user.shop.length > 0 && activeListings?.length > 0 &&
+                    {activeListings?.length > 0 &&
                         <>
                             <h2>Current Listings</h2>
                             <div className="shopListingsContainer">
@@ -70,10 +70,10 @@ function Shop() {
 
                     }
 
-                    {user.shop && user.shop.length > 0 && soldListings?.length === 0 &&
+                    {soldListings?.length === 0 &&
                         <div></div>
                     }
-                    {user.shop && user.shop.length > 0 && soldListings?.length > 0 &&
+                    {soldListings?.length > 0 &&
                         <>
                             <h2>Sold Listings</h2>
                             <div className="shopListingsContainer">

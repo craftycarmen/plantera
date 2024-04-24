@@ -8,6 +8,7 @@ import ProfileImage from "./ProfileImage";
 function Shop() {
     const { userId } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = useSelector(state => state.user[userId])
     const shop = user?.shop;
     const activeListings = shop?.filter(listing => listing.stockQty > 0)
@@ -37,9 +38,12 @@ function Shop() {
                 </div>
                 <div>
 
-                    {shop && activeListings?.length === 0 ? (
+                    {shop && shop.length > 0 && activeListings?.length === 0 &&
+
                         <div></div>
-                    ) : (
+                    }
+
+                    {shop && shop.length > 0 && activeListings?.length > 1 &&
                         <>
                             <h2>Current Listings</h2>
                             <div className="shopListingsContainer">
@@ -64,12 +68,13 @@ function Shop() {
                                 }
                             </div>
                         </>
-                    )
+
                     }
 
-                    {shop && soldListings?.length === 0 ? (
+                    {shop && shop.length > 0 && soldListings?.length === 0 &&
                         <div></div>
-                    ) : (
+                    }
+                    {shop && shop.length > 0 && soldListings?.length > 0 &&
                         <>
                             <h2>Sold Listings</h2>
                             <div className="shopListingsContainer">
@@ -94,7 +99,7 @@ function Shop() {
                                 }
                             </div>
                         </>
-                    )
+
                     }
 
                 </div>

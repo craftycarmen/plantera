@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const ordersList = [
   {
-    buyerId: 1,
+    buyerId: 2,
     orderId: 1,
     address: '123 Test St',
     city: 'San Francisco',

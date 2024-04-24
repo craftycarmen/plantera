@@ -8,7 +8,7 @@ function UserProfileForm({ formType }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
-    const user = useSelector(state => state.user[userId])
+    const user = useSelector(state => state.user[userId]?.profile)
     console.log("USERUSERUSER", sessionUser)
 
     console.log("USER!", user);
@@ -78,7 +78,6 @@ function UserProfileForm({ formType }) {
         setErrors(errs);
     }, [isCompleteProfile, bio, favoritePlant, city, state, shopDescription, paymentDetails, paymentMethod, accountType])
 
-    console.log(errors);
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors();
@@ -101,7 +100,7 @@ function UserProfileForm({ formType }) {
             console.error('Error updating profile:', error);
         }
     }
-    console.log(formType);
+    console.log(bio);
     return (
         <section className="formContainer">
             <h1>{formType}</h1>

@@ -9,9 +9,9 @@ function UserProfile() {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector(state => state.user[userId])
+    const user = useSelector(state => state.user[userId]?.profile)
     const sessionUser = useSelector(state => state.session.user)
-
+    console.log(user);
     const memberSince = (createdAt) => {
         const newDate = new Date(createdAt)
         return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
@@ -49,7 +49,7 @@ function UserProfile() {
                         </div>
                     </div>
 
-                    {user.city && (
+                    {user.city && user.state && (
                         <div className="location">
                             <span style={{ fontWeight: "800" }}>Location:</span>
                             <div>
@@ -58,7 +58,7 @@ function UserProfile() {
                         </div>
                     )}
 
-                    {user.favoritePlant && user.favoritePlant !== "undefined" && (
+                    {user.favoritePlant && (
                         <div className="favePlant">
                             <span style={{ fontWeight: "800" }}>Favorite Plant:</span>
                             <div>

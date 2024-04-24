@@ -70,12 +70,13 @@ router.post(
     validateSignup,
     async (req, res) => {
         const { email, firstName, lastName, password, username,
-            bio,
-            favoritePlant,
-            accountType,
-            shopDescription,
-            paymentMethod,
-            paymentDetails } = req.body;
+            // bio,
+            // favoritePlant,
+            // accountType,
+            // shopDescription,
+            // paymentMethod,
+            // paymentDetails
+        } = req.body;
         const profileImageUrl = req.file ?
             await singleFileUpload({ file: req.file, public: true }) :
             null;
@@ -83,12 +84,12 @@ router.post(
         const hashedPassword = bcrypt.hashSync(password);
         const user = await User.create({
             email, username, firstName, lastName, hashedPassword,
-            bio,
-            favoritePlant,
-            accountType,
-            shopDescription,
-            paymentMethod,
-            paymentDetails,
+            // bio,
+            // favoritePlant,
+            // accountType,
+            // shopDescription,
+            // paymentMethod,
+            // paymentDetails,
             // profileImageUrl
         });
 

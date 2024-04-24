@@ -30,13 +30,13 @@ function UserProfile() {
         <>
             <div className="userProfilePageContainer">
                 <ProfileImage userId={userId} />
+                <div className="username">
+                    <h1>{user.username}</h1>
+                    {sessionUser?.id === user.id &&
+                        <button onClick={() => navigate(`/user/${userId}/editprofile`)}>Edit Profile</button>
+                    }
+                </div>
                 <div className="userProfileInfo">
-                    <div className="username">
-                        <h1>{user.username}</h1>
-                        {sessionUser?.id === user.id &&
-                            <button onClick={() => navigate(`/user/${userId}/editprofile`)}>Edit Profile</button>
-                        }
-                    </div>
 
                     <div className="name">
                         <span style={{ fontWeight: "800" }}>Name:</span>

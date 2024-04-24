@@ -310,7 +310,7 @@ function CheckoutSignup() {
                 </div>
                 <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
-                    <button style={{ marginTop: "15px" }}
+                    <button style={{ marginTop: "15px", width: "321px" }}
                         disabled={Object.values(errors).length}
                         type="submit">Sign Up</button>
                 </div>

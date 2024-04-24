@@ -209,7 +209,7 @@ function ListingPage() {
                 <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
                 <div>
                     <h1>{listing.plantName}</h1>
-                    <div>from {listing.Seller?.username}</div>
+                    <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link></div>
                     <p className="price">${listing.price}</p>
                     <p>{listing.description}</p>
                     <p>Pot Size: {listing.potSize}&ldquo;</p>
@@ -241,6 +241,7 @@ function ListingPage() {
                                     <button
                                         type="submit"
                                         disabled={error}
+                                        style={{ width: "167px" }}
                                     >Add to Cart</button>
                                 </>}
                                 modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}

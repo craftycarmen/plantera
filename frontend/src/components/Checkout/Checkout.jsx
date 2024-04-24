@@ -108,13 +108,13 @@ function Checkout() {
     return (
         <>
             <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/cart">Shopping Cart</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;Checkout</h3>
-
-            <h1 style={{ marginTop: "20px" }}>Checkout</h1>
-            {!sessionUser ? (<ErrorHandling />) :
+            {cart.cartId === null && <div>Your cart is empty!</div>}
+            {!sessionUser && cart.cartId !== null && (<ErrorHandling />)}
+            {sessionUser && cart.cartId !== null &&
                 (<>
                     <div className="shoppingCartPageContainer">
                         <form onSubmit={handleSubmit}>
-                            <h3>Shipping Address</h3 >
+                            <h2>Shipping Address</h2 >
                             <div className='inputContainer'>
                                 <input
                                     type='text'
@@ -202,7 +202,7 @@ function Checkout() {
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.zipCode}</>}</div>
 
                             <br />
-                            <h3>Payment Information</h3>
+                            <h2>Payment Information</h2>
 
                             <div className='inputContainer'>
                                 <select
@@ -242,6 +242,7 @@ function Checkout() {
                             <button
                                 type="submit"
                                 disabled={!!Object.values(errors).length}
+                                style={{ marginTop: "15px", width: "321px" }}
                             >Place My Order</button>
                         </form >
                         <OrderSummary checkout={true} />

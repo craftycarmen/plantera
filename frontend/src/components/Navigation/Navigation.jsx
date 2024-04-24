@@ -26,7 +26,7 @@ function Navigation({ isLoaded }) {
                 <Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL
             </div>
             <div className='rightNav'>
-                <i className="fa-solid fa-magnifying-glass" />&nbsp;&nbsp;&nbsp;
+                <i className="fa-solid fa-magnifying-glass" onClick={() => alert('Feature coming soon')} />&nbsp;&nbsp;&nbsp;
 
                 {isLoaded && (
                     <>

@@ -90,3 +90,9 @@
     justify-content: center;
 
 }
+
+.profileOptions {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    row-gap: 10px;
+}

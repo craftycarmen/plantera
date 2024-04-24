@@ -12,9 +12,9 @@ function MeetTheSeller({ sellerInfo }) {
                 <div>{sellerInfo.UserImages?.[0]?.avatar === true && (
                     <>
                         <div className="sellerImageContainer">
-                            <img className="sellerImage"
+                            <Link to={`/user/${sellerInfo.id}`}><img className="sellerImage"
                                 src={sellerInfo.UserImages[0].url} />
-                            <div className="sellerImage-outline"></div>
+                                <div className="sellerImage-outline"></div></Link>
                         </div>
                     </>
                 )}
@@ -32,7 +32,7 @@ function MeetTheSeller({ sellerInfo }) {
                         <span style={{ fontWeight: "800" }}>Shop Description:</span>
                         <div>{sellerInfo.shopDescription}</div>
                     </div>
-                    <div><Link to={`/user/${sellerInfo.id}`}>View Profile</Link></div>
+                    {/* <div><Link to={`/user/${sellerInfo.id}`}>View Profile</Link></div> */}
                 </div>
             </div>
         </div>

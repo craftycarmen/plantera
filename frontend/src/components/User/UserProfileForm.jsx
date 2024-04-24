@@ -8,9 +8,8 @@ function UserProfileForm({ formType }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
-    const user = useSelector(state => state.user[userId]?.profile)
-    console.log("USERUSERUSER", sessionUser)
-
+    const user = useSelector(state => state.user[userId]?.User)
+    console.log("USERUSERUSER", user)
     console.log("USER!", user);
     const [bio, setBio] = useState(user?.bio || '');
     const [favoritePlant, setFavoritePlant] = useState(user?.favoritePlant || '');
@@ -202,7 +201,7 @@ function UserProfileForm({ formType }) {
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.shopDescription}</>}</div>
                         </div>
 
-                        Where do you want us to send your earnings?*
+                        <div className='inputContainer accountType'>Where do you want us to send your earnings?*</div>
                         <div className='inputContainer'>
                             <select
                                 value={paymentMethod}

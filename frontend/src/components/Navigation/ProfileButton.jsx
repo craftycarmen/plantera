@@ -62,18 +62,23 @@ function ProfileButton({ user }) {
                 {user ? (
                     <div className='userInfo'>
                         <div>Hey, {user.username}!</div>
-                        <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /> <a onClick={() => {
-                            closeMenu()
-                            navigate(`/user/${user.id}`)
-                        }}>Profile</a></div>
-                        {user.accountType === 'seller' &&
-                            <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /> <a onClick={() => {
+                        <div className='profileOptions'>
+                            <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
                                 closeMenu()
-                                navigate(`/listings/current`)
-                            }}>Listings</a></div>
-                        }
-                        <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /> Guides</div>
-                        <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /> Orders</div>
+                                navigate(`/user/${user.id}`)
+                            }}>Profile</a></div>
+                            {user.accountType === 'seller' && (
+                                <>
+                                    <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                        closeMenu()
+                                        navigate(`/listings/current`)
+                                    }}>Listings</a></div>
+                                </>
+                            )
+                            }
+                            <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /></div><div>Guides</div>
+                            <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div>Orders</div>
+                        </div>
                         <button onClick={logout}>Log Out</button>
 
                     </div>

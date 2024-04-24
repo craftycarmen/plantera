@@ -24,13 +24,13 @@ function Shop() {
     return (user && shop &&
         <div className="userProfilePageContainer">
             <ProfileImage userId={userId} />
+            <div className="username">
+                <h1>{user.username}&#39;s Shop</h1>
+                {sessionUser?.id === user.id &&
+                    <button onClick={() => navigate(`/listings/current`)}>Manage Listings</button>
+                }
+            </div>
             <div className="shopInfoContainer">
-                <div className="shopName">
-                    <h1>{user.username}&#39;s Shop</h1>
-                    {sessionUser?.id === user.id &&
-                        <button onClick={() => navigate(`/listings/current`)}>Manage Listings</button>
-                    }
-                </div>
 
                 <div className="shopDescription">
                     <span style={{ fontWeight: "800" }}>About {user.username}&#39;s Shop:</span>

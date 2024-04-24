@@ -109,10 +109,11 @@ function CheckoutLogin({ cartId }) {
                 <div>
                     <button
                         disabled={Object.values(charCount).length}
+                        style={{ marginTop: "15px", width: "321px" }}
                         type="submit">Log In</button>
                 </div>
             </form>
-            <span onClick={demoUser} style={{ cursor: "pointer" }}>Log In as Demo User</span>
+            <p>            <a onClick={demoUser} style={{ cursor: "pointer" }}>Log in as Demo User</a></p>
         </div>
     )
 }

@@ -1,0 +1,72 @@
+.userProfilePageContainer {
+    display: grid;
+    gap: 50px;
+    grid-template-columns: 1fr 2fr;
+    margin-top: 20px;
+}
+
+.userProfileLeft {
+    display: grid;
+    gap: 50px;
+}
+
+.userImageContainer {
+    width: 100%;
+    height: 250px;
+}
+
+.userImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.userProfileInfo {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, auto);
+}
+
+.profileShop {
+    display: flex;
+    justify-content: space-around;
+}
+
+.username {
+    grid-column: 1/3;
+    display: grid;
+    align-items: center;
+}
+
+.username button {
+    width: fit-content;
+    height: fit-content;
+}
+
+.name {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+.memberSince {
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+.location {
+    grid-column: 1/2;
+    grid-row: 3/4;
+}
+
+.favePlant {
+    grid-column: 2/3;
+    grid-row: 3/4;
+}
+
+.bio {
+    grid-column: 1/3;
+    grid-row: 4/5;
+}

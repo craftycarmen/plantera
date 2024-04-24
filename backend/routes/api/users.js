@@ -143,7 +143,25 @@ router.post(
     }
 );
 
-router.put('/:userId', singleMulterUpload("image"), async (req, res) => {
+router.get('/:userId', async (req, res) => {
+    const userId = Number(req.params.userId)
+    const user = await User.findOne({
+        include: {
+            model: Image,
+            as: 'UserImages',
+            attributes: ['id', 'url', 'avatar']
+        },
+        where: {
+            id: userId
+        }
+    })
+
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    return res.json(user)
+})
+
+router.put('/:userId', singleMulterUpload("image"), requireAuth, async (req, res) => {
     const userId = Number(req.params.userId)
     const user = await User.findByPk(userId);
 

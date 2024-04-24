@@ -7,7 +7,7 @@ function MeetTheSeller({ sellerInfo }) {
         <div className="meetTheSeller">
             <h2>Meet {sellerInfo.username}</h2>
             <div className="meetTheSellerContainer">
-                <div>{sellerInfo.UserImages && sellerInfo.UserImages[0].avatar === true && (
+                <div>{sellerInfo.UserImages?.[0]?.avatar === true && (
                     <>
                         <div className="sellerImageContainer">
                             <img className="sellerImage"
@@ -19,7 +19,7 @@ function MeetTheSeller({ sellerInfo }) {
                 <div>
                     <div>
                         <span style={{ fontWeight: "800" }}>Location:</span>
-                        <div>San Francisco, CA ***</div>
+                        <div>{sellerInfo.city}, {sellerInfo.state}</div>
                     </div>
                     <div>
                         <span style={{ fontWeight: "800" }}>Member Since:</span>

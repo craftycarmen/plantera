@@ -102,7 +102,14 @@ router.get(
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                accountType: user.accountType
+                accountType: user.accountType,
+                bio: user.bio,
+                favoritePlant: user.favoritePlant,
+                city: user.city,
+                state: user.state,
+                shopDescription: user.shopDescription,
+                paymentMethod: user.paymentMethod,
+                paymentDetails: user.paymentDetails
             };
             return res.json({
                 user: safeUser

@@ -6,13 +6,15 @@ import sessionReducer from './session';
 import listingsReducer from './listings';
 import cartReducer from './cart';
 import ordersReducer from './order';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   listings: listingsReducer,
   cart: cartReducer,
-  orders: ordersReducer
+  orders: ordersReducer,
+  user: userReducer
 });
 
 let enhancer;

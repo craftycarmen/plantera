@@ -14,7 +14,6 @@ function Checkout() {
 
     const sessionUser = useSelector(state => state.session.user);
     const userId = sessionUser?.id;
-    console.log("USERIDHERE", userId);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [address, setAddress] = useState("");
@@ -86,14 +85,12 @@ function Checkout() {
             orderTotal: Number(cartTotal)
         }
 
-        console.log("BUYERID", order.buyerId);
-
         let orderId = null;
         const res = await dispatch(addOrder(order))
-        console.log("RESORDERRES", res)
+
         if (res) {
             orderId = res.order.id
-            console.log("RESORDERRESORDERID", orderId)
+
             localStorage.removeItem('cartId');
             localStorage.removeItem('cartItems');
             dispatch(clearCart());

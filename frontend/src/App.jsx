@@ -12,8 +12,9 @@ import ShoppingCartPage from './components/Cart/CartPage';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/Checkout/OrderConfirmation';
 import CheckoutUser from './components/Checkout/CheckoutUser/CheckoutUser';
-import UserProfileForm from './components/User/UserProfileForm';
 import UserProfile from './components/User/UserProfile';
+import EditProfile from './components/User/EditProfile';
+import CompleteProfile from './components/User/CompleteProfile';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -82,8 +83,12 @@ export const router = createBrowserRouter([
         element: <UserProfile />
       },
       {
-        path: '/user/:userId/profile',
-        element: <UserProfileForm />
+        path: '/user/:userId/editprofile',
+        element: <EditProfile />
+      },
+      {
+        path: '/user/:userId/completeprofile',
+        element: <CompleteProfile />
       },
     ]
   }

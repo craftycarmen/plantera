@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 import './SignupForm.css';
@@ -17,19 +17,21 @@ function SignupFormModal({ navigate }) {
     const [confirmPassword, setConfirmPassword] = useState("");
     // const [bio, setBio] = useState("");
     // const [favoritePlant, setFavoritePlant] = useState("");
-    const [accountType, setAccountType] = useState("");
+    // const [accountType, setAccountType] = useState("");
     // const [shopDescription, setShopDescription] = useState("");
     // const [paymentMethod, setPaymentMethod] = useState("");
     // const [paymentDetails, setPaymentDetails] = useState("");
-    // const [image, setImage] = useState("")
+    const [image, setImage] = useState("")
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const [cartId] = useState(null);
 
-    // const updateFile = e => {
-    //     const file = e.target.files[0];
-    //     if (file) setImage(file);
-    // };
+
+
+    const updateFile = e => {
+        const file = e.target.files[0];
+        if (file) setImage(file);
+    };
 
     // const banks = ['Bank of Americano', 'Pursuit', 'Fells Wargo']
 
@@ -43,13 +45,14 @@ function SignupFormModal({ navigate }) {
         if (!lastName) errs.lastName = '';
         if (!password) errs.password = '';
         if (!confirmPassword) errs.confirmPassword = '';
+        if (!image) errs.image = '';
         if (username && username.length < 4) errs.username = 'Username must be 4 characters at minimum';
         if (password && password.length < 6) errs.password = 'Password must be 6 characters at minimum';
         if (confirmPassword && password !== confirmPassword) errs.confirmPassword = 'Password and confirm password must match';
-        if (accountType !== "buyer" && accountType !== "seller") errs.accountType = '';
+        // if (accountType !== "buyer" && accountType !== "seller") errs.accountType = '';
 
         setErrors(errs);
-    }, [email, username, firstName, lastName, password, confirmPassword, accountType])
+    }, [email, username, firstName, lastName, password, confirmPassword, image])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -65,8 +68,8 @@ function SignupFormModal({ navigate }) {
                         firstName,
                         lastName,
                         password,
-                        accountType,
-                        // image
+                        // accountType,
+                        image
                     })
                 );
 
@@ -80,13 +83,16 @@ function SignupFormModal({ navigate }) {
                     await dispatch(fetchCart(localCartId));
                     await dispatch(editCart(localCartId));
                 }
-
-                const userId = data.id
+                const reduxStateString = localStorage.getItem('reduxState');
+                const reduxState = JSON.parse(reduxStateString);
+                const userId = reduxState.session.user.id;
+                console.log("USERIDHELLO", userId);
 
                 closeModal();
                 if (!location.pathname.startsWith('/checkout/user')) {
-                    navigate(`/user/${userId}/complete`)
+                    navigate(`/user/${userId}/completeprofile`)
                 }
+
             } catch (res) {
                 console.error('Error during signup:', res);
                 const data = await res.json();
@@ -201,7 +207,7 @@ function SignupFormModal({ navigate }) {
                     <div className="error">{errors.favoritePlant &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.favoritePlant}</>}</div>
                 </div> */}
-                <div className="inputContainer accountType">
+                {/* <div className="inputContainer accountType">
                     Would you like to sell plants on Plantera?*
                     <div className='radioInput' style={{ paddingBottom: '10px' }}>
                         <input
@@ -222,7 +228,7 @@ function SignupFormModal({ navigate }) {
                     </div>
                     <div className="error">{errors.accountType &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.accountType}</>}</div>
-                </div>
+                </div> */}
                 {/* <div className="inputContainer">
                     <textarea
                         type="text"
@@ -266,7 +272,7 @@ function SignupFormModal({ navigate }) {
                     <div className="error">{errors.paymentDetails &&
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
                 </div> */}
-                {/* <div className='inputContainer'>
+                <div className='inputContainer'>
                     <input
                         type="file"
                         onChange={updateFile}
@@ -274,7 +280,7 @@ function SignupFormModal({ navigate }) {
                         id='image'
                     />
                     <label htmlFor='image' className='floating-label'>Profile Image*</label>
-                </div> */}
+                </div>
                 <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button style={{ marginTop: "15px" }}

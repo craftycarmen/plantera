@@ -1,28 +1,32 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editProfile } from "../../store/user";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function UserProfileForm({ formType }) {
+    const { userId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
+    const user = useSelector(state => state.user[userId])
+    console.log("USERUSERUSER", sessionUser)
 
-    const [bio, setBio] = useState(sessionUser?.bio);
-    const [favoritePlant, setFavoritePlant] = useState(sessionUser?.favoritePlant);
-    const [city, setCity] = useState(sessionUser?.city);
-    const [state, setState] = useState(sessionUser?.select);
-    const [accountType, setAccountType] = useState(sessionUser?.accountType);
-    const [shopDescription, setShopDescription] = useState(sessionUser?.shopDescription);
-    const [paymentMethod, setPaymentMethod] = useState(sessionUser?.paymentMethod);
-    const [paymentDetails, setPaymentDetails] = useState(sessionUser?.paymentDetails);
-    const [image, setImage] = useState(sessionUser?.image);
+    console.log("USER!", user);
+    const [bio, setBio] = useState(user?.bio || '');
+    const [favoritePlant, setFavoritePlant] = useState(user?.favoritePlant || '');
+    const [city, setCity] = useState(user?.city || '');
+    const [state, setState] = useState(user?.state || '');
+    const [accountType, setAccountType] = useState(sessionUser?.accountType || '');
+    const [shopDescription, setShopDescription] = useState(user?.shopDescription || '');
+    const [paymentMethod, setPaymentMethod] = useState(user?.paymentMethod || '');
+    const [paymentDetails, setPaymentDetails] = useState(user?.paymentDetails || '');
+    // const [image, setImage] = useState("");
     const [errors, setErrors] = useState({});
 
-    const updateFile = e => {
-        const file = e.target.files[0];
-        if (file) setImage(file);
-    };
+    // const updateFile = e => {
+    //     const file = e.target.files[0];
+    //     if (file) setImage(file);
+    // };
     // const updateBio = (e) => setBio(e.target.value);
     // const updateFavoritePlant = (e) => setFavoritePlant(e.target.value);
     // const updateCity = (e) => setCity(e.target.value);
@@ -32,8 +36,8 @@ function UserProfileForm({ formType }) {
     // const updatePaymentMethod = (e) => setPaymentMethod(e.target.value);
     // const updatePaymentDetails = (e) => setPaymentDetails(e.target.value);
 
-    const completeProfile = formType === 'Complete Profile';
-    const editProfile = formType === 'Edit Profile';
+    const isCompleteProfile = formType === 'Complete Profile';
+    const isEditProfile = formType === 'Edit Profile';
 
     const states = ['AL', 'AK', 'AZ', 'AR',
         'CA', 'CO', 'CT', 'DE', 'DC',
@@ -55,7 +59,7 @@ function UserProfileForm({ formType }) {
         if (!favoritePlant) errs.favoritePlant = '';
         if (!city) errs.city = '';
         if (!state) errs.state = '';
-        if (!image) errs.image = '';
+        // if (isCompleteProfile && !image) errs.image = '';
         if (bio && bio.length < 30) errs.bio = 'Bio must be 30 characters at mininmum';
         if (bio && bio.length > 250) errs.bio = 'Bio must be 250 characters at maximum';
         if (favoritePlant && favoritePlant.length < 5) errs.favoritePlant = 'Favorite plant must be 5 characters at mininmum';
@@ -68,12 +72,13 @@ function UserProfileForm({ formType }) {
             if (shopDescription && shopDescription.length < 30) errs.shopDescription = 'Shop description must be 30 characters at mininmum';
             if (shopDescription && shopDescription.length > 250) errs.shopDescription = 'Shop description must be 250 characters at maximum';
             if (paymentDetails && isNaN(paymentDetails)) errs.paymentDetails = 'Payment details must be 4 digits';
-            if (paymentDetails && paymentDetails.length !== 4) errs.paymentDetails = 'Payment details must be 4 digits';
+            if (paymentDetails && paymentDetails.length < 4) errs.paymentDetails = 'Payment details must be 4 digits';
         }
 
         setErrors(errs);
-    }, [bio, favoritePlant, city, state, image, shopDescription, paymentDetails, paymentMethod, accountType])
+    }, [isCompleteProfile, bio, favoritePlant, city, state, shopDescription, paymentDetails, paymentMethod, accountType])
 
+    console.log(errors);
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors();
@@ -83,34 +88,25 @@ function UserProfileForm({ formType }) {
             favoritePlant,
             city,
             state,
-            image,
             shopDescription,
             paymentDetails,
-            paymentMethod
+            paymentMethod,
+            accountType
         }
 
         try {
-            await dispatch(editProfile(profile));
-            navigate(`/user/${sessionUser.id}`)
+            await dispatch(editProfile(userId, profile));
+            navigate(`/user/${userId}`)
         } catch (error) {
             console.error('Error updating profile:', error);
         }
     }
-
+    console.log(formType);
     return (
-        <>
+        <section className="formContainer">
             <h1>{formType}</h1>
-            {completeProfile && <div>Thanks for signing up for Plantera! Please complete your profile.</div>}
+            {isCompleteProfile && <div>Thanks for signing up for Plantera! Please complete your profile.</div>}
             <form onSubmit={handleSubmit}>
-                <div className='inputContainer'>
-                    <input
-                        type="file"
-                        onChange={updateFile}
-                        accept=".jpg, .jpeg, .png"
-                        id='image'
-                    />
-                    <label htmlFor='image' className='floating-label'>Profile Image*</label>
-                </div>
                 <div className="inputContainer">
                     <textarea
                         type="text"
@@ -250,8 +246,10 @@ function UserProfileForm({ formType }) {
                     disabled={!!Object.values(errors).length}
                     style={{ width: "321px" }}
                 >{formType}</button>
+
             </form >
-        </>
+            {isCompleteProfile && <div className="skip"><Link to='/'>Skip for Now</Link></div>}
+        </section>
     )
 }
 

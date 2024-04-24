@@ -30,7 +30,7 @@ function UserProfile() {
             <div className="userProfilePageContainer">
                 <div className="userProfileLeft">
                     <div className="userImageContainer">
-                        {user.UserImages?.[0]?.avatar === true &&
+                        {user.UserImages?.[0] &&
                             <img className="userImage" src={user.UserImages?.[0]?.url} />
                         }
                     </div>
@@ -44,7 +44,7 @@ function UserProfile() {
                     <div className="username">
                         <h1>{user.username}</h1>
                         {sessionUser?.id === user.id &&
-                            <button onClick={() => navigate(`/edit`)}>Edit Profile</button>
+                            <button onClick={() => navigate(`/user/${userId}/editprofile`)}>Edit Profile</button>
                         }
                     </div>
 
@@ -69,7 +69,7 @@ function UserProfile() {
                         </div>
                     )}
 
-                    {user.favoritePlant && (
+                    {user.favoritePlant && user.favoritePlant !== "undefined" && (
                         <div className="favePlant">
                             <span style={{ fontWeight: "800" }}>Favorite Plant:</span>
                             <div>

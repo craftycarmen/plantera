@@ -5,7 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { clearCart, resetCartId } from '../../store/cart';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
@@ -62,9 +62,15 @@ function ProfileButton({ user }) {
                 {user ? (
                     <div className='userInfo'>
                         <div>Hey, {user.username}!</div>
-                        <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /> <Link to='/'>Profile</Link></div>
+                        <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /> <a onClick={() => {
+                            closeMenu()
+                            navigate(`/user/${user.id}`)
+                        }}>Profile</a></div>
                         {user.accountType === 'seller' &&
-                            <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /> <Link to='/listings/current'>Listings</Link></div>
+                            <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /> <a onClick={() => {
+                                closeMenu()
+                                navigate(`/listings/current`)
+                            }}>Listings</a></div>
                         }
                         <button onClick={logout}>Log Out</button>
 

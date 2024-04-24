@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Image, ShoppingCart } = require('../../db/models');
+const { User, Image, ShoppingCart, Listing } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -137,6 +137,7 @@ router.post(
 
         return res.json({
             user: safeUser,
+            userId: safeUser.id,
             cart: cartByUser,
             cartId: cartByUser ? cartByUser.id : null
         });
@@ -159,6 +160,19 @@ router.get('/:userId', async (req, res) => {
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     return res.json(user)
+})
+
+router.get('/:userId/shop', async (req, res) => {
+    const userId = Number(req.params.userId)
+    const shop = await Listing.findAll({
+        where: {
+            sellerId: userId
+        }
+    })
+
+    if (!shop) return res.status(404).json({ message: 'Shop not found' });
+
+    return res.json(shop)
 })
 
 router.put('/:userId', singleMulterUpload("image"), requireAuth, async (req, res) => {
@@ -195,12 +209,16 @@ router.put('/:userId', singleMulterUpload("image"), requireAuth, async (req, res
         paymentDetails: paymentDetails,
     });
 
-    await Image.create({
-        imageableId: userId,
-        imageableType: 'User',
-        url: profileImageUrl
-    })
+    if (profileImageUrl) {
 
+
+        await Image.create({
+            imageableId: userId,
+            imageableType: 'User',
+            url: profileImageUrl
+        })
+
+    }
 
     await user.save();
 

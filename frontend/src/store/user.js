@@ -1,7 +1,8 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD_PROFILE = 'user/LOAD_PROFILE';
-const UPDATE_PROFILE = '/user/UPDATE_PROFILE';
+const UPDATE_PROFILE = 'user/UPDATE_PROFILE';
+const LOAD_SHOP = 'user/LOAD_SHOP';
 
 export const loadProfile = (userId, user) => ({
     type: LOAD_PROFILE,
@@ -13,6 +14,8 @@ export const updateProfile = (user) => ({
     type: UPDATE_PROFILE,
     user
 })
+
+
 
 export const fetchProfile = (userId) => async (dispatch) => {
     const res = await fetch(`/api/user/${userId}`)
@@ -27,8 +30,8 @@ export const fetchProfile = (userId) => async (dispatch) => {
     }
 }
 
-export const editProfile = (user) => async (dispatch) => {
-    const res = await csrfFetch(`/api/user/${user.id}`, {
+export const editProfile = (userId, user) => async (dispatch) => {
+    const res = await csrfFetch(`/api/user/${userId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...user })
@@ -50,7 +53,7 @@ const userReducer = (state = {}, action) => {
             return { ...state, [action.userId]: action.user }
         }
         case UPDATE_PROFILE: {
-            return { ...state, [action.user.id]: action.user }
+            return { ...state, [action.userId]: action.user }
         }
         default: {
             return state;

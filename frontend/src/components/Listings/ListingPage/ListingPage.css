@@ -91,7 +91,7 @@
     /* grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr)); */
     gap: 50px;
     justify-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     align-self: center;
     margin-top: 20px;
 }

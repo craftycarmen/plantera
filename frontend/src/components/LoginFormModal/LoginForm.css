@@ -19,3 +19,9 @@
     border-bottom: 1px solid #28635A;
     border-left: 1px solid #28635A;
 }
+
+.demosignup {
+    display: grid;
+    justify-items: center;
+    margin-top: 20px;
+}

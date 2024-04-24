@@ -288,12 +288,12 @@ function SignupFormModal({ navigate }) {
                         type="submit">Sign Up</button>
                 </div>
             </form>
-            <p>Already a Plantera user?&nbsp;
+            <div style={{ marginTop: "20px" }}>Already a Plantera user?&nbsp;
                 <OpenModalMenuItem
                     itemText={<span className="modalLink">Log in</span>}
                     modalComponent={<LoginFormModal />}
                 />
-            </p>
+            </div>
         </section >
     );
 }

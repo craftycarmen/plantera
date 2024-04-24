@@ -4,8 +4,11 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
 import { editCart, fetchCart } from '../../store/cart';
+import SignupFormModal from '../SignupFormModal';
+// import { Link } from "react-router-dom";
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
-function LoginFormModal() {
+function LoginFormModal({ navigate }) {
     const dispatch = useDispatch();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
@@ -132,8 +135,15 @@ function LoginFormModal() {
                 </div>
             </form>
 
-            <button onClick={demoUser}>Log In as Demo User</button>
-
+            <div className='demosignup'>
+                <div><a onClick={demoUser}>Log in as Demo User</a></div>
+                <div>Not a Plantera user?&nbsp;
+                    <OpenModalMenuItem
+                        itemText={<span className="modalLink">Sign up</span>}
+                        modalComponent={<SignupFormModal />}
+                    />
+                </div>
+            </div>
         </section>
     );
 }

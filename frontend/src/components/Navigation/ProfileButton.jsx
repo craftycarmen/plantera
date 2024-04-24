@@ -83,7 +83,7 @@ function ProfileButton({ user }) {
                             <OpenModalMenuItem
                                 itemText="Log In"
                                 onItemClick={closeMenu}
-                                modalComponent={<LoginFormModal />}
+                                modalComponent={<LoginFormModal navigate={navigate} />}
                             />
                         </div>
                         <div className='profileLink'>

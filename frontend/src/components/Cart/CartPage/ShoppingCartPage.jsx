@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { fetchCart, fetchCartItems, updateCartItemInCart, removeCartItem } from "../../../store/cart";
 import './ShoppingCartPage.css';
 import { Link } from "react-router-dom";
+import OrderSummary from "./OrderSummary";
 
 function ShoppingCartPage() {
     const dispatch = useDispatch();
     const cartId = localStorage.getItem("cartId")
     const cartItems = useSelector(state => state.cart.cartItems)
-    const cartTotal = useSelector(state => state.cart.cartTotal);
+    // const cartTotal = useSelector(state => state.cart.cartTotal);
     const [localCartQty, setLocalCartQty] = useState({});
-
+    console.log("CT", cartItems);
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
@@ -20,13 +21,25 @@ function ShoppingCartPage() {
     }, [dispatch, cartId])
 
     useEffect(() => {
-        const initialCartQty = {};
-        cartItems.forEach(item => {
-            const storedQty = localStorage.getItem(`cartQty_${item.id}`);
-            initialCartQty[item.id] = storedQty ? parseInt(storedQty) : item.cartQty;
+        const initialQty = {};
+
+        const localStoredCartItems = localStorage.getItem('cartItems');
+        const storedCartItems = localStoredCartItems ? JSON.parse(localStoredCartItems) : [];
+        // const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || []);
+
+        storedCartItems.forEach(item => {
+            initialQty[item.id] = item.cartQty;
         });
-        setLocalCartQty(initialCartQty)
-    }, [cartItems])
+        setLocalCartQty(initialQty)
+    }, [])
+    // useEffect(() => {
+    //     const initialCartQty = {};
+    //     cartItems.forEach(item => {
+    //         const storedQty = localStorage.getItem(`cartQty_${item.id}`);
+    //         initialCartQty[item.id] = storedQty ? parseInt(storedQty) : item.cartQty;
+    //     });
+    //     setLocalCartQty(initialCartQty)
+    // }, [cartItems])
 
     const calculateCartItemTotal = (item) => {
         if (item.Listing && item.Listing.price) {
@@ -34,15 +47,6 @@ function ShoppingCartPage() {
         }
         return 0;
     };
-
-    const estimatedTax = (total) => {
-        let tax = (total * 0.0825).toFixed(2)
-        return tax
-    }
-
-    const orderTotal = (subtotal, tax) => {
-        return (subtotal + parseFloat(tax)).toFixed(2);
-    }
 
     const showListingPrice = (item) => {
         if (localCartQty[item.id] > 1) {
@@ -74,8 +78,26 @@ function ShoppingCartPage() {
             }
 
             await dispatch(updateCartItemInCart(cartId, updatedItem))
+
+            const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item => {
+                if (item.id === itemId) {
+                    return {
+                        ...item,
+                        cartQty: updatedQty
+                    }
+                }
+                return item
+            }
+            );
+
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
+
+
             await dispatch(fetchCartItems(cartId))
             await dispatch(fetchCart(cartId))
+
         }
     }
 
@@ -94,6 +116,20 @@ function ShoppingCartPage() {
             }
 
             await dispatch(updateCartItemInCart(cartId, updatedItem))
+            const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            const updatedCartItemsLocalStorage = cartItemsLocalStorage.map(item => {
+                if (item.id === itemId) {
+                    return {
+                        ...item,
+                        cartQty: updatedQty
+                    }
+                }
+                return item
+            }
+            );
+
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
             await dispatch(fetchCartItems(cartId))
             await dispatch(fetchCart(cartId))
         }
@@ -148,8 +184,10 @@ function ShoppingCartPage() {
                                     </div>
                                     <div className="smInfo">
                                         <div className="shoppingCartRow">
-                                            <h3>{item.Listing?.plantName}</h3>
-                                            <div>
+                                            <div><h3>{item.Listing?.plantName}</h3>
+                                                <div>from {item.Listing?.Seller?.username}</div>
+                                            </div>
+                                            <div className="shoppingCartPrice">
 
                                                 <h3>${calculateCartItemTotal(item)}</h3>
                                                 <div>{showListingPrice(item)}
@@ -168,43 +206,21 @@ function ShoppingCartPage() {
                                                         step="1"
                                                         min="1"
                                                         max={item.Listing?.stockQty}
-                                                        value={localCartQty[item.id]}
+                                                        value={localCartQty[item.id] || 0}
                                                         name="cartQty"
                                                         readOnly
                                                     />
                                                     <button onClick={() => removeQty(item.id)}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
                                                 </div>
                                             </div>
-                                            <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
+                                            <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer", marginTop: "8px" }} onClick={() => handleRemoveItem(item.id)} /></span>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div>
-                        <h2>Order Summary</h2>
-                        <div>
-                            {cartTotal &&
-                                <div className="subTotal">
-                                    <h3>Subtotal:</h3>
-                                    <h3>${cartTotal}</h3>
-                                </div>}
-                            <div className="subTotal">
-                                <span>Shipping:</span>
-                                <span>Free &#128522;</span>
-                            </div>
-                            <div className="subTotal">
-                                <span>Estimated Tax:</span>
-                                <span>${estimatedTax(cartTotal)}</span>
-                            </div>
-                            <div className="subTotal">
-                                <h2>Total:</h2>
-                                <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
-                            </div>
-                            <button style={{ width: "100%" }}>Check Out</button>
-                        </div>
-                    </div>
+                    <OrderSummary cartId={cartId} />
                 </div>
             )}
         </>

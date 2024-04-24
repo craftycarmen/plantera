@@ -1,0 +1,324 @@
+/* .userProfilePageContainer {
+    display: grid;
+    column-gap: 50px;
+    grid-template-columns: auto 2fr;
+    grid-template-rows: 1fr 5fr;
+    margin-top: 20px;
+}
+
+.userProfileLeft {
+    display: grid;
+    gap: 20px;
+    height: fit-content;
+    grid-row: 1/3
+}
+
+.userImageContainer {
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+
+.userImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+.userImage-outline {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 50%;
+}
+
+.userProfileInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 2fr;
+    grid-column: 2/3;
+    grid-row-start: 2;
+    justify-content: start;
+}
+
+.profileShop {
+    justify-items: center;
+    justify-self: center;
+}
+
+.username {
+    grid-column: 2/3;
+    grid-row-start: 1;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    height: fit-content;
+}
+
+.username button {
+    width: fit-content;
+    height: fit-content;
+}
+
+.name {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    height: fit-content;
+}
+
+.memberSince {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    height: fit-content;
+}
+
+.location {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+.favePlant {
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+.bio {
+    grid-column: 1/3;
+    grid-row-start: 3;
+}
+
+.formContainer {
+    width: fit-content;
+}
+
+.skip {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.shopImageContainer {
+    width: 300px;
+}
+
+.shopImage {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.shopInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.shopInfo span {
+    font-size: 16px;
+}
+
+.soldOutShopImage {
+    width: 300px;
+}
+
+.soldOutShopImage::before {
+    content: '';
+    z-index: 1;
+    width: 300px;
+    height: 175px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    position: absolute;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.shopListingsContainer {
+    display: flex;
+    gap: 20px;
+}
+
+.userShopInfo {
+    display: grid;
+    margin-top: 20px;
+}
+
+.shopName {
+    grid-column: 2/3;
+    grid-row-start: 1;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+}
+
+.shopName button {
+    width: fit-content;
+    height: fit-content;
+}
+
+.shopDescription {
+    height: fit-content;
+}
+
+.shopInfoContainer {
+    display: grid;
+    gap: 20px;
+    grid-template-rows: 1fr auto auto;
+    margin-top: -21px;
+    justify-content: start;
+} */
+.userProfilePageContainer {
+    display: grid;
+    column-gap: 50px;
+    grid-template-columns: auto 2fr;
+    grid-template-rows: 1fr 5fr;
+    margin-top: 20px;
+}
+
+.userProfileLeft,
+.shopPageLeft {
+    display: grid;
+    gap: 20px;
+    height: fit-content;
+    grid-row: 1/3;
+}
+
+.userImageContainer {
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+
+.userImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+.userImage-outline {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 50%;
+}
+
+.userProfileInfo {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 2fr;
+    grid-column: 2/3;
+    grid-row: 2;
+    justify-content: start;
+}
+
+.shopInfoContainer {
+    display: grid;
+    gap: 35px;
+    grid-row: 1;
+    grid-column: 2/3;
+    grid-template-rows: 1fr;
+    justify-content: start;
+    margin-top: 57px;
+}
+
+.username,
+.shopName {
+    grid-column: 2/3;
+    grid-row: 1;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    /* justify-content: start; */
+    height: fit-content;
+}
+
+.username button,
+.shopName button {
+    width: fit-content;
+    height: fit-content;
+}
+
+.name,
+.memberSince,
+.location,
+.favePlant,
+.bio,
+.shopDescription {
+    height: fit-content;
+}
+
+.skip {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 321px;
+}
+
+.shopListingsContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.shopImageContainer {
+    width: 300px;
+}
+
+.shopImage {
+    width: 100%;
+    height: 175px;
+    /* Keep the height for the shop image */
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.shopInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.shopInfo span {
+    font-size: 16px;
+}
+
+.soldOutShopImage {
+    width: 300px;
+}
+
+.soldOutShopImage::before {
+    content: '';
+    z-index: 1;
+    width: 300px;
+    height: 175px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    position: absolute;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.profileShop {
+    justify-items: center;
+    justify-self: center;
+}

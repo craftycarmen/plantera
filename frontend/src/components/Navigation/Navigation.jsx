@@ -1,13 +1,23 @@
 import { NavLink, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import ShoppingCartButton from './ShoppingCartButton';
+import { useEffect } from 'react';
+import { fetchCart } from '../../store/cart';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
+    const userCartId = useSelector(state => state.cart.cartId)
+    console.log("USERCARTIDNAV", userCartId);
+    const dispatch = useDispatch();
+    const cartId = userCartId || localStorage.getItem('cartId')
 
-    const cartId = localStorage.getItem('cartId')
+    useEffect(() => {
+        if (sessionUser) {
+            dispatch(fetchCart(userCartId))
+        }
+    }, [sessionUser, dispatch, userCartId])
 
     return (
         <div className='navigation'>
@@ -16,7 +26,7 @@ function Navigation({ isLoaded }) {
                 <Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL
             </div>
             <div className='rightNav'>
-                <i className="fa-solid fa-magnifying-glass" />&nbsp;&nbsp;&nbsp;
+                <i className="fa-solid fa-magnifying-glass" onClick={() => alert('Feature coming soon')} />&nbsp;&nbsp;&nbsp;
 
                 {isLoaded && (
                     <>

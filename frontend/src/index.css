@@ -38,7 +38,8 @@ a:hover {
 }
 
 input,
-textarea {
+textarea,
+select {
     display: block;
     border: none;
     width: 300px;
@@ -58,8 +59,19 @@ textarea {
     border-left: 1px solid #28635A;
 }
 
+select {
+    width: 321px;
+}
+
 input[type=radio] {
     accent-color: #E38251;
+}
+
+input[type=file] {
+    cursor: pointer;
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
 }
 
 textarea {
@@ -74,6 +86,7 @@ button {
     font-size: 14px;
     /* letter-spacing: -0.5px; */
     color: #28635A;
+    width: 100%;
 }
 
 button:hover {
@@ -89,7 +102,10 @@ button:hover {
 .inputContainer input:not(:placeholder-shown)~label,
 .inputContainer textarea:focus~label,
 .inputContainer textarea:not([placeholder=''])~label,
-.inputContainer textarea:not(:placeholder-shown)~label {
+.inputContainer textarea:not(:placeholder-shown)~label,
+.inputContainer select:focus~label,
+.inputContainer select:not([placeholder=''])~label,
+.inputContainer select:not(:placeholder-shown)~label {
     top: -12px;
     font-size: 12px;
     cursor: default;
@@ -104,8 +120,13 @@ button:hover {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     outline: none;
+}
+
+select:hover {
+    cursor: pointer;
 }
 
 .error {

@@ -3,9 +3,13 @@ import { csrfFetch } from "./csrf";
 const LOAD_CART = 'cart/LOAD_CART';
 const CREATE_CART = 'cart/CREATE_CART';
 const LOAD_CART_ITEMS = 'cart/LOAD_CART_ITEMS';
+const UPDATE_CART = 'cart/UPDATE_CART';
+const DELETE_CART = 'cart/DELETE_CART';
 const CREATE_CART_ITEM = 'cart/CREATE_CART_ITEM';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
+const CLEAR_CART = 'cart/CLEAR_CART';
+const RESET_CART_ID = 'cart/RESET_CART_ID';
 
 export const loadCart = (cartId, cartItems, cartTotal, numCartItems) => ({
     type: LOAD_CART,
@@ -17,6 +21,17 @@ export const loadCart = (cartId, cartItems, cartTotal, numCartItems) => ({
 
 export const createCart = (cartId) => ({
     type: CREATE_CART,
+    cartId
+});
+
+export const updateCart = (cartId, cart) => ({
+    type: UPDATE_CART,
+    cartId,
+    cart
+});
+
+export const deleteCart = (cartId) => ({
+    type: DELETE_CART,
     cartId
 });
 
@@ -40,31 +55,36 @@ export const deleteCartItem = (cartId, cartItemId) => ({
     type: DELETE_CART_ITEM,
     cartId,
     cartItemId
-})
+});
+
+export const clearCart = () => ({
+    type: CLEAR_CART
+});
+
+export const resetCartId = () => ({
+    type: RESET_CART_ID
+});
 
 
 export const fetchCart = () => async (dispatch) => {
     const cartId = Number(localStorage.getItem('cartId'));
-    console.log("CARTID", cartId);
-    if (!cartId) {
-        dispatch(createCart(null));
-        return;
-    }
-    const res = await fetch(`/api/cart/${cartId}`);
-    console.log("RES", res);
-    if (res.ok) {
-        const cart = await res.json();
-        console.log("CARTRES", cart);
-        if (cart.ShoppingCart !== null) {
-            const cartTotal = cart.ShoppingCart.cartTotal;
-            const numCartItems = cart.ShoppingCart.numCartItems
-            dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
-            // dispatch(loadCart(cart));
-            return cart
+    console.log('CartId fetched from localStorage:', cartId);
+
+    if (cartId > 0) {
+        const res = await fetch(`/api/cart/${cartId}`);
+        if (res.ok) {
+            const cart = await res.json();
+            if (cart.ShoppingCart !== null) {
+                const cartTotal = cart.ShoppingCart.cartTotal;
+                const numCartItems = cart.ShoppingCart.numCartItems
+                dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
+                return cart
+            }
+
+        } else {
+            const errors = await res.json();
+            return errors;
         }
-    } else {
-        const errors = await res.json();
-        return errors;
     }
 }
 
@@ -84,6 +104,33 @@ export const addCart = (cart) => async (dispatch) => {
     } else {
         const errors = await res.json();
         return errors;
+    }
+}
+
+export const editCart = (cartId, cart) => async (dispatch) => {
+    const res = await csrfFetch(`/api/cart/${cartId}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...cart })
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateCart(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
+export const removeCart = (cartId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/cart/${cartId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        dispatch(deleteCart(cartId))
     }
 }
 
@@ -228,11 +275,12 @@ export const removeCartItem = (cartId, cartItemId) => async (dispatch) => {
         dispatch(deleteCartItem(cartItemId));
         dispatch(fetchCart(cartId));
     }
-}
+};
 
 const initialState = {
     cart: null,
     cartItems: [],
+    cartId: null,
     cartTotal: 0,
     numCartItems: 0
 }
@@ -265,39 +313,15 @@ const cartReducer = (state = initialState, action) => {
             }
         }
 
-        // case UPDATE_CART_ITEM: {
-        //     const { cartItem } = action;
-        //     if (!cartItem) {
-        //         return state;
-        //     }
+        case UPDATE_CART: {
+            return { ...state, [action.cartId]: action.cart }
+        }
 
-        //     const updatedCartItemIndex = state.cartItems.findIndex(item => item.id === cartItem.id);
-
-        //     if (updatedCartItemIndex !== -1) {
-        //         const updatedCartItems = [...state.cartItems];
-        //         updatedCartItems[updatedCartItemIndex] = cartItem;
-        //         return {
-        //             ...state,
-        //             cartItems: updatedCartItems
-        //         };
-        //     } else {
-        //         return state;
-        //     }
-        // }
-
-        // case UPDATE_CART_ITEM: {
-        //     const { cartItem } = action;
-        //     if (!cartItem) {
-        //         return state;
-        //     }
-
-        //     return {
-        //         ...state,
-        //         cartItems: state.cartItems.map(item =>
-        //             item.id === cartItem.id ? { ...item, cartQty: cartItem.cartQty } : item
-        //         )
-        //     };
-        // }
+        case DELETE_CART: {
+            const newState = { ...state };
+            delete newState[action.cartId];
+            return newState
+        }
 
         case UPDATE_CART_ITEM: {
             const { cartItem } = action;
@@ -305,7 +329,7 @@ const cartReducer = (state = initialState, action) => {
                 return state;
             }
 
-            // Calculate the new numCartItems based on the updated cart items
+
             const numCartItems = state.cartItems.reduce((total, item) => total + item.cartQty, 0);
 
             return {
@@ -317,17 +341,27 @@ const cartReducer = (state = initialState, action) => {
             };
         }
 
-
         case DELETE_CART_ITEM: {
             const newState = { ...state };
             delete newState[action.cartItemId];
             return newState;
 
-            // return {
-            //     ...state,
-            //     cartItems: state.cartItems.filter(item => item.id !== action.cartItemId)
-            // }
         }
+
+        case CLEAR_CART: {
+            return initialState;
+        }
+
+        case RESET_CART_ID: {
+            return {
+                ...state,
+                cartId: null,
+                cartItems: [],
+                cartTotal: 0,
+                numCartItems: 0
+            }
+        }
+
         default:
             return { ...state }
     }

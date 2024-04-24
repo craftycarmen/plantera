@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const shoppingCartsList = [
   {
-    buyerId: 1,
+    buyerId: 2,
   },
   {
     buyerId: 3,

@@ -1,7 +1,8 @@
 .listingsContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
-    gap: 25px;
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); */
+    display: flex;
+    gap: 35px;
     justify-items: center;
 }
 
@@ -27,6 +28,6 @@
     font-size: 16px;
 }
 
-.listingsContainer a:hover {
+/* .listingsContainer a:hover {
     text-decoration: none;
-}
+} */

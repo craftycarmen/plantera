@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Image } = require('../../db/models');
+const { User, Image, ShoppingCart, Listing } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -13,19 +13,53 @@ const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.'),
+        .withMessage('Invalid email')
+        .bail()
+        .custom(async (value, { req }) => {
+            const user = await User.unscoped().findOne({
+                where: {
+                    email: value
+                }
+            });
+
+            if (user) {
+                throw new Error('Email already exists')
+            }
+        }),
     check('username')
         .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Username is required')
+        .bail()
         .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
+        .withMessage('Username must be 4 characters or more')
         .not()
         .isEmail()
-        .withMessage('Username cannot be an email.'),
+        .withMessage('Username cannot be an email')
+        .bail()
+        .custom(async (value, { req }) => {
+            const user = await User.findOne({
+                where: {
+                    username: value
+                }
+            })
+
+            if (user) {
+                throw new Error('Username already exists')
+            }
+        }),
+    check('firstName')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('First Name is required'),
+    check('lastName')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Last Name is required'),
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
+        .withMessage('Password must be 6 characters or more'),
     handleValidationErrors
 ];
 
@@ -36,40 +70,37 @@ router.post(
     validateSignup,
     async (req, res) => {
         const { email, firstName, lastName, password, username,
-            bio,
-            favoritePlant,
-            accountType,
-            shopDescription,
-            paymentMethod,
-            paymentDetails } = req.body;
+            // bio,
+            // favoritePlant,
+            // accountType,
+            // shopDescription,
+            // paymentMethod,
+            // paymentDetails
+        } = req.body;
         const profileImageUrl = req.file ?
             await singleFileUpload({ file: req.file, public: true }) :
             null;
 
-        console.log("PROFILEIMG", profileImageUrl);
-
         const hashedPassword = bcrypt.hashSync(password);
         const user = await User.create({
             email, username, firstName, lastName, hashedPassword,
-            bio,
-            favoritePlant,
-            accountType,
-            shopDescription,
-            paymentMethod,
-            paymentDetails,
+            // bio,
+            // favoritePlant,
+            // accountType,
+            // shopDescription,
+            // paymentMethod,
+            // paymentDetails,
             // profileImageUrl
         });
 
 
-        await Image.create({
-            imageableId: user.id,
-            imageableType: 'User',
-            url: profileImageUrl
-        });
-
-
-
-        console.log("USER", user);
+        if (profileImageUrl) {
+            await Image.create({
+                imageableId: user.id,
+                imageableType: 'User',
+                url: profileImageUrl
+            })
+        }
 
         const safeUser = {
             id: user.id,
@@ -87,91 +118,130 @@ router.post(
 
         await setTokenCookie(res, safeUser);
 
+        const { cartId } = req.body
+
+        if (cartId) {
+            const cart = await ShoppingCart.findByPk(cartId);
+
+            if (cart) {
+                cart.buyerId = user ? user.id : null;
+                await cart.save();
+            }
+        }
+
+        const cartByUser = await ShoppingCart.findOne({
+            where:
+            {
+                buyerId: user.id
+            }
+        })
+
         return res.json({
-            user: safeUser
+            user: safeUser,
+            userId: safeUser.id,
+            cart: cartByUser,
+            cartId: cartByUser ? cartByUser.id : null
         });
     }
 );
 
-// router.post('/', singleMulterUpload("image"), validateSignup, async (req, res) => {
-//     const { email, firstName, lastName, password, username, bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails } = req.body;
-//     const profileImageUrl = req.file ? req.file.location : null; // Assuming req.file.location contains the URL of the uploaded image
+router.get('/:userId', async (req, res) => {
+    const userId = Number(req.params.userId)
+    const user = await User.findOne({
+        include: {
+            model: Image,
+            as: 'UserImages',
+            attributes: ['id', 'url', 'avatar']
+        },
+        where: {
+            id: userId
+        }
+    })
 
-//     try {
-//         const user = await User.create({
-//             email, username, firstName, lastName, hashedPassword: bcrypt.hashSync(password),
-//             bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails, profileImageUrl
-//         });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    let shop;
 
-//         // If image was uploaded, associate it with the user
-//         if (req.file) {
-//             await Image.create({
-//                 imageableId: user.id,
-//                 imageableType: 'User',
-//                 url: profileImageUrl
-//             });
+    shop = await Listing.findAll({
+        include: {
+            model: Image,
+            as: "ListingImages",
+        },
+        where: {
+            sellerId: userId
+        }
+    })
+
+    if (shop.length === 0) return res.json({ User: user, Shop: null })
+
+    return res.json({ User: user, Shop: shop })
+})
+
+// router.get('/:userId/shop', async (req, res) => {
+//     const userId = Number(req.params.userId)
+//     const shop = await Listing.findAll({
+//         include: {
+//             model: Image,
+//             as: "ListingImages",
+//         },
+//         where: {
+//             sellerId: userId
 //         }
+//     })
 
-//         // Respond with the created user
-//         return res.status(201).json({ user });
-//     } catch (error) {
-//         // Handle error
-//         console.error(error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
+//     if (!shop) return res.status(404).json({ message: 'Shop not found' });
+
+//     return res.json(shop)
+// })
+
+router.put('/:userId', singleMulterUpload("image"), requireAuth, async (req, res) => {
+    const userId = Number(req.params.userId)
+    const user = await User.findByPk(userId);
+
+    if (!user) return res.status(404).json({ message: "User couldn't be found" });
+
+    if (req.user.id !== userId) return res.status(403).json({ message: "Forbidden" });
+
+    const {
+        bio,
+        favoritePlant,
+        accountType,
+        shopDescription,
+        city,
+        state,
+        paymentMethod,
+        paymentDetails } = req.body;
+
+    const profileImageUrl = req.file ?
+        await singleFileUpload({ file: req.file, public: true }) :
+        null;
 
 
-// router.post('/', singleMulterUpload("image"), validateSignup, async (req, res) => {
-//     const { email, firstName, lastName, password, username, bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails } = req.body;
-//     const profileImageUrl = req.file ? req.file.location : null;
+    user.set({
+        bio: bio,
+        favoritePlant: favoritePlant,
+        accountType: accountType,
+        shopDescription: shopDescription,
+        city: city,
+        state: state,
+        paymentMethod: paymentMethod,
+        paymentDetails: paymentDetails,
+    });
 
-//     console.log('req.file:', req.file);
-//     console.log('profileImageUrl:', profileImageUrl);
+    if (profileImageUrl) {
 
-//     try {
-//         let user, image;
 
-//         // Create the user without the profile image URL first
-//         user = await User.create({
-//             email, username, firstName, lastName, hashedPassword: bcrypt.hashSync(password),
-//             bio, favoritePlant, accountType, shopDescription, paymentMethod, paymentDetails, profileImageUrl: null // Set to null for now
-//         });
+        await Image.create({
+            imageableId: userId,
+            imageableType: 'User',
+            url: profileImageUrl
+        })
 
-//         // If image was uploaded, associate it with the user
-//         if (req.file) {
-//             // Check if profile image URL is available
-//             if (!profileImageUrl) {
-//                 return res.status(400).json({ error: 'Profile image URL is required' });
-//             }
+    }
 
-//             // Create the Image instance with the profile image URL
-//             image = await Image.create({
-//                 imageableId: user.id,
-//                 imageableType: 'User',
-//                 url: profileImageUrl
-//             });
-//         }
+    await user.save();
 
-//         // Update the user's profile image URL if it's available
-//         if (image) {
-//             await user.update({ profileImageUrl: profileImageUrl });
-//         }
-
-//         // Respond with the created user
-//         return res.status(201).json({ user });
-//     } catch (error) {
-//         // Handle validation error
-//         if (error.name === 'SequelizeValidationError') {
-//             const errors = error.errors.map(err => err.message);
-//             return res.status(400).json({ errors });
-//         }
-
-//         // Handle other errors
-//         console.error(error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
+    return res.json(user);
+});
 
 
 

@@ -3,6 +3,9 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
+import { editCart, fetchCart } from '../../store/cart';
+import SignupFormModal from '../SignupFormModal';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 function LoginFormModal() {
     const dispatch = useDispatch();
@@ -11,6 +14,7 @@ function LoginFormModal() {
     const [charCount, setCharCount] = useState({});
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const [cartId] = useState(null);
 
     useEffect(() => {
         const char = {}
@@ -19,31 +23,78 @@ function LoginFormModal() {
         setCharCount(char)
     }, [credential, password])
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
-        return dispatch(sessionActions.login({ credential, password }))
-            .then(closeModal)
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) {
-                    setErrors(data.errors);
+
+        try {
+            let localCartId = localStorage.getItem('cartId');
+
+            const data = await dispatch(sessionActions.login({ credential, password }));
+
+            if (!localCartId) {
+                if (data.cartId) {
+                    localCartId = data.cartId;
+                    localStorage.setItem('cartId', data.cartId);
                 }
-            });
+            }
+
+            if (localCartId) {
+                await dispatch(fetchCart(localCartId));
+                await dispatch(editCart(localCartId))
+            }
+
+            closeModal();
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
-    const demoUser = (e) => {
+    const demoUser = async (e) => {
         e.preventDefault();
 
-        return dispatch(
-            sessionActions.login({
-                credential: "PlanteraDemo",
-                password: "password"
-            })
-        )
-            .then(closeModal)
+        try {
+            let localCartId = localStorage.getItem('cartId');
+
+            let data;
+
+            if (!localCartId) {
+                data = await dispatch(sessionActions.login({
+                    credential: "PlanteraDemo",
+                    password: "password"
+                }));
+
+                if (data.cartId) {
+                    localCartId = data.cartId;
+                    localStorage.setItem('cartId', data.cartId);
+                }
+            }
+
+            if (localCartId) {
+                await dispatch(sessionActions.login({
+                    credential: "PlanteraDemo",
+                    password: "password"
+                }));
+                dispatch(fetchCart(localCartId));
+                dispatch(editCart(localCartId))
+            }
+            closeModal();
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
+
+    // const demoUser = (e) => {
+    //     e.preventDefault();
+    //     return dispatch(
+    //         sessionActions.login({
+    //             credential: "PlanteraDemo",
+    //             password: "password",
+    //         })
+    //     )
+    //         .then(closeModal)
+    // };
+
 
     return (
         <section className='modal'>
@@ -75,6 +126,7 @@ function LoginFormModal() {
                     <label htmlFor="password" className="floating-label">Password
                     </label>
                 </div>
+                <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button
                         disabled={Object.values(charCount).length}
@@ -82,8 +134,15 @@ function LoginFormModal() {
                 </div>
             </form>
 
-            <button onClick={demoUser}>Log In as Demo User</button>
-
+            <div className='demosignup'>
+                <div><a onClick={demoUser}>Log in as Demo User</a></div>
+                <div>Not a Plantera user?&nbsp;
+                    <OpenModalMenuItem
+                        itemText={<span className="modalLink">Sign up</span>}
+                        modalComponent={<SignupFormModal />}
+                    />
+                </div>
+            </div>
         </section>
     );
 }

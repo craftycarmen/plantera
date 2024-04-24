@@ -115,6 +115,14 @@ module.exports = (sequelize, DataTypes) => {
         //   }
         // }
       },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       accountType: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -150,7 +158,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", "createdAt", "updatedAt"]
+          exclude: ["hashedPassword", "updatedAt"]
         }
       }
     }

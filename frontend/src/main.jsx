@@ -8,6 +8,8 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import * as listingActions from './store/listings';
 import * as cartActions from './store/cart';
+import * as orderActions from './store/order';
+import * as userActions from './store/user';
 import { Modal, ModalProvider } from './context/Modal';
 
 const store = configureStore();
@@ -20,6 +22,8 @@ if (import.meta.env.MODE !== 'production') {
   window.sessionActions = sessionActions;
   window.listingActions = listingActions;
   window.cartActions = cartActions;
+  window.orderActions = orderActions;
+  window.userActions = userActions
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(

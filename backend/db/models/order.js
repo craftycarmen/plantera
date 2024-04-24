@@ -15,16 +15,26 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(
         models.User,
         {
-          foreignKey: 'buyerId'
+          foreignKey: 'buyerId',
         }
       )
 
       Order.belongsTo(
         models.ShoppingCart,
         {
-          foreignKey: 'cartId'
+          foreignKey: 'cartId',
+          onDelete: 'SET NULL',
+          allowNull: true
+        }
+      );
+
+      Order.hasMany(
+        models.CartItem,
+        {
+          foreignKey: 'orderId',
         }
       )
+
     }
   }
   Order.init({
@@ -39,12 +49,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     cartId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Cart ID is required'
-        }
-      }
+      allowNull: true,
+      // validate: {
+      //   notNull: {
+      //     msg: 'Cart ID is required'
+      //   }
+      // }
     },
     address: {
       type: DataTypes.STRING,
@@ -100,8 +110,17 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    subTotal: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Subtotal is required'
+        }
+      }
+    },
     orderTotal: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         notNull: {
@@ -112,7 +131,7 @@ module.exports = (sequelize, DataTypes) => {
     orderStatus: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Processing",
+      defaultValue: "Received",
       validate: {
         notNull: {
           msg: 'Order status is required'

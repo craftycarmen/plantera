@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function MeetTheSeller({ sellerInfo }) {
     const memberSince = (createdAt) => {
         const newDate = new Date(createdAt)
@@ -7,25 +9,30 @@ function MeetTheSeller({ sellerInfo }) {
         <div className="meetTheSeller">
             <h2>Meet {sellerInfo.username}</h2>
             <div className="meetTheSellerContainer">
-                <div>{sellerInfo.UserImages && sellerInfo.UserImages[0].avatar === true && (
+                <div>{sellerInfo.UserImages?.[0]?.avatar === true && (
                     <>
                         <div className="sellerImageContainer">
-                            <img className="sellerImage"
+                            <Link to={`/user/${sellerInfo.id}`}><img className="sellerImage"
                                 src={sellerInfo.UserImages[0].url} />
+                                <div className="sellerImage-outline"></div></Link>
                         </div>
                     </>
                 )}
                 </div>
-                <div>
+                <div className="listingsPageShop">
                     <div>
                         <span style={{ fontWeight: "800" }}>Location:</span>
-                        <div>San Francisco, CA ***</div>
+                        <div>{sellerInfo.city}, {sellerInfo.state}</div>
                     </div>
                     <div>
                         <span style={{ fontWeight: "800" }}>Member Since:</span>
                         <div>{sellerInfo.createdAt && memberSince(sellerInfo.createdAt)}</div>
                     </div>
-                    <p>{sellerInfo.shopDescription}</p>
+                    <div>
+                        <span style={{ fontWeight: "800" }}>Shop Description:</span>
+                        <div>{sellerInfo.shopDescription}</div>
+                    </div>
+                    {/* <div><Link to={`/user/${sellerInfo.id}`}>View Profile</Link></div> */}
                 </div>
             </div>
         </div>

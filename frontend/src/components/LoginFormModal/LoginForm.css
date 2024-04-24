@@ -7,10 +7,19 @@
     padding: 15px 25px 40px 25px;
     width: 100%;
     background-color: #8EBAA8;
-    border-radius: 5px;
+    border-radius: 3px;
     /* border: 2px #e2725a solid; */
     /* outline: 4px solid #FDD8D6; */
     /* box-shadow: 3px 3px 0px #FDD8D6; */
+    border: #FDAC8A solid 1.5px;
+}
+
+.modal h1 {
+    margin-top: 20px;
+}
+
+.modal a {
+    color: #F2DCCB;
 }
 
 .modal input,
@@ -18,4 +27,14 @@
     background-color: #8EBAA8;
     border-bottom: 1px solid #28635A;
     border-left: 1px solid #28635A;
+}
+
+.demosignup {
+    display: grid;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.demosignup span {
+    color: #F2DCCB;
 }

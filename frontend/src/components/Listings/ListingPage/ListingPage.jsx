@@ -26,12 +26,28 @@ function ListingPage() {
         return storedCartId ? parseInt(storedCartId) : null;
     });
 
+
+    let [newCartItemId, setNewCartItemId] = useState(null);
+    let existingItemId = null;
+    let stockQty = listing?.stockQty || 1;
+    let [cartQty, setCartQty] = useState(1);
+    const [error, setError] = useState("");
+    const [updatedQty, setUpdateQty] = useState({})
+
     useEffect(() => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         if (storedCartItems) dispatch(fetchCartItems(storedCartItems));
     }, [dispatch]);
 
-    let [newCartItemId, setNewCartItemId] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            await dispatch(fetchOneListing(listingId));
+            if (cart.cartId) {
+                dispatch(fetchCartItems(cart.cartId));
+            }
+        };
+        fetchData();
+    }, [dispatch, listingId, cart.cartId]);
 
     useEffect(() => {
         const fetchDataAndLocalStorageUpdate = async () => {
@@ -55,9 +71,6 @@ function ListingPage() {
         fetchDataAndLocalStorageUpdate();
     }, [dispatch, cart.cartId]);
 
-
-    let existingItemId = null;
-
     useEffect(() => {
         if (cart.cartItems) {
             const existingCartItem = cart.cartItems.find(item => item.id === existingItemId)
@@ -66,10 +79,6 @@ function ListingPage() {
             }
         }
     }, [cart.cartItems, listingId, existingItemId])
-
-    let stockQty = listing?.stockQty || 1;
-    let [cartQty, setCartQty] = useState(1);
-    const [error, setError] = useState("")
 
     let addQty = (e) => {
         e.preventDefault();
@@ -100,25 +109,24 @@ function ListingPage() {
 
     const handleQty = (e) => {
         e.preventDefault();
-
         const newQty = parseInt(e.target.value);
+        console.log("New Quantity:", newQty);
         setCartQty(newQty);
-        console.log("STOCKQTY", stockQty);
-        // if (newQty >= stockQty) {
-        //     setQtyExceeded(true);
-        // } else {
-        //     setQtyExceeded(false)
-        // }
+        setUpdateQty(prevUpdatedQty => ({ ...prevUpdatedQty, [listingId]: newQty }));
+        console.log("Updated Quantity:", updatedQty);
     };
+
+    useEffect(() => {
+        console.log("Updated Quantity:", updatedQty);
+    }, [updatedQty]);
 
 
     const handleAddToCart = async () => {
         let newCartId = cartId;
         let cartItemExists = false;
-
+        console.log("CARTSTUFF", newCartId);
         if (cartId === null) {
             const res = await dispatch(addCart());
-
             if (res) {
                 newCartId = res.id;
                 localStorage.setItem('cartId', newCartId);
@@ -200,7 +208,7 @@ function ListingPage() {
                 <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
                 <div>
                     <h1>{listing.plantName}</h1>
-                    <div>from {listing.Seller?.username}</div>
+                    <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link></div>
                     <p className="price">${listing.price}</p>
                     <p>{listing.description}</p>
                     <p>Pot Size: {listing.potSize}&ldquo;</p>
@@ -232,13 +240,14 @@ function ListingPage() {
                                     <button
                                         type="submit"
                                         disabled={error}
+                                        style={{ width: "167px" }}
                                     >Add to Cart</button>
                                 </>}
-                                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} />}
+                                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}
                             />
 
                         </form>
-                    ) : (<div>SOLD OUT</div>)
+                    ) : (<div className="soldOutText">SOLD OUT</div>)
                     }
 
                 </div>

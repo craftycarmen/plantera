@@ -27,7 +27,10 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'cartId'
         }
       )
+
+
     }
+
   }
   ShoppingCart.init({
     buyerId: {

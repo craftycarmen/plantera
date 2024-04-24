@@ -5,12 +5,16 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import listingsReducer from './listings';
 import cartReducer from './cart';
+import ordersReducer from './order';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   listings: listingsReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  orders: ordersReducer,
+  user: userReducer
 });
 
 let enhancer;

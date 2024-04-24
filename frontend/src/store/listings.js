@@ -161,10 +161,14 @@ const listingsReducer = (state = {}, action) => {
 
         case LOAD_OWNED_LISTINGS: {
             const listingsState = {}
-            action.listings.Listings.forEach(listing => {
-                listingsState[listing.id] = listing;
-            })
-            return listingsState
+            if (action.listings.Listings !== "No listings found") {
+                action.listings.Listings.forEach(listing => {
+                    listingsState[listing.id] = listing;
+                })
+                return listingsState
+            } else {
+                return state;
+            }
         }
 
         case CREATE_LISTING: {

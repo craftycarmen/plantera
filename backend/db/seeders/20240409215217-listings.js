@@ -15,7 +15,7 @@ const listingsList = [
     description: 'This is a full grown monstera in an 8.5-inch pot in soil, comes with the pot. It has unfortunately getting too large for my home, so it needs a new home!',
     price: 75,
     potSize: 8.5,
-    stockQty: 1
+    stockQty: 3
   },
   {
     sellerId: 2,
@@ -24,7 +24,7 @@ const listingsList = [
     description: 'Grew these from cuttings to 4" plants. Came from a luscious mother plant',
     price: 10,
     potSize: 4,
-    stockQty: 2
+    stockQty: 4
   },
   {
     sellerId: 1,
@@ -32,7 +32,7 @@ const listingsList = [
     description: 'The pothos that just keeps on giving. I had to trim the mother plant because she was getting sooo long.',
     price: 5,
     potSize: 4,
-    stockQty: 5
+    stockQty: 8
   },
   {
     sellerId: 1,

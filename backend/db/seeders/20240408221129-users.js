@@ -10,32 +10,41 @@ if (process.env.NODE_ENV === 'production') {
 
 const usersList = [
   {
-    firstName: 'Demo',
-    lastName: 'User',
+    firstName: 'Demorita',
+    lastName: 'Usersmith',
     email: 'demo@user.io',
     username: 'PlanteraDemo',
     hashedPassword: bcrypt.hashSync('password'),
     bio: 'My room is a jungle filled with plants.',
     favoritePlant: 'Monstera',
+    city: 'San Francisco',
+    state: 'CA',
     accountType: 'seller',
     shopDescription: 'I take great pride in caring for my plants. You will not be disappointed!',
     paymentMethod: 'Bank of Americano',
     paymentDetails: 1234
   },
   {
-    firstName: 'Demo1',
-    lastName: 'User',
+    firstName: 'Kingston',
+    lastName: 'Shmingston',
     email: 'user1@user.io',
-    username: 'FakeUser1',
+    username: 'PlantJungle',
     hashedPassword: bcrypt.hashSync('password'),
-    accountType: 'buyer'
+    city: 'New York',
+    state: 'NY',
+    accountType: 'seller',
+    shopDescription: 'Take a piece of my plant jungle home!',
+    paymentMethod: 'Bank of Americano',
+    paymentDetails: 1234
   },
   {
-    firstName: 'Demo2',
-    lastName: 'User',
+    firstName: 'Ellie',
+    lastName: 'Bellie',
     email: 'user2@user.io',
-    username: 'FakeUser2',
+    username: 'Plants4Life',
     hashedPassword: bcrypt.hashSync('password'),
+    city: 'San Jose',
+    state: 'CA',
     bio: 'My thumb is the greenest of green!',
     favoritePlant: 'Hoya australis',
     accountType: 'buyer'

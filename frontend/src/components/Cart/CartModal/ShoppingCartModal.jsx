@@ -4,20 +4,21 @@ import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
 import { useModal } from "../../../context/Modal";
 
-function ShoppingCartModal({ cartId, navigate }) {
+function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const cartItems = useSelector(state => state.cart.cartItems)
     const cartTotal = useSelector(state => state.cart.cartTotal);
 
-    console.log("CARTUSESELECTOR", cartItems);
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
         }
         runDispatches();
     }, [dispatch, cartId])
+
+    console.log("Updated Quantity in ShoppingCartModal:", updatedQty);
 
     const handleRemoveItem = async (itemId) => {
         await dispatch(removeCartItem(cartId, itemId));
@@ -48,6 +49,7 @@ function ShoppingCartModal({ cartId, navigate }) {
                             <div className="shoppingModalImgContainer">
                                 <img
                                     src={item.Listing?.ListingImages?.[0]?.url}
+                                    style={{ cursor: "pointer" }}
                                     onClick={() => {
                                         closeModal();
                                         navigate(`/listings/${item.Listing.id}`);
@@ -55,13 +57,14 @@ function ShoppingCartModal({ cartId, navigate }) {
                                 />
                             </div>
                             <div className="smInfo">
-                                <div className="shoppigModalRow">
+                                <div className="shoppingModalRow">
                                     <h3>{item.Listing?.plantName}</h3>
                                     <h3>${item.cartItemsTotal}</h3>
                                 </div>
                                 <div>Pot Size: {item.Listing?.potSize}&#34;</div>
-                                <div className="shoppigModalRow">
-                                    <span>Quantity: {item.cartQty}</span>
+                                <div className="shoppingModalRow">
+                                    <span>Quantity: {(item && updatedQty[item.id]) || (item && item.cartQty)}</span>
+
                                     <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
                                 </div>
                             </div>
@@ -72,9 +75,10 @@ function ShoppingCartModal({ cartId, navigate }) {
                         <h3>Subtotal:</h3>
                         <h3>${cartTotal}</h3>
                     </div>}
-
-                    <button style={{ width: '100%' }} onClick={checkout}>View Cart & Check Out</button>
-
+                    <div style={{ display: "flex", gap: "8px" }}>
+                        <button onClick={closeModal}>Continue Shopping</button>
+                        <button style={{ width: '100%', flexWrap: "nowrap" }} onClick={checkout}>View Cart & Check Out</button>
+                    </div>
                 </div>
             )
             }

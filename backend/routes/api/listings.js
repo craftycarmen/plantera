@@ -112,7 +112,7 @@ router.get('/:listingId', async (req, res) => {
             {
                 model: User,
                 as: 'Seller',
-                attributes: ['id', 'username', 'shopDescription', 'createdAt'],
+                attributes: ['id', 'username', 'city', 'state', 'shopDescription', 'createdAt'],
                 include: {
                     model: Image,
                     as: 'UserImages'

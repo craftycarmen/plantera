@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, ShoppingCart, CartItem, Listing, Image } = require('../../db/models');
+const { User, ShoppingCart, CartItem, Listing, Image, Order } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
@@ -53,11 +53,17 @@ router.get('/:cartId', async (req, res) => {
                 include: {
                     model: Listing,
                     attributes: ['id', 'plantName', 'price', 'stockQty', 'potSize'],
-                    include: {
+                    include: [{
                         model: Image,
                         as: 'ListingImages',
                         attributes: ['id', 'url']
-                    }
+                    },
+
+                    {
+                        model: User,
+                        as: 'Seller',
+                        attributes: ['username', 'id']
+                    }]
                 }
             },
         ],
@@ -65,6 +71,8 @@ router.get('/:cartId', async (req, res) => {
             id: cartId
         }
     });
+
+    // if (buyerId !== null && shoppingCart.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
 
     if (!shoppingCart) {
         return res.status(404).json({ error: 'Shopping cart not found' });
@@ -87,20 +95,6 @@ router.get('/:cartId', async (req, res) => {
     cartItemsList.forEach(item => {
         item.cartItemsTotal = item.cartQty * item.Listing.price
     })
-    console.log(cartItemsList);
-
-    // let cartTotalArray = [0]
-    // let numCartItemsArray = [0]
-    // cartItemsList.forEach(item => {
-    //     itemSubTotal = item.cartQty * item.Listing.price
-    //     item.subTotal = itemSubTotal
-    //     cartTotalArray.push(itemSubTotal)
-    //     numCartItemsArray.push(item.cartQty)
-    // })
-
-    // let cartTotal = cartTotalArray.reduce((total, amount) => total + amount)
-    // console.log(cartTotal);
-    // let numCartItems = numCartItemsArray.reduce((total, amount) => total + amount)
 
     let getCartById = {
         id: shoppingCart.id,
@@ -119,7 +113,13 @@ router.get('/:cartId', async (req, res) => {
 router.post('/', async (req, res) => {
 
     try {
-        const { buyerId, cartId } = req.body;
+        const { user } = req;
+
+        let buyerId = null;
+        if (user) {
+            buyerId = user.id;
+        }
+        const { cartId } = req.body;
 
         const existingCart = await ShoppingCart.findByPk(cartId);
 
@@ -134,6 +134,57 @@ router.post('/', async (req, res) => {
         return res.json(err.message)
     }
 });
+
+router.put('/:cartId', requireAuth, async (req, res) => {
+    try {
+        const cartId = Number(req.params.cartId);
+        const cart = await ShoppingCart.findByPk(cartId)
+        const { user } = req
+
+        if (!cart) return res.status(404).json({ message: "Cart couldn't be found" })
+
+        await cart.update({
+            buyerId: user.id
+        })
+
+        return res.json(cart)
+    } catch (err) {
+        return res.status(500).json(err.message)
+    }
+});
+
+router.delete('/:cartId', requireAuth, async (req, res) => {
+    const cartId = Number(req.params.cartId);
+
+    const cart = await ShoppingCart.findByPk(cartId)
+
+    if (!cart) return res.status(404).json({ message: "Cart couldn't be found" })
+
+    await CartItem.update({
+        cartId: null
+    }, {
+        where:
+        {
+            cartId
+        }
+    })
+
+    await Order.update({
+        cartId: null
+    }, {
+        where:
+        {
+            cartId
+        }
+    })
+
+    await cart.destroy();
+
+
+    return res.json({ message: "Successfully deleted" })
+
+});
+
 
 router.post('/:cartId/items', async (req, res) => {
 

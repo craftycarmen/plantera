@@ -18,3 +18,7 @@
 .radioInput span {
     margin-top: 8px;
 }
+
+input[type='radio']:hover {
+    cursor: pointer;
+}

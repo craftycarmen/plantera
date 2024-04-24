@@ -49,22 +49,35 @@ router.post(
             email: user.email,
             username: user.username,
             firstName: user.firstName,
-            lastName: user.lastName
+            lastName: user.lastName,
+            accountType: user.accountType
         };
 
         await setTokenCookie(res, safeUser);
 
-        // const { cartId } = req.body
-        // if (cartId) {
-        //     const cart = await ShoppingCart.findByPk(cartId);
-        //     if (cart) {
-        //         cart.buyerId = user.id;
-        //         await cart.save();
-        //     }
-        // }
+        const { cartId } = req.body
+
+        if (cartId) {
+            const cart = await ShoppingCart.findByPk(cartId);
+
+            if (cart) {
+                cart.buyerId = user ? user.id : null;
+                await cart.save();
+            }
+        }
+
+        const cartByUser = await ShoppingCart.findOne({
+            where:
+            {
+                buyerId: user.id
+            }
+        })
+
 
         return res.json({
-            user: safeUser
+            user: safeUser,
+            cart: cartByUser,
+            cartId: cartByUser ? cartByUser.id : null
         });
     }
 );
@@ -89,7 +102,15 @@ router.get(
                 email: user.email,
                 username: user.username,
                 firstName: user.firstName,
-                lastName: user.lastName
+                lastName: user.lastName,
+                accountType: user.accountType,
+                bio: user.bio,
+                favoritePlant: user.favoritePlant,
+                city: user.city,
+                state: user.state,
+                shopDescription: user.shopDescription,
+                paymentMethod: user.paymentMethod,
+                paymentDetails: user.paymentDetails
             };
             return res.json({
                 user: safeUser

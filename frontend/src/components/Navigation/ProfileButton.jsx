@@ -4,14 +4,18 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { clearCart, resetCartId } from '../../store/cart';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
+    const cartId = localStorage.getItem('cartId')
+    const navigate = useNavigate()
 
     const toggleMenu = (e) => {
-        e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+        e.stopPropagation();
         setShowMenu(!showMenu);
     };
 
@@ -34,7 +38,17 @@ function ProfileButton({ user }) {
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.logout());
+
+        if (user && cartId) {
+            localStorage.removeItem('cartId');
+            console.log('CartId cleared from localStorage');
+
+            localStorage.removeItem('cartItems')
+            dispatch(resetCartId())
+            dispatch(clearCart())
+        }
         closeMenu();
+        navigate('/')
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -42,32 +56,46 @@ function ProfileButton({ user }) {
     return (
         <div className='profileButtonWrapper'>
             <span onClick={toggleMenu}>
-                <i className="fa-solid fa-user" />
+                <i className="fa-regular fa-face-smile" />
             </span>
             <div className={ulClassName} ref={ulRef}>
                 {user ? (
-                    <>
-                        <li>{user.username}</li>
-                        <li>{user.firstName} {user.lastName}</li>
-                        <li>{user.email}</li>
-                        <li>
-                            <button onClick={logout}>Log Out</button>
-                        </li>
-                    </>
+                    <div className='userInfo'>
+                        <div>Hey, {user.username}!</div>
+                        <div className='profileOptions'>
+                            <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                closeMenu()
+                                navigate(`/user/${user.id}`)
+                            }}>Profile</a></div>
+                            {user.accountType === 'seller' && (
+                                <>
+                                    <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                        closeMenu()
+                                        navigate(`/listings/current`)
+                                    }}>Listings</a></div>
+                                </>
+                            )
+                            }
+                            <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /></div><div>Guides</div>
+                            <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div>Orders</div>
+                        </div>
+                        <button onClick={logout}>Log Out</button>
+
+                    </div>
                 ) : (
                     <>
                         <div className='profileLink'>
                             <OpenModalMenuItem
                                 itemText="Log In"
                                 onItemClick={closeMenu}
-                                modalComponent={<LoginFormModal />}
+                                modalComponent={<LoginFormModal navigate={navigate} />}
                             />
                         </div>
                         <div className='profileLink'>
                             <OpenModalMenuItem
                                 itemText="Sign Up"
                                 onItemClick={closeMenu}
-                                modalComponent={<SignupFormModal />}
+                                modalComponent={<SignupFormModal navigate={navigate} />}
                             />
                         </div>
                     </>

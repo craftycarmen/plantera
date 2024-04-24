@@ -11,7 +11,8 @@ function ManageListings() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user)
     const userId = sessionUser?.id;
-    const listings = Object.values(useSelector(state => state.listings)).filter(listing => listing.sellerId = userId);
+    const listings = Object.values(useSelector(state => state.listings)).filter(listing => listing.sellerId === userId);
+    console.log("LISTINGSMANAGE", listings);
 
     const activeListings = listings.filter(listing => listing.stockQty > 0)
     const soldListings = listings.filter(listing => listing.stockQty === 0)
@@ -25,22 +26,22 @@ function ManageListings() {
             <h1>Manage Your Listings</h1>
             {!sessionUser ? (
                 <ErrorHandling />
-            ) : (listings && activeListings && soldListings &&
+            ) : (listings &&
                 <>
-                    <div className="currentListings"><Link to={`/listings/new`}><button>Create New Listing</button></Link></div>
+                    <div className="currentListings"><Link to={`/listings/new`}><button style={{ width: "fit-content" }}>Create New Listing</button></Link></div>
 
                     <h2>Active Listings</h2>
                     <div className="listingsContainer">
                         {listings && activeListings?.length === 0 ? (
                             <div>No active listings!</div>
                         ) : (
-                            activeListings.map(listing => (
+                            activeListings && activeListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>
                                     <Link to={`/listings/${listing.id}`}>
                                         <div className="listingImageContainer">
                                             <img
                                                 className="listingImage"
-                                                src={listing.ListingImages[0].url} />
+                                                src={listing.ListingImages?.[0]?.url} />
                                         </div>
                                         <div className="listingInfo">
                                             <h3>{listing.plantName}</h3>
@@ -49,8 +50,8 @@ function ManageListings() {
                                     </Link>
                                     <div className="listingInfo">
                                         <div>In Stock: {listing.stockQty}</div>
-                                        <div>
-                                            <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>&nbsp;
+                                        <div className="listingButtons">
+                                            <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
                                             <OpenModalButton
                                                 buttonText="Delete"
                                                 modalComponent={<DeleteListingModal listingId={listing.id} />}
@@ -68,7 +69,7 @@ function ManageListings() {
                         {listings && soldListings?.length === 0 ? (
                             <div>No sold listings!</div>
                         ) : (
-                            soldListings.map(listing => (
+                            soldListings && soldListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>
                                     <Link to={`/listings/${listing.id}`}>
                                         <div className="listingImageContainer soldOutImage">
@@ -77,7 +78,7 @@ function ManageListings() {
                                                 src={listing.ListingImages[0].url} />
                                         </div>
                                         <div className="listingInfo">
-                                            <h2>{listing.plantName}</h2>
+                                            <h3>{listing.plantName}</h3>
                                             <span>${listing.price}</span>
                                         </div>
                                     </Link>

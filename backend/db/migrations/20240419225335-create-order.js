@@ -26,7 +26,7 @@ module.exports = {
       },
       cartId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'ShoppingCarts',
           key: 'id'
@@ -56,6 +56,10 @@ module.exports = {
         type: Sequelize.STRING(4),
         allowNull: false,
       },
+      subTotal: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
       orderTotal: {
         type: Sequelize.FLOAT,
         allowNull: false
@@ -63,7 +67,7 @@ module.exports = {
       orderStatus: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "Processing"
+        defaultValue: "Received"
       },
       createdAt: {
         allowNull: false,

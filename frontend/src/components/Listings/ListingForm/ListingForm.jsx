@@ -16,7 +16,7 @@ function ListingForm({ listing, formType }) {
     const [price, setPrice] = useState(listing?.price);
     const [potSize, setPotSize] = useState(listing?.potSize);
     const [stockQty, setStockQty] = useState(listing?.stockQty);
-    const [guideId, setGuideId] = useState(listing?.guideId);
+    // const [guideId, setGuideId] = useState(listing?.guideId);
     const [image, setImage] = useState("");
     // const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -26,7 +26,7 @@ function ListingForm({ listing, formType }) {
     const updatePrice = (e) => setPrice(e.target.value);
     const updatePotSize = (e) => setPotSize(e.target.value);
     const updateStockQty = (e) => setStockQty(e.target.value);
-    const updateGuideId = (e) => setGuideId(e.target.value);
+    // const updateGuideId = (e) => setGuideId(e.target.value);
     const updateFile = e => {
         const file = e.target.files[0];
         if (file) setImage(file);
@@ -78,7 +78,7 @@ function ListingForm({ listing, formType }) {
             price,
             potSize,
             stockQty,
-            guideId,
+            // guideId,
             image
         }
 
@@ -190,7 +190,7 @@ function ListingForm({ listing, formType }) {
                             <div className='error'>{errors.image &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
                         </>}
-                    <div className='inputContainer'>
+                    {/* <div className='inputContainer'>
                         <input
                             type='number'
                             step='1'
@@ -201,10 +201,11 @@ function ListingForm({ listing, formType }) {
                             id='guideId'
                         />
                         <label htmlFor='guideId' className='floating-label'>Guide ID</label>
-                    </div>
+                    </div> */}
                     <button
                         type='submit'
                         disabled={!!Object.values(errors).length}
+                        style={{ width: "321px" }}
                     >
                         {formType}
                     </button>

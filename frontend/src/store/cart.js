@@ -24,10 +24,11 @@ export const createCart = (cartId) => ({
     cartId
 });
 
-export const updateCart = (cartId, cart) => ({
+export const updateCart = (cartId, cart, cartTotal) => ({
     type: UPDATE_CART,
     cartId,
-    cart
+    cart,
+    cartTotal
 });
 
 export const deleteCart = (cartId) => ({
@@ -107,7 +108,7 @@ export const addCart = (cart) => async (dispatch) => {
     }
 }
 
-export const editCart = (cartId, cart) => async (dispatch) => {
+export const editCart = (cartId, cart, cartTotal) => async (dispatch) => {
     const res = await csrfFetch(`/api/cart/${cartId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
@@ -116,7 +117,7 @@ export const editCart = (cartId, cart) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(updateCart(data));
+        dispatch(updateCart(cartId, data, cartTotal));
         return data
     } else {
         const errors = await res.json();
@@ -314,7 +315,11 @@ const cartReducer = (state = initialState, action) => {
         }
 
         case UPDATE_CART: {
-            return { ...state, [action.cartId]: action.cart }
+            return {
+                ...state,
+                [action.cartId]: action.cart,
+                cartTotal: action.cartTotal
+            }
         }
 
         case DELETE_CART: {

@@ -197,6 +197,8 @@ function ListingPage() {
             localStorage.setItem('cartItems', JSON.stringify(updatedItemsLocalStorage));
 
         }
+
+
         return true;
     }
 

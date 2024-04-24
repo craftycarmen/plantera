@@ -181,7 +181,7 @@
     display: grid;
     column-gap: 50px;
     grid-template-columns: auto 2fr;
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: 1fr auto;
     margin-top: 20px;
 }
 
@@ -224,8 +224,9 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 2fr;
     grid-column: 2/3;
-    grid-row: 2;
+    grid-row: 1;
     justify-content: start;
+    margin-top: 56px;
 }
 
 .shopInfoContainer {
@@ -235,7 +236,7 @@
     grid-column: 2/3;
     grid-template-rows: 1fr;
     justify-content: start;
-    margin-top: 57px;
+    margin-top: 56px;
 }
 
 .username,

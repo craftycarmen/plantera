@@ -1,7 +1,7 @@
 .userProfilePageContainer {
     display: grid;
     gap: 50px;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: auto 2fr;
     margin-top: 20px;
 }
 
@@ -12,8 +12,9 @@
 }
 
 .userImageContainer {
-    width: 100%;
-    height: 250px;
+    width: 300px;
+    height: 300px;
+    position: relative;
 }
 
 .userImage {
@@ -21,7 +22,19 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    border-radius: 50%;
+}
+
+.userImage-outline {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 50%;
 }
 
 .userProfileInfo {
@@ -32,8 +45,10 @@
 }
 
 .profileShop {
-    display: flex;
-    justify-content: space-around;
+    /* display: grid; */
+    justify-items: center;
+    justify-self: center;
+    /* gap: 10px; */
 }
 
 .username {
@@ -119,13 +134,11 @@
     display: block;
     position: absolute;
     border-radius: 5px;
-    /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%); */
     background-color: rgba(255, 255, 255, 0.7);
 }
 
 .shopListingsContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 20px;
 }
 

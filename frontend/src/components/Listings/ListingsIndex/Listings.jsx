@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 
 function Listings() {
     const dispatch = useDispatch();
-    const listings = Object.values(useSelector((state) => state.listings)).filter(listing => listing.stockQty > 0)
+    const listings = Object.values(useSelector((state) => state.listings))
+        .filter(listing => listing.stockQty > 0)
+        .sort((a, b) => b.id - a.id)
 
     useEffect(() => {
         dispatch(fetchAllListings())

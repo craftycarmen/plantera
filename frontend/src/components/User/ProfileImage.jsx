@@ -11,7 +11,8 @@ function ProfileImage({ userId }) {
 
 
     useEffect(() => {
-        dispatch(fetchProfile(userId));
+        dispatch(fetchProfile(userId))
+        // .then(() => dispatch(fetchShop(userId)))
     }, [dispatch, userId])
     return (user &&
         <>
@@ -19,12 +20,18 @@ function ProfileImage({ userId }) {
             <div className="userProfileLeft">
                 <div className="userImageContainer">
                     {user.UserImages?.[0] &&
-                        <img className="userImage" src={user.UserImages?.[0]?.url} />
+                        <>
+                            <img className="userImage" src={user.UserImages?.[0]?.url} />
+                            <div className="userImage-outline"></div>
+                        </>
+
                     }
                 </div>
                 {user.accountType === "seller" && (
                     <div className="profileShop">
-                        <Link to={`/user/${userId}`}>View Profile</Link> | <Link to={`/user/${userId}/shop`}>View Shop</Link>
+                        <Link to={`/user/${userId}`}>Profile</Link>&nbsp;&nbsp;&nbsp;
+                        <Link to={`/user/${userId}/shop`}>Shop</Link>&nbsp;&nbsp;&nbsp;
+                        Guides
                     </div>
                 )}
             </div>

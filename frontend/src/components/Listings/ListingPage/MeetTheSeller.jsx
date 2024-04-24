@@ -14,6 +14,7 @@ function MeetTheSeller({ sellerInfo }) {
                         <div className="sellerImageContainer">
                             <img className="sellerImage"
                                 src={sellerInfo.UserImages[0].url} />
+                            <div className="sellerImage-outline"></div>
                         </div>
                     </>
                 )}

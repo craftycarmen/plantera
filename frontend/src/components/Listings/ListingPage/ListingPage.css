@@ -154,8 +154,10 @@
 }
 
 .sellerImageContainer {
-    width: 350px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
+    position: relative;
+
 }
 
 .sellerImage {
@@ -163,7 +165,19 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    border-radius: 50%;
+}
+
+.sellerImage-outline {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 50%;
 }
 
 .soldOutText {

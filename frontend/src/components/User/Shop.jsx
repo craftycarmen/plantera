@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { fetchShop } from "../../store/user";
+import { fetchProfile } from "../../store/user";
 import './User.css';
 import ProfileImage from "./ProfileImage";
 
@@ -11,17 +11,17 @@ function Shop() {
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId])
     const shop = user?.shop;
-    const activeListings = shop?.filter(listing => listing.stockQty > 0)
-    const soldListings = shop?.filter(listing => listing.stockQty === 0)
-
+    const activeListings = user?.shop?.filter(listing => listing.stockQty > 0)
+    const soldListings = user?.shop?.filter(listing => listing.stockQty === 0)
+    console.log("hello", user.shop);
     const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
-        dispatch(fetchShop(userId));
+        dispatch(fetchProfile(userId))
+        // .then(() => dispatch(fetchShop(userId)))
     }, [dispatch, userId])
 
-    console.log(shop);
-    return (user &&
+    return (user && shop &&
         <div className="userProfilePageContainer">
             <ProfileImage userId={userId} />
             <div className="shopInfoContainer">
@@ -38,21 +38,19 @@ function Shop() {
                 </div>
                 <div>
 
-                    {shop && shop.length > 0 && activeListings?.length === 0 &&
-
+                    {user.shop && user.shop.length > 0 && activeListings?.length === 0 &&
                         <div></div>
                     }
-
-                    {shop && shop.length > 0 && activeListings?.length > 1 &&
+                    {user.shop && user.shop.length > 0 && activeListings?.length > 0 &&
                         <>
                             <h2>Current Listings</h2>
                             <div className="shopListingsContainer">
                                 {
                                     activeListings && activeListings.map(listing => (
-
                                         <div className="currentListings" key={listing.id}>
-                                            <Link to={`/listings/${listing.id}`}>
-                                                <div className="shopImageContainer">
+
+                                            <div className="shopImageContainer">
+                                                <Link to={`/listings/${listing.id}`}>
                                                     <img
                                                         className="shopImage"
                                                         src={listing.ListingImages?.[0]?.url} />
@@ -60,8 +58,9 @@ function Shop() {
                                                         <h3>{listing.plantName}</h3>
                                                         <span>${listing.price}</span>
                                                     </div>
-                                                </div>
-                                            </Link>
+                                                </Link>
+                                            </div>
+
                                         </div>
 
                                     ))
@@ -71,16 +70,17 @@ function Shop() {
 
                     }
 
-                    {shop && shop.length > 0 && soldListings?.length === 0 &&
+                    {user.shop && user.shop.length > 0 && soldListings?.length === 0 &&
                         <div></div>
                     }
-                    {shop && shop.length > 0 && soldListings?.length > 0 &&
+                    {user.shop && user.shop.length > 0 && soldListings?.length > 0 &&
                         <>
                             <h2>Sold Listings</h2>
                             <div className="shopListingsContainer">
                                 {
                                     soldListings && soldListings.map(listing => (
                                         <div className="currentListings" key={listing.id}>
+
                                             <Link to={`/listings/${listing.id}`}>
                                                 <div className="shopImageContainer soldOutShopImage">
                                                     <img

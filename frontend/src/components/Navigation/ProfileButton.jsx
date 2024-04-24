@@ -62,7 +62,7 @@ function ProfileButton({ user }) {
                 {user ? (
                     <div className='userInfo'>
                         <div>Hey, {user.username}!</div>
-                        <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /> <a onClick={() => {
+                        <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /> <a onClick={() => {
                             closeMenu()
                             navigate(`/user/${user.id}`)
                         }}>Profile</a></div>
@@ -72,6 +72,8 @@ function ProfileButton({ user }) {
                                 navigate(`/listings/current`)
                             }}>Listings</a></div>
                         }
+                        <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /> Guides</div>
+                        <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /> Orders</div>
                         <button onClick={logout}>Log Out</button>
 
                     </div>

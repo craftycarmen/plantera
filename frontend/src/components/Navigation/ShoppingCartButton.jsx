@@ -7,7 +7,6 @@ import { fetchCartItems } from '../../store/cart';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function ShoppingCartButton({ cartId }) {
-    console.log("CARTIDHERE", cartId);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();

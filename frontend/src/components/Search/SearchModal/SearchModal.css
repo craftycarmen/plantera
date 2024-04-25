@@ -1,0 +1,30 @@
+.searchModal {
+    padding: 25px 35px 25px 35px;
+    margin-top: 0px;
+    width: calc(100% - 70px);
+    /* width: 100%; */
+    height: 125px;
+    position: fixed;
+    top: 151px;
+    /* right: 0; */
+    left: 0;
+    background-color: #8EBAA8;
+    justify-content: stretch;
+    border-radius: 3px;
+}
+
+.searchForm {
+    display: flex;
+    justify-content: center;
+}
+
+.searchModal input {
+    width: calc(100% - 500px);
+}
+
+.searchModal button {
+    background-color: transparent;
+    border: none;
+    width: fit-content;
+    margin-left: 20px;
+}

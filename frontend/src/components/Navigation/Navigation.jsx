@@ -5,6 +5,8 @@ import './Navigation.css';
 import ShoppingCartButton from './ShoppingCartButton';
 import { useEffect } from 'react';
 import { fetchCart } from '../../store/cart';
+// import SearchModal from '../Search/SearchModal/SearchModal';
+import SearchButton from './SearchButton';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -28,12 +30,15 @@ function Navigation({ isLoaded }) {
                 <Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL
             </div>
             <div className='rightNav'>
-                <i className="fa-solid fa-magnifying-glass" onClick={() => alert('Feature coming soon')} />&nbsp;&nbsp;&nbsp;
+                {/* <i className="fa-solid fa-magnifying-glass" onClick={() => alert('Feature coming soon')} /> */}
 
                 {isLoaded && (
-                    <>
-                        <ProfileButton user={user} />
-                    </>
+                    <SearchButton />
+                )}&nbsp;&nbsp;&nbsp;
+
+
+                {isLoaded && (
+                    <ProfileButton user={user} />
                 )}&nbsp;&nbsp;&nbsp;
 
                 {isLoaded && (

@@ -121,7 +121,9 @@ function CheckoutLogin({ cartId }) {
                         type="submit">Log In</button>
                 </div>
             </form>
-            <p>            <a onClick={demoUser} style={{ cursor: "pointer" }}>Log in as Demo User</a></p>
+            <p>
+                <a onClick={demoUser} className='checkDemoUser'>Log in as Demo User</a>
+            </p>
         </div>
     )
 }

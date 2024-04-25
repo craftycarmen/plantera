@@ -165,7 +165,7 @@ function ListingForm({ listing, formType }) {
                         <input
                             type='number'
                             step='1'
-                            min='1'
+                            min='0'
                             value={stockQty}
                             onChange={updateStockQty}
                             placeholder=''

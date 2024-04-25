@@ -69,3 +69,10 @@
     display: grid;
     gap: 20px;
 }
+
+.checkDemoUser {
+    cursor: pointer;
+    width: 321px;
+    display: flex;
+    justify-content: center;
+}

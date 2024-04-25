@@ -108,7 +108,7 @@ function SignupFormModal({ navigate }) {
     };
 
     return (
-        <section className='modal'>
+        <section className='modal signupModal'>
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 <div className="inputContainer">

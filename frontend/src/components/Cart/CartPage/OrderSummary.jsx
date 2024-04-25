@@ -78,7 +78,7 @@ function OrderSummary({ cartId, checkout }) {
                     <span>Free <i className="fa-regular fa-face-laugh-wink" /></span>
                 </div>
                 <div className="subTotalSummary">
-                    <span>Estimated Tax:</span>
+                    <span>Estimated Taxes:</span>
                     <span>${estimatedTax(cartTotal)}</span>
                 </div>
                 <div className="subTotalSummary">

@@ -3,7 +3,8 @@
 function LinkedGuides({ guides }) {
     return (guides && guides.length >= 1 &&
         <div className="linkedGuides">
-            <h2>Linked Guides</h2>
+            <h2>Get Inspired</h2>
+            <div>Check out these guides hand-selected by the seller for this listing!</div>
             <div className="linkedGuidesContainer">
                 {guides.map((guide) => (
                     <div key={guide.id}>

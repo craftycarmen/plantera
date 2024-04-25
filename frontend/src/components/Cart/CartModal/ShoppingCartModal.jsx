@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
@@ -8,6 +8,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
+    const [loading, setLoading] = useState(true);
     const cartItems = useSelector(state => state.cart?.cartItems)
     const cartTotal = useSelector(state => state.cart?.cartTotal);
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -16,6 +17,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
+            setLoading(false);
         }
         runDispatches();
     }, [dispatch, cartId])
@@ -36,6 +38,10 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const checkout = () => {
         closeModal()
         navigate('/cart')
+    }
+
+    if (loading) {
+        return <div>Loading...</div>; // Show loading indicator
     }
 
     return (

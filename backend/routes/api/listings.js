@@ -217,13 +217,15 @@ router.delete('/:listingId', requireAuth, async (req, res) => {
         }
     })
 
-    const orderedItems = items.filter(item => item.orderId !== null)
+    console.log('ITEMS', items)
 
+    const orderedItems = items.filter(item => item.orderId !== null)
+    console.log('ORDEREDITEMS', orderedItems)
     if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
 
     if (req.user.id !== listing.sellerId) return res.status(403).json({ message: "Forbidden" });
 
-    if (!orderedItems) {
+    if (orderedItems.length > 0) {
         return res.status(403).json({ message: "Forbidden — listing is attached to an order" })
     } else {
         await listing.destroy();

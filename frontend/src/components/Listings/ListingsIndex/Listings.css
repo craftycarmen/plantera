@@ -1,7 +1,9 @@
 .listingsContainer {
     /* display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); */
+    width: 1300px;
     display: flex;
+    flex-direction: row;
     gap: 35px;
     justify-items: center;
 }

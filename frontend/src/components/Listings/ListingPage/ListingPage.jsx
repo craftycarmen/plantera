@@ -112,8 +112,8 @@ function ListingPage() {
         const newQty = parseInt(e.target.value);
         console.log("New Quantity:", newQty);
         setCartQty(newQty);
-        setUpdateQty(prevUpdatedQty => ({ ...prevUpdatedQty, [listingId]: newQty }));
-        console.log("Updated Quantity:", updatedQty);
+        // setUpdateQty(prevUpdatedQty => ({ ...prevUpdatedQty, [listingId]: newQty }));
+        // console.log("Updated Quantity:", updatedQty);
     };
 
     useEffect(() => {
@@ -147,9 +147,9 @@ function ListingPage() {
 
         const totalQty = cartQty;
 
-        if (totalQty >= stockQty) {
-            setError("You've added the maximum quantity to your cart!")
-        }
+        // if (totalQty >= stockQty) {
+        //     setError("You've added the maximum quantity to your cart!")
+        // }
 
         const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
 
@@ -198,6 +198,7 @@ function ListingPage() {
 
         }
 
+        setUpdateQty(prevUpdatedQty => ({ ...prevUpdatedQty, [listingId]: cartQty }));
 
         return true;
     }

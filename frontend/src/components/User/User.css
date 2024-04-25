@@ -265,6 +265,11 @@
     height: fit-content;
 }
 
+.bio {
+    grid-column: 1/3;
+    grid-row-start: 3;
+}
+
 .skip {
     display: flex;
     justify-content: center;

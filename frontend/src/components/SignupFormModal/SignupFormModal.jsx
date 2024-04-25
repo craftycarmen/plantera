@@ -94,7 +94,7 @@ function SignupFormModal({ navigate }) {
                 }
 
             } catch (res) {
-                console.error('Error during signup:', res);
+                // console.error('Error during signup:', res);
                 const data = await res.json();
                 if (data?.errors) {
                     setErrors(data.errors);

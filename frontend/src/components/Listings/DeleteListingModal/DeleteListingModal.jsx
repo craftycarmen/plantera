@@ -48,7 +48,7 @@ function DeleteListingModal({ listingId }) {
                 </>
             ) : (
                 <>
-                    <p>This listing cannot be deleted because it has associated order(s).</p>
+                    <p>This listing cannot be deleted because it has associated order(s). If you&#39;d like to make this listing inactive, change stock quantity to 0.</p>
                     <button
                         id="no"
                         onClick={closeModal}

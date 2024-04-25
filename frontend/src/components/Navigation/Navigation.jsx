@@ -8,6 +8,8 @@ import { fetchCart } from '../../store/cart';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
+    const user = useSelector(state => state.user[sessionUser.id].User)
+    console.log(user);
     const userCartId = useSelector(state => state.cart.cartId)
     console.log("USERCARTIDNAV", userCartId);
     const dispatch = useDispatch();
@@ -30,7 +32,7 @@ function Navigation({ isLoaded }) {
 
                 {isLoaded && (
                     <>
-                        <ProfileButton user={sessionUser} />
+                        <ProfileButton user={user} />
                     </>
                 )}&nbsp;&nbsp;&nbsp;
 

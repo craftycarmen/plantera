@@ -57,7 +57,7 @@ function ListingForm({ listing, formType }) {
         if (description && description.length < 30 || description.length > 250) errs.description = 'Description must be between 30-250 characters';
         if (price && price <= 0) errs.price = 'Price must be greater than $0';
         if (potSize && potSize < 2) errs.potSize = 'Pot size must be 2 inches or greater';
-        if (stockQty && stockQty <= 0) errs.stockQty = 'Stock quantity must be greater than 0';
+        // if (stockQty && stockQty <= 0) errs.stockQty = 'Stock quantity must be greater than 0';
         if (createForm && !image) errs.image = ""
         // if (guideId && guideId > 10) errs.imag = "Guide is invalid"
 

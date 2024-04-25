@@ -93,6 +93,6 @@
 
 .profileOptions {
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 25px auto;
     row-gap: 10px;
 }

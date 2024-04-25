@@ -41,7 +41,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                 )
             }
 
-            {cartItems && cartItems.length > 0 && (
+            {cartItems && cartItems.length > 0 && cartTotal && (
                 <div style={{ marginTop: "35px" }}>
                     {cartItems.map((item) => (
 
@@ -71,10 +71,10 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                         </div>
                     ))
                     }
-                    {cartTotal && <div className="subTotal">
+                    <div className="subTotal">
                         <h3>Subtotal:</h3>
                         <h3>${cartTotal}</h3>
-                    </div>}
+                    </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                         <button onClick={closeModal}>Continue Shopping</button>
                         <button style={{ width: '100%', flexWrap: "nowrap" }} onClick={checkout}>View Cart & Check Out</button>

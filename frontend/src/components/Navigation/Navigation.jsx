@@ -8,7 +8,7 @@ import { fetchCart } from '../../store/cart';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
-    const user = useSelector(state => state.user[sessionUser.id].User)
+    const user = useSelector(state => state.user[sessionUser?.id]?.User)
     console.log(user);
     const userCartId = useSelector(state => state.cart.cartId)
     console.log("USERCARTIDNAV", userCartId);

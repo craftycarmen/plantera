@@ -9,6 +9,7 @@ function ShoppingCartPage() {
     const dispatch = useDispatch();
     const cartId = localStorage.getItem("cartId")
     const cartItems = useSelector(state => state.cart.cartItems)
+    cartItems.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     // const cartTotal = useSelector(state => state.cart.cartTotal);
     const [localCartQty, setLocalCartQty] = useState({});
     console.log("CT", cartItems);
@@ -32,14 +33,6 @@ function ShoppingCartPage() {
         });
         setLocalCartQty(initialQty)
     }, [])
-    // useEffect(() => {
-    //     const initialCartQty = {};
-    //     cartItems.forEach(item => {
-    //         const storedQty = localStorage.getItem(`cartQty_${item.id}`);
-    //         initialCartQty[item.id] = storedQty ? parseInt(storedQty) : item.cartQty;
-    //     });
-    //     setLocalCartQty(initialCartQty)
-    // }, [cartItems])
 
     const calculateCartItemTotal = (item) => {
         if (item.Listing && item.Listing.price) {
@@ -54,19 +47,10 @@ function ShoppingCartPage() {
         }
     }
 
-    // const addQty = (itemId) => {
-    //     const updatedQty = localCartQty[itemId] + 1;
-    //     if (updatedQty <= cartItems.find(item => item.id === itemId).Listing.stockQty) {
-    //         setLocalCartQty(prevCartQty => ({
-    //             ...prevCartQty,
-    //             [itemId]: updatedQty
-    //         }));
-    // }
-
     const addQty = async (itemId) => {
-        const updatedQty = localCartQty[itemId] + 1;
+        const updatedQty = (localCartQty[itemId] || 0) + 1;
         const item = cartItems.find(item => item.id === itemId);
-        if (updatedQty <= item.Listing.stockQty) {
+        if (item && updatedQty <= item.Listing.stockQty) {
             setLocalCartQty(prevCartQty => ({
                 ...prevCartQty,
                 [itemId]: updatedQty
@@ -102,9 +86,9 @@ function ShoppingCartPage() {
     }
 
     const removeQty = async (itemId) => {
-        const updatedQty = localCartQty[itemId] - 1;
+        const updatedQty = (localCartQty[itemId] || 0) - 1;
         const item = cartItems.find(item => item.id === itemId);
-        if (localCartQty[itemId] > 1) {
+        if (item && updatedQty > 1) {
             setLocalCartQty(prevCartQty => ({
                 ...prevCartQty,
                 [itemId]: updatedQty

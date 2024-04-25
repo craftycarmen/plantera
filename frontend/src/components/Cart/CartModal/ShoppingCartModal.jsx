@@ -11,6 +11,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const cartItems = useSelector(state => state.cart?.cartItems)
     const cartTotal = useSelector(state => state.cart?.cartTotal);
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+    console.log("CARTTOTALMODAL", cartTotal);
     console.log("CARTITEMSMODAL", cartItems);
 
     useEffect(() => {

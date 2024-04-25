@@ -282,7 +282,7 @@ const initialState = {
     cart: null,
     cartItems: [],
     cartId: null,
-    cartTotal: 0,
+    cartTotal: null,
     numCartItems: 0
 }
 
@@ -342,7 +342,7 @@ const cartReducer = (state = initialState, action) => {
                 cartItems: state.cartItems.map(item =>
                     item.id === cartItem.id ? { ...item, cartQty: cartItem.cartQty } : item
                 ),
-                numCartItems: numCartItems // Update numCartItems with the new value
+                numCartItems: numCartItems
             };
         }
 
@@ -362,7 +362,7 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 cartId: null,
                 cartItems: [],
-                cartTotal: 0,
+                cartTotal: null,
                 numCartItems: 0
             }
         }

@@ -13,6 +13,7 @@ import EditProfile from './components/User/EditProfile';
 import CompleteProfile from './components/User/CompleteProfile';
 import Shop from './components/User/Shop';
 import Layout from './Layout';
+import Home from './components/Home/Home';
 
 const router = createBrowserRouter([
     {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <h1>Welcome!</h1>
+                element: <Home />
             },
             {
                 path: '/listings',

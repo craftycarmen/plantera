@@ -8,9 +8,10 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const cartItems = useSelector(state => state.cart.cartItems)
-    const cartTotal = useSelector(state => state.cart.cartTotal);
+    const cartItems = useSelector(state => state.cart?.cartItems)
+    const cartTotal = useSelector(state => state.cart?.cartTotal);
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+    console.log("CARTITEMSMODAL", cartItems);
 
     useEffect(() => {
         const runDispatches = async () => {

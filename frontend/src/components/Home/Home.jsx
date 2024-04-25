@@ -1,10 +1,19 @@
 import './Home.css';
 
 function Home() {
+
     return (
         <>
-            <h1>Welcome to Plantera!</h1>
-            <img className='header' src='../../plantsheader.jpg' />
+            <div className='headerContainer'>
+                <img className='headerImage' src='../../IMG_5977.jpg' />
+                <div className="headerText">
+                    <h1>welcome to plantera!</h1>
+                    <div className='headerIntro'>
+                        <div>the plant marketplace community,</div>
+                        <div>where we're <span style={{ fontStyle: "italic" }}>forevermore</span> in our plant era.</div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

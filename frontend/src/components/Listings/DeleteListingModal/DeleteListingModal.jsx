@@ -31,24 +31,29 @@ function DeleteListingModal({ listingId }) {
             {!errors ? (
                 <>
                     <p>Are you sure you want to delete this listing?</p>
-                    <button
+                    <span><button
                         id="yes"
-                        onClick={yes}>
-                        Yes, Delete Listing
-                    </button>
-                    <br />
-                    <button
-                        id="no"
-                        onClick={closeModal}>
-                        Cancel
-                    </button>
+                        onClick={yes}
+                        style={{ width: "190px" }}
+                    >
+                        Delete Listing
+                    </button>&nbsp;
+                        <button
+                            id="no"
+                            onClick={closeModal}
+                            style={{ width: "190px" }}
+                        >
+                            Cancel
+                        </button></span>
                 </>
             ) : (
                 <>
                     <p>This listing cannot be deleted because it has associated order(s).</p>
                     <button
                         id="no"
-                        onClick={closeModal}>
+                        onClick={closeModal}
+                        style={{ width: "190px" }}
+                    >
                         Cancel
                     </button>
                 </>

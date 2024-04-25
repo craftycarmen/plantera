@@ -217,10 +217,8 @@ router.delete('/:listingId', requireAuth, async (req, res) => {
         }
     })
 
-    console.log('ITEMS', items)
-
     const orderedItems = items.filter(item => item.orderId !== null)
-    console.log('ORDEREDITEMS', orderedItems)
+
     if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
 
     if (req.user.id !== listing.sellerId) return res.status(403).json({ message: "Forbidden" });

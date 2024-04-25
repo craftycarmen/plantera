@@ -9,8 +9,6 @@ function UserProfileForm({ formType }) {
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
     const user = useSelector(state => state.user[userId]?.User)
-    console.log("USERUSERUSER", user)
-    console.log("USER!", user);
     const [bio, setBio] = useState(user?.bio || '');
     const [favoritePlant, setFavoritePlant] = useState(user?.favoritePlant || '');
     const [city, setCity] = useState(user?.city || '');

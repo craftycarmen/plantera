@@ -12,7 +12,6 @@ function ManageListings() {
     const sessionUser = useSelector((state) => state.session.user)
     const userId = sessionUser?.id;
     const listings = Object.values(useSelector(state => state.listings)).filter(listing => listing.sellerId === userId);
-    console.log("LISTINGSMANAGE", listings);
 
     const activeListings = listings.filter(listing => listing.stockQty > 0)
     const soldListings = listings.filter(listing => listing.stockQty === 0)

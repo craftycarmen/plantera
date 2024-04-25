@@ -9,10 +9,16 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const { closeModal } = useModal();
 
     const cartItems = useSelector(state => state.cart?.cartItems)
-    const cartTotal = useSelector(state => state.cart?.cartTotal);
+    // const cartTotal = useSelector(state => state.cart?.cartTotal);
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
-    console.log("CARTTOTALMODAL", cartTotal);
+    // console.log("CARTTOTALMODAL", cartTotal);
     console.log("CARTITEMSMODAL", cartItems);
+
+    const calculateSubtotal = () => {
+        return cartItems.reduce((total, item) => {
+            return total + (item.cartQty * item.Listing?.price);
+        }, 0);
+    };
 
     useEffect(() => {
         const runDispatches = async () => {
@@ -74,7 +80,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                     }
                     <div className="subTotal">
                         <h3>Subtotal:</h3>
-                        {cartTotal && cartTotal > 0 && <h3>${cartTotal}</h3>}
+                        <h3>${calculateSubtotal()}</h3>
                     </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                         <button onClick={closeModal}>Continue Shopping</button>

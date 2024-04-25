@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
@@ -8,7 +8,6 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const [loading, setLoading] = useState(true);
     const cartItems = useSelector(state => state.cart?.cartItems)
     const cartTotal = useSelector(state => state.cart?.cartTotal);
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -17,7 +16,6 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
-            setLoading(false);
         }
         runDispatches();
     }, [dispatch, cartId])
@@ -40,20 +38,16 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
         navigate('/cart')
     }
 
-    if (loading) {
-        return <div>Loading...</div>; // Show loading indicator
-    }
-
     return (
         <section className="shoppingModal">
             <h1>Your Shopping Cart</h1>
-            {cartItems && cartItems.length === 0 &&
+            {cartItems?.length === 0 &&
                 (
                     <div style={{ marginTop: "35px" }}>Your cart is empty!</div>
                 )
             }
 
-            {cartItems && cartItems.length > 0 && cartTotal && (
+            {cartItems?.length > 0 && (
                 <div style={{ marginTop: "35px" }}>
                     {cartItems.map((item) => (
 
@@ -85,7 +79,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                     }
                     <div className="subTotal">
                         <h3>Subtotal:</h3>
-                        <h3>${cartTotal}</h3>
+                        {cartTotal && <h3>${cartTotal}</h3>}
                     </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                         <button onClick={closeModal}>Continue Shopping</button>

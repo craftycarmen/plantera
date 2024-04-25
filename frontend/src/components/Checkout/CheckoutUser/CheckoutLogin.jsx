@@ -36,8 +36,12 @@ function CheckoutLogin({ cartId }) {
             }
 
             navigate('/checkout')
-        } catch (error) {
-            console.error('Error during login:', error);
+        } catch (res) {
+            console.error('Error during login:', res);
+            const data = await res.json();
+            if (data?.errors) {
+                setErrors(data.errors);
+            }
         }
     };
 
@@ -70,8 +74,12 @@ function CheckoutLogin({ cartId }) {
                 dispatch(editCart(localCartId))
             }
             navigate('/checkout')
-        } catch (error) {
-            console.error('Error during login:', error);
+        } catch (res) {
+            console.error('Error during login:', res);
+            const data = await res.json();
+            if (data?.errors) {
+                setErrors(data.errors);
+            }
         }
     };
 

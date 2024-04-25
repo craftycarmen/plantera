@@ -147,7 +147,7 @@ export const fetchCartItems = () => async (dispatch) => {
     if (res.ok) {
         const cartItems = await res.json();
         console.log("CARTITEMSINSTORE", cartItems.ShoppingCart)
-        if (cartItems.ShoppingCart && cartItems.ShoppingCart.CartItems) {
+        if (cartItems.ShoppingCart && cartItems.ShoppingCart.CartItems.length > 0) {
             dispatch(loadCartItems(cartItems.ShoppingCart.CartItems));
             return cartItems
         }

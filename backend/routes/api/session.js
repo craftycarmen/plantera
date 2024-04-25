@@ -50,7 +50,7 @@ router.post(
             username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
-            accountType: user.accountType
+            // accountType: user.accountType
         };
 
         await setTokenCookie(res, safeUser);

@@ -41,12 +41,6 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     return (
         <section className="shoppingModal">
             <h1>Your Shopping Cart</h1>
-            {cartItems?.length === 0 &&
-                (
-                    <div style={{ marginTop: "35px" }}>Your cart is empty!</div>
-                )
-            }
-
             {cartItems?.length > 0 && (
                 <div style={{ marginTop: "35px" }}>
                     {cartItems.map((item) => (
@@ -87,6 +81,11 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                     </div>
                 </div>
             )
+            }
+            {cartItems?.length === 0 &&
+                (
+                    <div style={{ marginTop: "35px" }}>Your cart is empty!</div>
+                )
             }
         </section >
     )

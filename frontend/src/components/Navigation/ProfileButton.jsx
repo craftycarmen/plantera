@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
@@ -7,12 +7,16 @@ import SignupFormModal from '../SignupFormModal';
 import { clearCart, resetCartId } from '../../store/cart';
 import { useNavigate } from 'react-router-dom';
 
-function ProfileButton({ user }) {
+function ProfileButton() {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
     const cartId = localStorage.getItem('cartId')
     const navigate = useNavigate()
+    const sessionUser = useSelector(state => state.session.user);
+    const user = useSelector(state => state.user[sessionUser?.id]?.User)
+    const currUser = user || sessionUser;
+
 
     const toggleMenu = (e) => {
         e.stopPropagation();
@@ -39,7 +43,7 @@ function ProfileButton({ user }) {
         e.preventDefault();
         dispatch(sessionActions.logout());
 
-        if (user && cartId) {
+        if (currUser && cartId) {
             localStorage.removeItem('cartId');
             console.log('CartId cleared from localStorage');
 
@@ -59,15 +63,15 @@ function ProfileButton({ user }) {
                 <i className="fa-regular fa-face-smile" />
             </span>
             <div className={ulClassName} ref={ulRef}>
-                {user ? (
+                {currUser ? (
                     <div className='userInfo'>
-                        <div>Hey, {user.username}!</div>
+                        <div>Hey, {currUser.username}!</div>
                         <div className='profileOptions'>
                             <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
                                 closeMenu()
-                                navigate(`/user/${user.id}`)
+                                navigate(`/user/${currUser.id}`)
                             }}>Profile</a></div>
-                            {user.accountType === 'seller' && (
+                            {currUser.accountType === 'seller' && (
                                 <>
                                     <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
                                         closeMenu()

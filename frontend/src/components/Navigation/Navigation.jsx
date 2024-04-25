@@ -9,12 +9,12 @@ import { fetchCart } from '../../store/cart';
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
     const user = useSelector(state => state.user[sessionUser?.id]?.User)
-    console.log(user);
+    // console.log("NOTSESHUSER", user);
     const userCartId = useSelector(state => state.cart.cartId)
     console.log("USERCARTIDNAV", userCartId);
     const dispatch = useDispatch();
     const cartId = userCartId || localStorage.getItem('cartId')
-
+    // console.log("SESHUSER", sessionUser);
     useEffect(() => {
         if (sessionUser) {
             dispatch(fetchCart(userCartId))

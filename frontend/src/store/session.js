@@ -72,12 +72,13 @@ export const restoreUser = () => async (dispatch) => {
 
 export const signup = (user) => async (dispatch) => {
     const { username, firstName, lastName, email, password,
-        bio,
-        favoritePlant,
-        accountType,
-        shopDescription,
-        paymentMethod,
-        paymentDetails, image } = user;
+        // bio,
+        // favoritePlant,
+        // accountType,
+        // shopDescription,
+        // paymentMethod,
+        // paymentDetails, 
+        image } = user;
 
     const formData = new FormData();
     formData.append("username", username);
@@ -85,12 +86,12 @@ export const signup = (user) => async (dispatch) => {
     formData.append("email", email);
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
-    formData.append("bio", bio);
-    formData.append("favoritePlant", favoritePlant);
-    formData.append("accountType", accountType);
-    formData.append("shopDescription", shopDescription);
-    formData.append("paymentMethod", paymentMethod);
-    formData.append("paymentDetails", paymentDetails);
+    // formData.append("bio", bio);
+    // formData.append("favoritePlant", favoritePlant);
+    // formData.append("accountType", accountType);
+    // formData.append("shopDescription", shopDescription);
+    // formData.append("paymentMethod", paymentMethod);
+    // formData.append("paymentDetails", paymentDetails);
 
     if (image) {
         formData.append("image", image)

@@ -45,8 +45,12 @@ function LoginFormModal() {
             }
 
             closeModal();
-        } catch (error) {
-            console.error('Error during login:', error);
+        } catch (res) {
+            console.error('Error during login:', res);
+            const data = await res.json();
+            if (data?.errors) {
+                setErrors(data.errors);
+            }
         }
     };
 
@@ -79,8 +83,12 @@ function LoginFormModal() {
                 dispatch(editCart(localCartId))
             }
             closeModal();
-        } catch (error) {
-            console.error('Error during login:', error);
+        } catch (res) {
+            console.error('Error during login:', res);
+            const data = await res.json();
+            if (data?.errors) {
+                setErrors(data.errors);
+            }
         }
     };
 

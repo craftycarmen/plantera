@@ -16,11 +16,14 @@ function ProfileButton() {
     const sessionUser = useSelector(state => state.session.user);
     const user = useSelector(state => state.user[sessionUser?.id]?.User)
     const currUser = user || sessionUser;
-
+    const isSeller = currUser && currUser.accountType === 'seller';
+    console.log(currUser);
 
     const toggleMenu = (e) => {
         e.stopPropagation();
         setShowMenu(!showMenu);
+
+
     };
 
     useEffect(() => {
@@ -71,7 +74,7 @@ function ProfileButton() {
                                 closeMenu()
                                 navigate(`/user/${currUser.id}`)
                             }}>Profile</a></div>
-                            {currUser.accountType === 'seller' && (
+                            {isSeller && (
                                 <>
                                     <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
                                         closeMenu()

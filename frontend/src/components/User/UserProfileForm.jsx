@@ -97,7 +97,7 @@ function UserProfileForm({ formType }) {
             console.error('Error updating profile:', error);
         }
     }
-    console.log(bio);
+
     return (
         <section className="formContainer">
             <h1>{formType}</h1>

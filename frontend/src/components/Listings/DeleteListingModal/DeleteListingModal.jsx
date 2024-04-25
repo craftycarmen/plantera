@@ -15,8 +15,6 @@ function DeleteListingModal({ listingId }) {
         } catch (error) {
             console.error("Error deleting listing:", error);
 
-            // Log the error object to inspect it
-            console.log(error.status);
             if (error.status === 403) {
                 setErrors("You cannot delete this listing, as there is an active order with this listing.")
             } else {

@@ -13,7 +13,7 @@ function Shop() {
     const shop = useSelector(state => state.user[userId]?.Shop)
     const activeListings = shop?.filter(listing => listing.stockQty > 0)
     const soldListings = shop?.filter(listing => listing.stockQty === 0)
-    console.log("hello", activeListings);
+    console.log("hello", shop);
     const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function Shop() {
         // .then(() => dispatch(fetchShop(userId)))
     }, [dispatch, userId])
 
-    return (user && shop &&
+    return (user &&
         <div className="userProfilePageContainer">
             <ProfileImage userId={userId} />
             <div className="username">

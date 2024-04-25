@@ -9,7 +9,7 @@ function MeetTheSeller({ sellerInfo }) {
         <div className="meetTheSeller">
             <h2>Meet {sellerInfo.username}</h2>
             <div className="meetTheSellerContainer">
-                <div>{sellerInfo.UserImages?.[0]?.avatar === true && (
+                <div>{sellerInfo.UserImages?.[0] && (
                     <>
                         <div className="sellerImageContainer">
                             <Link to={`/user/${sellerInfo.id}`}><img className="sellerImage"

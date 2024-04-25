@@ -7,16 +7,16 @@ function UserProfileForm({ formType }) {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const sessionUser = useSelector(state => state.session.user);
-    const user = useSelector(state => state.user[userId]?.User)
+    const user = useSelector(state => state.user[userId]?.User);
+
     const [bio, setBio] = useState(user?.bio || '');
     const [favoritePlant, setFavoritePlant] = useState(user?.favoritePlant || '');
     const [city, setCity] = useState(user?.city || '');
     const [state, setState] = useState(user?.state || '');
-    const [accountType, setAccountType] = useState(sessionUser?.accountType || '');
+    const [accountType, setAccountType] = useState(user?.accountType || '');
     const [shopDescription, setShopDescription] = useState(user?.shopDescription || '');
     const [paymentMethod, setPaymentMethod] = useState(user?.paymentMethod || '');
-    const [paymentDetails, setPaymentDetails] = useState(user?.paymentDetails || '');
+    const [paymentDetails, setPaymentDetails] = useState(user?.paymentDetails || undefined);
     // const [image, setImage] = useState("");
     const [errors, setErrors] = useState({});
 

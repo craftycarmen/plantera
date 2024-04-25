@@ -107,7 +107,7 @@ function OrderConfirmation() {
                                 </div>
                                 <div className="subTotalSummary">
                                     <h2>Total:</h2>
-                                    <h2>${order.orderTotal}</h2>
+                                    <h2>${order.orderTotal.toFixed(2)}</h2>
                                 </div>
                             </div >
                         </div>

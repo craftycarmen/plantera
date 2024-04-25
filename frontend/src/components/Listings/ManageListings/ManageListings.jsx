@@ -32,7 +32,7 @@ function ManageListings() {
                     <h2>Active Listings</h2>
                     <div className="listingsContainer">
                         {listings && activeListings?.length === 0 ? (
-                            <div>No active listings!</div>
+                            <div className="currentListings">No active listings!</div>
                         ) : (
                             activeListings && activeListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>
@@ -66,7 +66,7 @@ function ManageListings() {
                     <h2>Sold Listings</h2>
                     <div className="listingsContainer">
                         {listings && soldListings?.length === 0 ? (
-                            <div>No sold listings!</div>
+                            <div className="currentListings">No sold listings!</div>
                         ) : (
                             soldListings && soldListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>

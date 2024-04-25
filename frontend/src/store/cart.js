@@ -282,7 +282,7 @@ const initialState = {
     cart: null,
     cartItems: [],
     cartId: null,
-    cartTotal: null,
+    cartTotal: 0,
     numCartItems: 0
 }
 
@@ -362,7 +362,7 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 cartId: null,
                 cartItems: [],
-                cartTotal: null,
+                cartTotal: 0,
                 numCartItems: 0
             }
         }

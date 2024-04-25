@@ -74,7 +74,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                     }
                     <div className="subTotal">
                         <h3>Subtotal:</h3>
-                        {cartTotal && <h3>${cartTotal}</h3>}
+                        {cartTotal && cartTotal > 0 && <h3>${cartTotal}</h3>}
                     </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                         <button onClick={closeModal}>Continue Shopping</button>

@@ -85,7 +85,7 @@ router.get('/:cartId', async (req, res) => {
         cartItemsList.push(item.toJSON())
     });
 
-    let cartTotal = null;
+    let cartTotal = 0;
     let numCartItems = 0;
     cartItemsList.forEach(item => {
         cartTotal += item.cartQty * item.Listing.price

@@ -12,6 +12,7 @@ function ShoppingCartPage() {
     cartItems.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     // const cartTotal = useSelector(state => state.cart.cartTotal);
     const [localCartQty, setLocalCartQty] = useState({});
+    const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
     console.log("CT", cartItems);
     useEffect(() => {
         const runDispatches = async () => {
@@ -121,8 +122,11 @@ function ShoppingCartPage() {
 
     const handleRemoveItem = async (itemId) => {
         await dispatch(removeCartItem(cartId, itemId));
-        dispatch(fetchCartItems());
-        dispatch(fetchCart(cartId))
+        const updatedCartItemsLocalStorage = cartItemsLocalStorage.filter(item => item.id !== itemId);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
+
+        await dispatch(fetchCartItems());
+        await dispatch(fetchCart(cartId))
     };
 
     // const removeQty = (itemId) => {

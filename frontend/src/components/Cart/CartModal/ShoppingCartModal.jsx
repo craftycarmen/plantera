@@ -29,8 +29,8 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
         const updatedCartItemsLocalStorage = cartItemsLocalStorage.filter(item => item.id !== itemId);
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
 
-        dispatch(fetchCartItems());
-        dispatch(fetchCart(cartId))
+        await dispatch(fetchCartItems());
+        await dispatch(fetchCart(cartId))
     };
 
 

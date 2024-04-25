@@ -1,5 +1,5 @@
 const express = require('express')
-const { Listing, Image, User, Guide, ListingGuide } = require('../../db/models');
+const { Listing, Image, User, Guide, ListingGuide, CartItem } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
@@ -207,17 +207,28 @@ router.put('/:listingId', requireAuth, async (req, res) => {
     return res.json(listing)
 });
 
+
 router.delete('/:listingId', requireAuth, async (req, res) => {
     const listingId = Number(req.params.listingId);
     const listing = await Listing.findByPk(listingId)
+    const items = await CartItem.findAll({
+        where: {
+            listingId: listingId,
+        }
+    })
+
+    const orderedItems = items.filter(item => item.orderId !== null)
 
     if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
 
     if (req.user.id !== listing.sellerId) return res.status(403).json({ message: "Forbidden" });
 
-    await listing.destroy();
-
-    return res.json({ message: "Successfully deleted" })
+    if (!orderedItems) {
+        return res.status(403).json({ message: "Forbidden — listing is attached to an order" })
+    } else {
+        await listing.destroy();
+        return res.json({ message: "Successfully deleted" })
+    }
 });
 
 module.exports = router;

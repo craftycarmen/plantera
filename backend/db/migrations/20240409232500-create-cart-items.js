@@ -39,6 +39,7 @@ module.exports = {
           model: 'Listings',
           key: 'id'
         },
+        onDelete: 'cascade'
       },
       cartQty: {
         type: Sequelize.INTEGER,

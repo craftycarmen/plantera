@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         models.CartItem,
         {
           foreignKey: 'listingId',
+          onDelete: 'CASCADE'
         }
       )
     }

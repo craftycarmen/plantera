@@ -8,12 +8,15 @@ import OrderSummary from "./OrderSummary";
 function ShoppingCartPage() {
     const dispatch = useDispatch();
     const cartId = localStorage.getItem("cartId")
-    const cartItems = useSelector(state => state.cart.cartItems)
-    cartItems.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    // const cartTotal = useSelector(state => state.cart.cartTotal);
+
     const [localCartQty, setLocalCartQty] = useState({});
+
+    const cartItems = useSelector(state => state.cart.cartItems)
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+
     console.log("CT", cartItems);
+
+    cartItems.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
@@ -37,16 +40,27 @@ function ShoppingCartPage() {
 
     const calculateCartItemTotal = (item) => {
         if (item.Listing && item.Listing.price) {
-            return item.Listing.price * localCartQty[item.id];
+            // return item.Listing.price * localCartQty[item.id];
+            return item.Listing.price * (localCartQty && localCartQty[item.id] ? localCartQty[item.id] : item.cartQty);
         }
         return 0;
     };
 
     const showListingPrice = (item) => {
-        if (localCartQty[item.id] > 1) {
+        if (localCartQty && localCartQty[item.id] && localCartQty[item.id] > 1 || item.cartQty > 1) {
             return `$${item.Listing.price} each`
         }
     }
+
+    const qtyInput = (itemId) => {
+        if (localCartQty && localCartQty[itemId]) {
+            return localCartQty[itemId];
+        } else {
+            const item = cartItems.find(item => item.id === itemId);
+            return item ? item.cartQty : 0;
+        }
+    };
+
 
     const addQty = async (itemId) => {
         const updatedQty = (localCartQty[itemId] || 0) + 1;
@@ -194,7 +208,7 @@ function ShoppingCartPage() {
                                                         step="1"
                                                         min="1"
                                                         max={item.Listing?.stockQty}
-                                                        value={localCartQty[item.id] || 0}
+                                                        value={qtyInput(item.id)}
                                                         name="cartQty"
                                                         readOnly
                                                     />

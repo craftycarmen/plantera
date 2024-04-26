@@ -47,7 +47,7 @@
     align-items: center;
     /* margin-top: -10px; */
     height: 24px;
-    background-color: white;
+    background-color: #efefef;
     border-radius: 3px;
     /* padding: 5px; */
 }
@@ -61,7 +61,7 @@
     height: 24px;
     /* margin-top: 10px; */
     /* padding: 0px 10px; */
-    background-color: white;
+    background-color: #efefef;
     border-radius: 3px;
     /* margin-right: 5px; */
 }
@@ -79,12 +79,16 @@
     color: #E38251;
 }
 
+.qtyPlusMinus i {
+    margin-bottom: 25px;
+}
+
 .quantityInput input {
     width: 20px;
     height: 14px;
     border-radius: 0;
     text-align: center;
-    background-color: white;
+    background-color: #efefef;
 }
 
 .price {
@@ -105,7 +109,7 @@
     /* grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr)); */
     gap: 50px;
     justify-items: center;
-    /* justify-content: center; */
+    /* justify-content: end; */
     align-self: center;
     margin-top: 20px;
 }

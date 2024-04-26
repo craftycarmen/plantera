@@ -21,20 +21,21 @@
 }
 
 .shoppingModalImgContainer {
-    width: 200px;
+    width: 150px;
 }
 
 
 .shoppingModalListing {
     display: grid;
     gap: 20px;
-    grid-template-columns: 1fr 1fr;
-    padding-bottom: 20px;
+    grid-template-columns: 1fr 2fr;
+    /* padding-bottom: 10px; */
+    /* height: 100px; */
 }
 
 .shoppingModal img {
     width: 100%;
-    height: 125px;
+    height: 100px;
     object-fit: cover;
     object-position: center;
     border-radius: 5px;
@@ -44,12 +45,29 @@
 .smInfo {
     display: grid;
     grid-template-rows: 2fr 1fr 1fr;
-    padding: 5px 0px 10px 0px;
+    padding: 0px 0px 10px 0px;
+    height: 100px;
 }
 
 .shoppingModalRow {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
     justify-content: space-between;
+    gap: 20px;
+    height: fit-content;
+    /* width: 180px; */
+}
+
+/* .shoppingModalRow h3:nth-child(1) {
+    word-wrap: break-word;
+    height: fit-content;
+} */
+
+.shoppingModalRow h3:nth-child(2),
+.shoppingModalRow span:nth-child(2) {
+    word-wrap: break-word;
+    grid-column: 2/3;
+    justify-self: end;
 }
 
 .subTotal {

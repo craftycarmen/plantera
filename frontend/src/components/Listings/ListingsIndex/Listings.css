@@ -20,14 +20,32 @@
     border-radius: 5px;
 }
 
-.listingInfo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.listingImage-outline {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 3px;
 }
 
-.listingInfo span {
+.listingInfo {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: 3fr 1fr;
+    width: 348.75px;
+    column-gap: 20px;
+    padding-top: 5px;
+}
+
+.listingPrice {
     font-size: 16px;
+    grid-column: 2/3;
+    justify-self: end;
+    align-self: start;
 }
 
 /* .listingsContainer a:hover {

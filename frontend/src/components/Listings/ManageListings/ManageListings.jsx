@@ -43,12 +43,12 @@ function ManageListings() {
                                                 className="listingImage"
                                                 src={listing.ListingImages?.[0]?.url} />
                                         </div>
-                                        <div className="listingInfo">
+                                        <div className="manageListingInfo">
                                             <h3>{listing.plantName}</h3>
-                                            <span>{price(listing.price)}</span>
+                                            <div className="listingPrice">{price(listing.price)}</div>
                                         </div>
                                     </Link>
-                                    <div className="listingInfo">
+                                    <div className="manageListingInfo">
                                         <div>In Stock: {listing.stockQty}</div>
                                         <div className="listingButtons">
                                             <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
@@ -77,13 +77,13 @@ function ManageListings() {
                                                 className="listingImage"
                                                 src={listing.ListingImages[0].url} />
                                         </div>
-                                        <div className="listingInfo">
+                                        <div className="manageListingInfo">
                                             <h3>{listing.plantName}</h3>
-                                            <span>{price(listing.price)}</span>
+                                            <div className="listingPrice">{price(listing.price)}</div>
                                         </div>
                                     </Link>
-                                    <div className="listingInfo" style={{ justifyContent: "end" }}>
-                                        <div className="listingButtons">
+                                    <div className="soldListingButtonContainer">
+                                        <div className="soldListingButtons">
                                             <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
                                             <OpenModalButton
                                                 buttonText="Delete"

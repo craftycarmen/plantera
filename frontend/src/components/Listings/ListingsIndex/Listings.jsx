@@ -32,9 +32,9 @@ function Listings() {
                                 </div>
                                 <div className="listingInfo">
                                     <h2>{listing.plantName}</h2>
-                                    <span>{price(listing.price)}</span>
-                                </div>
-                                <div>from {listing.Seller?.username}
+                                    <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
+                                    <div>from {listing.Seller?.username}
+                                    </div>
                                 </div>
                             </Link>
                         </div>

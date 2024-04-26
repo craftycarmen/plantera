@@ -6,6 +6,7 @@ function Home() {
         <>
             <div className='headerContainer'>
                 <img className='headerImage' src='../../IMG_5977.jpg' />
+                <div className='headerImage-outline'></div>
                 <div className="headerText">
                     <h1>welcome to plantera!</h1>
                     <div className='headerIntro'>

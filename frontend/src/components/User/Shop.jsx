@@ -57,7 +57,7 @@ function Shop() {
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
                                                         <h3>{listing.plantName}</h3>
-                                                        <span>{price(listing.price)}</span>
+                                                        <div className="listingPrice">{price(listing.price)}</div>
                                                     </div>
                                                 </Link>
                                             </div>
@@ -89,7 +89,7 @@ function Shop() {
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
                                                         <h3>{listing.plantName}</h3>
-                                                        <span>{price(listing.price)}</span>
+                                                        <div className="listingPrice">{price(listing.price)}</div>
                                                     </div>
                                                 </div>
                                             </Link>

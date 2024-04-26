@@ -99,7 +99,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                                 />
                             </div>
                             <div className="smInfo">
-                                <div className="shoppingModalRow">
+                                <div className="shoppingModalRow" style={{ marginTop: "-5px" }}>
                                     <h3>{item.Listing?.plantName}</h3>
                                     <h3>{calculateItemSubTotal(item)}</h3>
                                 </div>
@@ -117,9 +117,9 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                         <h3>Subtotal:</h3>
                         <h3>{calculateSubtotal()}</h3>
                     </div>
-                    <div style={{ display: "flex", gap: "8px" }}>
-                        <button onClick={closeModal}>Continue Shopping</button>
-                        <button style={{ width: '100%', flexWrap: "nowrap" }} onClick={checkout}>View Cart & Check Out</button>
+                    <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
+                        <button onClick={closeModal} style={{ width: "fit-content", padding: "0px 14.5px" }}>Continue Shopping</button>
+                        <button style={{ width: 'fit-content', flexWrap: "nowrap", padding: "0px 14.5px" }} onClick={checkout}>View Cart & Check Out</button>
                     </div>
                 </div>
             )

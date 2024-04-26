@@ -25,4 +25,38 @@
 .listingButtons {
     display: flex;
     gap: 8px;
+    justify-content: end;
+    width: fit-content;
+}
+
+.soldListingButtonContainer {
+    display: flex;
+    justify-content: end;
+}
+
+.soldListingButtons {
+    display: flex;
+    gap: 8px;
+    justify-content: end;
+    width: fit-content;
+}
+
+.manageListingInfo {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: 3fr 1fr;
+    width: 348.75px;
+    column-gap: 20px;
+    padding-top: 5px;
+}
+
+.manageListingInfo {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: 3fr 1fr;
+    width: 348.75px;
+    column-gap: 20px;
+    padding-top: 5px;
 }

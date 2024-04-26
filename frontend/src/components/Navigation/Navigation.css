@@ -1,6 +1,6 @@
 .navigation {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: auto 2fr auto;
     gap: 50px;
     justify-items: center;
     align-items: center;
@@ -9,11 +9,13 @@
 
 .navLinks {
     font-size: 18px;
+    margin-right: 25%;
 }
 
 .rightNav {
     cursor: default;
     position: relative;
+    justify-self: end;
 }
 
 .rightNav i {
@@ -80,7 +82,7 @@
     font-size: 11px;
     /* margin-top: 10px;
     margin-left: -1px; */
-    margin-top: 0px;
+    margin-top: .5px;
     top: 0;
     right: 0;
     bottom: 0;

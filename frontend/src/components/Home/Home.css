@@ -12,6 +12,17 @@
     border-radius: 3px;
 }
 
+.headerImage-outline {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
 .headerContainer::before {
     content: '';
     position: absolute;

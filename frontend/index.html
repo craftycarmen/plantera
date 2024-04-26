@@ -10,7 +10,14 @@
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet">
   <script src="https://kit.fontawesome.com/3bdae81422.js" crossorigin="anonymous"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script> -->
+  <script>
+    function loadBackupScript() {
+      var script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
 
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,6 +26,8 @@
 
 <body>
   <div id="root"></div>
+  <div class="top-triangle"></div>
+  <div class="bottom-triangle"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

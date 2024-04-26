@@ -1,11 +1,14 @@
-// export const price = (price) => {
-//     return price.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 })
-// }
-
-
 export const price = (price) => {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD'
     }).format(price);
 };
+
+// export const plantName = (text) => {
+//     if (text.length > 25) {
+//         return text.substring(0, 25) + "..."
+//     } else {
+//         return text
+//     }
+// }

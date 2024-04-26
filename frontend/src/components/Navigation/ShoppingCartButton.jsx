@@ -34,11 +34,17 @@ function ShoppingCartButton({ cartId }) {
     }, [dispatch, numCartItems])
 
     const handleOpenModal = async () => {
-        if (location.pathname !== '/cart') {
-            await dispatch(fetchCartItems(cartId));
-            navigate('/cart');
+        try {
+            if (location.pathname !== '/cart') {
+                await dispatch(fetchCartItems(cartId));
+                navigate('/cart');
+            }
+        } catch (error) {
+            if (process.env.NODE_ENV === 'development') {
+                console.error(error);
+            }
         }
-    };
+    }
 
     return (
         <div className='shoppingCartIconWrapper'>

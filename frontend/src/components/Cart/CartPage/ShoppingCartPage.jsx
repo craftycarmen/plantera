@@ -187,7 +187,7 @@ function ShoppingCartPage() {
                                     <div className="shoppingCartImgContainer">
                                         <Link to={`/listings/${item.Listing?.id}`}><img src={item.Listing?.ListingImages?.[0]?.url} alt={item.Listing?.plantName} /></Link>
                                     </div>
-                                    <div className="smInfo">
+                                    <div className="smInfo" style={{ height: "225px" }}>
                                         <div className="shoppingCartRow">
                                             <div><h3>{item.Listing?.plantName}</h3>
                                                 <div>from {item.Listing?.Seller?.username}</div>
@@ -204,7 +204,14 @@ function ShoppingCartPage() {
                                             <div className="quantityContainer">
                                                 <span className="qtylabel">Quantity:</span>
                                                 <div className="quantityInput">
-                                                    <button onClick={() => addQty(item.id)}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                                    <button
+                                                        onClick={() => addQty(item.id)}
+                                                        disabled={(item.Listing?.stockQty === 1 && qtyInput(item.id) === 1) || (qtyInput(item.id) === item.Listing?.stockQty)}
+                                                    >
+                                                        <span className="qtyPlusMinus">
+                                                            <i className="fa-solid fa-plus" />
+                                                        </span>
+                                                    </button>
                                                     <input
                                                         className="inputBox"
                                                         type="number"
@@ -215,10 +222,22 @@ function ShoppingCartPage() {
                                                         name="cartQty"
                                                         readOnly
                                                     />
-                                                    <button onClick={() => removeQty(item.id)}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                                    <button
+                                                        onClick={() => removeQty(item.id)}
+                                                        disabled={qtyInput(item.id) === 1}
+                                                    >
+                                                        <span className="qtyPlusMinus">
+                                                            <i className="fa-solid fa-minus" />
+                                                        </span>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer", marginTop: "8px" }} onClick={() => handleRemoveItem(item.id)} /></span>
+                                        </div>
+                                        <div className="stockLevelMsg">
+                                            {item.Listing.stockQty === 1 && (<div >Only 1 in stock!</div>)}
+
+                                            {qtyInput(item.id) === item.Listing?.stockQty && item.Listing?.stockQty !== 1 && (<div>Only {item.Listing?.stockQty} in stock!</div>)}
                                         </div>
                                     </div>
                                 </div>

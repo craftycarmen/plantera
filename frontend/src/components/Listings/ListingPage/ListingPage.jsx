@@ -223,29 +223,48 @@ function ListingPage() {
                                     <div className="quantityContainer">
                                         <span className="qtylabel">Quantity:</span>
                                         <div className="quantityInput">
-                                            <button onClick={addQty}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                            <button
+                                                onClick={addQty}
+                                                disabled={(cartQty === listing.stockQty)}
+                                            >
+                                                <span className="qtyPlusMinus">
+                                                    <i className="fa-solid fa-plus" />
+                                                </span>
+                                            </button>
                                             <input
                                                 className="inputBox"
-                                                type="number" step="1"
+                                                type="number"
+                                                step="1"
                                                 min="1"
                                                 max={listing.stockQty}
                                                 value={cartQty}
                                                 name="cartQty"
                                                 onChange={handleQty} />
 
-                                            <button onClick={removeQty}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                            <button
+                                                onClick={removeQty}
+                                                disabled={cartQty === 1}
+                                            >
+                                                <span className="qtyPlusMinus">
+                                                    <i className="fa-solid fa-minus" />
+                                                </span>
+                                            </button>
 
                                         </div>
+                                        <div className='stockLevelMsg' style={{ marginLeft: "5px" }}>
+                                            {listing.stockQty === 1 && (<div>Only 1 in stock!</div>)}
+
+                                            {listing.stockQty === cartQty && listing.stockQty !== 1 && (<div>Only {listing.stockQty} in stock!</div>)}
+                                        </div>
                                     </div>
-                                    <div className='error'>{error &&
-                                        <><i className="fa-solid fa-circle-exclamation" /> {error}</>}</div>
+
 
                                     <OpenModalMenuItem
                                         itemText={<>
                                             <button
                                                 type="submit"
                                                 disabled={error}
-                                                style={{ width: "167px", marginTop: "10px" }}
+                                                style={{ width: "158px", marginTop: "10px" }}
                                             >Add to Cart</button>
                                         </>}
                                         modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}

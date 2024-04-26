@@ -27,14 +27,14 @@
 
 .smInfo {
     display: grid;
-    grid-template-rows: 3fr 1fr 1fr;
+    grid-template-rows: 3fr 1fr 1fr 1fr;
     padding: 5px 0px 10px 0px;
 }
 
 .shoppingCartRow {
     display: grid;
     grid-template-columns: 4fr auto;
-    gap: 30px;
+    column-gap: 30px;
 }
 
 .subTotal {
@@ -47,4 +47,9 @@
     display: grid;
     justify-items: end;
     height: fit-content
+}
+
+.stockLevelMsg {
+    font-style: italic;
+    color: #E38251;
 }

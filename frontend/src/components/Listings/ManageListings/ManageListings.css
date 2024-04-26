@@ -1,12 +1,12 @@
 .soldOutImage {
-    width: 400px;
+    width: 348.75px;
 }
 
 .soldOutImage::before {
     content: '';
     z-index: 1;
-    width: 400px;
-    height: 250px;
+    width: 348.75px;
+    height: 225px;
     object-fit: cover;
     object-position: center;
     display: block;

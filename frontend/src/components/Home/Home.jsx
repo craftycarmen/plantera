@@ -10,7 +10,7 @@ function Home() {
                     <h1>welcome to plantera!</h1>
                     <div className='headerIntro'>
                         <div>the plant marketplace community,</div>
-                        <div>where we're <span style={{ fontStyle: "italic" }}>forevermore</span> in our plant era.</div>
+                        <div>where we&#39;re <span style={{ fontStyle: "italic" }}>forevermore</span> in our plant era.</div>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchCartItems } from '../../store/cart';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { hideErrorInProd } from '../../../utils';
 
 function ShoppingCartButton({ cartId }) {
     const dispatch = useDispatch();
@@ -40,9 +41,7 @@ function ShoppingCartButton({ cartId }) {
                 navigate('/cart');
             }
         } catch (error) {
-            if (process.env.NODE_ENV === 'development') {
-                console.error(error);
-            }
+            hideErrorInProd(error);
         }
     }
 

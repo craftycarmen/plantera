@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { hideErrorInProd } from "../../utils";
 
 const LOAD_CART = 'cart/LOAD_CART';
 const CREATE_CART = 'cart/CREATE_CART';
@@ -81,9 +82,7 @@ export const fetchCart = () => async (dispatch) => {
                 dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
                 return cart
             } else {
-                if (process.env.NODE_ENV === 'development') {
-                    console.error('Cart not found for cart ID:', cartId);
-                }
+                hideErrorInProd('Cart not found for cart ID:', cartId);
                 localStorage.removeItem('cartId');
                 localStorage.removeItem('cartItems');
                 dispatch(resetCartId());
@@ -92,9 +91,7 @@ export const fetchCart = () => async (dispatch) => {
             }
 
         } else {
-            if (process.env.NODE_ENV === 'development') {
-                console.error('Invalid cart ID #1:', cartId);
-            }
+            hideErrorInProd('Invalid cart ID #1:', cartId);
             localStorage.removeItem('cartId');
             localStorage.removeItem('cartItems');
             dispatch(resetCartId());
@@ -112,9 +109,7 @@ export const fetchCart = () => async (dispatch) => {
             // }
         }
     } else {
-        if (process.env.NODE_ENV === 'development') {
-            console.error('Invalid cart ID #2: ', cartId);
-        }
+        hideErrorInProd('Invalid cart ID #2: ', cartId);
         localStorage.removeItem('cartId');
         localStorage.removeItem('cartItems');
         dispatch(resetCartId());
@@ -202,14 +197,14 @@ export const fetchCartItems = () => async (dispatch) => {
             }
 
         } else if (res.status === 404) {
-            console.error('Cart not found for cart ID:', cartId);
+            hideErrorInProd('Cart not found for cart ID:', cartId);
         } else {
             const errors = await res.json();
-            console.error(errors)
+            hideErrorInProd(errors)
             return errors;
         }
     } catch (error) {
-        console.error('Error fetching cart items:', error);
+        hideErrorInProd('Error fetching cart items:', error);
         throw error
     }
 }

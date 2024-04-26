@@ -5,6 +5,12 @@ export const price = (price) => {
     }).format(price);
 };
 
+export const hideErrorInProd = (message, ...args) => {
+    if (process.env.NODE_ENV === 'development') {
+        console.error(message, ...args);
+    }
+}
+
 // export const plantName = (text) => {
 //     if (text.length > 25) {
 //         return text.substring(0, 25) + "..."

@@ -89,7 +89,9 @@ export const fetchCart = () => async (dispatch) => {
                 dispatch(clearCart());
                 return null;
             }
-
+        } else if (res.status === 404) {
+            hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
+            return;
         } else {
             hideErrorInProd('Invalid cart ID #1:', cartId);
             localStorage.removeItem('cartId');

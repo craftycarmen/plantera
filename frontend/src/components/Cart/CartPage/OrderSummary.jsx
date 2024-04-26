@@ -19,12 +19,12 @@ function OrderSummary({ cartId, checkout }) {
     }, [dispatch, cartId])
 
     const estimatedTax = (total) => {
-        let tax = (total * 0.0825).toFixed(2)
-        return tax
+        let tax = (total * 0.0825)
+        return tax.toLocaleString('en-US', { maximumFractionDigits: 2 })
     }
 
     const orderTotal = (subtotal, tax) => {
-        return (subtotal + parseFloat(tax)).toFixed(2);
+        return (subtotal + parseFloat(tax)).toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
 
     const handleCheckOut = () => {
@@ -83,7 +83,7 @@ function OrderSummary({ cartId, checkout }) {
                 {cartTotal &&
                     <div className="subTotalSummary">
                         <span>Subtotal:</span>
-                        <span>${cartTotal.toFixed(2)}</span>
+                        <span>${cartTotal.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                     </div>}
                 <div className="subTotalSummary">
                     <span>Shipping:</span>

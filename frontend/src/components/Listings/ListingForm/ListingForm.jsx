@@ -15,7 +15,7 @@ function ListingForm({ listing, formType }) {
     const [description, setDescription] = useState(listing?.description || "");
     const [price, setPrice] = useState(listing?.price || "");
     const [potSize, setPotSize] = useState(listing?.potSize || "");
-    const [stockQty, setStockQty] = useState(listing?.stockQty || "");
+    const [stockQty, setStockQty] = useState(listing?.stockQty || 0);
     // const [guideId, setGuideId] = useState(listing?.guideId);
     const [image, setImage] = useState("");
     // const [imageLoading, setImageLoading] = useState(false);

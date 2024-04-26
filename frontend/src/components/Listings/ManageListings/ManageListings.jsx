@@ -44,7 +44,7 @@ function ManageListings() {
                                         </div>
                                         <div className="listingInfo">
                                             <h3>{listing.plantName}</h3>
-                                            <span>${listing.price}</span>
+                                            <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                                         </div>
                                     </Link>
                                     <div className="listingInfo">
@@ -78,9 +78,18 @@ function ManageListings() {
                                         </div>
                                         <div className="listingInfo">
                                             <h3>{listing.plantName}</h3>
-                                            <span>${listing.price}</span>
+                                            <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                                         </div>
                                     </Link>
+                                    <div className="listingInfo" style={{ justifyContent: "end" }}>
+                                        <div className="listingButtons">
+                                            <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
+                                            <OpenModalButton
+                                                buttonText="Delete"
+                                                modalComponent={<DeleteListingModal listingId={listing.id} />}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             ))
                         )

@@ -31,7 +31,7 @@ function Listings() {
                                 </div>
                                 <div className="listingInfo">
                                     <h2>{listing.plantName}</h2>
-                                    <span>${listing.price}</span>
+                                    <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                                 </div>
                                 <div>from {listing.Seller?.username}
                                 </div>

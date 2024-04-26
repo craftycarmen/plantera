@@ -40,15 +40,17 @@ function ShoppingCartPage() {
 
     const calculateCartItemTotal = (item) => {
         if (item.Listing && item.Listing.price) {
-            // return item.Listing.price * localCartQty[item.id];
-            return item.Listing.price * (localCartQty && localCartQty[item.id] ? localCartQty[item.id] : item.cartQty);
+            const total = item.Listing.price * (localCartQty && localCartQty[item.id] ? localCartQty[item.id] : item.cartQty);
+            return total.toLocaleString('en-US', { maximumFractionDigits: 2 })
         }
         return 0;
     };
 
     const showListingPrice = (item) => {
         if (localCartQty && localCartQty[item.id] && localCartQty[item.id] > 1 || item.cartQty > 1) {
-            return `$${item.Listing.price} each`
+            const total = `${item.Listing?.price}`
+            const totalFormatted = total.toLocaleString('en-US', { maximumFractionDigits: 2 })
+            return `$${totalFormatted} each`
         }
     }
 

@@ -48,7 +48,7 @@ function CheckoutLogin({ cartId }) {
             if (cartItems.length > 0 && data.user?.id) {
                 const ownedItems = sellerItems(cartItems, data.user?.id)
                 if (ownedItems) {
-                    alert('Please remove item(s) that belong to you before checking out.');
+                    alert('Sellers cannot purchase their own items. Please remove any item(s) that belong to you before checking out.');
                     navigate('/cart');
                     return;
                 }
@@ -97,7 +97,7 @@ function CheckoutLogin({ cartId }) {
                 if (cartItems.length > 0 && data.user?.id) {
                     const ownedItems = sellerItems(cartItems, data.user?.id)
                     if (ownedItems) {
-                        alert('Please remove item(s) that belong to you before checking out.');
+                        alert('Sellers cannot purchase their own items. Please remove any item(s) that belong to you before checking out.');
                         navigate('/cart');
                         return;
                     }
@@ -115,7 +115,7 @@ function CheckoutLogin({ cartId }) {
                 if (cartItems.length > 0 && data.user?.id) {
                     const ownedItems = sellerItems(cartItems, data.user?.id)
                     if (ownedItems) {
-                        alert('Please remove item(s) that belong to you before checking out.');
+                        alert('Sellers cannot purchase their own items. Please remove any item(s) that belong to you before checking out.');
                         navigate('/cart');
                         return;
                     }

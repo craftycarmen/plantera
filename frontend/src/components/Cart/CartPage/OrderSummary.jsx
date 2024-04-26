@@ -42,7 +42,7 @@ function OrderSummary({ cartId, checkout }) {
         if (sessionUser) {
             const ownedItems = sellerItems(cartItems, sessionUser?.id)
             if (ownedItems) {
-                alert('Please remove item(s) that belong to you before checking out.');
+                alert('Sellers cannot purchase their own items. Please remove any item(s) that belong to you before checking out.');
                 return;
             }
             navigate('/checkout')

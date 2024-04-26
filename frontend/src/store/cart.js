@@ -73,31 +73,37 @@ export const fetchCart = () => async (dispatch) => {
     console.log('CartId fetched from localStorage:', cartId);
 
     if (cartId > 0) {
-        const res = await fetch(`/api/cart/${cartId}`);
-        if (res.ok) {
-            const cart = await res.json();
-            if (cart.ShoppingCart !== null) {
-                const cartTotal = cart.ShoppingCart.cartTotal;
-                const numCartItems = cart.ShoppingCart.numCartItems
-                dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
-                return cart
+        try {
+            const res = await fetch(`/api/cart/${cartId}`);
+            if (res.ok) {
+                const cart = await res.json();
+                if (cart.ShoppingCart !== null) {
+                    const cartTotal = cart.ShoppingCart.cartTotal;
+                    const numCartItems = cart.ShoppingCart.numCartItems
+                    dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
+                    return cart
+                } else {
+                    hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
+                    localStorage.removeItem('cartId');
+                    localStorage.removeItem('cartItems');
+                    dispatch(resetCartId());
+                    dispatch(clearCart());
+                    return null;
+                }
             } else {
-                hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
+                if (res.status === 404) {
+                    hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
+                } else {
+                    hideErrorInProd('Invalid cart ID #1:', cartId);
+                }
                 localStorage.removeItem('cartId');
                 localStorage.removeItem('cartItems');
                 dispatch(resetCartId());
                 dispatch(clearCart());
                 return null;
             }
-        } else if (res.status === 404) {
-            hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
-            return;
-        } else {
-            hideErrorInProd('Invalid cart ID #1:', cartId);
-            localStorage.removeItem('cartId');
-            localStorage.removeItem('cartItems');
-            dispatch(resetCartId());
-            dispatch(clearCart());
+        } catch (error) {
+            hideErrorInProd('Error fetching cart:', error);
             return null;
         }
     } else {

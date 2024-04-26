@@ -29,6 +29,18 @@ function OrderSummary({ cartId, checkout }) {
 
     const handleCheckOut = () => {
         if (sessionUser) {
+            const sellerItems = (cartItems, userId) => {
+                return cartItems.some(item => {
+                    console.log("Item:", item);
+                    console.log("User ID:", userId);
+                    console.log("Seller ID:", item.Listing?.Seller?.id);
+                    return item.Listing?.Seller?.id === sessionUser?.id;
+                })
+            }
+            if (sellerItems) {
+                alert('Please remove item(s) that belong to you before checking out.');
+                return;
+            }
             navigate('/checkout')
         } else {
             navigate('/checkout/user')

@@ -8,6 +8,7 @@ import MeetTheSeller from "./MeetTheSeller";
 import { addCart, addItemToCart, fetchCart, fetchCartItems, updateCartItemInCart } from "../../../store/cart";
 import ShoppingCartModal from "../../Cart/CartModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import { price } from "../../../../utils";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -212,7 +213,7 @@ function ListingPage() {
                 <div>
                     <h1>{listing.plantName}</h1>
                     <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link></div>
-                    <p className="price">${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</p>
+                    <p className="price">{price(listing.price)}</p>
                     <p>{listing.description}</p>
                     <p>Pot Size: {listing.potSize}&ldquo;</p>
                     {listing.stockQty && listing.stockQty > 0 ? (

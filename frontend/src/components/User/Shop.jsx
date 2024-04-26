@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchProfile } from "../../store/user";
 import './User.css';
 import ProfileImage from "./ProfileImage";
+import { price } from "../../../utils";
 
 function Shop() {
     const { userId } = useParams();
@@ -56,7 +57,7 @@ function Shop() {
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
                                                         <h3>{listing.plantName}</h3>
-                                                        <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
+                                                        <span>{price(listing.price)}</span>
                                                     </div>
                                                 </Link>
                                             </div>
@@ -88,7 +89,7 @@ function Shop() {
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
                                                         <h3>{listing.plantName}</h3>
-                                                        <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
+                                                        <span>{price(listing.price)}</span>
                                                     </div>
                                                 </div>
                                             </Link>

@@ -3,6 +3,7 @@ import { fetchAllListings } from "../../../store/listings";
 import { useEffect } from "react";
 import './Listings.css';
 import { Link } from "react-router-dom";
+import { price } from "../../../../utils";
 
 function Listings() {
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function Listings() {
                                 </div>
                                 <div className="listingInfo">
                                     <h2>{listing.plantName}</h2>
-                                    <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
+                                    <span>{price(listing.price)}</span>
                                 </div>
                                 <div>from {listing.Seller?.username}
                                 </div>

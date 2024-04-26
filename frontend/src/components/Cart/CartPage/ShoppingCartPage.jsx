@@ -4,6 +4,7 @@ import { fetchCart, fetchCartItems, updateCartItemInCart, removeCartItem } from 
 import './ShoppingCartPage.css';
 import { Link } from "react-router-dom";
 import OrderSummary from "./OrderSummary";
+import { price } from "../../../../utils";
 
 function ShoppingCartPage() {
     const dispatch = useDispatch();
@@ -41,16 +42,16 @@ function ShoppingCartPage() {
     const calculateCartItemTotal = (item) => {
         if (item.Listing && item.Listing.price) {
             const total = item.Listing.price * (localCartQty && localCartQty[item.id] ? localCartQty[item.id] : item.cartQty);
-            return total.toLocaleString('en-US', { maximumFractionDigits: 2 })
+            return price(total)
         }
         return 0;
     };
 
     const showListingPrice = (item) => {
         if (localCartQty && localCartQty[item.id] && localCartQty[item.id] > 1 || item.cartQty > 1) {
-            const total = `${item.Listing?.price}`
-            const totalFormatted = total.toLocaleString('en-US', { maximumFractionDigits: 2 })
-            return `$${totalFormatted} each`
+            const total = item.Listing?.price
+            const totalFormatted = price(total)
+            return `${totalFormatted} each`
         }
     }
 
@@ -193,7 +194,7 @@ function ShoppingCartPage() {
                                             </div>
                                             <div className="shoppingCartPrice">
 
-                                                <h3>${calculateCartItemTotal(item)}</h3>
+                                                <h3>{calculateCartItemTotal(item)}</h3>
                                                 <div>{showListingPrice(item)}
                                                 </div>
                                             </div>

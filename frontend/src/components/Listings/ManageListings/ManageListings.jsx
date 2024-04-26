@@ -6,6 +6,7 @@ import OpenModalButton from "../../OpenModalButton";
 import { Link } from "react-router-dom";
 import './ManageListings.css';
 import ErrorHandling from "../../ErrorHandling";
+import { price } from "../../../../utils";
 
 function ManageListings() {
     const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function ManageListings() {
                                         </div>
                                         <div className="listingInfo">
                                             <h3>{listing.plantName}</h3>
-                                            <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
+                                            <span>{price(listing.price)}</span>
                                         </div>
                                     </Link>
                                     <div className="listingInfo">
@@ -78,7 +79,7 @@ function ManageListings() {
                                         </div>
                                         <div className="listingInfo">
                                             <h3>{listing.plantName}</h3>
-                                            <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
+                                            <span>{price(listing.price)}</span>
                                         </div>
                                     </Link>
                                     <div className="listingInfo" style={{ justifyContent: "end" }}>

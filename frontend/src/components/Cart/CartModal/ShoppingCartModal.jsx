@@ -74,7 +74,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const checkout = () => {
 
         if (sellerItems(cartItems, userId)) {
-            alert('Please remove item(s) that belong to you before checking out.')
+            alert('Sellers cannot purchase their own items. Please remove any item(s) that belong to you before checking out.')
         } else {
             closeModal()
             navigate('/cart')

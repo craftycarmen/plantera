@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
+import { fetchCart, fetchCartItems, loadCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
 import { useModal } from "../../../context/Modal";
 import { price } from "../../../../utils";
@@ -53,11 +53,13 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const handleRemoveItem = async (itemId) => {
         await dispatch(removeCartItem(cartId, itemId));
 
-        const updatedCartItemsLocalStorage = cartItemsLocalStorage.filter(item => item.id !== itemId);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
+        // const updatedCartItemsLocalStorage = cartItemsLocalStorage.filter(item => item.id !== itemId);
+        // localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
 
-        await dispatch(fetchCartItems());
-        await dispatch(fetchCart(cartId))
+        const updatedCartItems = cartItems.filter(item => item.id !== itemId)
+        dispatch(loadCartItems())
+        dispatch(fetchCart(cartId))
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
 
     const sellerItems = (cartItems, userId) => {

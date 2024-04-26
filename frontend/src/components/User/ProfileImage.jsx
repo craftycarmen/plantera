@@ -31,7 +31,7 @@ function ProfileImage({ userId }) {
                     <div className="profileShop">
                         <Link to={`/user/${userId}`}>Profile</Link>&nbsp;&nbsp;&nbsp;
                         <Link to={`/user/${userId}/shop`}>Shop</Link>&nbsp;&nbsp;&nbsp;
-                        Guides
+                        {/* Guides */}
                     </div>
                 )}
             </div>

@@ -27,7 +27,11 @@ function Navigation({ isLoaded }) {
         <div className='navigation'>
             <NavLink to="/"><img style={{ width: "350px" }} src='../../logo.png' /></NavLink>
             <div className='navLinks'>
-                <Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;INSPIRE&nbsp;&nbsp;&nbsp;SELL
+                <Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;
+
+                <span onClick={() => alert('Page coming soon')} >INSPIRE</span>&nbsp;&nbsp;&nbsp;
+
+                <span onClick={() => alert('Page coming soon')} >SELL</span>
             </div>
             <div className='rightNav'>
                 {/* <i className="fa-solid fa-magnifying-glass" onClick={() => alert('Feature coming soon')} /> */}

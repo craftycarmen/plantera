@@ -103,7 +103,7 @@ function ShoppingCartPage() {
     const removeQty = async (itemId) => {
         const updatedQty = (localCartQty[itemId] || 0) - 1;
         const item = cartItems.find(item => item.id === itemId);
-        if (item && updatedQty > 1) {
+        if (item && updatedQty > 0) {
             setLocalCartQty(prevCartQty => ({
                 ...prevCartQty,
                 [itemId]: updatedQty

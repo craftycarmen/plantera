@@ -20,6 +20,10 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
         }, 0);
     };
 
+    const calculateItemSubTotal = (item) => {
+        return item.cartQty * item.Listing?.price
+    }
+
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
@@ -66,7 +70,8 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                             <div className="smInfo">
                                 <div className="shoppingModalRow">
                                     <h3>{item.Listing?.plantName}</h3>
-                                    <h3>${item.cartItemsTotal}</h3>
+                                    {/* <h3>${item.cartItemsTotal}</h3> */}
+                                    <h3>${calculateItemSubTotal(item)}</h3>
                                 </div>
                                 <div>Pot Size: {item.Listing?.potSize}&#34;</div>
                                 <div className="shoppingModalRow">

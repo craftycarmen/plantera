@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as sessionActions from '../../../store/session';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchCart, editCart } from '../../../store/cart';
 
@@ -11,6 +11,8 @@ function CheckoutLogin({ cartId }) {
     const [password, setPassword] = useState("");
     const [charCount, setCharCount] = useState({});
     const [errors, setErrors] = useState({});
+    const cartItems = useSelector(state => state.cart.cartItems);
+    const userId = useSelector(state => state.session?.user?.id);
 
     useEffect(() => {
         const char = {}
@@ -35,6 +37,21 @@ function CheckoutLogin({ cartId }) {
                 await dispatch(editCart(cartId))
             }
 
+            if (cartItems.length > 0 && data.user?.id) {
+                const sellerItems = (cartItems, userId) => {
+                    return cartItems.some(item => {
+                        console.log("Item:", item);
+                        console.log("User ID:", userId);
+                        console.log("Seller ID:", item.Listing?.Seller?.id);
+                        return item.Listing?.Seller?.id === data.user?.id;
+                    })
+                }
+                if (sellerItems) {
+                    alert('Please remove item(s) that belong to you before checking out.');
+                    navigate('/cart');
+                    return;
+                }
+            }
             navigate('/checkout')
         } catch (res) {
             console.error('Error during login:', res);
@@ -63,16 +80,54 @@ function CheckoutLogin({ cartId }) {
                     localCartId = data.cartId;
                     localStorage.setItem('cartId', data.cartId);
                 }
+
+                console.log("DATAAAAAA", data);
+
+                if (cartItems.length > 0 && data?.user?.id) {
+                    const sellerItems = (cartItems, userId) => {
+                        return cartItems.some(item => {
+                            console.log("Item:", item);
+                            console.log("User ID:", userId);
+                            console.log("Seller ID:", item.Listing?.Seller?.id);
+                            return item.Listing?.Seller?.id === data?.user?.id;
+                        })
+                    }
+                    if (sellerItems) {
+                        alert('Please remove item(s) that belong to you before checking out.');
+                        navigate('/cart');
+                        return;
+                    }
+                }
             }
 
             if (localCartId) {
-                await dispatch(sessionActions.login({
+                data = await dispatch(sessionActions.login({
                     credential: "PlanteraDemo",
                     password: "password"
                 }));
                 dispatch(fetchCart(localCartId));
                 dispatch(editCart(localCartId))
+
+                console.log("DATAAAAAA2", data);
+                if (cartItems.length > 0 && data?.user?.id) {
+                    const sellerItems = (cartItems, userId) => {
+                        return cartItems.some(item => {
+                            console.log("Item:", item);
+                            console.log("User ID:", userId);
+                            console.log("Seller ID:", item.Listing?.Seller?.id);
+                            return item.Listing?.Seller?.id === data?.user?.id;
+                        })
+                    }
+                    if (sellerItems) {
+                        alert('Please remove item(s) that belong to you before checking out.');
+                        navigate('/cart');
+                        return;
+                    }
+
+                }
             }
+
+
             navigate('/checkout')
         } catch (res) {
             console.error('Error during login:', res);

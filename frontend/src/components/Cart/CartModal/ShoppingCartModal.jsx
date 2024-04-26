@@ -11,6 +11,8 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const cartItems = useSelector(state => state.cart?.cartItems)
     // const cartTotal = useSelector(state => state.cart?.cartTotal);
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const sessionUser = useSelector(state => state.session.user);
+    const userId = sessionUser?.id;
     // console.log("CARTTOTALMODAL", cartTotal);
     console.log("CARTITEMSMODAL", cartItems);
 
@@ -43,10 +45,24 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
         await dispatch(fetchCart(cartId))
     };
 
+    const sellerItems = (cartItems, userId) => {
+        return cartItems.some(item => {
+            console.log("Item:", item);
+            console.log("User ID:", userId);
+            console.log("Seller ID:", item.Listing?.Seller?.id);
+            return item.Listing?.Seller?.id === userId;
+        });
+    };
 
     const checkout = () => {
-        closeModal()
-        navigate('/cart')
+
+        if (sellerItems(cartItems, userId)) {
+            alert('Please remove item(s) that belong to you before checking out.')
+        } else {
+            closeModal()
+            navigate('/cart')
+        }
+
     }
 
     return (

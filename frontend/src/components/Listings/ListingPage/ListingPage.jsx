@@ -16,7 +16,7 @@ function ListingPage() {
 
     const listing = useSelector(state => (state.listings[listingId]))
 
-    // const sessionUser = useSelector(state => state.session.user);
+    const sessionUser = useSelector(state => state.session.user);
 
     const cart = useSelector(state => state.cart)
     const cartItems = useSelector(state => state.cart.cartItems)
@@ -217,38 +217,39 @@ function ListingPage() {
                     <p>Pot Size: {listing.potSize}&ldquo;</p>
                     {listing.stockQty && listing.stockQty > 0 ? (
                         <form onSubmit={(e) => { e.preventDefault(); handleAddToCart(); }}>
+                            {listing.Seller?.id !== sessionUser?.id && (
+                                <>
+                                    <div className="quantityContainer">
+                                        <span className="qtylabel">Quantity:</span>
+                                        <div className="quantityInput">
+                                            <button onClick={addQty}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                            <input
+                                                className="inputBox"
+                                                type="number" step="1"
+                                                min="1"
+                                                max={listing.stockQty}
+                                                value={cartQty}
+                                                name="cartQty"
+                                                onChange={handleQty} />
 
-                            <div className="quantityContainer">
-                                <span className="qtylabel">Quantity:</span>
-                                <div className="quantityInput">
-                                    <button onClick={addQty}><i className="fa-solid fa-plus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
-                                    <input
-                                        className="inputBox"
-                                        type="number" step="1"
-                                        min="1"
-                                        max={listing.stockQty}
-                                        value={cartQty}
-                                        name="cartQty"
-                                        onChange={handleQty} />
+                                            <button onClick={removeQty}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
 
-                                    <button onClick={removeQty}><i className="fa-solid fa-minus" style={{ fontSize: "x-small", color: "#E38251" }} /></button>
+                                        </div>
+                                    </div>
+                                    <div className='error'>{error &&
+                                        <><i className="fa-solid fa-circle-exclamation" /> {error}</>}</div>
 
-                                </div>
-                            </div>
-                            <div className='error'>{error &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {error}</>}</div>
-
-                            <OpenModalMenuItem
-                                itemText={<>
-                                    <button
-                                        type="submit"
-                                        disabled={error}
-                                        style={{ width: "167px", marginTop: "10px" }}
-                                    >Add to Cart</button>
-                                </>}
-                                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}
-                            />
-
+                                    <OpenModalMenuItem
+                                        itemText={<>
+                                            <button
+                                                type="submit"
+                                                disabled={error}
+                                                style={{ width: "167px", marginTop: "10px" }}
+                                            >Add to Cart</button>
+                                        </>}
+                                        modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}
+                                    />
+                                </>)}
                         </form>
                     ) : (<div className="soldOutText">SOLD OUT</div>)
                     }

@@ -55,7 +55,7 @@ function ShoppingCartButton({ cartId }) {
 
                         <i style={{ color: "#28635A" }} className="fa-solid fa-cart-shopping" />
 
-                        {numCartItems > 0 &&
+                        {cartId && numCartItems > 0 &&
                             (
 
                                 <span className="cartCircle">
@@ -81,7 +81,7 @@ function ShoppingCartButton({ cartId }) {
 
                     <i style={{ color: "#28635A" }} className="fa-solid fa-cart-shopping" />
 
-                    {numCartItems > 0 &&
+                    {cartId && numCartItems > 0 &&
                         (
 
                             <span className="cartCircle">

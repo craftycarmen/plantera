@@ -189,18 +189,28 @@ export const fetchCartItems = () => async (dispatch) => {
         return;
     }
 
-    const res = await fetch(`/api/cart/${cartId}`);
+    try {
 
-    if (res.ok) {
-        const cartItems = await res.json();
-        console.log("CARTITEMSINSTORE", cartItems.ShoppingCart)
-        if (cartItems.ShoppingCart && cartItems.ShoppingCart.CartItems.length > 0) {
-            dispatch(loadCartItems(cartItems.ShoppingCart.CartItems));
-            return cartItems
+        const res = await fetch(`/api/cart/${cartId}`);
+
+        if (res.ok) {
+            const cartItems = await res.json();
+            console.log("CARTITEMSINSTORE", cartItems.ShoppingCart)
+            if (cartItems.ShoppingCart && cartItems.ShoppingCart.CartItems.length > 0) {
+                dispatch(loadCartItems(cartItems.ShoppingCart.CartItems));
+                return cartItems
+            }
+
+        } else if (res.status === 404) {
+            console.error('Cart not found for cart ID:', cartId);
+        } else {
+            const errors = await res.json();
+            console.error(errors)
+            return errors;
         }
-    } else {
-        const errors = await res.json();
-        return errors;
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        throw error
     }
 }
 

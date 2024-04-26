@@ -81,8 +81,9 @@ export const fetchCart = () => async (dispatch) => {
                 dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
                 return cart
             } else {
-                console.error('Cart not found for cart ID:', cartId);
-                // Reset cart ID, clear cart items, and delete cart items from local storage
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Cart not found for cart ID:', cartId);
+                }
                 localStorage.removeItem('cartId');
                 localStorage.removeItem('cartItems');
                 dispatch(resetCartId());
@@ -91,7 +92,9 @@ export const fetchCart = () => async (dispatch) => {
             }
 
         } else {
-            console.error('Invalid cart ID #1:', cartId);
+            if (process.env.NODE_ENV === 'development') {
+                console.error('Invalid cart ID #1:', cartId);
+            }
             localStorage.removeItem('cartId');
             localStorage.removeItem('cartItems');
             dispatch(resetCartId());
@@ -109,7 +112,9 @@ export const fetchCart = () => async (dispatch) => {
             // }
         }
     } else {
-        console.error('Invalid cart ID #2: ', cartId);
+        if (process.env.NODE_ENV === 'development') {
+            console.error('Invalid cart ID #2: ', cartId);
+        }
         localStorage.removeItem('cartId');
         localStorage.removeItem('cartItems');
         dispatch(resetCartId());

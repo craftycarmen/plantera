@@ -68,7 +68,7 @@ export const resetCartId = () => ({
 
 
 export const fetchCart = () => async (dispatch) => {
-    const cartId = Number(localStorage.getItem('cartId'));
+    let cartId = Number(localStorage.getItem('cartId'));
     console.log('CartId fetched from localStorage:', cartId);
 
     if (cartId > 0) {
@@ -80,12 +80,42 @@ export const fetchCart = () => async (dispatch) => {
                 const numCartItems = cart.ShoppingCart.numCartItems
                 dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
                 return cart
+            } else {
+                console.error('Cart not found for cart ID:', cartId);
+                // Reset cart ID, clear cart items, and delete cart items from local storage
+                localStorage.removeItem('cartId');
+                localStorage.removeItem('cartItems');
+                dispatch(resetCartId());
+                dispatch(clearCart());
+                return null;
             }
 
         } else {
-            const errors = await res.json();
-            return errors;
+            console.error('Invalid cart ID #1:', cartId);
+            localStorage.removeItem('cartId');
+            localStorage.removeItem('cartItems');
+            dispatch(resetCartId());
+            dispatch(clearCart());
+            return null;
+
+            // const newCart = await dispatch(addCart())
+
+            // if (newCart) {
+            //     cartId = newCart.id;
+            //     localStorage.setItem('cartId', cartId);
+            //     console.log('New cart created with ID:', cartId);
+            // } else {
+            //     console.error('Error creating a new cart.');
+            // }
         }
+    } else {
+        console.error('Invalid cart ID #2: ', cartId);
+        localStorage.removeItem('cartId');
+        localStorage.removeItem('cartItems');
+        dispatch(resetCartId());
+        dispatch(clearCart());
+        return null;
+
     }
 }
 
@@ -122,6 +152,18 @@ export const editCart = (cartId, cart, cartTotal) => async (dispatch) => {
     } else {
         const errors = await res.json();
         return errors;
+    }
+}
+
+export const clearTheCart = () => async (dispatch) => {
+    let cartId = Number(localStorage.getItem('cartId'));
+    if (cartId > 0) {
+        await fetch(`/api/cart/${cartId}`, {
+            method: 'DELETE'
+        })
+
+        localStorage.removeItem('cartId')
+        dispatch(resetCartId())
     }
 }
 
@@ -329,28 +371,20 @@ const cartReducer = (state = initialState, action) => {
         }
 
         case UPDATE_CART_ITEM: {
-            const { cartItem } = action;
-            if (!cartItem) {
-                return state;
-            }
-
-
-            const numCartItems = state.cartItems.reduce((total, item) => total + item.cartQty, 0);
-
+            const updatedCartItems = state.cartItems.map(item =>
+                item.id === action.cartItem.id ? { ...item, cartQty: action.cartItem.cartQty } : item
+            );
             return {
                 ...state,
-                cartItems: state.cartItems.map(item =>
-                    item.id === cartItem.id ? { ...item, cartQty: cartItem.cartQty } : item
-                ),
-                numCartItems: numCartItems
+                cartItems: updatedCartItems
             };
         }
-
         case DELETE_CART_ITEM: {
-            const newState = { ...state };
-            delete newState[action.cartItemId];
-            return newState;
-
+            const updatedCartItems = state.cartItems.filter(item => item.id !== action.cartItemId);
+            return {
+                ...state,
+                cartItems: updatedCartItems
+            };
         }
 
         case CLEAR_CART: {

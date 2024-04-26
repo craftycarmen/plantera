@@ -69,7 +69,7 @@ function UserProfileForm({ formType }) {
             if (shopDescription && shopDescription.trim().length < 30) errs.shopDescription = 'Shop description must be 30 characters at mininmum';
             if (shopDescription && shopDescription.trim().length > 250) errs.shopDescription = 'Shop description must be 250 characters at maximum';
             if (paymentDetails && isNaN(paymentDetails)) errs.paymentDetails = 'Payment details must be 4 digits';
-            if (paymentDetails && paymentDetails.trim().length < 4) errs.paymentDetails = 'Payment details must be 4 digits';
+            if (paymentDetails && paymentDetails.length < 4) errs.paymentDetails = 'Payment details must be 4 digits';
         }
 
         setErrors(errs);

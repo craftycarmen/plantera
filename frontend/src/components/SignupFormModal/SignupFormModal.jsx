@@ -46,8 +46,8 @@ function SignupFormModal({ navigate }) {
         if (!password) errs.password = '';
         if (!confirmPassword) errs.confirmPassword = '';
         if (!image) errs.image = '';
-        if (username && username.length < 4) errs.username = 'Username must be 4 characters at minimum';
-        if (password && password.length < 6) errs.password = 'Password must be 6 characters at minimum';
+        if (username && username.trim().length < 4) errs.username = 'Username must be 4 characters at minimum';
+        if (password && password.trim().length < 6) errs.password = 'Password must be 6 characters at minimum';
         if (confirmPassword && password !== confirmPassword) errs.confirmPassword = 'Password and confirm password must match';
         // if (accountType !== "buyer" && accountType !== "seller") errs.accountType = '';
 

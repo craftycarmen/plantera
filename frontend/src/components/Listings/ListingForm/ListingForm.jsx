@@ -11,11 +11,11 @@ function ListingForm({ listing, formType }) {
 
     const sessionUser = useSelector(state => state.session.user);
 
-    const [plantName, setPlantName] = useState(listing?.plantName);
-    const [description, setDescription] = useState(listing?.description);
-    const [price, setPrice] = useState(listing?.price);
-    const [potSize, setPotSize] = useState(listing?.potSize);
-    const [stockQty, setStockQty] = useState(listing?.stockQty);
+    const [plantName, setPlantName] = useState(listing?.plantName || "");
+    const [description, setDescription] = useState(listing?.description || "");
+    const [price, setPrice] = useState(listing?.price || "");
+    const [potSize, setPotSize] = useState(listing?.potSize || "");
+    const [stockQty, setStockQty] = useState(listing?.stockQty || "");
     // const [guideId, setGuideId] = useState(listing?.guideId);
     const [image, setImage] = useState("");
     // const [imageLoading, setImageLoading] = useState(false);
@@ -53,8 +53,8 @@ function ListingForm({ listing, formType }) {
         if (!price) errs.price = '';
         if (!potSize) errs.potSize = '';
         if (!stockQty) errs.stockQty = '';
-        if (plantName && plantName.length < 3 || plantName.length > 100) errs.plantName = 'Plant name must be between 3-100 characters';
-        if (description && description.length < 30 || description.length > 250) errs.description = 'Description must be between 30-250 characters';
+        if (plantName && plantName.trim().length < 3 || plantName.trim().length > 100) errs.plantName = 'Plant name must be between 3-100 characters';
+        if (description && description.trim().length < 30 || description.trim().length > 250) errs.description = 'Description must be between 30-250 characters';
         if (price && price <= 0) errs.price = 'Price must be greater than $0';
         if (potSize && potSize < 2) errs.potSize = 'Pot size must be 2 inches or greater';
         // if (stockQty && stockQty <= 0) errs.stockQty = 'Stock quantity must be greater than 0';
@@ -63,7 +63,6 @@ function ListingForm({ listing, formType }) {
 
         setErrors(errs);
     }, [plantName, description, price, potSize, stockQty, createForm, image])
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();

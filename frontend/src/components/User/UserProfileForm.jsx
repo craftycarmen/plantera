@@ -57,19 +57,19 @@ function UserProfileForm({ formType }) {
         if (!city) errs.city = '';
         if (!state) errs.state = '';
         // if (isCompleteProfile && !image) errs.image = '';
-        if (bio && bio.length < 30) errs.bio = 'Bio must be 30 characters at mininmum';
-        if (bio && bio.length > 250) errs.bio = 'Bio must be 250 characters at maximum';
-        if (favoritePlant && favoritePlant.length < 5) errs.favoritePlant = 'Favorite plant must be 5 characters at mininmum';
-        if (favoritePlant && favoritePlant.length > 100) errs.favoritePlant = 'Favorite plant must be 100 characters at maximum';
-        if (city && city.length > 100) errs.city = 'City must be 100 characters at maximum';
+        if (bio && bio.trim().length < 30) errs.bio = 'Bio must be 30 characters at mininmum';
+        if (bio && bio.trim().length > 250) errs.bio = 'Bio must be 250 characters at maximum';
+        if (favoritePlant && favoritePlant.trim().length < 3) errs.favoritePlant = 'Favorite plant must be 3 characters at mininmum';
+        if (favoritePlant && favoritePlant.trim().length > 100) errs.favoritePlant = 'Favorite plant must be 100 characters at maximum';
+        if (city && city.trim().length > 100) errs.city = 'City must be 100 characters at maximum';
         if (accountType === "seller") {
             if (!shopDescription) errs.shopDescription = '';
             if (!paymentMethod) errs.paymentMethod = '';
             if (!paymentDetails) errs.paymentDetails = '';
-            if (shopDescription && shopDescription.length < 30) errs.shopDescription = 'Shop description must be 30 characters at mininmum';
-            if (shopDescription && shopDescription.length > 250) errs.shopDescription = 'Shop description must be 250 characters at maximum';
+            if (shopDescription && shopDescription.trim().length < 30) errs.shopDescription = 'Shop description must be 30 characters at mininmum';
+            if (shopDescription && shopDescription.trim().length > 250) errs.shopDescription = 'Shop description must be 250 characters at maximum';
             if (paymentDetails && isNaN(paymentDetails)) errs.paymentDetails = 'Payment details must be 4 digits';
-            if (paymentDetails && paymentDetails.length < 4) errs.paymentDetails = 'Payment details must be 4 digits';
+            if (paymentDetails && paymentDetails.trim().length < 4) errs.paymentDetails = 'Payment details must be 4 digits';
         }
 
         setErrors(errs);

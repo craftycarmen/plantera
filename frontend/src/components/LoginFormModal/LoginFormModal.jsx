@@ -18,8 +18,8 @@ function LoginFormModal() {
 
     useEffect(() => {
         const char = {}
-        if (credential.length < 4) char.credential = 'Not enough characters'
-        if (password.length < 6) char.password = 'Not enough characters'
+        if (credential.trim().length < 4) char.credential = 'Not enough characters'
+        if (password.trim().length < 6) char.password = 'Not enough characters'
         setCharCount(char)
     }, [credential, password])
 

@@ -17,13 +17,15 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     console.log("CARTITEMSMODAL", cartItems);
 
     const calculateSubtotal = () => {
-        return cartItems.reduce((total, item) => {
+        const total = cartItems.reduce((total, item) => {
             return total + (item.cartQty * item.Listing?.price);
         }, 0);
+        return total.toLocaleString('en-US', { maximumFractionDigits: 2 });
     };
 
     const calculateItemSubTotal = (item) => {
-        return item.cartQty * item.Listing?.price
+        const total = item.cartQty * item.Listing?.price
+        return total.toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
 
     useEffect(() => {

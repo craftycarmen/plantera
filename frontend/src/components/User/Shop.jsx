@@ -56,7 +56,7 @@ function Shop() {
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
                                                         <h3>{listing.plantName}</h3>
-                                                        <span>${listing.price}</span>
+                                                        <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                                                     </div>
                                                 </Link>
                                             </div>
@@ -88,7 +88,7 @@ function Shop() {
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
                                                         <h3>{listing.plantName}</h3>
-                                                        <span>${listing.price}</span>
+                                                        <span>${listing.price.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
                                                     </div>
                                                 </div>
                                             </Link>

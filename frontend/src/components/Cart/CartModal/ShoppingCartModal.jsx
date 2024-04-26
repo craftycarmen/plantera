@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCart, fetchCartItems, loadCartItems, removeCartItem } from "../../../store/cart";
+import { fetchCart, loadCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
 import { useModal } from "../../../context/Modal";
 import { price } from "../../../../utils";
@@ -11,7 +11,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
 
     const cartItems = useSelector(state => state.cart?.cartItems)
     // const cartTotal = useSelector(state => state.cart?.cartTotal);
-    const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
+    // const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
     const sessionUser = useSelector(state => state.session.user);
     const userId = sessionUser?.id;
     // console.log("CARTTOTALMODAL", cartTotal);

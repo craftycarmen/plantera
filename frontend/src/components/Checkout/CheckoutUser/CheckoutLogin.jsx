@@ -12,7 +12,6 @@ function CheckoutLogin({ cartId }) {
     const [charCount, setCharCount] = useState({});
     const [errors, setErrors] = useState({});
     const cartItems = useSelector(state => state.cart.cartItems);
-    const userId = useSelector(state => state.session?.user?.id);
 
     useEffect(() => {
         const char = {}

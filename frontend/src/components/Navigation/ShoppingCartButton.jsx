@@ -3,7 +3,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import './Navigation.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { fetchCartItems } from '../../store/cart';
+import { fetchCart, fetchCartItems, resetCartId, clearCart } from '../../store/cart';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { hideErrorInProd } from '../../../utils';
 
@@ -14,25 +14,68 @@ function ShoppingCartButton({ cartId }) {
     const numCartItems = useSelector(state => state.cart.numCartItems);
     const [updatedQty, setUpdatedQty] = useState({});
 
+    // useEffect(() => {
+    //     const runDispatches = async () => {
+    //         dispatch(fetchCartItems())
+
+    //         const storedCartItems = localStorage.getItem('cartItems')
+    //         if (storedCartItems) {
+    //             const parsedStoredCartItems = JSON.parse(storedCartItems)
+
+    //             const qty = {};
+
+    //             parsedStoredCartItems.forEach(item => {
+    //                 qty[item.id] = item.cartQty
+    //             });
+
+    //             setUpdatedQty(qty)
+    //         }
+    //     }
+    //     runDispatches();
+    // }, [dispatch, numCartItems])
+
     useEffect(() => {
         const runDispatches = async () => {
-            dispatch(fetchCartItems())
+            if (cartId) {
+                try {
+                    const fetchedCart = await dispatch(fetchCart(cartId));
 
-            const storedCartItems = localStorage.getItem('cartItems')
-            if (storedCartItems) {
-                const parsedStoredCartItems = JSON.parse(storedCartItems)
+                    if (fetchedCart !== null) {
+                        const fetchedItems = await dispatch(fetchCartItems(cartId));
 
-                const qty = {};
+                        if (fetchedItems !== undefined) {
+                            localStorage.setItem('cartItems', JSON.stringify(fetchedItems.ShoppingCart.CartItems));
 
-                parsedStoredCartItems.forEach(item => {
-                    qty[item.id] = item.cartQty
-                });
-
-                setUpdatedQty(qty)
+                            const qty = {};
+                            fetchedItems.ShoppingCart.CartItems.forEach(item => {
+                                qty[item.id] = item.cartQty;
+                            });
+                            setUpdatedQty(qty);
+                        } else {
+                            console.log("Fetched items are undefined");
+                        }
+                    } else {
+                        console.log("Cart does not exist, resetting cart state and local storage");
+                        localStorage.removeItem('cartId');
+                        localStorage.removeItem('cartItems');
+                        dispatch(resetCartId());
+                        dispatch(clearCart());
+                    }
+                } catch (error) {
+                    console.error("Error fetching cart and cart items:", error);
+                }
+            } else {
+                console.log("Cart ID is not found in local storage");
+                localStorage.removeItem('cartId');
+                localStorage.removeItem('cartItems');
+                dispatch(resetCartId());
+                dispatch(clearCart());
             }
-        }
+        };
+
         runDispatches();
-    }, [dispatch, numCartItems])
+    }, [dispatch, cartId]);
+
 
     const handleOpenModal = async () => {
         try {

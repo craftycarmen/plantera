@@ -33,7 +33,7 @@
     gap: 8px;
     overflow: hidden;
     border-radius: 5px;
-    width: 300px;
+    /* width: 305px; */
     padding-bottom: 10px;
 }
 
@@ -46,10 +46,10 @@
     display: flex;
     align-items: center;
     /* margin-top: -10px; */
-    height: 14px;
+    height: 24px;
     background-color: white;
     border-radius: 3px;
-    padding: 5px;
+    /* padding: 5px; */
 }
 
 .quantityButton {
@@ -63,6 +63,20 @@
     /* padding: 0px 10px; */
     background-color: white;
     border-radius: 3px;
+    /* margin-right: 5px; */
+}
+
+.quantityInput button:disabled {
+    cursor: default;
+}
+
+.quantityInput button:disabled i {
+    color: gray;
+}
+
+.qtyPlusMinus {
+    font-size: x-small;
+    color: #E38251;
 }
 
 .quantityInput input {

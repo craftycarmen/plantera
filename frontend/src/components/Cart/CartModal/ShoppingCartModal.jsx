@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCart, fetchCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
 import { useModal } from "../../../context/Modal";
+import { price } from "../../../../utils";
 
 function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const dispatch = useDispatch();
@@ -16,17 +17,29 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     // console.log("CARTTOTALMODAL", cartTotal);
     console.log("CARTITEMSMODAL", cartItems);
 
+    // const calculateSubtotal = () => {
+    //     const total = cartItems.reduce((total, item) => {
+    //         return total + (item.cartQty * item.Listing?.price);
+    //     }, 0);
+    //     return total.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 });
+    // };
+
+    // const calculateItemSubTotal = (item) => {
+    //     let total = item.cartQty * item.Listing?.price
+    //     return total.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 });
+    // }
+
     const calculateSubtotal = () => {
         const total = cartItems.reduce((total, item) => {
             return total + (item.cartQty * item.Listing?.price);
         }, 0);
-        return total.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 });
+        return price(total);
     };
 
     const calculateItemSubTotal = (item) => {
-        let total = item.cartQty * item.Listing?.price
-        return total.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 });
-    }
+        let total = item.cartQty * item.Listing?.price;
+        return price(total);
+    };
 
     useEffect(() => {
         const runDispatches = async () => {
@@ -88,8 +101,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                             <div className="smInfo">
                                 <div className="shoppingModalRow">
                                     <h3>{item.Listing?.plantName}</h3>
-                                    {/* <h3>${item.cartItemsTotal}</h3> */}
-                                    <h3>${calculateItemSubTotal(item)}</h3>
+                                    <h3>{calculateItemSubTotal(item)}</h3>
                                 </div>
                                 <div>Pot Size: {item.Listing?.potSize}&#34;</div>
                                 <div className="shoppingModalRow">
@@ -103,7 +115,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                     }
                     <div className="subTotal">
                         <h3>Subtotal:</h3>
-                        <h3>${calculateSubtotal()}</h3>
+                        <h3>{calculateSubtotal()}</h3>
                     </div>
                     <div style={{ display: "flex", gap: "8px" }}>
                         <button onClick={closeModal}>Continue Shopping</button>

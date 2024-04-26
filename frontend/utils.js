@@ -6,7 +6,7 @@ export const price = (price) => {
 };
 
 export const hideErrorInProd = (message, ...args) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
         console.error(message, ...args);
     }
 }

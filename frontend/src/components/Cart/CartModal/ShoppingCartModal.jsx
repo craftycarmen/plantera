@@ -20,12 +20,12 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
         const total = cartItems.reduce((total, item) => {
             return total + (item.cartQty * item.Listing?.price);
         }, 0);
-        return total.toLocaleString('en-US', { maximumFractionDigits: 2 });
+        return total.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 });
     };
 
     const calculateItemSubTotal = (item) => {
-        const total = item.cartQty * item.Listing?.price
-        return total.toLocaleString('en-US', { maximumFractionDigits: 2 });
+        let total = item.cartQty * item.Listing?.price
+        return total.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
 
     useEffect(() => {

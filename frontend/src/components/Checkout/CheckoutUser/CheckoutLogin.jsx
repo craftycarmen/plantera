@@ -36,21 +36,24 @@ function CheckoutLogin({ cartId }) {
                 await dispatch(editCart(cartId))
             }
 
+            const sellerItems = (cartItems, userId) => {
+                return cartItems.some(item => {
+                    console.log("Item:", item);
+                    console.log("User ID:", userId);
+                    console.log("Seller ID:", item.Listing?.Seller?.id);
+                    return item.Listing?.Seller?.id === data.user?.id;
+                })
+            }
+
             if (cartItems.length > 0 && data.user?.id) {
-                const sellerItems = (cartItems, userId) => {
-                    return cartItems.some(item => {
-                        console.log("Item:", item);
-                        console.log("User ID:", userId);
-                        console.log("Seller ID:", item.Listing?.Seller?.id);
-                        return item.Listing?.Seller?.id === data.user?.id;
-                    })
-                }
-                if (sellerItems) {
+                const ownedItems = sellerItems(cartItems, data.user?.id)
+                if (ownedItems) {
                     alert('Please remove item(s) that belong to you before checking out.');
                     navigate('/cart');
                     return;
                 }
             }
+
             navigate('/checkout')
         } catch (res) {
             console.error('Error during login:', res);
@@ -69,6 +72,15 @@ function CheckoutLogin({ cartId }) {
 
             let data;
 
+            const sellerItems = (cartItems, userId) => {
+                return cartItems.some(item => {
+                    console.log("Item:", item);
+                    console.log("User ID:", userId);
+                    console.log("Seller ID:", item.Listing?.Seller?.id);
+                    return item.Listing?.Seller?.id === data?.user?.id;
+                })
+            }
+
             if (!localCartId) {
                 data = await dispatch(sessionActions.login({
                     credential: "PlanteraDemo",
@@ -82,16 +94,9 @@ function CheckoutLogin({ cartId }) {
 
                 console.log("DATAAAAAA", data);
 
-                if (cartItems.length > 0 && data?.user?.id) {
-                    const sellerItems = (cartItems, userId) => {
-                        return cartItems.some(item => {
-                            console.log("Item:", item);
-                            console.log("User ID:", userId);
-                            console.log("Seller ID:", item.Listing?.Seller?.id);
-                            return item.Listing?.Seller?.id === data?.user?.id;
-                        })
-                    }
-                    if (sellerItems) {
+                if (cartItems.length > 0 && data.user?.id) {
+                    const ownedItems = sellerItems(cartItems, data.user?.id)
+                    if (ownedItems) {
                         alert('Please remove item(s) that belong to you before checking out.');
                         navigate('/cart');
                         return;
@@ -107,25 +112,15 @@ function CheckoutLogin({ cartId }) {
                 dispatch(fetchCart(localCartId));
                 dispatch(editCart(localCartId))
 
-                console.log("DATAAAAAA2", data);
-                if (cartItems.length > 0 && data?.user?.id) {
-                    const sellerItems = (cartItems, userId) => {
-                        return cartItems.some(item => {
-                            console.log("Item:", item);
-                            console.log("User ID:", userId);
-                            console.log("Seller ID:", item.Listing?.Seller?.id);
-                            return item.Listing?.Seller?.id === data?.user?.id;
-                        })
-                    }
-                    if (sellerItems) {
+                if (cartItems.length > 0 && data.user?.id) {
+                    const ownedItems = sellerItems(cartItems, data.user?.id)
+                    if (ownedItems) {
                         alert('Please remove item(s) that belong to you before checking out.');
                         navigate('/cart');
                         return;
                     }
-
                 }
             }
-
 
             navigate('/checkout')
         } catch (res) {

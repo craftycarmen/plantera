@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCart, fetchCartItems } from "../../../store/cart";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { price } from "../../../../utils";
 
 function OrderSummary({ cartId, checkout }) {
     const dispatch = useDispatch();
@@ -19,25 +20,28 @@ function OrderSummary({ cartId, checkout }) {
     }, [dispatch, cartId])
 
     const estimatedTax = (total) => {
-        let tax = (total * 0.0825)
-        return tax.toLocaleString('en-US', { maximumFractionDigits: 2 })
+        const tax = (total * 0.0825)
+        return tax.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 })
     }
 
     const orderTotal = (subtotal, tax) => {
-        return (subtotal + parseFloat(tax)).toLocaleString('en-US', { maximumFractionDigits: 2 });
+        const total = subtotal + parseFloat(tax)
+        return price(total)
+    }
+
+    const sellerItems = (cartItems, userId) => {
+        return cartItems.some(item => {
+            console.log("Item:", item);
+            console.log("User ID:", userId);
+            console.log("Seller ID:", item.Listing?.Seller?.id);
+            return item.Listing?.Seller?.id === sessionUser?.id;
+        })
     }
 
     const handleCheckOut = () => {
         if (sessionUser) {
-            const sellerItems = (cartItems, userId) => {
-                return cartItems.some(item => {
-                    console.log("Item:", item);
-                    console.log("User ID:", userId);
-                    console.log("Seller ID:", item.Listing?.Seller?.id);
-                    return item.Listing?.Seller?.id === sessionUser?.id;
-                })
-            }
-            if (sellerItems) {
+            const ownedItems = sellerItems(cartItems, sessionUser?.id)
+            if (ownedItems) {
                 alert('Please remove item(s) that belong to you before checking out.');
                 return;
             }
@@ -83,7 +87,7 @@ function OrderSummary({ cartId, checkout }) {
                 {cartTotal &&
                     <div className="subTotalSummary">
                         <span>Subtotal:</span>
-                        <span>${cartTotal.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
+                        <span>{price(cartTotal)}</span>
                     </div>}
                 <div className="subTotalSummary">
                     <span>Shipping:</span>
@@ -95,7 +99,7 @@ function OrderSummary({ cartId, checkout }) {
                 </div>
                 <div className="subTotalSummary">
                     <h2>Total:</h2>
-                    <h2>${orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
+                    <h2>{orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
                 </div>
                 {checkout ? (<div></div>) : (<><button style={{ width: "100%" }} onClick={handleCheckOut}>Check Out</button></>)}
             </div >

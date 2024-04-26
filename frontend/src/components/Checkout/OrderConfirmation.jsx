@@ -15,7 +15,7 @@ function OrderConfirmation() {
 
     const estimatedTax = (total) => {
         let tax = (total * 0.0825).toFixed(2)
-        return tax
+        return tax.toLocaleString('en-US', { maximumFractionDigits: 2 })
     }
 
     useEffect(() => {

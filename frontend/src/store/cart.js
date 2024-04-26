@@ -82,7 +82,7 @@ export const fetchCart = () => async (dispatch) => {
                 dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
                 return cart
             } else {
-                hideErrorInProd('Cart not found for cart ID:', cartId);
+                hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
                 localStorage.removeItem('cartId');
                 localStorage.removeItem('cartItems');
                 dispatch(resetCartId());
@@ -97,16 +97,6 @@ export const fetchCart = () => async (dispatch) => {
             dispatch(resetCartId());
             dispatch(clearCart());
             return null;
-
-            // const newCart = await dispatch(addCart())
-
-            // if (newCart) {
-            //     cartId = newCart.id;
-            //     localStorage.setItem('cartId', cartId);
-            //     console.log('New cart created with ID:', cartId);
-            // } else {
-            //     console.error('Error creating a new cart.');
-            // }
         }
     } else {
         hideErrorInProd('Invalid cart ID #2: ', cartId);
@@ -115,7 +105,6 @@ export const fetchCart = () => async (dispatch) => {
         dispatch(resetCartId());
         dispatch(clearCart());
         return null;
-
     }
 }
 
@@ -197,7 +186,8 @@ export const fetchCartItems = () => async (dispatch) => {
             }
 
         } else if (res.status === 404) {
-            hideErrorInProd('Cart not found for cart ID:', cartId);
+            hideErrorInProd('Cart not found for cart ID in fetchCartItems:', cartId);
+            return;
         } else {
             const errors = await res.json();
             hideErrorInProd(errors)

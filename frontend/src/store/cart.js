@@ -185,7 +185,7 @@ export const fetchCartItems = () => async (dispatch) => {
     const cartId = Number(localStorage.getItem('cartId'));
 
     if (!cartId) {
-        return;
+        return [];
     }
 
     try {
@@ -202,7 +202,7 @@ export const fetchCartItems = () => async (dispatch) => {
 
         } else if (res.status === 404) {
             hideErrorInProd('Cart not found for cart ID in fetchCartItems:', cartId);
-            return;
+            return [];
         } else {
             const errors = await res.json();
             hideErrorInProd(errors)

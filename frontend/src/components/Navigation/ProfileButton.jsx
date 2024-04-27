@@ -5,7 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { clearCart, resetCartId } from '../../store/cart';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function ProfileButton() {
     const dispatch = useDispatch();
@@ -17,6 +17,7 @@ function ProfileButton() {
     const user = useSelector(state => state.user[sessionUser?.id]?.User)
     const currUser = user || sessionUser;
     const isSeller = currUser && currUser.accountType === 'seller';
+    const location = useLocation();
     console.log(currUser);
 
     const toggleMenu = (e) => {
@@ -27,7 +28,17 @@ function ProfileButton() {
     };
 
     useEffect(() => {
-        if (!showMenu) return;
+        const closeMenuWithDelay = () => {
+            setTimeout(() => {
+                setShowMenu(false);
+            }, 100);
+        };
+
+        closeMenuWithDelay();
+    }, [location]);
+
+    useEffect(() => {
+        if (!showMenu || !ulRef.current) return;
 
         const closeMenu = (e) => {
             if (!ulRef.current.contains(e.target)) {
@@ -65,49 +76,53 @@ function ProfileButton() {
             <span onClick={toggleMenu}>
                 <i className="fa-regular fa-face-smile" />
             </span>
-            <div className={ulClassName} ref={ulRef}>
-                {currUser ? (
-                    <div className='userInfo'>
-                        <div>Hey, {currUser.username}!</div>
-                        <div className='profileOptions'>
-                            <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
-                                closeMenu()
-                                navigate(`/user/${currUser.id}`)
-                            }}>Profile</a></div>
-                            {isSeller && (
-                                <>
-                                    <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
-                                        closeMenu()
-                                        navigate(`/listings/current`)
-                                    }}>Listings</a></div>
-                                </>
-                            )
-                            }
-                            {/* <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /></div><div>Guides</div>
+            {location.pathname !== '/checkout/user' && (
+                <div className={ulClassName} ref={ulRef}>
+                    {currUser ? (
+                        <div className='userInfo'>
+                            <div>Hey, {currUser.username}!</div>
+                            <div className='profileOptions'>
+                                <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                    closeMenu()
+                                    navigate(`/user/${currUser.id}`)
+                                }}>Profile</a></div>
+                                {isSeller && (
+                                    <>
+                                        <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                            closeMenu()
+                                            navigate(`/listings/current`)
+                                        }}>Listings</a></div>
+                                    </>
+                                )
+                                }
+                                {/* <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /></div><div>Guides</div>
                             <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div>Orders</div> */}
-                        </div>
-                        <button onClick={logout}>Log Out</button>
+                            </div>
+                            <button onClick={logout}>Log Out</button>
 
-                    </div>
-                ) : (
-                    <>
-                        <div className='profileLink'>
-                            <OpenModalMenuItem
-                                itemText="Log In"
-                                onItemClick={closeMenu}
-                                modalComponent={<LoginFormModal navigate={navigate} />}
-                            />
                         </div>
-                        <div className='profileLink'>
-                            <OpenModalMenuItem
-                                itemText="Sign Up"
-                                onItemClick={closeMenu}
-                                modalComponent={<SignupFormModal navigate={navigate} />}
-                            />
-                        </div>
-                    </>
-                )}
-            </div>
+                    ) : (
+                        <>
+
+                            <div className='profileLink'>
+                                <OpenModalMenuItem
+                                    itemText="Log In"
+                                    onItemClick={closeMenu}
+                                    modalComponent={<LoginFormModal navigate={navigate} />}
+                                />
+                            </div>
+                            <div className='profileLink'>
+                                <OpenModalMenuItem
+                                    itemText="Sign Up"
+                                    onItemClick={closeMenu}
+                                    modalComponent={<SignupFormModal navigate={navigate} />}
+                                />
+                            </div>
+
+                        </>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

@@ -44,7 +44,7 @@ function ShoppingCartButton({ cartId }) {
                     if (fetchedCart !== null) {
                         const fetchedItems = await dispatch(fetchCartItems(cartId));
 
-                        if (fetchedItems !== undefined) {
+                        if (fetchedItems !== undefined && fetchedItems.ShoppingCart) {
                             localStorage.setItem('cartItems', JSON.stringify(fetchedItems.ShoppingCart.CartItems));
 
                             const qty = {};
@@ -53,7 +53,7 @@ function ShoppingCartButton({ cartId }) {
                             });
                             setUpdatedQty(qty);
                         } else {
-                            console.log("Fetched items are undefined");
+                            console.log("Fetched items are undefined or ShoppingCart is not available");
                         }
                     } else {
                         console.log("Cart does not exist, resetting cart state and local storage");

@@ -69,14 +69,14 @@ function ListingPage() {
                     if (fetchedCart !== null) {
                         const fetchedItems = await dispatch(fetchCartItems(cart.cartId));
 
-                        if (fetchedItems !== undefined) {
+                        if (fetchedItems !== undefined && fetchedItems.ShoppingCart) {
                             const updatedCartItems = fetchedItems.ShoppingCart.CartItems;
 
                             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
                             dispatch({ type: 'cart/setCartItems', payload: updatedCartItems });
                         } else {
-                            console.log("fetchedItems is undefined");
+                            console.log("fetchedItems is undefined or ShoppingCart is not available");
                         }
                     } else {
                         console.log("Cart does not exist, resetting cart state and local storage");

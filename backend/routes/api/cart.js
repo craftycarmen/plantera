@@ -72,11 +72,7 @@ router.get('/:cartId', async (req, res) => {
         }
     });
 
-    // if (buyerId !== null && shoppingCart.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
-
-    if (!shoppingCart) {
-        return res.status(200)
-    }
+    if (buyerId !== null && shoppingCart.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
 
     const cartItems = shoppingCart.CartItems
     const cartItemsList = []

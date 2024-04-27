@@ -73,55 +73,81 @@ export const fetchCart = () => async (dispatch) => {
     console.log('CartId fetched from localStorage:', cartId);
 
     if (cartId > 0) {
-        try {
-            const res = await fetch(`/api/cart/${cartId}`);
-            if (res.ok) {
-                const cart = await res.json();
-                if (cart.ShoppingCart !== null) {
-                    const cartTotal = cart.ShoppingCart.cartTotal;
-                    const numCartItems = cart.ShoppingCart.numCartItems
-                    dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
-                    return cart
-                } else {
-                    // hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
-                    localStorage.removeItem('cartId');
-                    localStorage.removeItem('cartItems');
-                    dispatch(resetCartId());
-                    dispatch(clearCart());
-                    return null;
-                }
+        const res = await fetch(`/api/cart/${cartId}`);
+        if (res.ok) {
+            const data = await res.json();
+
+            if (data.message && data.message === 'Shopping cart not found') {
+                localStorage.removeItem('cartId');
+                localStorage.removeItem('cartItems');
+                dispatch(resetCartId());
+                dispatch(clearCart());
+                return null;
             } else {
-                if (res.status === 404) {
-                    if (process.env.NODE_ENV === 'development') {
-                        console.log('Cart not found:', cartId);
-                    }
-                    localStorage.removeItem('cartId');
-                    localStorage.removeItem('cartItems');
-                    dispatch(resetCartId());
-                    dispatch(clearCart());
-                    return null
-                }
-                // hideErrorInProd('Invalid cart ID #1:', cartId);
-                // }
-                // localStorage.removeItem('cartId');
-                // localStorage.removeItem('cartItems');
-                // dispatch(resetCartId());
-                // dispatch(clearCart());
-                // return null;
+                const cart = data.ShoppingCart;
+                const cartTotal = cart.cartTotal;
+                const numCartItems = cart.numCartItems
+                dispatch(loadCart(cartId, cart.CartItems, cartTotal, numCartItems));
+                return cart
             }
-        } catch (error) {
-            // hideErrorInProd('Error fetching cart:', error);
-            return null;
         }
-    } else {
-        // hideErrorInProd('Invalid cart ID #2: ', cartId);
-        localStorage.removeItem('cartId');
-        localStorage.removeItem('cartItems');
-        dispatch(resetCartId());
-        dispatch(clearCart());
-        return null;
     }
 }
+
+// export const fetchCart = () => async (dispatch) => {
+//     let cartId = Number(localStorage.getItem('cartId'));
+//     console.log('CartId fetched from localStorage:', cartId);
+
+//     if (cartId > 0) {
+//         try {
+//             const res = await fetch(`/api/cart/${cartId}`);
+//             if (res.ok) {
+//                 const cart = await res.json();
+//                 if (cart.ShoppingCart !== null) {
+//                     const cartTotal = cart.ShoppingCart.cartTotal;
+//                     const numCartItems = cart.ShoppingCart.numCartItems
+//                     dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
+//                     return cart
+//                 } else {
+//                     // hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
+//                     localStorage.removeItem('cartId');
+//                     localStorage.removeItem('cartItems');
+//                     dispatch(resetCartId());
+//                     dispatch(clearCart());
+//                     return null;
+//                 }
+//             } else {
+//                 if (res.status === 404) {
+//                     if (process.env.NODE_ENV === 'development') {
+//                         console.log('Cart not found:', cartId);
+//                     }
+//                     localStorage.removeItem('cartId');
+//                     localStorage.removeItem('cartItems');
+//                     dispatch(resetCartId());
+//                     dispatch(clearCart());
+//                     return null
+//                 }
+//                 // hideErrorInProd('Invalid cart ID #1:', cartId);
+//                 // }
+//                 // localStorage.removeItem('cartId');
+//                 // localStorage.removeItem('cartItems');
+//                 // dispatch(resetCartId());
+//                 // dispatch(clearCart());
+//                 // return null;
+//             }
+//         } catch (error) {
+//             // hideErrorInProd('Error fetching cart:', error);
+//             return null;
+//         }
+//     } else {
+//         // hideErrorInProd('Invalid cart ID #2: ', cartId);
+//         localStorage.removeItem('cartId');
+//         localStorage.removeItem('cartItems');
+//         dispatch(resetCartId());
+//         dispatch(clearCart());
+//         return null;
+//     }
+// }
 
 export const addCart = (cart) => async (dispatch) => {
     const res = await csrfFetch('/api/cart', {

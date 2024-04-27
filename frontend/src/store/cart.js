@@ -83,7 +83,7 @@ export const fetchCart = () => async (dispatch) => {
                     dispatch(loadCart(cartId, cart.ShoppingCart.CartItems, cartTotal, numCartItems));
                     return cart
                 } else {
-                    hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
+                    // hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
                     localStorage.removeItem('cartId');
                     localStorage.removeItem('cartItems');
                     dispatch(resetCartId());
@@ -92,22 +92,29 @@ export const fetchCart = () => async (dispatch) => {
                 }
             } else {
                 if (res.status === 404) {
+                    if (process.env.NODE_ENV === 'development') {
+                        console.log('Cart not found:', cartId);
+                    }
+                    localStorage.removeItem('cartId');
+                    localStorage.removeItem('cartItems');
+                    dispatch(resetCartId());
+                    dispatch(clearCart());
                     return null
-                } else {
-                    hideErrorInProd('Invalid cart ID #1:', cartId);
                 }
-                localStorage.removeItem('cartId');
-                localStorage.removeItem('cartItems');
-                dispatch(resetCartId());
-                dispatch(clearCart());
-                return null;
+                // hideErrorInProd('Invalid cart ID #1:', cartId);
+                // }
+                // localStorage.removeItem('cartId');
+                // localStorage.removeItem('cartItems');
+                // dispatch(resetCartId());
+                // dispatch(clearCart());
+                // return null;
             }
         } catch (error) {
-            hideErrorInProd('Error fetching cart:', error);
+            // hideErrorInProd('Error fetching cart:', error);
             return null;
         }
     } else {
-        hideErrorInProd('Invalid cart ID #2: ', cartId);
+        // hideErrorInProd('Invalid cart ID #2: ', cartId);
         localStorage.removeItem('cartId');
         localStorage.removeItem('cartItems');
         dispatch(resetCartId());

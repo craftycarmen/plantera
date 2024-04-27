@@ -43,12 +43,23 @@ app.use(
 
 app.use(routes); // Connect all the routes
 
-app.use((_req, _res, next) => {
+app.use((_req, res, next) => {
     const err = new Error("The requested resource couldn't be found.");
     err.title = "Resource Not Found";
     err.errors = { message: "The requested resource couldn't be found." };
     err.status = 404;
-    next(err);
+
+    if (!isProduction) {
+        next(err);
+    } else {
+        res.status(err.status).json({
+            title: err.title,
+            message: err.message,
+            errors: err.errors
+        });
+    }
+
+    // next(err);
 });
 
 app.use((err, _req, _res, next) => {

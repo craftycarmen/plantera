@@ -92,14 +92,7 @@ export const fetchCart = () => async (dispatch) => {
                 }
             } else {
                 if (res.status === 404) {
-                    if (process.env.NODE_ENV !== 'development') {
-                        hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
-                        localStorage.removeItem('cartId');
-                        localStorage.removeItem('cartItems');
-                        dispatch(resetCartId());
-                        dispatch(clearCart());
-                        return;
-                    }
+                    return null
                 } else {
                     hideErrorInProd('Invalid cart ID #1:', cartId);
                 }

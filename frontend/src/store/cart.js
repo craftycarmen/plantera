@@ -92,6 +92,9 @@ export const fetchCart = () => async (dispatch) => {
                 }
             } else {
                 if (res.status === 404) {
+                    if (process.env.NODE_ENV !== 'development') {
+                        return;
+                    }
                     hideErrorInProd('Cart not found for cart ID in fetchCart:', cartId);
                 } else {
                     hideErrorInProd('Invalid cart ID #1:', cartId);

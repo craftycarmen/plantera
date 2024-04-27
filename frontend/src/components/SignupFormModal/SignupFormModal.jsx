@@ -21,7 +21,8 @@ function SignupFormModal({ navigate }) {
     // const [shopDescription, setShopDescription] = useState("");
     // const [paymentMethod, setPaymentMethod] = useState("");
     // const [paymentDetails, setPaymentDetails] = useState("");
-    const [image, setImage] = useState("")
+    const [image, setImage] = useState("");
+    const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const [cartId] = useState(null);
@@ -61,6 +62,7 @@ function SignupFormModal({ navigate }) {
             setErrors({});
 
             try {
+                setImageLoading(true);
                 const data = await dispatch(
                     sessionActions.signup({
                         email,
@@ -99,6 +101,7 @@ function SignupFormModal({ navigate }) {
                 if (data?.errors) {
                     setErrors(data.errors);
                 }
+                setImageLoading(false);
             }
         } else {
             setErrors({
@@ -281,6 +284,7 @@ function SignupFormModal({ navigate }) {
                     />
                     <label htmlFor='image' className='floating-label'>Profile Image*</label>
                 </div>
+                {imageLoading && (<div style={{ marginLeft: "125px", padding: "0px" }}><img src='../../loading.gif' /></div>)}
                 <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button style={{ marginTop: "15px" }}

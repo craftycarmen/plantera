@@ -21,6 +21,7 @@ function Navigation({ isLoaded }) {
         }
     }, [sessionUser, dispatch, userCartId])
 
+
     return (
         <div className='navigation'>
             <NavLink to="/"><img style={{ width: "350px" }} src='../../logo.png' /></NavLink>

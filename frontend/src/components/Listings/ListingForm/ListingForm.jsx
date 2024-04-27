@@ -18,7 +18,7 @@ function ListingForm({ listing, formType }) {
     const [stockQty, setStockQty] = useState(listing?.stockQty !== undefined ? listing.stockQty : "");
     // const [guideId, setGuideId] = useState(listing?.guideId);
     const [image, setImage] = useState("");
-    // const [imageLoading, setImageLoading] = useState(false);
+    const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
     const updatePlantName = (e) => setPlantName(e.target.value);
@@ -83,6 +83,7 @@ function ListingForm({ listing, formType }) {
 
         if (createForm) {
             try {
+                setImageLoading(true)
                 const newListing = await dispatch(addListing(listing));
 
                 const { id } = newListing
@@ -187,6 +188,7 @@ function ListingForm({ listing, formType }) {
                                 />
                                 <label htmlFor='image' className='floating-label'>Image*</label>
                             </div>
+                            {imageLoading && (<div style={{ marginLeft: "125px" }}><img src='../../loading.gif' /></div>)}
                             <div className='error'>{errors.image &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
                         </>}
@@ -205,7 +207,7 @@ function ListingForm({ listing, formType }) {
                     <button
                         type='submit'
                         disabled={!!Object.values(errors).length}
-                        style={{ width: "321px" }}
+                        style={{ marginTop: "15px", width: "321px" }}
                     >
                         {formType}
                     </button>

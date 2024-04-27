@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCart, loadCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
@@ -14,6 +14,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     // const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
     const sessionUser = useSelector(state => state.session.user);
     const userId = sessionUser?.id;
+    const [loading, setLoading] = useState(true);
     // console.log("CARTTOTALMODAL", cartTotal);
     console.log("CARTITEMSMODAL", cartItems);
 
@@ -44,6 +45,9 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
+            setTimeout(() => {
+                setLoading(false);
+            }, 800);
         }
         runDispatches();
     }, [dispatch, cartId])
@@ -85,7 +89,8 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     return (
         <section className="shoppingModal">
             <h1>Your Shopping Cart</h1>
-            {cartItems?.length > 0 && (
+            {loading && <div style={{ justifyContent: "center", margin: "100px 175px" }}><img style={{ width: "auto", height: "auto" }} src='../../loading.gif' /></div>}
+            {!loading && cartItems?.length > 0 && (
                 <div style={{ marginTop: "35px" }}>
                     {cartItems.map((item) => (
 
@@ -126,7 +131,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                 </div>
             )
             }
-            {cartItems?.length === 0 &&
+            {!loading && cartItems?.length === 0 &&
                 (
                     <div style={{ marginTop: "35px" }}>Your cart is empty!</div>
                 )

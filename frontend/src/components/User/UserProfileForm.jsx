@@ -8,7 +8,9 @@ function UserProfileForm({ formType }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId]?.User);
-
+    const shop = useSelector(state => state.user[userId]?.Shop)
+    const activeListings = shop?.filter(listing => listing.stockQty > 0)
+    console.log("ACTIVEEEEEEE", activeListings);
     const [bio, setBio] = useState(user?.bio || '');
     const [favoritePlant, setFavoritePlant] = useState(user?.favoritePlant || '');
     const [city, setCity] = useState(user?.city || '');
@@ -62,6 +64,9 @@ function UserProfileForm({ formType }) {
         if (favoritePlant && favoritePlant.trim().length < 3) errs.favoritePlant = 'Favorite plant must be 3 characters at mininmum';
         if (favoritePlant && favoritePlant.trim().length > 100) errs.favoritePlant = 'Favorite plant must be 100 characters at maximum';
         if (city && city.trim().length > 100) errs.city = 'City must be 100 characters at maximum';
+        if (accountType == 'buyer') {
+            if (activeListings.length > 0) errs.accountType = 'You currently have active listings. Please delete them or change stock quantity to 0 before changing your account type.';
+        }
         if (accountType === "seller") {
             if (!shopDescription) errs.shopDescription = '';
             if (!paymentMethod) errs.paymentMethod = '';
@@ -73,7 +78,7 @@ function UserProfileForm({ formType }) {
         }
 
         setErrors(errs);
-    }, [isCompleteProfile, bio, favoritePlant, city, state, shopDescription, paymentDetails, paymentMethod, accountType])
+    }, [isCompleteProfile, bio, favoritePlant, city, state, shopDescription, paymentDetails, paymentMethod, accountType, activeListings.length])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

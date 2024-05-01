@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCart, fetchCartItems } from "../../../store/cart";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { price } from "../../../../utils";
+import { price, plantName } from "../../../../utils";
 
 function OrderSummary({ cartId, checkout }) {
     const dispatch = useDispatch();
@@ -72,7 +72,7 @@ function OrderSummary({ cartId, checkout }) {
                                 </div>
                                 <div>
                                     <div style={{ fontWeight: '600' }}>
-                                        {item.Listing?.plantName}
+                                        {plantName(item.Listing?.plantName)}
                                     </div>
                                     <div>{item.Listing?.potSize}&#34;</div>
                                 </div>

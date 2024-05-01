@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCart, loadCartItems, removeCartItem } from "../../../store/cart";
 import './ShoppingCart.css';
 import { useModal } from "../../../context/Modal";
-import { price } from "../../../../utils";
+import { price, plantName } from "../../../../utils";
 
 function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const dispatch = useDispatch();
@@ -47,7 +47,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
             await dispatch(fetchCart(cartId))
             setTimeout(() => {
                 setLoading(false);
-            }, 800);
+            }, 500);
         }
         runDispatches();
     }, [dispatch, cartId])
@@ -107,7 +107,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
                             </div>
                             <div className="smInfo">
                                 <div className="shoppingModalRow" style={{ marginTop: "-5px" }}>
-                                    <h3>{item.Listing?.plantName}</h3>
+                                    <h3>{plantName(item.Listing?.plantName)}</h3>
                                     <h3>{calculateItemSubTotal(item)}</h3>
                                 </div>
                                 <div>Pot Size: {item.Listing?.potSize}&#34;</div>

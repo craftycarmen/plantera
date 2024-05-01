@@ -53,7 +53,7 @@ function ListingForm({ listing, formType }) {
         if (!price) errs.price = '';
         if (!potSize) errs.potSize = '';
         if (!stockQty) errs.stockQty = '';
-        if (plantName && plantName.trim().length < 3 || plantName.trim().length > 30) errs.plantName = 'Plant name must be between 3-30 characters';
+        if (plantName && plantName.trim().length < 3 || plantName.trim().length > 50) errs.plantName = 'Plant name must be between 3-50 characters';
         if (description && description.trim().length < 30 || description.trim().length > 250) errs.description = 'Description must be between 30-250 characters';
         if (price && price <= 0) errs.price = 'Price must be greater than $0';
         if (potSize && potSize < 2 && potSize > 12) errs.potSize = 'Pot size must be btween 2-12 inches';
@@ -150,7 +150,7 @@ function ListingForm({ listing, formType }) {
                     <div className='inputContainer'>
                         <input
                             type='number'
-                            step='0.25'
+                            step='1'
                             min='2'
                             max='12'
                             value={potSize}

@@ -16,7 +16,7 @@ function DeleteListingModal({ listingId }) {
             console.error("Error deleting listing:", error);
 
             if (error.status === 403) {
-                setErrors("You cannot delete this listing, as there is an active order with this listing.")
+                setErrors("This listing cannot be deleted because it is linked to existing orders.")
             } else {
                 console.error("Error deleting listing:", error)
             }
@@ -46,7 +46,7 @@ function DeleteListingModal({ listingId }) {
                 </>
             ) : (
                 <>
-                    <p>This listing cannot be deleted because it has associated order(s). If you&#39;d like to make this listing inactive, change stock quantity to 0.</p>
+                    <p>This listing cannot be deleted because it is linked to existing order(s). If you&#39;d like to make this listing inactive, change stock quantity to 0.</p>
                     <button
                         id="no"
                         onClick={closeModal}

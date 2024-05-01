@@ -3,7 +3,7 @@ import { fetchAllListings } from "../../../store/listings";
 import { useEffect } from "react";
 import './Listings.css';
 import { Link } from "react-router-dom";
-import { price } from "../../../../utils";
+import { price, plantName } from "../../../../utils";
 
 function Listings() {
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function Listings() {
                                         src={listing.ListingImages[0].url} />
                                 </div>
                                 <div className="listingInfo">
-                                    <h2>{listing.plantName}</h2>
+                                    <h2>{plantName(listing.plantName)}</h2>
                                     <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
                                     <div>from {listing.Seller?.username}
                                     </div>

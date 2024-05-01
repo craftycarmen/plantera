@@ -65,7 +65,7 @@ function UserProfileForm({ formType }) {
         if (favoritePlant && favoritePlant.trim().length > 100) errs.favoritePlant = 'Favorite plant must be 100 characters at maximum';
         if (city && city.trim().length > 100) errs.city = 'City must be 100 characters at maximum';
         if (accountType == 'buyer') {
-            if (activeListings.length > 0) errs.accountType = 'You currently have active listings. Please delete them or change stock quantity to 0 before changing your account type.';
+            if (activeListings?.length > 0) errs.accountType = 'You currently have active listings. Please delete them or change stock quantity to 0 before changing your account type.';
         }
         if (accountType === "seller") {
             if (!shopDescription) errs.shopDescription = '';
@@ -78,7 +78,7 @@ function UserProfileForm({ formType }) {
         }
 
         setErrors(errs);
-    }, [isCompleteProfile, bio, favoritePlant, city, state, shopDescription, paymentDetails, paymentMethod, accountType, activeListings.length])
+    }, [isCompleteProfile, bio, favoritePlant, city, state, shopDescription, paymentDetails, paymentMethod, accountType, activeListings?.length])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

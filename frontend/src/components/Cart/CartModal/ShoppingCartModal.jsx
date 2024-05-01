@@ -89,7 +89,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     return (
         <section className="shoppingModal">
             <h1>Your Shopping Cart</h1>
-            {loading && <div style={{ justifyContent: "center", margin: "100px 175px" }}><img style={{ width: "auto", height: "auto" }} src='../../loading.gif' /></div>}
+            {loading && <div style={{ justifyContent: "center", margin: "100px 175px" }} className="dots"></div>}
             {!loading && cartItems?.length > 0 && (
                 <div style={{ marginTop: "35px" }}>
                     {cartItems.map((item) => (

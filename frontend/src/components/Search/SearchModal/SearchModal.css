@@ -17,6 +17,7 @@
     display: flex;
     justify-content: start;
     margin-left: 210px;
+    font-size: 28px;
 }
 
 .searchForm {

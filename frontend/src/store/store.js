@@ -7,6 +7,7 @@ import listingsReducer from './listings';
 import cartReducer from './cart';
 import ordersReducer from './order';
 import userReducer from './user';
+import searchReducer from './search';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   listings: listingsReducer,
   cart: cartReducer,
   orders: ordersReducer,
-  user: userReducer
+  user: userReducer,
+  search: searchReducer
 });
 
 let enhancer;

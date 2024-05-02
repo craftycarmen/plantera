@@ -1,8 +1,22 @@
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import './SearchModal.css';
+import { fetchListingResults } from '../../../store/search';
+import { useModal } from '../../../context/Modal';
 
-function SearchModal() {
-    const handleSubmit = async () => {
+function SearchModal({ navigate }) {
+    const dispatch = useDispatch();
+    const { closeModal } = useModal();
+    const [searchQuery, setSearchQuery] = useState('');
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        dispatch(fetchListingResults(searchQuery))
+            .then(() => {
+                navigate('/search/')
+                setSearchQuery('')
+                closeModal();
+            })
     }
 
     return (
@@ -11,6 +25,10 @@ function SearchModal() {
             <form onSubmit={handleSubmit} className='searchForm'>
                 <input
                     type='text'
+                    value={searchQuery}
+                    placeholder='monstera, ficus, pothos'
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    id='searchQuery'
                 />
                 <button
                     type='submit'

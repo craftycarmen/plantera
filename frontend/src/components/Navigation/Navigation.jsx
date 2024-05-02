@@ -5,18 +5,15 @@ import './Navigation.css';
 import ShoppingCartButton from './ShoppingCartButton';
 import { useEffect } from 'react';
 import { fetchCart } from '../../store/cart';
-// import SearchModal from '../Search/SearchModal/SearchModal';
 import SearchButton from './SearchButton';
 
 function Navigation({ isLoaded }) {
+    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const user = useSelector(state => state.user[sessionUser?.id]?.User)
-    // console.log("NOTSESHUSER", user);
     const userCartId = useSelector(state => state.cart.cartId)
-    console.log("USERCARTIDNAV", userCartId);
-    const dispatch = useDispatch();
     const cartId = userCartId || localStorage.getItem('cartId')
-    // console.log("SESHUSER", sessionUser);
+
     useEffect(() => {
         if (sessionUser) {
             dispatch(fetchCart(userCartId))

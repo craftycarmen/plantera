@@ -1,10 +1,9 @@
 import OpenModalMenuItem from './OpenModalMenuItem';
 import SearchModal from '../Search/SearchModal/SearchModal';
+import { useNavigate } from 'react-router-dom';
 
 function SearchButton() {
-    const handleOpenModal = async () => {
-
-    }
+    const navigate = useNavigate();
 
     return (
         <>
@@ -15,7 +14,7 @@ function SearchButton() {
 
                 </>}
                 // onClick={handleOpenModal}
-                modalComponent={<SearchModal />}
+                modalComponent={<SearchModal navigate={navigate} />}
             />
         </>
     )

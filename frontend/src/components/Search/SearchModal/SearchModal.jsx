@@ -1,19 +1,20 @@
 import './SearchModal.css';
-import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
 
 function SearchModal() {
-    const handleOpenModal = async () => {
+    const handleSubmit = async () => {
 
     }
 
     return (
         <section className="searchModal">
             <h1>Search</h1>
-            <form className='searchForm'>
+            <form onSubmit={handleSubmit} className='searchForm'>
                 <input
                     type='text'
                 />
-                <button><i style={{ fontSize: "x-large" }} className="fa-solid fa-magnifying-glass" /></button>
+                <button
+                    type='submit'
+                ><i style={{ fontSize: "x-large" }} className="fa-solid fa-magnifying-glass" /></button>
             </form>
         </section>
     )

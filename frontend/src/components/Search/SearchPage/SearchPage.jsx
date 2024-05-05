@@ -2,14 +2,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { price, plantName } from "../../../../utils";
-import { fetchListingResults } from "../../../store/search";
+import { fetchListingResults, setSearchTerm } from "../../../store/search";
 
 function SearchPage() {
     const dispatch = useDispatch()
     const listings = Object.values(useSelector(state => state.search))
-    const queryParams = new URLSearchParams(window.location.search);
-    const searchTerm = queryParams.get("search")
-    // const searchTerm = useSelector(state => state.search.searchTerm)
+    const { search: urlSearchTerm } = useParams();
+    const searchTermRedux = useSelector(state => state.search.searchTerm);
+
+    const getSearchFromLocal = () => {
+        return localStorage.getItem('searchTerm')
+    }
+
+    const getSearchTerm = () => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const searchTermFromURL = queryParams.get("search")
+        return searchTermFromURL || getSearchFromLocal() || '';
+    }
+
+    const searchTerm = urlSearchTerm || searchTermRedux || getSearchTerm();
+
     console.log(searchTerm);
     console.log("SEARCH", searchTerm);
 
@@ -17,9 +29,18 @@ function SearchPage() {
         if (length === 1) return `${length} result`
         else return `${length} results`
     }
+
     useEffect(() => {
-        dispatch(fetchListingResults(searchTerm))
-    }, [dispatch, searchTerm])
+        if (searchTerm) {
+            dispatch(fetchListingResults(searchTerm));
+            dispatch(setSearchTerm(searchTerm));
+            localStorage.setItem('searchTerm', searchTerm);
+        } else {
+            localStorage.removeItem('searchTerm');
+        }
+    }, [dispatch, searchTerm]);
+
+
     return (
         <>
             <h1>Search Results</h1>

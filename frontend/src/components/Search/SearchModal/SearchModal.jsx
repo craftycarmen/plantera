@@ -1,16 +1,21 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import './SearchModal.css';
-import { fetchListingResults } from '../../../store/search';
+import { fetchListingResults, setSearchTerm } from '../../../store/search';
 import { useModal } from '../../../context/Modal';
 
 function SearchModal({ navigate }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const [searchQuery, setSearchQuery] = useState('');
+    const searchTermLocalStorage = (searchTerm) => {
+        localStorage.setItem('searchTerm', searchTerm)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        localStorage.removeItem('searchTerm')
+        searchTermLocalStorage(searchQuery);
         dispatch(fetchListingResults(searchQuery))
             .then(() => {
                 navigate(`/search?search=${searchQuery}`)

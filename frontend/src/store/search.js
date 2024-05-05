@@ -34,7 +34,7 @@ export const fetchListingResults = (searchQuery) => async (dispatch) => {
 
     if (searchQuery) {
         queryParams.push(`search=${searchQuery}`)
-        dispatch(setSearchTerm(searchQuery))
+        // dispatch(setSearchTerm(searchQuery))
     }
 
     if (queryParams.length > 0) {
@@ -51,8 +51,18 @@ export const fetchListingResults = (searchQuery) => async (dispatch) => {
     }
 }
 
-const searchReducer = (state = {}, action) => {
+const initialState = {
+    searchTerm: '',
+}
+const searchReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_SEARCH_TERM: {
+            console.log("ACTION!!", action.searchTerm);
+            return {
+                ...state,
+                searchTerm: action.searchTerm
+            }
+        }
         case LOAD_LISTING_RESULTS: {
             const listingsState = {};
             action.listings.Listings.forEach(listing => {
@@ -60,10 +70,7 @@ const searchReducer = (state = {}, action) => {
             });
             return listingsState;
         }
-        case SET_SEARCH_TERM: {
-            console.log("ACTION!!", action.searchTerm);
-            return { ...state, searchTerm: action.searchTerm }
-        }
+
         default:
             return { ...state }
     }

@@ -64,7 +64,7 @@ const validateQuery = [
 ]
 
 router.get('/', validateQuery, async (req, res) => {
-    let { page, size, minPotSize, maxPotSize, minPrice, maxPrice } = req.query
+    let { page, size, minPotSize, maxPotSize, minPrice, maxPrice, search } = req.query
     const results = {}
     const pagination = {}
     const where = {}
@@ -112,6 +112,12 @@ router.get('/', validateQuery, async (req, res) => {
     if (!minPrice && maxPrice) {
         where.price = {
             [Op.lte]: [maxPrice]
+        }
+    }
+
+    if (search) {
+        where.plantName = {
+            [Op.like]: `${search}%`
         }
     }
 

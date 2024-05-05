@@ -13,7 +13,6 @@ function SearchButton() {
                     <i style={{ color: "#28635A" }} className="fa-solid fa-magnifying-glass" />
 
                 </>}
-                // onClick={handleOpenModal}
                 modalComponent={<SearchModal navigate={navigate} />}
             />
         </>

@@ -13,7 +13,7 @@ function SearchModal({ navigate }) {
         e.preventDefault();
         dispatch(fetchListingResults(searchQuery))
             .then(() => {
-                navigate('/search/')
+                navigate(`/search?search=${searchQuery}`)
                 setSearchQuery('')
                 closeModal();
             })

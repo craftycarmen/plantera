@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import './Listings.css';
 import { Link } from "react-router-dom";
 import { price, plantName } from "../../../../utils";
+import FilterButton from "../../Filter/FilterButton";
 
 function Listings() {
     const dispatch = useDispatch();
@@ -19,6 +20,8 @@ function Listings() {
         <>
             <h1>Shop</h1>
             <div>Shop for plants from fellow plant lovers!</div>
+            <br />
+            <FilterButton />
             <br />
             <div className="listingsContainer">
                 {

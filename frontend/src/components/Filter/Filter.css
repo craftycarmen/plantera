@@ -1,0 +1,49 @@
+.filterButtonWrapper:hover {
+    cursor: pointer;
+}
+
+.filter-dropdown {
+    position: absolute;
+    border: #28635A solid 1.5px;
+    /* box-shadow: 2px 2px 0px #f9ddd2; */
+    border-radius: 3px;
+    padding: 15px;
+    background-color: #F2DCCB;
+    width: fit-content;
+    text-wrap: nowrap;
+    margin-top: 5px;
+    margin-right: -2px;
+    left: 1;
+    z-index: 2;
+    cursor: text;
+}
+
+.filter-dropdown-hidden {
+    display: none;
+}
+
+.filterInputBox {
+    border: none;
+    padding: 5px 5px;
+    margin-top: 10px;
+    outline: none;
+    width: 25px;
+    height: 20px;
+    background-color: #efefef;
+    border-radius: 3px;
+}
+
+.filterInputBox::-webkit-inner-spin-button,
+.filterInputBox::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+.filterRange {
+    display: flex;
+    align-items: center;
+    /* margin-top: -10px; */
+    height: 24px;
+    border-radius: 3px;
+    /* padding: 5px; */
+}

@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { price, plantName } from "../../../../utils";
 import { fetchListingResults, setSearchTerm } from "../../../store/search";
 
 function SearchPage() {
     const dispatch = useDispatch()
     const listings = Object.values(useSelector(state => state.search))
+    const [error, setError] = useState(null)
     const { search: urlSearchTerm } = useParams();
     const searchTermRedux = useSelector(state => state.search.searchTerm);
 
@@ -23,7 +24,7 @@ function SearchPage() {
     const searchTerm = urlSearchTerm || searchTermRedux || getSearchTerm();
 
     console.log(searchTerm);
-    console.log("SEARCH", searchTerm);
+    console.log("SEARCH", listings);
 
     const results = (length) => {
         if (length === 1) return `${length} result`
@@ -32,9 +33,14 @@ function SearchPage() {
 
     useEffect(() => {
         if (searchTerm) {
-            dispatch(fetchListingResults(searchTerm));
-            dispatch(setSearchTerm(searchTerm));
-            localStorage.setItem('searchTerm', searchTerm);
+            setError(null)
+            localStorage.setItem('searchTerm', searchTerm)
+            dispatch(fetchListingResults(searchTerm))
+                // dispatch(setSearchTerm(searchTerm))
+                .catch(error => {
+                    setError('No listings found')
+                    console.error('Error fetching listings:', error);
+                })
         } else {
             localStorage.removeItem('searchTerm');
         }
@@ -44,7 +50,7 @@ function SearchPage() {
     return (
         <>
             <h1>Search Results</h1>
-            {listings.length === 0 ? (
+            {error || listings.length === 0 ? (
                 <div>No results found.</div>
             ) : (
                 <>

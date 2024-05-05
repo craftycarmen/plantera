@@ -155,14 +155,16 @@ router.get('/', validateQuery, async (req, res) => {
         }
     });
 
-    if (listingsList.length === 0) return res.status(400).json({ message: 'No listings found' })
-
     results.Listings = listingsList
     if (page) results.page = page;
     if (size) results.size = size;
+    console.log(listingsList);
+    if (listingsList.length === 0) {
+        return res.status(404).json({ message: 'No listings found' })
 
-    return res.json(results);
-
-});
+    } else {
+        return res.json(results);
+    }
+})
 
 module.exports = router;

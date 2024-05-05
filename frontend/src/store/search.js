@@ -48,6 +48,11 @@ export const fetchListingResults = (searchQuery) => async (dispatch) => {
     if (res.ok) {
         const listings = await res.json();
         dispatch(loadListingResults(listings))
+    } else if (res.status === 404) {
+        dispatch(loadListingResults([]))
+    } else {
+        const errors = await res.json();
+        return errors;
     }
 }
 
@@ -65,9 +70,11 @@ const searchReducer = (state = initialState, action) => {
         }
         case LOAD_LISTING_RESULTS: {
             const listingsState = {};
-            action.listings.Listings.forEach(listing => {
-                listingsState[listing.id] = listing;
-            });
+            if (action.listings && action.listings.Listings) {
+                action.listings.Listings.forEach(listing => {
+                    listingsState[listing.id] = listing;
+                });
+            }
             return listingsState;
         }
 

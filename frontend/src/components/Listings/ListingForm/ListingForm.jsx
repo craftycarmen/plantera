@@ -188,11 +188,7 @@ function ListingForm({ listing, formType }) {
                                 />
                                 <label htmlFor='image' className='floating-label'>Image*</label>
                             </div>
-<<<<<<< HEAD
-                            {imageLoading && (<div style={{ marginLeft: "125px" }}><img src='../../loading.gif' /></div>)}
-=======
                             {imageLoading && (<div style={{ marginLeft: "125px" }} className="dots"></div>)}
->>>>>>> search
                             <div className='error'>{errors.image &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
                         </>}

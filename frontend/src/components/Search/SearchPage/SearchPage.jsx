@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { price, plantName } from "../../../../utils";
-import { fetchListingResults, setSearchTerm } from "../../../store/search";
+import { fetchListingResults } from "../../../store/search";
 
 function SearchPage() {
     const dispatch = useDispatch()
@@ -36,7 +36,6 @@ function SearchPage() {
             setError(null)
             localStorage.setItem('searchTerm', searchTerm)
             dispatch(fetchListingResults(searchTerm))
-                // dispatch(setSearchTerm(searchTerm))
                 .catch(error => {
                     setError('No listings found')
                     console.error('Error fetching listings:', error);

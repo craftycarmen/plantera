@@ -158,7 +158,6 @@ router.get('/', validateQuery, async (req, res) => {
     results.Listings = listingsList
     if (page) results.page = page;
     if (size) results.size = size;
-    console.log(listingsList);
     if (listingsList.length === 0) {
         return res.status(404).json({ message: 'No listings found' })
 

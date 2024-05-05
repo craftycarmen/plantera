@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import './SearchModal.css';
-import { fetchListingResults, setSearchTerm } from '../../../store/search';
+import { fetchListingResults } from '../../../store/search';
 import { useModal } from '../../../context/Modal';
 
 function SearchModal({ navigate }) {

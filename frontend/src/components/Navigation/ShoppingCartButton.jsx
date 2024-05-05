@@ -8,7 +8,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { hideErrorInProd } from '../../../utils';
 
 function ShoppingCartButton({ cartId }) {
-    console.log("CARTIDHERE", cartId);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();

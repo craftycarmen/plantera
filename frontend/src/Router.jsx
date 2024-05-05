@@ -14,6 +14,7 @@ import CompleteProfile from './components/User/CompleteProfile';
 import Shop from './components/User/Shop';
 import Layout from './Layout';
 import Home from './components/Home/Home';
+import SearchPage from './components/Search/SearchPage/SearchPage';
 
 const router = createBrowserRouter([
     {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
             {
                 path: '/user/:userId/shop',
                 element: <Shop />
+            },
+            {
+                path: '/search',
+                element: <SearchPage />
             },
         ]
     }

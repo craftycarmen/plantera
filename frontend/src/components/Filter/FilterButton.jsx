@@ -150,7 +150,7 @@ function FilterButton({ searchTerm }) {
                                         onChange={() => handlePriceChange(range)}
                                         onClick={fetchListings}
                                     />
-                                    <span style={{ marginTop: "5px" }}>{range.name}</span>
+                                    <span style={{ marginTop: "8px" }}>{range.name}</span>
                                 </label>
                             ))}
 

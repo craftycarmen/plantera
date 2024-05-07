@@ -33,7 +33,7 @@ export const fetchListingResults = (searchQuery, filters = {}) => async (dispatc
     const queryParams = [];
 
     if (searchQuery) {
-        queryParams.push(`search=${searchQuery}`)
+        queryParams.push(`search=${searchQuery.toLowerCase()}`)
         // dispatch(setSearchTerm(searchQuery))
     }
 

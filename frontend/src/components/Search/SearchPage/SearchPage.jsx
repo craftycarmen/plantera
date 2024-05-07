@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { price, plantName } from "../../../../utils";
 import { fetchListingResults } from "../../../store/search";
+import FilterButton from "../../Filter/FilterButton";
 
 function SearchPage() {
     const dispatch = useDispatch()
@@ -54,6 +55,8 @@ function SearchPage() {
             ) : (
                 <>
                     <div>{listings.length && results(listings.length)} for &#34;{searchTerm}&#34;</div>
+                    <br />
+                    <FilterButton searchTerm={searchTerm} />
                     <br />
                     <div className="listingsContainer">
                         {

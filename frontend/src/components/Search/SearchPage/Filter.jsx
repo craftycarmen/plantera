@@ -1,18 +1,18 @@
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 
-function Filter() {
-    const dispatch = useDispatch();
-    const [minPrice, setMinPrice] = useState("");
-    const [maxPrice, setMaxPrice] = useState("");
-    const [minPotSize, setMinPotSize] = useState("");
-    const [maxPotSize, setMaxPotSize] = useState("");
+// function Filter() {
+//     const dispatch = useDispatch();
+//     const [minPrice, setMinPrice] = useState("");
+//     const [maxPrice, setMaxPrice] = useState("");
+//     const [minPotSize, setMinPotSize] = useState("");
+//     const [maxPotSize, setMaxPotSize] = useState("");
 
-    const handleFilter = (e) => {
-        e.preventDefault();
+//     const handleFilter = (e) => {
+//         e.preventDefault();
 
-        const queryParams = new URLSearchParams();
+//         const queryParams = new URLSearchParams();
 
-    }
-}
+//     }
+// }
 
-export default Filter
+// export default Filter

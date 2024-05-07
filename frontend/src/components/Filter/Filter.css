@@ -40,10 +40,23 @@
 }
 
 .filterRange {
-    display: flex;
+    display: grid;
     align-items: center;
-    /* margin-top: -10px; */
-    height: 24px;
     border-radius: 3px;
     /* padding: 5px; */
+    /* gap: px; */
+    /* grid-template-columns: 24px auto; */
+}
+
+.filterRange input {
+    width: 24px;
+    align-items: center;
+}
+
+.priceOptions {
+    display: grid;
+    grid-template-columns: 24px auto;
+    align-items: center;
+    gap: 10px;
+    height: 35px;
 }

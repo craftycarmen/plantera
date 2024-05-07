@@ -28,7 +28,7 @@ export const setSearchTerm = (searchTerm) => ({
 //     console.log("QUERY", queryParams);
 //     console.log("URL", url);
 
-export const fetchListingResults = (searchQuery) => async (dispatch) => {
+export const fetchListingResults = (searchQuery, filters = {}) => async (dispatch) => {
     let url = '/api/search';
     const queryParams = [];
 
@@ -37,17 +37,26 @@ export const fetchListingResults = (searchQuery) => async (dispatch) => {
         // dispatch(setSearchTerm(searchQuery))
     }
 
+    if (filters) {
+        // let filtered = Object.values(filters)
+        // queryParams.push(filtered.join(''))
+        for (const [key, value] of Object.entries(filters)) {
+            if (value !== undefined) queryParams.push(`${key}=${value}`)
+        }
+    }
     if (queryParams.length > 0) {
         url += `?${queryParams.join('&')}`
     }
 
     console.log("QUERY", queryParams);
     console.log("URL", url);
+    console.log("FILTERS", filters);
     const res = await fetch(url);
     console.log("SEARCH RES", res);
     if (res.ok) {
         const listings = await res.json();
         dispatch(loadListingResults(listings))
+        console.log("LISTINGS HERE", listings);
     } else if (res.status === 404) {
         dispatch(loadListingResults([]))
     } else {
@@ -58,6 +67,7 @@ export const fetchListingResults = (searchQuery) => async (dispatch) => {
 
 const initialState = {
     searchTerm: '',
+    listings: []
 }
 const searchReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -75,7 +85,11 @@ const searchReducer = (state = initialState, action) => {
                     listingsState[listing.id] = listing;
                 });
             }
-            return listingsState;
+            // return listingsState;
+            return {
+                ...state,
+                ...listingsState
+            }
         }
 
         default:

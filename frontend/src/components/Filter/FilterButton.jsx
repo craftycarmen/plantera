@@ -7,7 +7,6 @@ function FilterButton({ searchTerm }) {
     const dispatch = useDispatch()
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
-    const listings = useSelector(state => state.listings)
     const [minPrice, setMinPrice] = useState(undefined)
     const [maxPrice, setMaxPrice] = useState(undefined)
     const [minPotSize, setMinPotSize] = useState(undefined)
@@ -71,6 +70,14 @@ function FilterButton({ searchTerm }) {
     //     // }
 
     // }, [dispatch, searchTerm, minPrice, maxPrice, minPotSize, maxPotSize])
+
+    useEffect(() => {
+        setMinPrice(undefined);
+        setMaxPrice(undefined);
+        setMinPotSize(undefined);
+        setMaxPotSize(undefined);
+        setSelectedPrice({});
+    }, [searchTerm]);
 
     useEffect(() => {
         const closeMenu = (e) => {

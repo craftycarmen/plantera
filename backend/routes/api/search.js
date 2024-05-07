@@ -146,7 +146,7 @@ router.get('/', validateQuery, async (req, res) => {
     let listingsList = [];
 
     listings.forEach(listing => {
-        listingsList.push(listing.toJSON());
+        if (listing.stockQty > 0) listingsList.push(listing.toJSON());
     });
 
     listingsList.forEach(listing => {

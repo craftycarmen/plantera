@@ -48,6 +48,8 @@ function FilterButton({ searchTerm }) {
         setSelectedPrice(option);
         setMinPrice(option.value.minPrice);
         setMaxPrice(option.value.maxPrice);
+        const filters = { minPrice: option.value.minPrice, maxPrice: option.value.maxPrice };
+        dispatch(fetchListingResults(searchTerm, filters));
     }
 
     const fetchListings = useCallback(() => {

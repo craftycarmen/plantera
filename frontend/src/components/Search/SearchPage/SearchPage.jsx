@@ -51,7 +51,11 @@ function SearchPage() {
         <>
             <h1>Search Results</h1>
             {error || listings.length === 0 ? (
-                <div>No results found.</div>
+                <>
+                    <div>No results found.</div>
+                    <br />
+                    <FilterButton searchTerm={searchTerm} />
+                </>
             ) : (
                 <>
                     <div>{listings.length && results(listings.length)} for &#34;{searchTerm}&#34;</div>
@@ -61,21 +65,23 @@ function SearchPage() {
                     <div className="listingsContainer">
                         {
                             listings && listings?.map((listing) => (
-                                <div key={listing.id}>
-                                    <Link to={`/listings/${listing.id}`}>
-                                        <div className="listingImageContainer">
-                                            <img
-                                                className="listingImage"
-                                                src={listing.ListingImages?.[0]?.url} />
-                                        </div>
-                                        <div className="listingInfo">
-                                            <h2>{plantName(listing.plantName)}</h2>
-                                            <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
-                                            <div>from {listing.Seller?.username}
+                                listing && (
+                                    <div key={listing.id}>
+                                        <Link to={`/listings/${listing.id}`}>
+                                            <div className="listingImageContainer">
+                                                <img
+                                                    className="listingImage"
+                                                    src={listing.ListingImages?.[0]?.url} />
                                             </div>
-                                        </div>
-                                    </Link>
-                                </div>
+                                            <div className="listingInfo">
+                                                <h2>{plantName(listing.plantName)}</h2>
+                                                <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
+                                                <div>from {listing.Seller?.username}
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                )
                             ))
                         }
                     </div>

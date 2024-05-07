@@ -87,7 +87,7 @@ const searchReducer = (state = initialState, action) => {
             }
             // return listingsState;
             return {
-                ...state,
+                // ...state,
                 ...listingsState
             }
         }

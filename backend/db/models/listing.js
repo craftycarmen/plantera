@@ -106,7 +106,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     potSize: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {

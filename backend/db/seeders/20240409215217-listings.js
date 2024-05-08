@@ -14,7 +14,7 @@ const listingsList = [
     plantName: 'Monstera',
     description: 'This is a full grown monstera in an 8.5-inch pot in soil, comes with the pot. It has unfortunately getting too large for my home, so it needs a new home!',
     price: 75,
-    potSize: 8.5,
+    potSize: 8,
     stockQty: 3
   },
   {
@@ -31,7 +31,7 @@ const listingsList = [
     plantName: 'Snow Queen Pothos',
     description: 'The pothos that just keeps on giving. I had to trim the mother plant because she was getting sooo long.',
     price: 5,
-    potSize: 4,
+    potSize: 2,
     stockQty: 8
   },
   {

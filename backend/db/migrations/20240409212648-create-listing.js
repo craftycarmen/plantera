@@ -43,7 +43,7 @@ module.exports = {
         allowNull: false,
       },
       potSize: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       stockQty: {

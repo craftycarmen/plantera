@@ -38,31 +38,31 @@ module.exports = {
         allowNull: false
       },
       bio: {
-        type: Sequelize.STRING(250),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       favoritePlant: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       city: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       state: {
-        type: Sequelize.STRING(2),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       accountType: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       shopDescription: {
-        type: Sequelize.STRING(250),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       paymentMethod: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       paymentDetails: {

@@ -64,7 +64,8 @@ const validateQuery = [
 ]
 
 router.get('/', validateQuery, async (req, res) => {
-    let { page, size, minPotSize, maxPotSize, minPrice, maxPrice, search } = req.query
+    let { page, size, minPrice, maxPrice, potSize, search } = req.query
+    potSize = potSize ? potSize.split(',').map(Number) : [];
     const results = {}
     const pagination = {}
     const where = {}
@@ -79,21 +80,9 @@ router.get('/', validateQuery, async (req, res) => {
         if (page > 10) page = 10
     }
 
-    if (minPotSize && maxPotSize) {
+    if (potSize.length > 0) {
         where.potSize = {
-            [Op.between]: [minPotSize, maxPotSize]
-        }
-    }
-
-    if (minPotSize && !maxPotSize) {
-        where.potSize = {
-            [Op.gte]: [minPotSize]
-        }
-    }
-
-    if (!minPotSize && maxPotSize) {
-        where.potSize = {
-            [Op.lte]: [maxPotSize]
+            [Op.in]: [potSize]
         }
     }
 

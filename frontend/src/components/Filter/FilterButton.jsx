@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import './Filter.css'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchListingResults } from "../../store/search";
 
 function FilterButton({ searchTerm }) {
@@ -11,8 +11,32 @@ function FilterButton({ searchTerm }) {
     const [maxPrice, setMaxPrice] = useState(undefined)
     const [minPotSize, setMinPotSize] = useState(undefined)
     const [maxPotSize, setMaxPotSize] = useState(undefined)
+    const [customMinPrice, setCustomMinPrice] = useState(undefined);
+    const [customMaxPrice, setCustomMaxPrice] = useState(undefined);
     const [selectedPrice, setSelectedPrice] = useState({})
 
+    const customPrice = () => {
+        return (<div className="customPrice">
+            $<input
+                className="filterInputBox"
+                type="number"
+                step="1"
+                min="0"
+                value={customMinPrice}
+                onChange={(e) => setCustomMinPrice(e.target.value)}
+            />&nbsp;—
+            $<input
+                className="filterInputBox"
+                type="number"
+                step="1"
+                min="0"
+                value={customMaxPrice}
+                onChange={(e) => setCustomMaxPrice(e.target.value)}
+                placeholder="$"
+            />
+        </div>
+        )
+    }
     const priceOptions = [
         {
             name: "Under $25",
@@ -40,7 +64,13 @@ function FilterButton({ searchTerm }) {
                 minPrice: 100
             }
         },
-        // { name: "Custom", value: "Custom" }
+        {
+            name: customPrice(),
+            value: {
+                minPrice: customMinPrice,
+                maxPrice: customMaxPrice
+            }
+        }
     ]
 
     const handlePriceChange = (option) => {
@@ -59,17 +89,6 @@ function FilterButton({ searchTerm }) {
     useEffect(() => {
         if (Object.keys(selectedPrice).length !== 0) fetchListings()
     }, [fetchListings, selectedPrice, minPrice, maxPrice])
-
-    // useEffect(() => {
-    //     if (selectedPrice) {
-    //         const { minPrice, maxPrice } = selectedPrice.value;
-
-    //     }
-    //     // const fetchListings = () => {
-    //     dispatch(fetchListingResults(searchTerm, minPrice, maxPrice, minPotSize, maxPotSize))
-    //     // }
-
-    // }, [dispatch, searchTerm, minPrice, maxPrice, minPotSize, maxPotSize])
 
     useEffect(() => {
         setMinPrice(undefined);
@@ -115,29 +134,6 @@ function FilterButton({ searchTerm }) {
                     <form className="filter-dropdown" ref={ulRef}>
                         <div>Price</div>
                         <div className="filterRange">
-                            {/* <span>Min</span>
-                            <input
-                                className="filterInputBox"
-                                type="number"
-                                step="1"
-                                min="0"
-                                value={minPrice}
-                                onChange={(e) => {
-                                    console.log("Min Price:", e.target.value);
-                                    setMinPrice(e.target.value);
-                                    handleFilterChange();
-                                }}
-                            />
-                            <span>Max</span>
-                            <input
-                                className="filterInputBox"
-                                type="number"
-                                step="1"
-                                min="0"
-                                value={maxPrice}
-                                onChange={(e) => { setMaxPrice(e.target.value); handleFilterChange(); }}
-                            /> */}
-
                             {priceOptions.map((range, index) => (
                                 <label key={range.name} className="priceOptions">
 

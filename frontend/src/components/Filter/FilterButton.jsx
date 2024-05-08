@@ -14,6 +14,7 @@ function FilterButton({ searchTerm }) {
     const [customMinPrice, setCustomMinPrice] = useState(undefined);
     const [customMaxPrice, setCustomMaxPrice] = useState(undefined);
     const [selectedPrice, setSelectedPrice] = useState({})
+    const [errors, setErrors] = useState({})
 
     const customPrice = () => {
         return (<div className="customPrice">
@@ -32,7 +33,6 @@ function FilterButton({ searchTerm }) {
                 min="0"
                 value={customMaxPrice}
                 onChange={(e) => setCustomMaxPrice(e.target.value)}
-                placeholder="$"
             />
         </div>
         )
@@ -73,8 +73,16 @@ function FilterButton({ searchTerm }) {
         }
     ]
 
+    useEffect(() => {
+        const errs = {};
+        if (customMinPrice && customMaxPrice && customMinPrice > customMaxPrice) errs.customMinPrice = "Minimum price must be greater than maximum price"
+
+        setErrors(errs)
+    }, [customMinPrice, customMaxPrice])
+
     const handlePriceChange = (option) => {
         setSelectedPrice(option);
+        setErrors();
         setMinPrice(option.value.minPrice);
         setMaxPrice(option.value.maxPrice);
         const filters = { minPrice: option.value.minPrice, maxPrice: option.value.maxPrice };
@@ -145,11 +153,14 @@ function FilterButton({ searchTerm }) {
                                         type="radio"
                                         onChange={() => handlePriceChange(range)}
                                         onClick={fetchListings}
+
                                     />
                                     <span style={{ marginTop: "8px" }}>{range.name}</span>
+
                                 </label>
                             ))}
-
+                            <div className="error">{errors?.customMinPrice &&
+                                <><i className="fa-solid fa-circle-exclamation" /> {errors.customMinPrice}</>}</div>
                         </div>
                         {/* <div>Pot Size</div>
                         <div className="filterRange">

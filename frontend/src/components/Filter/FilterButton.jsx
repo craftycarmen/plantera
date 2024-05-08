@@ -115,7 +115,7 @@ function FilterButton({ searchTerm }) {
         {
             name: "Any",
             value: {
-                potSize: "all"
+                potSize: "any"
             }
         },
         {
@@ -185,8 +185,8 @@ function FilterButton({ searchTerm }) {
             }
         },
     ]
-    const handlePotSize = () => {
-        const filters = { potSize: potSize }
+    const handlePotSize = (value) => {
+        setPotSize(value)
     }
 
     const fetchListings = useCallback(() => {
@@ -226,9 +226,7 @@ function FilterButton({ searchTerm }) {
         setShowMenu(!showMenu);
     }
 
-    // const handleFilterChange = () => {
 
-    // }
     // const closeMenu = () => setShowMenu(false);
 
     return (
@@ -293,7 +291,7 @@ function FilterButton({ searchTerm }) {
                             <div>Pot Size</div>
                             <div className="potSize">
                                 {potSizeOptions.map((size) => (
-                                    <button key={size.name} onClick={handlePotSize}>{size.name}</button>
+                                    <button key={size.name} onClick={() => handlePotSize(size.value.potSize)}>{size.name}</button>
                                 ))}
                                 {/* <button onClick={handlePotSize}>Any</button>
                                 <button onClick={handlePotSize}>2&#34;</button>
@@ -312,7 +310,7 @@ function FilterButton({ searchTerm }) {
                     </form>
                 )}
             </div>
-        </div>
+        </div >
     )
 }
 

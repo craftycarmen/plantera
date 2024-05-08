@@ -80,7 +80,7 @@ router.get('/', validateQuery, async (req, res) => {
         if (page > 10) page = 10
     }
 
-    if (potSize.length > 0) {
+    if (potSize && !isNaN(potSize[0])) {
         // If potSize has multiple values, include them in the query
         if (potSize.length > 1) {
             where.potSize = {

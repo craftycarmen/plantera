@@ -64,8 +64,8 @@ const validateQuery = [
 ]
 
 router.get('/', validateQuery, async (req, res) => {
-    let { page, size, minPrice, maxPrice, potSize, search } = req.query
-    potSize = potSize ? potSize.split(',').map(Number) : [];
+    let { page, size, minPrice, maxPrice, search, potSize } = req.query
+    potSize = Array.isArray(potSize) ? potSize.map(Number) : [Number(potSize)]
     const results = {}
     const pagination = {}
     const where = {}
@@ -81,8 +81,14 @@ router.get('/', validateQuery, async (req, res) => {
     }
 
     if (potSize.length > 0) {
-        where.potSize = {
-            [Op.in]: [potSize]
+        // If potSize has multiple values, include them in the query
+        if (potSize.length > 1) {
+            where.potSize = {
+                [Op.in]: potSize
+            };
+        } else {
+            // If only one potSize value, use it directly
+            where.potSize = potSize[0];
         }
     }
 

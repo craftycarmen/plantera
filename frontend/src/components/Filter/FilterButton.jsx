@@ -17,15 +17,15 @@ function FilterButton({ searchTerm }) {
 
     const customPrice = () => {
         return (<div className="customPrice">
-            $<input
+            <span>$</span><input
                 className="filterInputBox"
                 type="number"
                 step="1"
                 min="0"
                 value={customMinPrice}
                 onChange={(e) => setCustomMinPrice(e.target.value)}
-            />&nbsp;—
-            $<input
+            /><span>&nbsp;—&nbsp;</span>
+            <span>$</span><input
                 className="filterInputBox"
                 type="number"
                 step="1"

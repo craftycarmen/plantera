@@ -10,6 +10,7 @@
     padding: 15px;
     background-color: #F2DCCB;
     width: fit-content;
+    height: 210px;
     text-wrap: nowrap;
     margin-top: 5px;
     margin-right: -2px;
@@ -24,11 +25,9 @@
 
 .filterInputBox {
     border: none;
-    padding: 5px 5px;
-    margin-top: 10px;
+    padding: 2px 5px;
+    margin-top: 5px;
     outline: none;
-    width: 25px;
-    height: 20px;
     background-color: #efefef;
     border-radius: 3px;
 }
@@ -61,7 +60,20 @@
     height: 35px;
 }
 
+.priceOptions:last-child {
+    margin-top: -1px;
+}
+
 .customPrice {
     display: flex;
     align-items: center;
+}
+
+.customPrice input {
+    margin-top: 10px;
+    width: 26px;
+}
+
+.customPrice span {
+    margin-top: 0px;
 }

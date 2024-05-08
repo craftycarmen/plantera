@@ -67,6 +67,7 @@
 .customPrice {
     display: flex;
     align-items: center;
+    margin-left: 35px;
 }
 
 .customPrice input {
@@ -76,6 +77,10 @@
 
 .customPrice span {
     margin-top: 0px;
+}
+
+.customPrice button {
+    margin-left: 10px;
 }
 
 .filterRange div.error {

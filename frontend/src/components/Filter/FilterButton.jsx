@@ -17,26 +17,30 @@ function FilterButton({ searchTerm }) {
     const [errors, setErrors] = useState({})
 
     const customPrice = () => {
-        return (<div className="customPrice">
-            <span>$</span><input
-                className="filterInputBox"
-                type="number"
-                step="1"
-                min="0"
-                value={customMinPrice || ""}
-                onChange={(e) => setCustomMinPrice(e.target.value)}
-            /><span>&nbsp;—&nbsp;</span>
-            <span>$</span><input
-                className="filterInputBox"
-                type="number"
-                step="1"
-                min="0"
-                value={customMaxPrice || ""}
-                onChange={(e) => setCustomMaxPrice(e.target.value)}
-            />
-        </div>
+        return (
+            <>
+                <div className="customPrice">
+                    <span>$</span><input
+                        className="filterInputBox"
+                        type="number"
+                        step="1"
+                        min="0"
+                        value={customMinPrice || ""}
+                        onChange={(e) => setCustomMinPrice(e.target.value)}
+                    /><span>&nbsp;—&nbsp;</span>
+                    <span>$</span><input
+                        className="filterInputBox"
+                        type="number"
+                        step="1"
+                        min="0"
+                        value={customMaxPrice || ""}
+                        onChange={(e) => setCustomMaxPrice(e.target.value)}
+                    />
+                </div>
+            </>
         )
     }
+
     const priceOptions = [
         {
             name: "Under $25",
@@ -65,11 +69,7 @@ function FilterButton({ searchTerm }) {
             }
         },
         {
-            name: customPrice(),
-            value: {
-                minPrice: customMinPrice || undefined,
-                maxPrice: customMaxPrice || undefined
-            }
+            name: "Custom"
         }
     ]
 
@@ -83,14 +83,29 @@ function FilterButton({ searchTerm }) {
     const handlePriceChange = (option) => {
         setSelectedPrice(option);
         const { minPrice: newMinPrice, maxPrice: newMaxPrice } = option.value;
-        if (newMinPrice !== undefined && newMaxPrice !== undefined && newMinPrice > newMaxPrice) {
-            setErrors({ customMinPrice: "Minimum price must be less than maximum price" })
-            return;
-        }
+        // if (newMinPrice !== undefined && newMaxPrice !== undefined && newMinPrice > newMaxPrice) {
+        //     setErrors({ customMinPrice: "Minimum price must be less than maximum price" })
+        //     return;
+        // }
         setErrors();
         setMinPrice(option.value.minPrice);
         setMaxPrice(option.value.maxPrice);
         const filters = { minPrice: newMinPrice, maxPrice: newMaxPrice };
+        dispatch(fetchListingResults(searchTerm, filters));
+    }
+
+    const handleCustomApply = (e) => {
+        e.preventDefault()
+        // const { minPrice: newMinPrice, maxPrice: newMaxPrice } = option.value;
+        if (customMinPrice !== undefined && customMaxPrice !== undefined && customMinPrice > customMaxPrice) {
+            setErrors({ customMinPrice: "Minimum price must be less than maximum price" })
+            return;
+        }
+        setSelectedPrice({ name: "Custom" });
+        setErrors();
+        setMinPrice(customMinPrice);
+        setMaxPrice(customMaxPrice);
+        const filters = { minPrice: customMinPrice, maxPrice: customMaxPrice };
         dispatch(fetchListingResults(searchTerm, filters));
     }
 
@@ -164,6 +179,31 @@ function FilterButton({ searchTerm }) {
 
                                 </label>
                             ))}
+
+                            <div className="customPrice">
+                                <span>$</span><input
+                                    className="filterInputBox"
+                                    type="number"
+                                    step="1"
+                                    min="0"
+                                    value={customMinPrice || ""}
+                                    onChange={(e) => setCustomMinPrice(e.target.value)}
+                                /><span>&nbsp;—&nbsp;</span>
+                                <span>$</span><input
+                                    className="filterInputBox"
+                                    type="number"
+                                    step="1"
+                                    min="0"
+                                    value={customMaxPrice || ""}
+                                    onChange={(e) => setCustomMaxPrice(e.target.value)}
+                                />
+                                <button
+                                    disabled={errors && !!Object.values(errors)?.length
+                                    }
+                                    onClick={(e) => handleCustomApply(e)}><i className="fa-solid fa-check" /></button>
+                            </div>
+
+
                             <div className="error">{errors?.customMinPrice &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.customMinPrice}</>}</div>
                         </div>

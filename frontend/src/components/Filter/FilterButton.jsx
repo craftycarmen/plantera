@@ -23,7 +23,7 @@ function FilterButton({ searchTerm }) {
                 type="number"
                 step="1"
                 min="0"
-                value={customMinPrice}
+                value={customMinPrice || ""}
                 onChange={(e) => setCustomMinPrice(e.target.value)}
             /><span>&nbsp;—&nbsp;</span>
             <span>$</span><input
@@ -31,7 +31,7 @@ function FilterButton({ searchTerm }) {
                 type="number"
                 step="1"
                 min="0"
-                value={customMaxPrice}
+                value={customMaxPrice || ""}
                 onChange={(e) => setCustomMaxPrice(e.target.value)}
             />
         </div>
@@ -67,25 +67,30 @@ function FilterButton({ searchTerm }) {
         {
             name: customPrice(),
             value: {
-                minPrice: customMinPrice,
-                maxPrice: customMaxPrice
+                minPrice: customMinPrice || undefined,
+                maxPrice: customMaxPrice || undefined
             }
         }
     ]
 
     useEffect(() => {
         const errs = {};
-        if (customMinPrice && customMaxPrice && customMinPrice > customMaxPrice) errs.customMinPrice = "Minimum price must be greater than maximum price"
+        if (customMinPrice && customMaxPrice && customMinPrice > customMaxPrice) errs.customMinPrice = "Minimum price must be less than maximum price"
 
         setErrors(errs)
     }, [customMinPrice, customMaxPrice])
 
     const handlePriceChange = (option) => {
         setSelectedPrice(option);
+        const { minPrice: newMinPrice, maxPrice: newMaxPrice } = option.value;
+        if (newMinPrice !== undefined && newMaxPrice !== undefined && newMinPrice > newMaxPrice) {
+            setErrors({ customMinPrice: "Minimum price must be less than maximum price" })
+            return;
+        }
         setErrors();
         setMinPrice(option.value.minPrice);
         setMaxPrice(option.value.maxPrice);
-        const filters = { minPrice: option.value.minPrice, maxPrice: option.value.maxPrice };
+        const filters = { minPrice: newMinPrice, maxPrice: newMaxPrice };
         dispatch(fetchListingResults(searchTerm, filters));
     }
 

@@ -10,7 +10,7 @@
     padding: 15px;
     background-color: #F2DCCB;
     width: fit-content;
-    height: 210px;
+    height: fit-content;
     text-wrap: nowrap;
     margin-top: 5px;
     margin-right: -2px;
@@ -76,4 +76,11 @@
 
 .customPrice span {
     margin-top: 0px;
+}
+
+.filterRange div.error {
+    margin-left: 35px;
+    inline-size: 100px;
+    white-space: pre-wrap;
+    margin-top: 10px;
 }

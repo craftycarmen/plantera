@@ -16,32 +16,39 @@ function FilterButton({ searchTerm }) {
     const [selectedPrice, setSelectedPrice] = useState({})
     const [errors, setErrors] = useState({})
 
-    const customPrice = () => {
-        return (
-            <>
-                <div className="customPrice">
-                    <span>$</span><input
-                        className="filterInputBox"
-                        type="number"
-                        step="1"
-                        min="0"
-                        value={customMinPrice || ""}
-                        onChange={(e) => setCustomMinPrice(e.target.value)}
-                    /><span>&nbsp;—&nbsp;</span>
-                    <span>$</span><input
-                        className="filterInputBox"
-                        type="number"
-                        step="1"
-                        min="0"
-                        value={customMaxPrice || ""}
-                        onChange={(e) => setCustomMaxPrice(e.target.value)}
-                    />
-                </div>
-            </>
-        )
-    }
+    // const customPrice = () => {
+    //     return (
+    //         <>
+    //             <div className="customPrice">
+    //                 <span>$</span><input
+    //                     className="filterInputBox"
+    //                     type="number"
+    //                     step="1"
+    //                     min="0"
+    //                     value={customMinPrice || ""}
+    //                     onChange={(e) => setCustomMinPrice(e.target.value)}
+    //                 /><span>&nbsp;—&nbsp;</span>
+    //                 <span>$</span><input
+    //                     className="filterInputBox"
+    //                     type="number"
+    //                     step="1"
+    //                     min="0"
+    //                     value={customMaxPrice || ""}
+    //                     onChange={(e) => setCustomMaxPrice(e.target.value)}
+    //                 />
+    //             </div>
+    //         </>
+    //     )
+    // }
 
     const priceOptions = [
+        {
+            name: "Any",
+            value: {
+                minPrice: undefined,
+                maxPrice: undefined
+            }
+        },
         {
             name: "Under $25",
             value: {

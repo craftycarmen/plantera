@@ -12,7 +12,9 @@ function Listings() {
     const listings = Object.values(useSelector((state) => state.listings))
         .filter(listing => listing.stockQty > 0)
         .sort((a, b) => b.id - a.id)
-    const filteredListings = useSelector((state) => state.search);
+    const filteredListings = Object.values(useSelector((state) => state.search))
+        .filter(listing => listing.stockQty > 0)
+        .sort((a, b) => b.id - a.id)
     const [showFilter, setShowFilter] = useState(false);
     const [filters, setFilters] = useState(null)
 
@@ -62,7 +64,7 @@ function Listings() {
                                 <div className="listingImageContainer">
                                     <img
                                         className="listingImage"
-                                        src={listing.ListingImages[0].url} />
+                                        src={listing.ListingImages?.[0]?.url} />
                                 </div>
                                 <div className="listingInfo">
                                     <h2>{plantName(listing.plantName)}</h2>

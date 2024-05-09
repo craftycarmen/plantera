@@ -8,6 +8,8 @@ import FilterButton from "../../Filter/FilterButton";
 function SearchPage() {
     const dispatch = useDispatch()
     const listings = Object.values(useSelector(state => state.search))
+        .filter(listing => listing.stockQty > 0)
+        .sort((a, b) => b.id - a.id)
     const [error, setError] = useState(null)
     const { search: urlSearchTerm } = useParams();
     const searchTermRedux = useSelector(state => state.search.searchTerm);

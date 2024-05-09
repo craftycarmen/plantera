@@ -338,7 +338,7 @@ function FilterButton({ searchTerm, onFilterToggle }) {
                             </div>
                         </div>
                         <br />
-                        <button style={{ marginTop: "20px" }}>Clear Filters</button>
+                        <button style={{ marginTop: "20px" }} >Clear Filters</button>
                     </form>
                 )}
             </div>

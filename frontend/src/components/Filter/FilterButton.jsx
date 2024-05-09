@@ -126,7 +126,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         {
             name: "Any",
             value: {
-                potSize: "any"
+                potSize: 0
             }
         },
         {

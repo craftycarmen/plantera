@@ -81,9 +81,14 @@ router.get('/', validateQuery, async (req, res) => {
         if (size > 20) size = 20
         if (page > 10) page = 10
     }
-
-    if (potSize && !isNaN(potSize[0])) {
-        if (potSize.length > 1) {
+    potSize.filter(Number)
+    console.log("POTSIZE", potSize.includes(0));
+    if (potSize) {
+        if (potSize.includes(0)) {
+            where.potSize = {
+                [Op.in]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+            };
+        } else if (potSize.length > 1) {
             where.potSize = {
                 [Op.in]: potSize
             };

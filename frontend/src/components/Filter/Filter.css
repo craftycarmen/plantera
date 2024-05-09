@@ -1,4 +1,4 @@
-.filterButtonWrapper span:hover {
+.filterButton:hover {
     cursor: pointer;
 }
 

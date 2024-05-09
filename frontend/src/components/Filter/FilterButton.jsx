@@ -256,7 +256,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
 
     return (
         <div className="filterButtonWrapper">
-            <span onClick={toggleMenu}>
+            <span className="filterButton" onClick={toggleMenu}>
                 <i className="fa-solid fa-filter" /> Filter
             </span>
             <div className="outerFilterWrapper">

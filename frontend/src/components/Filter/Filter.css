@@ -106,3 +106,9 @@
     white-space: pre-wrap;
     margin-top: 10px;
 }
+
+.clickedButton {
+    background-color: #FDAC8A;
+    border-radius: 3px;
+    border: 1px black solid;
+}

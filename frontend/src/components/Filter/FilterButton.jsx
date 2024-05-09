@@ -10,35 +10,11 @@ function FilterButton({ searchTerm }) {
     const [minPrice, setMinPrice] = useState(undefined)
     const [maxPrice, setMaxPrice] = useState(undefined)
     const [potSize, setPotSize] = useState([])
+    const [potSizeButtonClicked, setPotSizeButtonClicked] = useState({})
     const [customMinPrice, setCustomMinPrice] = useState(undefined);
     const [customMaxPrice, setCustomMaxPrice] = useState(undefined);
     const [selectedPrice, setSelectedPrice] = useState({})
     const [errors, setErrors] = useState({})
-
-    // const customPrice = () => {
-    //     return (
-    //         <>
-    //             <div className="customPrice">
-    //                 <span>$</span><input
-    //                     className="filterInputBox"
-    //                     type="number"
-    //                     step="1"
-    //                     min="0"
-    //                     value={customMinPrice || ""}
-    //                     onChange={(e) => setCustomMinPrice(e.target.value)}
-    //                 /><span>&nbsp;—&nbsp;</span>
-    //                 <span>$</span><input
-    //                     className="filterInputBox"
-    //                     type="number"
-    //                     step="1"
-    //                     min="0"
-    //                     value={customMaxPrice || ""}
-    //                     onChange={(e) => setCustomMaxPrice(e.target.value)}
-    //                 />
-    //             </div>
-    //         </>
-    //     )
-    // }
 
     const priceOptions = [
         {
@@ -111,6 +87,10 @@ function FilterButton({ searchTerm }) {
             newMinPrice = undefined;
             newMaxPrice = undefined;
         }
+
+        setCustomMinPrice(undefined);
+        setCustomMaxPrice(undefined);
+
         setErrors();
         setMinPrice(newMinPrice);
         setMaxPrice(newMaxPrice);
@@ -132,7 +112,7 @@ function FilterButton({ searchTerm }) {
             return;
         }
 
-        setSelectedPrice({});
+        setSelectedPrice(priceOptions.find(option => option.name === 'Custom'))
         setErrors({});
         setMinPrice(customMinPrice);
         setMaxPrice(customMaxPrice);
@@ -217,7 +197,6 @@ function FilterButton({ searchTerm }) {
 
     const handlePotSize = (value, e) => {
         e.preventDefault();
-        console.log("Pot size clicked:", value);
         const updatedPotSize = Array.isArray(potSize) ? [...potSize] : [];
 
         if (!updatedPotSize.includes(value)) {
@@ -227,7 +206,7 @@ function FilterButton({ searchTerm }) {
             updatedPotSize.splice(index, 1);
         }
         setPotSize(updatedPotSize)
-        console.log("Updated pot size:", updatedPotSize);
+        setPotSizeButtonClicked(prevState => ({ ...prevState, [value]: !prevState[value] }))
 
         const filters = { minPrice, maxPrice }
         if (updatedPotSize.length > 0) {
@@ -240,7 +219,7 @@ function FilterButton({ searchTerm }) {
 
     const fetchListings = useCallback(() => {
         let filters = { minPrice, maxPrice }
-        if (potSize.length > 0) {
+        if (potSize?.length > 0) {
             filters = { ...filters, potSize }
         }
         dispatch(fetchListingResults(searchTerm, filters))
@@ -350,12 +329,9 @@ function FilterButton({ searchTerm }) {
                             <div>Pot Size</div>
                             <div className="potSize">
                                 {potSizeOptions.map((size) => (
-                                    <button
+                                    <button className={potSizeButtonClicked[size.value.potSize] ? "clickedButton" : ""}
                                         key={size.name}
-                                        onClick={(e) => {
-                                            handlePotSize(size.value.potSize, e);
-                                        }
-                                        }
+                                        onClick={(e) => handlePotSize(size.value.potSize, e)}
                                     >{size.name}</button>
                                 ))}
                             </div>

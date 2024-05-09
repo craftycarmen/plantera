@@ -114,7 +114,7 @@ function FilterButton({ searchTerm }) {
         setErrors();
         setMinPrice(newMinPrice);
         setMaxPrice(newMaxPrice);
-        const filters = { minPrice: newMinPrice, maxPrice: newMaxPrice };
+        const filters = { minPrice: newMinPrice, maxPrice: newMaxPrice, potSize };
         dispatch(fetchListingResults(searchTerm, filters));
     }
 

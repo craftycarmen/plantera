@@ -51,7 +51,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
             }
         },
         {
-            name: "Custom"
+            name: ""
         }
     ]
 
@@ -113,7 +113,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
             return;
         }
 
-        setSelectedPrice(priceOptions.find(option => option.name === 'Custom'))
+        setSelectedPrice(priceOptions.find(option => option.name === ''))
         setErrors({});
         setMinPrice(customMinPrice);
         setMaxPrice(customMaxPrice);
@@ -276,8 +276,8 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
                                                 (Object.keys(selectedPrice).length !== 0 &&
                                                     selectedPrice.value &&
                                                     JSON.stringify(range.value) === JSON.stringify(selectedPrice.value)) ||
-                                                (selectedPrice.name === 'Custom' &&
-                                                    range.name === 'Custom')
+                                                (selectedPrice.name === '' &&
+                                                    range.name === '')
                                             }
 
                                             type="radio"

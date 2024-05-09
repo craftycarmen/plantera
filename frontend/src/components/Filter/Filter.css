@@ -84,7 +84,8 @@
 .customPrice {
     display: flex;
     align-items: center;
-    margin-left: 35px;
+    margin-left: 34px;
+    margin-top: -30px;
 }
 
 .customPrice input {
@@ -103,7 +104,7 @@
 
 .filterRange div.error {
     margin-left: 35px;
-    inline-size: 180px;
+    inline-size: 160px;
     white-space: pre-wrap;
     margin-top: 10px;
 }

@@ -61,7 +61,7 @@ function SearchPage() {
             <h1>Search Results</h1>
             {error || listings.length === 0 ? (
                 <>
-                    <div>No results found for &#34;{searchTerm}&#34;.</div>
+                    <div>No results found for &#34;{searchTerm}&#34;</div>
                     <br />
                     <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} />
                 </>

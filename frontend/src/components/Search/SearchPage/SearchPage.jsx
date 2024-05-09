@@ -54,7 +54,7 @@ function SearchPage() {
     };
 
     const listingsContainerStyle = {
-        marginLeft: showFilter ? '300px' : '0',
+        marginLeft: showFilter ? '270px' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 

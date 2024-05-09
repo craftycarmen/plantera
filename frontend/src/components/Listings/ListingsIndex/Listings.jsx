@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllListings } from "../../../store/listings";
-import { useEffect } from "react";
+import { fetchListingResults } from "../../../store/search";
+import { useEffect, useState } from "react";
 import './Listings.css';
 import { Link } from "react-router-dom";
 import { price, plantName } from "../../../../utils";
@@ -11,21 +12,46 @@ function Listings() {
     const listings = Object.values(useSelector((state) => state.listings))
         .filter(listing => listing.stockQty > 0)
         .sort((a, b) => b.id - a.id)
+    const filteredListings = useSelector((state) => state.search);
+    const [error, setError] = useState(null)
+    const [showFilter, setShowFilter] = useState(false);
+    const [filters, setFilters] = useState(null)
+
+
+    const handleFilterToggle = () => {
+        setShowFilter(!showFilter);
+    };
+
+    const listingsContainerStyle = {
+        marginLeft: showFilter ? '300px' : '0',
+        transition: 'margin-left 0.2s ease-in-out'
+    };
+
 
     useEffect(() => {
         dispatch(fetchAllListings())
     }, [dispatch])
 
-    return (listings &&
+    useEffect(() => {
+        if (filters) dispatch(fetchListingResults(null, filters))
+    }, [dispatch, filters])
+
+    const handleFilterChange = (filterParams) => {
+        setFilters(filterParams)
+    }
+
+    const displayedListings = filters ? Object.values(filteredListings) : Object.values(listings)
+
+    return (displayedListings &&
         <>
             <h1>Shop</h1>
             <div>Shop for plants from fellow plant lovers!</div>
             <br />
-            <FilterButton />
+            <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
             <br />
-            <div className="listingsContainer">
+            <div className="listingsContainer" style={listingsContainerStyle}>
                 {
-                    listings.map((listing) => (
+                    displayedListings.map((listing) => (
                         <div key={listing.id}>
                             <Link to={`/listings/${listing.id}`}>
                                 <div className="listingImageContainer">

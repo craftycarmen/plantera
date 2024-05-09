@@ -3,7 +3,7 @@ import './Filter.css'
 import { useDispatch } from "react-redux";
 import { fetchListingResults } from "../../store/search";
 
-function FilterButton({ searchTerm, onFilterToggle }) {
+function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
     const dispatch = useDispatch()
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -96,6 +96,7 @@ function FilterButton({ searchTerm, onFilterToggle }) {
         setMaxPrice(newMaxPrice);
         const filters = { minPrice: newMinPrice, maxPrice: newMaxPrice, potSize };
         dispatch(fetchListingResults(searchTerm, filters));
+        onFilterChange(filters);
     }
 
     const handleCustomApply = (e) => {
@@ -118,6 +119,7 @@ function FilterButton({ searchTerm, onFilterToggle }) {
         setMaxPrice(customMaxPrice);
         const filters = { minPrice: customMinPrice, maxPrice: customMaxPrice };
         dispatch(fetchListingResults(searchTerm, filters));
+        onFilterChange(filters);
     }
 
     const potSizeOptions = [
@@ -213,7 +215,7 @@ function FilterButton({ searchTerm, onFilterToggle }) {
             filters.potSize = updatedPotSize
         }
         dispatch(fetchListingResults(searchTerm, filters))
-
+        onFilterChange(filters);
     }
 
 

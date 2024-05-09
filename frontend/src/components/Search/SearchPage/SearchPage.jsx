@@ -13,7 +13,6 @@ function SearchPage() {
     const searchTermRedux = useSelector(state => state.search.searchTerm);
     const [showFilter, setShowFilter] = useState(false);
 
-
     const getSearchFromLocal = () => {
         return localStorage.getItem('searchTerm')
     }
@@ -47,19 +46,6 @@ function SearchPage() {
             localStorage.removeItem('searchTerm');
         }
     }, [dispatch, searchTerm]);
-
-    // useEffect(() => {
-    //     const handleClickOutside = (e) => {
-    //         if (filterRef.current && !filterRef.current.contains(e.target)) {
-    //             setShowFilter(false);
-    //         }
-    //     };
-
-    //     document.addEventListener("mousedown", handleClickOutside);
-    //     return () => {
-    //         document.removeEventListener("mousedown", handleClickOutside);
-    //     };
-    // }, []);
 
     const handleFilterToggle = () => {
         setShowFilter(!showFilter);

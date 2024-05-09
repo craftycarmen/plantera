@@ -112,3 +112,13 @@
     border-radius: 3px;
     border: 1px black solid;
 }
+
+.rightPosition {
+    position: absolute;
+    /* top: 0; */
+    /* right: 0; */
+    margin-left: 400px;
+    transition: margin-left 0.3s ease-in-out;
+    /* Adjust as needed */
+    /* Add other necessary styles */
+}

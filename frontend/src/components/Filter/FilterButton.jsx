@@ -3,7 +3,7 @@ import './Filter.css'
 import { useDispatch } from "react-redux";
 import { fetchListingResults } from "../../store/search";
 
-function FilterButton({ searchTerm }) {
+function FilterButton({ searchTerm, onFilterToggle }) {
     const dispatch = useDispatch()
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -255,6 +255,7 @@ function FilterButton({ searchTerm }) {
     const toggleMenu = (e) => {
         e.stopPropagation();
         setShowMenu(!showMenu);
+        onFilterToggle()
     }
 
 

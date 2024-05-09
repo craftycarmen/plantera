@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { price, plantName } from "../../../../utils";
 import { fetchListingResults } from "../../../store/search";
 import FilterButton from "../../Filter/FilterButton";
@@ -11,6 +11,8 @@ function SearchPage() {
     const [error, setError] = useState(null)
     const { search: urlSearchTerm } = useParams();
     const searchTermRedux = useSelector(state => state.search.searchTerm);
+    const [showFilter, setShowFilter] = useState(false);
+    const filterRef = useRef(null);
 
     const getSearchFromLocal = () => {
         return localStorage.getItem('searchTerm')
@@ -46,6 +48,22 @@ function SearchPage() {
         }
     }, [dispatch, searchTerm]);
 
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (filterRef.current && !filterRef.current.contains(e.target)) {
+                setShowFilter(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleFilterToggle = () => {
+        setShowFilter((prevShowFilter) => !prevShowFilter);
+    };
 
     return (
         <>
@@ -54,15 +72,15 @@ function SearchPage() {
                 <>
                     <div>No results found.</div>
                     <br />
-                    <FilterButton searchTerm={searchTerm} />
+                    <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} />
                 </>
             ) : (
                 <>
                     <div>{listings.length && results(listings.length)} for &#34;{searchTerm}&#34;</div>
                     <br />
-                    <FilterButton searchTerm={searchTerm} />
+                    <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} />
                     <br />
-                    <div className="listingsContainer">
+                    <div className={`listingsContainer${showFilter ? ' rightPosition' : ''}`} ref={filterRef}>
                         {
                             listings && listings?.map((listing) => (
                                 listing && (

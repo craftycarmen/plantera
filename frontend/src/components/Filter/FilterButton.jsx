@@ -236,6 +236,15 @@ function FilterButton({ searchTerm, onFilterToggle }) {
         setSelectedPrice({});
     }, [searchTerm]);
 
+    const handleClear = (e) => {
+        e.preventDefault();
+        setMinPrice(undefined);
+        setMaxPrice(undefined);
+        setPotSize(undefined);
+        setSelectedPrice({});
+        setPotSizeButtonClicked(false);
+        dispatch(fetchListingResults(searchTerm, null))
+    }
     // useEffect(() => {
     //     const closeMenu = (e) => {
     //         if (ulRef.current && !ulRef.current.contains(e.target)) {
@@ -338,7 +347,7 @@ function FilterButton({ searchTerm, onFilterToggle }) {
                             </div>
                         </div>
                         <br />
-                        <button style={{ marginTop: "20px" }} >Clear Filters</button>
+                        <button style={{ marginTop: "20px" }} onClick={(e) => handleClear(e)}>Clear Filters</button>
                     </form>
                 )}
             </div>

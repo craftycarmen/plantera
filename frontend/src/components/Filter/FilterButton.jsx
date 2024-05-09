@@ -236,21 +236,21 @@ function FilterButton({ searchTerm, onFilterToggle }) {
         setSelectedPrice({});
     }, [searchTerm]);
 
-    useEffect(() => {
-        const closeMenu = (e) => {
-            if (ulRef.current && !ulRef.current.contains(e.target)) {
-                setShowMenu(false);
-            }
-        };
+    // useEffect(() => {
+    //     const closeMenu = (e) => {
+    //         if (ulRef.current && !ulRef.current.contains(e.target)) {
+    //             setShowMenu(false);
+    //         }
+    //     };
 
-        if (showMenu) {
-            document.addEventListener('click', closeMenu);
-        } else {
-            document.removeEventListener('click', closeMenu);
-        }
+    //     if (showMenu) {
+    //         document.addEventListener('click', closeMenu);
+    //     } else {
+    //         document.removeEventListener('click', closeMenu);
+    //     }
 
-        return () => document.removeEventListener('click', closeMenu);
-    }, [showMenu]);
+    //     return () => document.removeEventListener('click', closeMenu);
+    // }, [showMenu]);
 
     const toggleMenu = (e) => {
         e.stopPropagation();
@@ -266,11 +266,11 @@ function FilterButton({ searchTerm, onFilterToggle }) {
             <span onClick={toggleMenu}>
                 <i className="fa-solid fa-filter" /> Filter
             </span>
-            <div>
+            <div className="outerFilterWrapper">
                 {showMenu && (
                     <form className="filter-dropdown" ref={ulRef}>
                         <div>
-                            <div>Price</div>
+                            <h3>Price</h3>
                             <div className="filterRange">
                                 {priceOptions.map((range, index) => (
                                     <label key={range.name} className="priceOptions">
@@ -325,9 +325,9 @@ function FilterButton({ searchTerm, onFilterToggle }) {
                                     <><i className="fa-solid fa-circle-exclamation" /> {errors.customMinPrice}</>}</div>
                             </div>
                         </div>
-                        <div className="verticalLine"></div>
+                        <br />
                         <div>
-                            <div>Pot Size</div>
+                            <h3>Pot Size</h3>
                             <div className="potSize">
                                 {potSizeOptions.map((size) => (
                                     <button className={potSizeButtonClicked[size.value.potSize] ? "clickedButton" : ""}
@@ -337,6 +337,8 @@ function FilterButton({ searchTerm, onFilterToggle }) {
                                 ))}
                             </div>
                         </div>
+                        <br />
+                        <button style={{ marginTop: "20px" }}>Clear Filters</button>
                     </form>
                 )}
             </div>

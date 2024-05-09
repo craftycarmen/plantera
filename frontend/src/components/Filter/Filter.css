@@ -1,5 +1,10 @@
-.filterButtonWrapper:hover {
+.filterButtonWrapper span:hover {
     cursor: pointer;
+}
+
+.outerFilterWrapper {
+    height: 100%;
+    overflow-y: auto;
 }
 
 .filter-dropdown {
@@ -7,25 +12,19 @@
     border: #28635A solid 1.5px;
     /* box-shadow: 2px 2px 0px #f9ddd2; */
     border-radius: 3px;
-    padding: 15px 20px 0px 20px;
+    padding: 15px 20px 15px 20px;
     background-color: #F2DCCB;
     width: fit-content;
-    height: fit-content;
+    /* bottom: 20px; */
     text-wrap: nowrap;
-    margin-top: 5px;
+    margin-top: 20px;
+    /* margin-bottom: 20px; */
     margin-right: -2px;
     left: 1;
     z-index: 2;
     cursor: text;
-    display: flex;
-    column-gap: 30px;
-}
-
-.verticalLine {
-    border-left: 1px solid #28635A;
-    height: 250px;
     display: grid;
-    align-self: center;
+    column-gap: 30px;
 }
 
 .filter-dropdown-hidden {
@@ -55,9 +54,10 @@
 
 .potSize {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     gap: 10px;
     padding-top: 18px;
+    justify-content: space-evenly;
 }
 
 .potSize button {
@@ -98,11 +98,12 @@
 
 .customPrice button {
     margin-left: 10px;
+    width: 30px;
 }
 
 .filterRange div.error {
     margin-left: 35px;
-    inline-size: 100px;
+    inline-size: 180px;
     white-space: pre-wrap;
     margin-top: 10px;
 }
@@ -111,14 +112,4 @@
     background-color: #FDAC8A;
     border-radius: 3px;
     border: 1px black solid;
-}
-
-.rightPosition {
-    position: absolute;
-    /* top: 0; */
-    /* right: 0; */
-    margin-left: 400px;
-    transition: margin-left 0.3s ease-in-out;
-    /* Adjust as needed */
-    /* Add other necessary styles */
 }

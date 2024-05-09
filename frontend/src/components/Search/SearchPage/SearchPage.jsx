@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { price, plantName } from "../../../../utils";
 import { fetchListingResults } from "../../../store/search";
 import FilterButton from "../../Filter/FilterButton";
@@ -12,7 +12,7 @@ function SearchPage() {
     const { search: urlSearchTerm } = useParams();
     const searchTermRedux = useSelector(state => state.search.searchTerm);
     const [showFilter, setShowFilter] = useState(false);
-    const filterRef = useRef(null);
+
 
     const getSearchFromLocal = () => {
         return localStorage.getItem('searchTerm')
@@ -48,21 +48,26 @@ function SearchPage() {
         }
     }, [dispatch, searchTerm]);
 
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (filterRef.current && !filterRef.current.contains(e.target)) {
-                setShowFilter(false);
-            }
-        };
+    // useEffect(() => {
+    //     const handleClickOutside = (e) => {
+    //         if (filterRef.current && !filterRef.current.contains(e.target)) {
+    //             setShowFilter(false);
+    //         }
+    //     };
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    //     document.addEventListener("mousedown", handleClickOutside);
+    //     return () => {
+    //         document.removeEventListener("mousedown", handleClickOutside);
+    //     };
+    // }, []);
 
     const handleFilterToggle = () => {
-        setShowFilter((prevShowFilter) => !prevShowFilter);
+        setShowFilter(!showFilter);
+    };
+
+    const listingsContainerStyle = {
+        marginLeft: showFilter ? '300px' : '0',
+        transition: 'margin-left 0.2s ease-in-out'
     };
 
     return (
@@ -80,7 +85,7 @@ function SearchPage() {
                     <br />
                     <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} />
                     <br />
-                    <div className={`listingsContainer${showFilter ? ' rightPosition' : ''}`} ref={filterRef}>
+                    <div className="listingsContainer" style={listingsContainerStyle} >
                         {
                             listings && listings?.map((listing) => (
                                 listing && (

@@ -81,8 +81,7 @@ router.get('/', validateQuery, async (req, res) => {
         if (size > 20) size = 20
         if (page > 10) page = 10
     }
-    potSize.filter(Number)
-    console.log("POTSIZE", potSize.includes(0));
+
     if (potSize) {
         if (potSize.includes(0)) {
             where.potSize = {

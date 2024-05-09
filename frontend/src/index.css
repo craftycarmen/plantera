@@ -159,6 +159,7 @@ select:hover {
 
 button:disabled {
     color: gray;
+    cursor: default;
 }
 
 .dots {

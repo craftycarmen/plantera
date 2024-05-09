@@ -96,7 +96,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         setMaxPrice(newMaxPrice);
         const filters = { minPrice: newMinPrice, maxPrice: newMaxPrice, potSize };
         dispatch(fetchListingResults(searchTerm, filters));
-        onFilterChange(filters);
+        if (onFilterChange) onFilterChange(filters);
     }
 
     const handleCustomApply = (e) => {
@@ -119,7 +119,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         setMaxPrice(customMaxPrice);
         const filters = { minPrice: customMinPrice, maxPrice: customMaxPrice };
         dispatch(fetchListingResults(searchTerm, filters));
-        onFilterChange(filters);
+        if (onFilterChange) onFilterChange(filters);
     }
 
     const potSizeOptions = [
@@ -215,7 +215,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
             filters.potSize = updatedPotSize
         }
         dispatch(fetchListingResults(searchTerm, filters))
-        onFilterChange(filters);
+        if (onFilterChange) onFilterChange(filters);
     }
 
 
@@ -247,30 +247,12 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         setPotSizeButtonClicked(false);
         dispatch(fetchListingResults(searchTerm, null))
     }
-    // useEffect(() => {
-    //     const closeMenu = (e) => {
-    //         if (ulRef.current && !ulRef.current.contains(e.target)) {
-    //             setShowMenu(false);
-    //         }
-    //     };
-
-    //     if (showMenu) {
-    //         document.addEventListener('click', closeMenu);
-    //     } else {
-    //         document.removeEventListener('click', closeMenu);
-    //     }
-
-    //     return () => document.removeEventListener('click', closeMenu);
-    // }, [showMenu]);
 
     const toggleMenu = (e) => {
         e.stopPropagation();
         setShowMenu(!showMenu);
         onFilterToggle()
     }
-
-
-    // const closeMenu = () => setShowMenu(false);
 
     return (
         <div className="filterButtonWrapper">

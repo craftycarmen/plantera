@@ -9,7 +9,7 @@ function FilterButton({ searchTerm }) {
     const ulRef = useRef();
     const [minPrice, setMinPrice] = useState(undefined)
     const [maxPrice, setMaxPrice] = useState(undefined)
-    const [potSize, setPotSize] = useState(undefined)
+    const [potSize, setPotSize] = useState([])
     const [customMinPrice, setCustomMinPrice] = useState(undefined);
     const [customMaxPrice, setCustomMaxPrice] = useState(undefined);
     const [selectedPrice, setSelectedPrice] = useState({})
@@ -81,17 +81,39 @@ function FilterButton({ searchTerm }) {
 
     useEffect(() => {
         const errs = {};
-        if (customMinPrice && customMaxPrice && customMinPrice > customMaxPrice) errs.customMinPrice = "Minimum price must be less than maximum price"
 
-        setErrors(errs)
-    }, [customMinPrice, customMaxPrice])
+        if (
+            customMinPrice !== undefined &&
+            customMaxPrice !== undefined &&
+            customMinPrice !== "" &&
+            customMaxPrice !== "" &&
+            customMinPrice >= 0 &&
+            customMaxPrice >= 0 &&
+            customMinPrice >= customMaxPrice
+        ) {
+            errs.customMinPrice = "Minimum price must be less than maximum price";
+        } else {
+            setErrors({});
+        }
+
+        setErrors(errs);
+    }, [customMinPrice, customMaxPrice]);
+
 
     const handlePriceChange = (option) => {
         setSelectedPrice(option);
-        const { minPrice: newMinPrice, maxPrice: newMaxPrice } = option.value;
+        let newMinPrice, newMaxPrice;
+
+        if (option.value) {
+            newMinPrice = option.value.minPrice;
+            newMaxPrice = option.value.maxPrice;
+        } else {
+            newMinPrice = undefined;
+            newMaxPrice = undefined;
+        }
         setErrors();
-        setMinPrice(option.value.minPrice);
-        setMaxPrice(option.value.maxPrice);
+        setMinPrice(newMinPrice);
+        setMaxPrice(newMaxPrice);
         const filters = { minPrice: newMinPrice, maxPrice: newMaxPrice };
         dispatch(fetchListingResults(searchTerm, filters));
     }
@@ -99,12 +121,19 @@ function FilterButton({ searchTerm }) {
     const handleCustomApply = (e) => {
         e.preventDefault()
         // const { minPrice: newMinPrice, maxPrice: newMaxPrice } = option.value;
-        if (customMinPrice !== undefined && customMaxPrice !== undefined && customMinPrice > customMaxPrice) {
+        if (customMinPrice !== undefined &&
+            customMaxPrice !== undefined &&
+            customMinPrice !== "" &&
+            customMaxPrice !== "" &&
+            customMinPrice >= 0 &&
+            customMaxPrice >= 0 &&
+            customMinPrice >= customMaxPrice) {
             setErrors({ customMinPrice: "Minimum price must be less than maximum price" })
             return;
         }
-        setSelectedPrice({ name: "Custom" });
-        setErrors();
+
+        setSelectedPrice({});
+        setErrors({});
         setMinPrice(customMinPrice);
         setMaxPrice(customMaxPrice);
         const filters = { minPrice: customMinPrice, maxPrice: customMaxPrice };
@@ -185,18 +214,41 @@ function FilterButton({ searchTerm }) {
             }
         },
     ]
-    const handlePotSize = (value) => {
-        setPotSize(value)
+
+    const handlePotSize = (value, e) => {
+        e.preventDefault();
+        console.log("Pot size clicked:", value);
+        const updatedPotSize = Array.isArray(potSize) ? [...potSize] : [];
+
+        if (!updatedPotSize.includes(value)) {
+            updatedPotSize.push(value)
+        } else {
+            const index = updatedPotSize.indexOf(value);
+            updatedPotSize.splice(index, 1);
+        }
+        setPotSize(updatedPotSize)
+        console.log("Updated pot size:", updatedPotSize);
+
+        const filters = { minPrice, maxPrice }
+        if (updatedPotSize.length > 0) {
+            filters.potSize = updatedPotSize
+        }
+        dispatch(fetchListingResults(searchTerm, filters))
+
     }
 
+
     const fetchListings = useCallback(() => {
-        const filters = { minPrice, maxPrice, potSize }
+        let filters = { minPrice, maxPrice }
+        if (potSize.length > 0) {
+            filters = { ...filters, potSize }
+        }
         dispatch(fetchListingResults(searchTerm, filters))
     }, [dispatch, searchTerm, minPrice, maxPrice, potSize])
 
     useEffect(() => {
         if (Object.keys(selectedPrice).length !== 0) fetchListings()
-    }, [fetchListings, selectedPrice, minPrice, maxPrice])
+    }, [fetchListings, selectedPrice, minPrice, maxPrice, potSize])
 
     useEffect(() => {
         setMinPrice(undefined);
@@ -247,7 +299,14 @@ function FilterButton({ searchTerm }) {
                                             key={index}
                                             name="priceRange"
                                             value={range.value}
-                                            checked={selectedPrice && JSON.stringify(range.value) === JSON.stringify(selectedPrice.value)}
+                                            checked={
+                                                (Object.keys(selectedPrice).length !== 0 &&
+                                                    selectedPrice.value &&
+                                                    JSON.stringify(range.value) === JSON.stringify(selectedPrice.value)) ||
+                                                (selectedPrice.name === 'Custom' &&
+                                                    range.name === 'Custom')
+                                            }
+
                                             type="radio"
                                             onChange={() => handlePriceChange(range)}
                                             onClick={fetchListings}
@@ -264,19 +323,19 @@ function FilterButton({ searchTerm }) {
                                         type="number"
                                         step="1"
                                         min="0"
-                                        value={customMinPrice || ""}
-                                        onChange={(e) => setCustomMinPrice(e.target.value)}
+                                        value={customMinPrice === "" ? "" : customMinPrice || ""}
+                                        onChange={(e) => setCustomMinPrice(e.target.value === "" ? undefined : e.target.value)}
                                     /><span>&nbsp;—&nbsp;</span>
                                     <span>$</span><input
                                         className="filterInputBox"
                                         type="number"
                                         step="1"
                                         min="0"
-                                        value={customMaxPrice || ""}
-                                        onChange={(e) => setCustomMaxPrice(e.target.value)}
+                                        value={customMaxPrice === "" ? "" : customMaxPrice || ""}
+                                        onChange={(e) => setCustomMaxPrice(e.target.value === "" ? undefined : e.target.value)}
                                     />
                                     <button
-                                        disabled={errors && !!Object.values(errors)?.length
+                                        disabled={(!customMinPrice && !customMaxPrice) || errors && !!Object.values(errors)?.length
                                         }
                                         onClick={(e) => handleCustomApply(e)}><i className="fa-solid fa-check" /></button>
                                 </div>
@@ -291,20 +350,14 @@ function FilterButton({ searchTerm }) {
                             <div>Pot Size</div>
                             <div className="potSize">
                                 {potSizeOptions.map((size) => (
-                                    <button key={size.name} onClick={() => handlePotSize(size.value.potSize)}>{size.name}</button>
+                                    <button
+                                        key={size.name}
+                                        onClick={(e) => {
+                                            handlePotSize(size.value.potSize, e);
+                                        }
+                                        }
+                                    >{size.name}</button>
                                 ))}
-                                {/* <button onClick={handlePotSize}>Any</button>
-                                <button onClick={handlePotSize}>2&#34;</button>
-                                <button onClick={handlePotSize}>3&#34;</button>
-                                <button onClick={handlePotSize}>4&#34;</button>
-                                <button onClick={handlePotSize}>5&#34;</button>
-                                <button onClick={handlePotSize}>6&#34;</button>
-                                <button onClick={handlePotSize}>7&#34;</button>
-                                <button onClick={handlePotSize}>8&#34;</button>
-                                <button onClick={handlePotSize}>9&#34;</button>
-                                <button onClick={handlePotSize}>10&#34;</button>
-                                <button onClick={handlePotSize}>11&#34;</button>
-                                <button onClick={handlePotSize}>12&#34;</button> */}
                             </div>
                         </div>
                     </form>

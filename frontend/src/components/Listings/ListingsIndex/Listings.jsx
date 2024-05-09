@@ -13,7 +13,6 @@ function Listings() {
         .filter(listing => listing.stockQty > 0)
         .sort((a, b) => b.id - a.id)
     const filteredListings = useSelector((state) => state.search);
-    const [error, setError] = useState(null)
     const [showFilter, setShowFilter] = useState(false);
     const [filters, setFilters] = useState(null)
 
@@ -42,6 +41,7 @@ function Listings() {
 
     const displayedListings = filters ? Object.values(filteredListings) : Object.values(listings)
 
+    console.log("DL", displayedListings.length);
     return (displayedListings &&
         <>
             <h1>Shop</h1>
@@ -50,7 +50,12 @@ function Listings() {
             <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
             <br />
             <div className="listingsContainer" style={listingsContainerStyle}>
-                {
+                {displayedListings.length === 0 ? (
+                    <>
+                        <div>No results found. Please refine or clear filters.</div>
+                    </>
+                ) : (
+
                     displayedListings.map((listing) => (
                         <div key={listing.id}>
                             <Link to={`/listings/${listing.id}`}>
@@ -68,7 +73,9 @@ function Listings() {
                             </Link>
                         </div>
                     ))
-                }
+
+                )}
+
             </div>
         </>
     )

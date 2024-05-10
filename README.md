@@ -1,4 +1,4 @@
-# plantsplantsplants
+# plantera
 ## USER AUTHENTICATION/AUTHORIZATION
 
 ### All endpoints that require authentication

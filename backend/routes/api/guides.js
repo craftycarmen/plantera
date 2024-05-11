@@ -32,6 +32,39 @@ router.get('/', async (req, res) => {
     return res.json({ Guides: guidesList })
 });
 
+router.get('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    if (user) {
+        const guides = await Guide.findAll({
+            include: [
+                {
+                    model: Image,
+                    as: 'GuideImages',
+                    attributes: {
+                        exclude: ['avatar']
+                    }
+                },
+            ],
+            where: {
+                userId: user.id
+            }
+        });
+
+        let guidesList = [];
+
+        guides.forEach(guide => {
+            guidesList.push(guide.toJSON())
+        });
+
+        if (guidesList.length === 0) {
+            return res.json({ Guides: "No guides found" })
+        } else {
+            return res.json({ Guides: guidesList })
+        }
+    }
+})
+
 router.get('/:guideId', async (req, res) => {
     const guide = await Guide.findByPk(req.params.guideId, {
         include: [

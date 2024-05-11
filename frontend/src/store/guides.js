@@ -12,7 +12,12 @@ export const loadAllGuides = (guides) => ({
 export const loadOneGuide = (guide) => ({
     type: LOAD_ONE_GUIDE,
     guide
-})
+});
+
+export const loadOwnedGuides = (guides) => ({
+    type: LOAD_OWNED_GUIDES,
+    guides
+});
 
 export const fetchAllGuides = () => async (dispatch) => {
     const res = await fetch('/api/guides');
@@ -40,6 +45,19 @@ export const fetchOneGuide = (guideId) => async (dispatch) => {
     }
 }
 
+export const fetchOwnedGuides = () => async (dispatch) => {
+    const res = await fetch('/api/guides/current');
+
+    if (res.ok) {
+        const guides = await res.json();
+        dispatch(loadOwnedGuides(guides));
+        return guides;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 
 
 const guidesReducer = (state = {}, action) => {
@@ -54,6 +72,17 @@ const guidesReducer = (state = {}, action) => {
         }
         case LOAD_ONE_GUIDE: {
             return { ...state, [action.guide.id]: action.guide }
+        }
+        case LOAD_OWNED_GUIDES: {
+            const guidesState = {};
+            if (action.guides.Guides !== "No guides found") {
+                action.guides.Guides.forEach(guide => {
+                    guidesState[guide.id] = guide;
+                });
+                return guidesState
+            } else {
+                return state;
+            }
         }
         default:
             return { ...state }

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import './Guides.css';
 import { useEffect } from "react";
-import { fetchAllGuides } from "../../store/guides";
+import { fetchAllGuides } from "../../../store/guides";
 import { Link } from "react-router-dom";
 
 function Guides() {

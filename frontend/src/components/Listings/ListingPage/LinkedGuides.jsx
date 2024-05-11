@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 
 function LinkedGuides({ guides }) {
@@ -8,19 +9,19 @@ function LinkedGuides({ guides }) {
             <div className="linkedGuidesContainer">
                 {guides.map((guide) => (
                     <div key={guide.id}>
-
-                        <div className="listingGuideCoverContainer">
-                            {guide.GuideImages && guide.GuideImages[0] &&
-                                <img
-                                    className="listingGuideCover"
-                                    src={guide.GuideImages[0].url} />
-                            }
-                            <div className="linkedGuideHeader">
-                                <h3>{guide.title}</h3>
-                                <div>by {guide.User?.username}</div>
+                        <Link to={`/guides/${guide.id}`}>
+                            <div className="listingGuideCoverContainer">
+                                {guide.GuideImages && guide.GuideImages[0] &&
+                                    <img
+                                        className="listingGuideCover"
+                                        src={guide.GuideImages?.[0]?.url} />
+                                }
+                                <div className="linkedGuideHeader">
+                                    <h3>{guide.title}</h3>
+                                    <div>by {guide.Author?.username}</div>
+                                </div>
                             </div>
-
-                        </div>
+                        </Link>
                     </div>
                 ))}
             </div>

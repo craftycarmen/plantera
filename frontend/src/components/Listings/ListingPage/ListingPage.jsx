@@ -16,7 +16,7 @@ function ListingPage() {
     const navigate = useNavigate();
 
     const listing = useSelector(state => (state.listings[listingId]))
-
+    console.log("LISTING", listing);
     const sessionUser = useSelector(state => state.session.user);
 
     const cart = useSelector(state => state.cart)

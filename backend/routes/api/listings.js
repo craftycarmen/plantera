@@ -134,6 +134,7 @@ router.get('/:listingId', async (req, res) => {
                     },
                     {
                         model: User,
+                        as: 'Author',
                         attributes: ['id', 'username']
                     }
                 ]

@@ -1,0 +1,17 @@
+.guidePageContainer {
+    margin-top: 35px;
+    display: grid;
+    gap: 35px;
+}
+
+.guidePageImage {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.guidePageHeader {
+    text-align: center;
+}

@@ -9,6 +9,11 @@ export const loadAllGuides = (guides) => ({
     guides
 });
 
+export const loadOneGuide = (guide) => ({
+    type: LOAD_ONE_GUIDE,
+    guide
+})
+
 export const fetchAllGuides = () => async (dispatch) => {
     const res = await fetch('/api/guides');
 
@@ -22,6 +27,21 @@ export const fetchAllGuides = () => async (dispatch) => {
     }
 }
 
+export const fetchOneGuide = (guideId) => async (dispatch) => {
+    const res = await fetch(`/api/guides/${guideId}`);
+
+    if (res.ok) {
+        const guide = await res.json();
+        dispatch(loadOneGuide(guide));
+        return guide;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
+
+
 const guidesReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_ALL_GUIDES: {
@@ -31,6 +51,9 @@ const guidesReducer = (state = {}, action) => {
             });
 
             return guidesState
+        }
+        case LOAD_ONE_GUIDE: {
+            return { ...state, [action.guide.id]: action.guide }
         }
         default:
             return { ...state }

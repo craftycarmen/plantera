@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       Guide.belongsTo(
         models.User,
         {
-          foreignKey: 'userId'
+          foreignKey: 'userId',
+          as: 'Author'
         }
       );
 

@@ -25,9 +25,9 @@ function Navigation({ isLoaded }) {
         <div className='navigation'>
             <NavLink to="/"><img style={{ width: "350px" }} src='../../logo.png' /></NavLink>
             <div className='navLinks'>
-                <Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;
+                <span><Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;</span>
 
-                <span onClick={() => alert('Page coming soon')} >INSPIRE</span>&nbsp;&nbsp;&nbsp;
+                <span><Link to="/guides">INSPIRE</Link>&nbsp;&nbsp;&nbsp;</span>
 
                 <span onClick={() => alert('Page coming soon')} >SELL</span>
             </div>

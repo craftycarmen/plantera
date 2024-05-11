@@ -1,0 +1,53 @@
+.guidesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 25px;
+    justify-items: center;
+}
+
+.guideImageContainer {
+    position: relative;
+    width: 348.75px;
+    height: 400px;
+}
+
+.guideImage {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.guideImageContainer::before {
+    content: '';
+    z-index: 1;
+    width: 348.75px;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    position: absolute;
+    border-radius: 5px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%);
+}
+
+.guideInfo {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    color: #F2DCCB;
+    z-index: 1;
+}
+
+.guideInfo h2 {
+    font-size: 18px;
+}
+
+.guideInfo div {
+    margin-top: auto;
+}

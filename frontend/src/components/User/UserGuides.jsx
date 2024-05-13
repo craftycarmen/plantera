@@ -20,12 +20,12 @@ function UserGuides() {
         <div className="userProfilePageContainer">
             <ProfileImage userId={userId} />
             <div className="username">
-                <h1>{user.username}&#39;s Guides</h1>
+                <h1>{user.username} <i className="fa-solid fa-angle-right" style={{ fontSize: "large" }} /> Guides</h1>
                 {sessionUser?.id === user.id &&
                     <button onClick={() => navigate(`/guides/current`)}>Manage Guides</button>
                 }
             </div>
-            <div className="guidesContainer">
+            <div className="guidesContainer" style={{ marginTop: "20px" }}>
                 {guides.map((guide) => (
                     <div key={guide.id}>
                         <Link to={`/guides/${guide.id}`}>

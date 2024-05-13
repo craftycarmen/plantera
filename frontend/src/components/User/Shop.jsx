@@ -26,7 +26,7 @@ function Shop() {
         <div className="userProfilePageContainer">
             <ProfileImage userId={userId} />
             <div className="username">
-                <h1>{user.username}&#39;s Shop</h1>
+                <h1>{user.username} <i className="fa-solid fa-angle-right" style={{ fontSize: "large" }} /> Shop</h1>
                 {sessionUser?.id === user.id &&
                     <button onClick={() => navigate(`/listings/current`)}>Manage Listings</button>
                 }

@@ -14,7 +14,7 @@ function UserGuides() {
 
     useEffect(() => {
         dispatch(fetchProfile(userId))
-    }, [dispatch])
+    }, [dispatch, userId])
 
     return (user &&
         <div className="userProfilePageContainer">

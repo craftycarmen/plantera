@@ -12,7 +12,7 @@ function GuidePage({ guideId: propsGuideId }) {
 
     useEffect(() => {
         dispatch(fetchOneGuide(guideId))
-    }, [dispatch]);
+    }, [dispatch, guideId]);
 
     return (guide &&
         <>

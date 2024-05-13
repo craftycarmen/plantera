@@ -19,6 +19,7 @@ import Guides from './components/Guides/GuidesIndex';
 import GuidePage from './components/Guides/GuidePage/GuidePage';
 import ManageGuides from './components/Guides/ManageGuides/ManageGuides';
 import UserGuides from './components/User/UserGuides';
+import CreateGuide from './components/Guides/CreateGuide';
 
 const router = createBrowserRouter([
     {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
             {
                 path: '/guides/current',
                 element: <ManageGuides />
+            },
+            {
+                path: '/guides/new',
+                element: <CreateGuide />
             },
         ]
     }

@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const LOAD_ALL_GUIDES = 'guides/LOAD_ALL_GUIDES';
 const LOAD_ONE_GUIDE = 'guides/LOAD_ONE_GUIDE';
 const LOAD_OWNED_GUIDES = 'guides/LOAD_OWNED_GUIDES';
+const CREATE_GUIDE = 'guides/CREATE_GUIDE';
 
 export const loadAllGuides = (guides) => ({
     type: LOAD_ALL_GUIDES,
@@ -18,6 +19,11 @@ export const loadOwnedGuides = (guides) => ({
     type: LOAD_OWNED_GUIDES,
     guides
 });
+
+export const createGuide = (guide) => ({
+    type: CREATE_GUIDE,
+    guide: guide
+})
 
 export const fetchAllGuides = () => async (dispatch) => {
     const res = await fetch('/api/guides');
@@ -58,7 +64,35 @@ export const fetchOwnedGuides = () => async (dispatch) => {
     }
 }
 
+export const addGuide = (guide) => async (dispatch) => {
+    const { title, description, image, content } = guide;
 
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("imageaable_id", guide.id);
+    formData.append("imageable_type", "Guide");
+    formData.append("content", content);
+
+    try {
+        const res = await csrfFetch('/api/guides', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to create guide');
+        }
+
+        const data = await res.json();
+        dispatch(createGuide(data));
+        return data
+    } catch (error) {
+        console.error('Error creating guide:', error);
+        throw error;
+    }
+}
 
 const guidesReducer = (state = {}, action) => {
     switch (action.type) {
@@ -83,6 +117,9 @@ const guidesReducer = (state = {}, action) => {
             } else {
                 return state;
             }
+        }
+        case CREATE_GUIDE: {
+            return { ...state, [action.guide.id]: action.guide }
         }
         default:
             return { ...state }

@@ -4,13 +4,14 @@ import { useEffect } from "react";
 import './GuidePage.css';
 import { Link, useParams } from "react-router-dom";
 
-function GuidePage() {
-    const { guideId } = useParams();
+function GuidePage({ guideId: propsGuideId }) {
+    const { guideId: paramsGuideId } = useParams();
+    const guideId = propsGuideId || paramsGuideId;
     const dispatch = useDispatch();
     const guide = useSelector(state => (state.guides[guideId]));
 
     useEffect(() => {
-        dispatch(fetchOneGuide())
+        dispatch(fetchOneGuide(guideId))
     }, [dispatch]);
 
     return (guide &&

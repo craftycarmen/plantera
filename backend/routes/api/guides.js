@@ -90,6 +90,33 @@ router.get('/:guideId', async (req, res) => {
             message: "Guide couldn't be found"
         })
     }
+});
+
+router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
+    try {
+        const { title, description, image, content } = req.body;
+
+        const guideImageUrl = req.file ?
+            await singleFileUpload({ file: req.file, public: true }) :
+            null;
+
+        const guide = await Guide.create({
+            userId: req.user.id,
+            title,
+            description,
+            content
+        });
+
+        await Image.create({
+            imageableId: guide.id,
+            imageableType: 'Guide',
+            url: guideImageUrl
+        })
+
+        return res.status(201).json(guide)
+    } catch (err) {
+        return res.json(err.message);
+    }
 })
 
 module.exports = router;

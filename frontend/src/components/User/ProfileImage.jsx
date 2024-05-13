@@ -8,7 +8,7 @@ function ProfileImage({ userId }) {
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.user[userId]?.User)
-
+    const guides = useSelector(state => state.user[userId]?.Guides)
 
     useEffect(() => {
         dispatch(fetchProfile(userId))
@@ -27,14 +27,13 @@ function ProfileImage({ userId }) {
 
                     }
                 </div>
-                {user.accountType === "seller" && (
-                    <div className="profileShop">
-                        <Link to={`/user/${userId}`}>Profile</Link>&nbsp;&nbsp;&nbsp;
-                        <Link to={`/user/${userId}/shop`}>Shop</Link>&nbsp;&nbsp;&nbsp;
-                        {/* Guides */}
-                    </div>
-                )}
-            </div>
+
+                <div className="profileShop">
+                    <span><Link to={`/user/${userId}`}>Profile</Link></span>
+                    {user.accountType === "seller" && (<span><Link to={`/user/${userId}/shop`}>Shop</Link></span>)}
+                    {guides?.length > 0 && <span><Link to={`/user/${userId}/guides`}>Guides</Link></span>}
+                </div>
+            </div >
 
         </>
     )

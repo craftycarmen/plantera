@@ -150,6 +150,8 @@
 }
 
 .profileShop {
+    display: flex;
     justify-items: center;
     justify-self: center;
+    gap: 20px;
 }

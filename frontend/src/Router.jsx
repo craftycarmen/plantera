@@ -18,6 +18,7 @@ import SearchPage from './components/Search/SearchPage/SearchPage';
 import Guides from './components/Guides/GuidesIndex';
 import GuidePage from './components/Guides/GuidePage/GuidePage';
 import ManageGuides from './components/Guides/ManageGuides/ManageGuides';
+import UserGuides from './components/User/UserGuides';
 
 const router = createBrowserRouter([
     {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
             {
                 path: '/user/:userId/shop',
                 element: <Shop />
+            },
+            {
+                path: '/user/:userId/guides',
+                element: <UserGuides />
             },
             {
                 path: '/search',

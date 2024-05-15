@@ -20,6 +20,7 @@ import GuidePage from './components/Guides/GuidePage/GuidePage';
 import ManageGuides from './components/Guides/ManageGuides/ManageGuides';
 import UserGuides from './components/User/UserGuides';
 import CreateGuide from './components/Guides/GuideForm/CreateGuide';
+import UpdateGuide from './components/Guides/GuideForm/UpdateGuide';
 
 const router = createBrowserRouter([
     {
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
             {
                 path: '/guides/new',
                 element: <CreateGuide />
+            },
+            {
+                path: '/guides/:guideId/edit',
+                element: <UpdateGuide />
             },
         ]
     }

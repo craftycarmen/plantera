@@ -117,6 +117,42 @@ router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
     } catch (err) {
         return res.json(err.message);
     }
+});
+
+router.put('/:guideId', requireAuth, async (req, res) => {
+    const guideId = Number(req.params.guideId);
+    const guide = await Guide.findByPk(guideId);
+
+    if (!guide) return res.status(404).json({ message: "Guide couldn't be found" });
+
+    if (req.user.id !== guide.userId) return res.status(403).json({ message: "Forbidden" });
+
+    const { title, description, content } = req.body;
+
+    guide.set({
+        userId: req.user.id,
+        title,
+        description,
+        content
+    });
+
+    await guide.save();
+
+    return res.json(guide)
+
+});
+
+router.delete('/:guideId', requireAuth, async (req, res) => {
+    const guideId = Number(req.params.guideId);
+    const guide = await Guide.findByPk(guideId);
+
+    if (!guide) return res.status(404).json({ message: "Guide couldn't be found" });
+
+    if (req.user.id !== guide.userId) return res.status(403).json({ message: "Forbidden" });
+
+    await guide.destroy();
+
+    return res.json({ message: "Successfully deleted" })
 })
 
 module.exports = router;

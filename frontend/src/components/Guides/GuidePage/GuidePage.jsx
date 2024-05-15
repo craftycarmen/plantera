@@ -3,6 +3,7 @@ import { fetchOneGuide } from "../../../store/guides";
 import { useEffect } from "react";
 import './GuidePage.css';
 import { Link, useParams } from "react-router-dom";
+import parse from 'html-react-parser';
 
 function GuidePage({ guideId: propsGuideId }) {
     const { guideId: paramsGuideId } = useParams();
@@ -28,7 +29,7 @@ function GuidePage({ guideId: propsGuideId }) {
                     className="guidePageImage"
                     src={guide.GuideImages?.[0].url}
                 />
-                <div>{guide.content}</div>
+                <div>{parse(guide.content)}</div>
             </div>
         </>
     )

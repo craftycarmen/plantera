@@ -14,11 +14,34 @@ function CreateGuide() {
     const [content, setContent] = useState("");
     const [errors, setErrors] = useState({});
     const [imageLoading, setImageLoading] = useState(false);
+    const modules = {
+        toolbar: [
+            [{ header: [2, false] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ["link", "image"],
+            ["clean"]
+        ]
+    }
+
+    const formats = [
+        "header",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "list",
+        "bullet",
+        "indent",
+        "link",
+        "image"
+    ]
 
     const updateFile = e => {
         const file = e.target.files[0];
         if (file) setImage(file)
     }
+
     useEffect(() => {
         const errs = {};
 
@@ -32,11 +55,6 @@ function CreateGuide() {
 
         setErrors(errs);
     }, [title, description, image, content])
-
-    const handleTitle = (e) => {
-        const newTitle = e.target.value;
-        setTitle(newTitle)
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -109,6 +127,8 @@ function CreateGuide() {
                         theme="snow"
                         value={content}
                         onChange={setContent}
+                        modules={modules}
+                        formats={formats}
                     />
 
                     <div className="error">{errors?.content &&

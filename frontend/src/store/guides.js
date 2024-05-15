@@ -4,6 +4,8 @@ const LOAD_ALL_GUIDES = 'guides/LOAD_ALL_GUIDES';
 const LOAD_ONE_GUIDE = 'guides/LOAD_ONE_GUIDE';
 const LOAD_OWNED_GUIDES = 'guides/LOAD_OWNED_GUIDES';
 const CREATE_GUIDE = 'guides/CREATE_GUIDE';
+const UPDATE_GUIDE = 'guides/UPDATE_GUIDE';
+const DELETE_GUIDE = 'guides/DELETE_GUIDE';
 
 export const loadAllGuides = (guides) => ({
     type: LOAD_ALL_GUIDES,
@@ -23,6 +25,16 @@ export const loadOwnedGuides = (guides) => ({
 export const createGuide = (guide) => ({
     type: CREATE_GUIDE,
     guide: guide
+});
+
+export const updateGuide = (guide) => ({
+    type: UPDATE_GUIDE,
+    guide
+});
+
+export const deleteGuide = (guideId) => ({
+    type: DELETE_GUIDE,
+    guideId
 })
 
 export const fetchAllGuides = () => async (dispatch) => {
@@ -94,6 +106,33 @@ export const addGuide = (guide) => async (dispatch) => {
     }
 }
 
+export const editGuide = (guide) => async (dispatch) => {
+    const res = await csrfFetch(`/api/guides/${guide.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...guide })
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateGuide(data));
+        return data;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
+export const removeGuide = (guideId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/guides/${guideId}`, {
+        method: "DELETE"
+    });
+
+    if (res.ok) {
+        dispatch(deleteGuide(guideId))
+    }
+}
+
 const guidesReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_ALL_GUIDES: {
@@ -120,6 +159,14 @@ const guidesReducer = (state = {}, action) => {
         }
         case CREATE_GUIDE: {
             return { ...state, [action.guide.id]: action.guide }
+        }
+        case UPDATE_GUIDE: {
+            return { ...state, [action.guide.id]: action.guide }
+        }
+        case DELETE_GUIDE: {
+            const newState = { ...state };
+            delete newState[action.guideId];
+            return newState;
         }
         default:
             return { ...state }

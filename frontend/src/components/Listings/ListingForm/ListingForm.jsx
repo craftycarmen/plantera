@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { addListing, editListing } from '../../../store/listings';
 import ErrorHandling from "../../ErrorHandling";
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 function ListingForm({ listing, formType }) {
     const dispatch = useDispatch();
@@ -102,6 +104,81 @@ function ListingForm({ listing, formType }) {
             }
         }
     }
+
+    const guides = Object.values(useSelector(state => state.guides));
+    console.log("GUIDES", guides);
+
+    let guideOptions = []
+    guides.map(guide => {
+        guideOptions.push({
+            value: guide.id,
+            label: guide.title
+        })
+    });
+
+
+    console.log(guideOptions);
+
+    const animatedComponents = makeAnimated();
+    const [selectedGuide, setSelectedGuides] = useState([]);
+
+    const customSelectStyle = {
+        control: (base, state) => ({
+            ...base,
+            background: "#B9CDCA",
+            borderRadius: "3px",
+            // match with the menu
+            // borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+            // // Overwrittes the different states of border
+            borderColor: state.isFocused ? "#28635A" : "#28635A",
+            // // Removes weird border around container
+            boxShadow: state.isFocused ? null : null,
+            "&:hover": {
+                //     // Overwrittes the different states of border
+                borderColor: state.isFocused ? "#28635A" : "#28635A"
+            },
+            color: "#28635A",
+            cursor: "pointer",
+            width: "322px"
+        }),
+        menu: base => ({
+            ...base,
+            // override border radius to match the box
+            borderRadius: 0,
+            // kill the gap
+            marginTop: 0,
+            background: "#B9CDCA",
+            cursor: "pointer",
+            borderRadius: "3px",
+        }),
+        menuList: base => ({
+            ...base,
+            // kill the white space on first and last option
+            padding: 0,
+            background: "#B9CDCA",
+            cursor: "pointer"
+        }),
+        dropdownIndicator: base => ({
+            ...base,
+            color: "#28635A",
+            "&:hover": { color: "#FDAC8A" }
+        }),
+        clearIndicator: (base, state) => ({
+            ...base,
+            color: state.isFocused ? "#28635A" : "#28635A",
+            "&:hover": { color: "#FDAC8A" }
+        }),
+        option: (base, state) => ({
+            ...base,
+            color: state.isDisabled ? "gray" : "#28635A",
+            cursor: state.isDisabled ? 'default' : 'cursor',
+            backgroundColor: state.isSelected ? '#B9CDCA' : 'inherit',
+            '&:hover': {
+                backgroundColor: state.isSelected ? '#B9CDCA' : '#FDAC8A',
+                backgroundColor: state.isDisabled ? '#B9CDCA' : '#FDAC8A'
+            }
+        }),
+    };
 
     return (
         <>
@@ -204,6 +281,32 @@ function ListingForm({ listing, formType }) {
                         />
                         <label htmlFor='guideId' className='floating-label'>Guide ID</label>
                     </div> */}
+                    <div className='inputContainer'>
+                        <div>Link Guides (up to 3)</div>
+                        <Select
+                            closeMenuOnSelect={false}
+                            components={animatedComponents}
+                            isMulti
+                            value={selectedGuide}
+                            onChange={(e) => setSelectedGuides(e)}
+                            options={guideOptions}
+                            name="guides"
+                            isOptionDisabled={() => selectedGuide.length >= 3}
+                            theme={(theme) => ({
+                                ...theme,
+                                borderRadius: 0,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: '#FDAC8A',
+                                    primary: '#FDAC8A',
+                                    neutral80: '#28635A',
+                                    color: '#28635A',
+                                },
+                            })}
+                            styles={customSelectStyle}
+                        />
+
+                    </div>
                     <button
                         type='submit'
                         disabled={!!Object.values(errors).length}

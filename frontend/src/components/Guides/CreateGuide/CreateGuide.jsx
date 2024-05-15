@@ -92,7 +92,7 @@ function CreateGuide() {
     return (
         <>
             <h1>Create Guide</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="guideForm">
                 <div className="inputContainer">
                     <input
                         type="text"
@@ -100,6 +100,7 @@ function CreateGuide() {
                         onChange={(e) => setTitle(e.target.value)}
                         placeholder=""
                         id="title"
+                        style={{ width: "578px" }}
                     />
                     <label htmlFor="title" className="floating-label">Title*</label>
                     <div className="error">{errors.title &&
@@ -111,6 +112,7 @@ function CreateGuide() {
                         onChange={updateFile}
                         accept=".jpg, .jpeg, .png"
                         id='image'
+                        style={{ width: "578px" }}
                     />
                     <label htmlFor='image' className='floating-label'>Cover Image*</label>
                 </div>
@@ -121,6 +123,7 @@ function CreateGuide() {
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder=""
                         id="description"
+                        style={{ width: "578px" }}
                     />
                     <label htmlFor="description" className="floating-label">Description*</label>
                     <div className="error">{errors?.description &&
@@ -141,7 +144,7 @@ function CreateGuide() {
                         <><i className="fa-solid fa-circle-exclamation" /> {errors.content}</>}</div>
                 </div>
                 <div>
-                    <button style={{ marginTop: "15px" }}
+                    <button style={{ marginTop: "15px", width: "600px" }}
                         disabled={Object.values(errors).length}
                         type="submit">Create Guide</button>
                 </div>

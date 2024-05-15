@@ -83,7 +83,7 @@ export const addGuide = (guide) => async (dispatch) => {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("image", image);
-    formData.append("imageaable_id", guide.id);
+    formData.append("imageable_id", guide.id);
     formData.append("imageable_type", "Guide");
     formData.append("content", content);
 

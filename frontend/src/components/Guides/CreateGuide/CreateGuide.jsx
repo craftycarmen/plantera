@@ -14,14 +14,20 @@ function CreateGuide() {
     const [content, setContent] = useState("");
     const [errors, setErrors] = useState({});
     const [imageLoading, setImageLoading] = useState(false);
+
     const modules = {
-        toolbar: [
-            [{ header: [2, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
-            ["link", "image"],
-            ["clean"]
-        ]
+        toolbar: {
+            container: [
+                [{ header: [1, 2, false] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
+                ["link", "image"],
+                ["clean"]
+            ],
+            // handlers: {
+            //     'image': handleImageUpload
+            // }
+        }
     }
 
     const formats = [

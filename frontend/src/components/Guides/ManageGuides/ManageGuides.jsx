@@ -5,6 +5,7 @@ import { fetchOwnedGuides } from '../../../store/guides';
 import ErrorHandling from '../../ErrorHandling';
 import { Link } from 'react-router-dom';
 import OpenModalButton from '../../OpenModalButton';
+import DeleteGuideModal from '../DeleteGuideModal';
 
 function ManageGuides() {
     const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function ManageGuides() {
                                     <Link to={`/guides/${guide.id}/edit`}><button>Edit</button></Link>
                                     <OpenModalButton
                                         buttonText="Delete"
-                                    // modalComponent={<DeleteGuideModal guideId={guide.id}}
+                                        modalComponent={<DeleteGuideModal guideId={guide.id} />}
                                     />
                                 </div>
                             </div>

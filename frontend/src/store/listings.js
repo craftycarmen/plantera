@@ -83,7 +83,7 @@ export const fetchOwnedListings = () => async (dispatch) => {
 }
 
 export const addListing = (listing) => async (dispatch) => {
-    const { plantName, description, price, potSize, stockQty, guideId, image } = listing;
+    const { plantName, description, price, potSize, stockQty, selectedGuides, image } = listing;
 
     const formData = new FormData();
     formData.append("plantName", plantName);
@@ -94,9 +94,9 @@ export const addListing = (listing) => async (dispatch) => {
     formData.append("image", image)
     formData.append("imageable_id", listing.id)
     formData.append("imageable_type", "Listing")
-    if (guideId >= 1) {
-        formData.append("guideId", guideId);
-    }
+    selectedGuides.forEach((guideId, index) => {
+        formData.append(`selectedGuides[${index}]`, guideId);
+    });
 
     try {
         const res = await csrfFetch('/api/listings', {

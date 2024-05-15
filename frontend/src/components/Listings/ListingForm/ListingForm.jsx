@@ -29,10 +29,29 @@ function ListingForm({ listing, formType }) {
     const updatePotSize = (e) => setPotSize(e.target.value);
     const updateStockQty = (e) => setStockQty(e.target.value);
     // const updateGuideId = (e) => setGuideId(e.target.value);
+    const animatedComponents = makeAnimated();
+    const guides = Object.values(useSelector(state => state.guides));
+    const [selectedGuides, setSelectedGuides] = useState([]);
+    const guideOptions = guides.map(guide => ({
+        value: guide.id,
+        label: guide.title
+    }));
+    useEffect(() => {
+        const selectedOptions = listing.Guides?.map(guide => ({
+            value: guide.id,
+            label: guide.title
+        })) || [];
+        console.log("SELECTEDGUIDES", selectedOptions);
+
+        setSelectedGuides(selectedOptions);
+
+    }, [listing.Guides]);
+
     const updateFile = e => {
         const file = e.target.files[0];
         if (file) setImage(file);
     };
+    console.log("SELECTED", selectedGuides);
 
     const createForm = formType === 'Create Listing';
     const updateForm = formType === 'Update Listing';
@@ -79,9 +98,10 @@ function ListingForm({ listing, formType }) {
             price,
             potSize,
             stockQty,
-            // guideId,
+            selectedGuides: selectedGuides.map(guide => guide.value),
             image
         }
+        console.log("Selected Guides:", selectedGuides);
 
         if (createForm) {
             try {
@@ -105,23 +125,6 @@ function ListingForm({ listing, formType }) {
         }
     }
 
-    const guides = Object.values(useSelector(state => state.guides));
-    console.log("GUIDES", guides);
-
-    let guideOptions = []
-    guides.map(guide => {
-        guideOptions.push({
-            value: guide.id,
-            label: guide.title
-        })
-    });
-
-
-    console.log(guideOptions);
-
-    const animatedComponents = makeAnimated();
-    const [selectedGuide, setSelectedGuides] = useState([]);
-
     const customSelectStyle = {
         control: (base, state) => ({
             ...base,
@@ -143,13 +146,11 @@ function ListingForm({ listing, formType }) {
         }),
         menu: base => ({
             ...base,
-            // override border radius to match the box
-            borderRadius: 0,
-            // kill the gap
             marginTop: 0,
             background: "#B9CDCA",
             cursor: "pointer",
             borderRadius: "3px",
+            width: "322px"
         }),
         menuList: base => ({
             ...base,
@@ -174,7 +175,7 @@ function ListingForm({ listing, formType }) {
             cursor: state.isDisabled ? 'default' : 'cursor',
             backgroundColor: state.isSelected ? '#B9CDCA' : 'inherit',
             '&:hover': {
-                backgroundColor: state.isSelected ? '#B9CDCA' : '#FDAC8A',
+                // backgroundColor: state.isSelected ? '#B9CDCA' : '#FDAC8A',
                 backgroundColor: state.isDisabled ? '#B9CDCA' : '#FDAC8A'
             }
         }),
@@ -287,11 +288,11 @@ function ListingForm({ listing, formType }) {
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti
-                            value={selectedGuide}
+                            value={selectedGuides}
                             onChange={(e) => setSelectedGuides(e)}
                             options={guideOptions}
                             name="guides"
-                            isOptionDisabled={() => selectedGuide.length >= 3}
+                            isOptionDisabled={() => selectedGuides.length >= 3}
                             theme={(theme) => ({
                                 ...theme,
                                 borderRadius: 0,

@@ -194,7 +194,7 @@ function CreateListingForm() {
         price: '',
         potSize: '',
         stockQty: '',
-        guideId: '',
+        selectedGuides: [],
         image: ''
     }
 

@@ -153,8 +153,8 @@ router.get('/:listingId', async (req, res) => {
 
 router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
     try {
-        const { plantName, description, price, potSize, stockQty, guideId } = req.body;
-
+        const { plantName, description, price, potSize, stockQty } = req.body;
+        const selectedGuides = req.body.selectedGuides ? JSON.parse(req.body.selectedGuides) : [];
         const listingImageUrl = req.file ?
             await singleFileUpload({ file: req.file, public: true }) :
             null;
@@ -166,7 +166,7 @@ router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
             price,
             potSize,
             stockQty,
-            guideId,
+            selectedGuides,
             // listingImageUrl
         });
 
@@ -191,7 +191,7 @@ router.put('/:listingId', requireAuth, async (req, res) => {
 
     if (req.user.id !== listing.sellerId) return res.status(403).json({ message: "Forbidden" });
 
-    const { plantName, description, price, potSize, stockQty, guideId } = req.body;
+    const { plantName, description, price, potSize, stockQty, selectedGuides } = req.body;
 
     listing.set({
         sellerId: req.user.id,
@@ -200,7 +200,7 @@ router.put('/:listingId', requireAuth, async (req, res) => {
         price: Number.parseFloat(price),
         potSize: potSize,
         stockQty: stockQty,
-        guideId: guideId,
+        selectedGuides: selectedGuides,
     });
 
     await listing.save();

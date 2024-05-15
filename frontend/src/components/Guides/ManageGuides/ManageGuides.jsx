@@ -23,7 +23,13 @@ function ManageGuides() {
             <h1>Manage Guides</h1>
             {!sessionUser ? (
                 <ErrorHandling />
-            ) : (guides &&
+            ) : (guides && guides.length === 0 ? (
+                <>
+                    <div className='currentGuides'>
+                        <Link to={`/guides/new`}><button style={{ width: "fit-content" }}>Create New Guide</button></Link>
+                    </div>
+                    No guides listed!</>
+            ) : (
                 <>
                     <div className='currentGuides'>
                         <Link to={`/guides/new`}><button style={{ width: "fit-content" }}>Create New Guide</button></Link>
@@ -52,6 +58,7 @@ function ManageGuides() {
                         ))}
                     </div>
                 </>
+            )
             )}
         </>
     )

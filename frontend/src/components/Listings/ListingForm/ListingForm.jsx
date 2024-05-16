@@ -5,6 +5,7 @@ import { addListing, editListing } from '../../../store/listings';
 import ErrorHandling from "../../ErrorHandling";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { fetchAllGuides } from '../../../store/guides';
 
 function ListingForm({ listing, formType }) {
     const dispatch = useDispatch();
@@ -31,30 +32,28 @@ function ListingForm({ listing, formType }) {
     // const updateGuideId = (e) => setGuideId(e.target.value);
     const animatedComponents = makeAnimated();
     const guides = Object.values(useSelector(state => state.guides));
+    console.log("GUIDES:", guides);
     const [selectedGuides, setSelectedGuides] = useState([]);
-    const guideOptions = guides.map(guide => ({
-        value: guide.id,
-        label: guide.title
-    }));
 
-    // useEffect(() => {
-    //     const selectedOptions = listing.Guides?.map(guide => ({
-    //         value: guide.id,
-    //         label: guide.title
-    //     })) || [];
-    //     console.log("SELECTEDGUIDES", selectedOptions);
+    const guideOptions = guides
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .map(guide => ({
+            value: guide.id,
+            label: guide.title
+        }));
 
-    //     setSelectedGuides(selectedOptions);
 
-    // }, [listing.Guides]);
-
+    useEffect(() => {
+        dispatch(fetchAllGuides())
+    }, [dispatch])
+    console.log(listing.Guides);
     useEffect(() => {
         const selectedOptions = (listing?.Guides || []).map(guide => ({
             value: guide.id,
             label: guide.title
         }));
         setSelectedGuides(selectedOptions);
-    }, [listing.Guides]);
+    }, [listing.Guides, listing]);
 
 
     const updateFile = e => {

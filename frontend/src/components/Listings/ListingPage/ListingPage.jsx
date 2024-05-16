@@ -9,8 +9,6 @@ import { addCart, addItemToCart, fetchCart, fetchCartItems, updateCartItemInCart
 import ShoppingCartModal from "../../Cart/CartModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { price } from "../../../../utils";
-// import DeleteListingModal from "../DeleteListingModal";
-import OpenModalButton from "../../OpenModalButton";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -301,7 +299,7 @@ function ListingPage() {
                                     />
                                 </>) : (
                                 <>
-                                    <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
+                                    <Link to={`/listings/current`}><button style={{ width: "fit-content" }}>Manage Listing</button></Link>
 
                                 </>
                             )}

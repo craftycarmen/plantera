@@ -24,7 +24,8 @@ function GuideForm({ guide, formType }) {
                 [{ header: [1, 2, false] }],
                 ["bold", "italic", "underline", "strike"],
                 [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
-                ["link", "image"],
+                // ["link", "image"],
+                ["link"],
                 ["clean"]
             ],
             // handlers: {
@@ -43,7 +44,7 @@ function GuideForm({ guide, formType }) {
         "bullet",
         "indent",
         "link",
-        "image"
+        // "image"
     ]
 
     const updateFile = e => {
@@ -62,7 +63,7 @@ function GuideForm({ guide, formType }) {
         if (createGuide && !image) errs.image = '';
         if (!content) errs.content = '';
         if (title && title.trim().length < 5 || title.trim().length > 30) errs.title = 'Title must be between 5-30 characters';
-        if (description && description.trim().length < 5 || description.trim().length > 75) errs.description = 'Description must be between 5-75 characters';
+        if (description && description.trim().length < 20 || description.trim().length > 75) errs.description = 'Description must be between 20-75 characters';
         if (content && content.trim().length < 250 || content.trim().length > 5000) errs.content = 'Content must be between 250-5,000 characters';
 
         setErrors(errs);

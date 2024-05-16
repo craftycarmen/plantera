@@ -200,12 +200,16 @@ router.put('/:listingId', requireAuth, async (req, res) => {
     const listingId = Number(req.params.listingId);
     const listing = await Listing.findByPk(listingId);
 
+
     if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
 
     if (req.user.id !== listing.sellerId) return res.status(403).json({ message: "Forbidden" });
 
-    const { plantName, description, price, potSize, stockQty, selectedGuides } = req.body;
-
+    const { plantName, description, price, potSize, stockQty, guideIds } = req.body;
+    const guideIdsArray = guideIds.split(',').map(id => parseInt(id.trim()));
+    if (guideIdsArray.length === 1 && !isNaN(guideIdsArray[0])) {
+        guideIdsArray.push(guideIdsArray[0])
+    }
     listing.set({
         sellerId: req.user.id,
         plantName: plantName,
@@ -213,10 +217,20 @@ router.put('/:listingId', requireAuth, async (req, res) => {
         price: Number.parseFloat(price),
         potSize: potSize,
         stockQty: stockQty,
-        selectedGuides: selectedGuides,
     });
 
     await listing.save();
+
+    await ListingGuide.destroy({ where: { listingId: listing.id } });
+
+    if (guideIdsArray.length > 0) {
+        await Promise.all(guideIdsArray.map(async (guideId) => {
+            await ListingGuide.create({
+                listingId: listing.id,
+                guideId
+            })
+        }))
+    }
 
     return res.json(listing)
 });

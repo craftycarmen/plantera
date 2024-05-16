@@ -118,10 +118,17 @@ export const addListing = (listing) => async (dispatch) => {
 };
 
 export const editListing = (listing) => async (dispatch) => {
+    const guideIdsString = listing.guideIds.join(',');
+
+    const editedListing = {
+        ...listing,
+        guideIds: guideIdsString
+    }
     const res = await csrfFetch(`/api/listings/${listing.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...listing })
+        // body: JSON.stringify({ ...listing })
+        body: JSON.stringify(editedListing)
     });
 
     if (res.ok) {

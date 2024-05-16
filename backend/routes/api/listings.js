@@ -152,6 +152,7 @@ router.get('/:listingId', async (req, res) => {
 });
 
 router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
+
     try {
         const { plantName, description, price, potSize, stockQty, guideIds } = req.body;
         const guideIdsArray = guideIds.split(',').map(id => parseInt(id.trim()));

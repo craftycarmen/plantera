@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editProfile } from "../../store/user";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { titleCase, upperCaseFirst } from "../../../utils";
 
 function UserProfileForm({ formType }) {
     const { userId } = useParams();
@@ -10,7 +11,6 @@ function UserProfileForm({ formType }) {
     const user = useSelector(state => state.user[userId]?.User);
     const shop = useSelector(state => state.user[userId]?.Shop)
     const activeListings = shop?.filter(listing => listing.stockQty > 0)
-    console.log("ACTIVEEEEEEE", activeListings);
     const [bio, setBio] = useState(user?.bio || '');
     const [favoritePlant, setFavoritePlant] = useState(user?.favoritePlant || '');
     const [city, setCity] = useState(user?.city || '');
@@ -86,8 +86,8 @@ function UserProfileForm({ formType }) {
 
         const profile = {
             bio,
-            favoritePlant,
-            city,
+            favoritePlant: titleCase(favoritePlant),
+            city: titleCase(city),
             state,
             shopDescription,
             paymentDetails,

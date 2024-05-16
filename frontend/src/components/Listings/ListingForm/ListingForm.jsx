@@ -6,6 +6,7 @@ import ErrorHandling from "../../ErrorHandling";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { fetchAllGuides } from '../../../store/guides';
+import { titleCase, upperCaseFirst } from '../../../../utils';
 
 function ListingForm({ listing, formType }) {
     const dispatch = useDispatch();
@@ -19,7 +20,6 @@ function ListingForm({ listing, formType }) {
     const [price, setPrice] = useState(listing?.price || "");
     const [potSize, setPotSize] = useState(listing?.potSize || "");
     const [stockQty, setStockQty] = useState(listing?.stockQty !== undefined ? listing.stockQty : "");
-    // const [guideId, setGuideId] = useState(listing?.guideId);
     const [image, setImage] = useState("");
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -93,8 +93,8 @@ function ListingForm({ listing, formType }) {
         listing = {
             ...listing,
             sellerId: sessionUser.id,
-            plantName,
-            description,
+            plantName: titleCase(plantName),
+            description: upperCaseFirst(description),
             price,
             potSize,
             stockQty,

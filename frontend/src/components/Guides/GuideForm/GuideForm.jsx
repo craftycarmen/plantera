@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from "react-router-dom";
 import ErrorHandling from "../../ErrorHandling";
+import { titleCase, upperCaseFirst } from "../../../../utils";
 
 function GuideForm({ guide, formType }) {
     const dispatch = useDispatch();
@@ -77,8 +78,8 @@ function GuideForm({ guide, formType }) {
         guide = {
             ...guide,
             userId: sessionUser.id,
-            title,
-            description,
+            title: titleCase(title),
+            description: upperCaseFirst(description),
             content,
             image
         }

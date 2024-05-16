@@ -6,6 +6,7 @@ import './SignupForm.css';
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import { fetchCart, editCart } from '../../store/cart';
+import { titleCase } from '../../../utils';
 
 function SignupFormModal({ navigate }) {
     const dispatch = useDispatch();
@@ -67,8 +68,8 @@ function SignupFormModal({ navigate }) {
                     sessionActions.signup({
                         email,
                         username,
-                        firstName,
-                        lastName,
+                        firstName: titleCase(firstName),
+                        lastName: titleCase(lastName),
                         password,
                         // accountType,
                         image

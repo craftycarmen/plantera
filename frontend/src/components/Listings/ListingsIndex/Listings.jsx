@@ -16,7 +16,8 @@ function Listings() {
         .filter(listing => listing.stockQty > 0)
         .sort((a, b) => b.id - a.id)
     const [showFilter, setShowFilter] = useState(false);
-    const [filters, setFilters] = useState(null)
+    const [filters, setFilters] = useState(null);
+    const [displayCount, setDisplayCount] = useState(8);
 
 
     const handleFilterToggle = () => {
@@ -39,9 +40,14 @@ function Listings() {
 
     const handleFilterChange = (filterParams) => {
         setFilters(filterParams)
+        setDisplayCount(8)
     }
 
-    const displayedListings = filters ? Object.values(filteredListings) : Object.values(listings)
+    const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
+
+    const handleShowMore = () => {
+        setDisplayCount(prevCount => prevCount + 8);
+    }
 
     console.log("DL", displayedListings.length);
     return (displayedListings &&
@@ -57,30 +63,35 @@ function Listings() {
                         <div>No results found. Please refine or clear filters.</div>
                     </>
                 ) : (
-
-                    displayedListings.map((listing) => (
-                        <div key={listing.id}>
-                            <Link to={`/listings/${listing.id}`}>
-                                <div className="listingImageContainer">
-                                    <img
-                                        className="listingImage"
-                                        src={listing.ListingImages?.[0]?.url} />
-                                </div>
-                                <div className="listingInfo">
-                                    <h2>{listingName(listing.plantName)}</h2>
-                                    <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
-                                    <div>from {listing.Seller?.username}
+                    <>
+                        {displayedListings.map((listing) => (
+                            <div key={listing.id}>
+                                <Link to={`/listings/${listing.id}`}>
+                                    <div className="listingImageContainer">
+                                        <img className="listingImage" src={listing.ListingImages?.[0]?.url} />
                                     </div>
-                                </div>
-                            </Link>
-                        </div>
-                    ))
-
+                                    <div className="listingInfo">
+                                        <h2>{listingName(listing.plantName)}</h2>
+                                        <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
+                                        <div>from {listing.Seller?.username}</div>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                        {filters ? (filteredListings.length > displayCount && (
+                            <div style={{ width: "100%", textAlign: "center" }}>
+                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                            </div>
+                        )) : (listings.length > displayCount && (
+                            <div style={{ width: "100%", textAlign: "center" }}>
+                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                            </div>
+                        ))}
+                    </>
                 )}
-
             </div>
         </>
-    )
+    );
 }
 
 export default Listings

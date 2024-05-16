@@ -43,7 +43,7 @@ const listingsList = [
     stockQty: 0
   },
   {
-    sellerId: 1,
+    sellerId: 5,
     plantName: 'Philodendron Pink Princess',
     description: "Rare and radiant, this Pink Princess thrives in my care. Grown from a tiny cutting, she's now a stunning centerpiece for your collection.",
     price: 50,
@@ -67,7 +67,7 @@ const listingsList = [
     stockQty: 3
   },
   {
-    sellerId: 1,
+    sellerId: 5,
     plantName: "Philodendron Lemon Lime",
     description: "Bright and vibrant, my Lemon Lime is a testament to my passion for plants. Grown with care, she brings a burst of citrusy energy to any room.",
     price: 32,
@@ -83,7 +83,7 @@ const listingsList = [
     stockQty: 1
   },
   {
-    sellerId: 1,
+    sellerId: 5,
     plantName: "ZZ Raven",
     description: "The ZZ raven is bold and mysterious. New growth is bright green, and then the leaves mature into nearly black leaves (no it's not dying!).",
     price: 80,
@@ -91,7 +91,7 @@ const listingsList = [
     stockQty: 5
   },
   {
-    sellerId: 1,
+    sellerId: 7,
     plantName: "Syngonium Mojito",
     description: "Tropical vibes abound with this Mojito! Grown with care, she's a refreshing splash of green and white, bringing a taste of paradise to your home.",
     price: 30,
@@ -99,7 +99,7 @@ const listingsList = [
     stockQty: 1
   },
   {
-    sellerId: 1,
+    sellerId: 7,
     plantName: "Monstera Adansonii",
     description: "Also known as the swiss cheese plant—this one is a classic. Make sure to use a trellis of some sort so it can really thrive and fenestrate.",
     price: 15,
@@ -107,7 +107,7 @@ const listingsList = [
     stockQty: 12
   },
   {
-    sellerId: 1,
+    sellerId: 8,
     plantName: "Tradescantia Zebrina",
     description: "If you love purple or are looking for a gift for someone who loves the color, the tradescantia zebrina is perfect! There aren't many naturally colored plants out there, so make this the one.",
     price: 60,
@@ -115,7 +115,7 @@ const listingsList = [
     stockQty: 2
   },
   {
-    sellerId: 1,
+    sellerId: 8,
     plantName: "Hoya Compacta Variegata",
     description: "This hoya rope is just simply beautiful. Thanks to the variegation, you get splashes of green, creamy white, and pink.",
     price: 15,
@@ -131,7 +131,7 @@ const listingsList = [
     stockQty: 1
   },
   {
-    sellerId: 1,
+    sellerId: 7,
     plantName: "ZZ Chameleon",
     description: "If you're familiar with the ZZ raven, the chameleon is similar! Except the leaves mature in to a bright yellow color",
     price: 45,
@@ -139,7 +139,7 @@ const listingsList = [
     stockQty: 3
   },
   {
-    sellerId: 1,
+    sellerId: 8,
     plantName: "Marble Queen Pothos",
     description: "Majestic and pure, my Marble Queen shines bright. Grown with dedication, she's a symbol of purity and beauty, ready to thrive in your care.",
     price: 40,
@@ -147,7 +147,7 @@ const listingsList = [
     stockQty: 0
   },
   {
-    sellerId: 1,
+    sellerId: 2,
     plantName: "Pothos N'Joy",
     description: "Joyful and vibrant, my N'Joy is a delight to behold. Grown with love, she's a constant source of happiness, ready to bring smiles to your home.",
     price: 60,

@@ -19,14 +19,18 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Listings'
+          model: 'Listings',
+          key: 'id',
+          onDelete: 'CASCADE'
         }
       },
       guideId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Guides'
+          model: 'Guides',
+          key: 'id',
+          onDelete: 'CASCADE'
         }
       },
       createdAt: {

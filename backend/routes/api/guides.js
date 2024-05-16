@@ -1,5 +1,5 @@
 const express = require('express');
-const { Guide, Image, ListingGuide, User } = require('../../db/models');
+const { Guide, Image, ListingGuide, User, Listing } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { singleFileUpload, singleMulterUpload } = require('../../awsS3');
 
@@ -150,6 +150,17 @@ router.delete('/:guideId', requireAuth, async (req, res) => {
 
     if (req.user.id !== guide.userId) return res.status(403).json({ message: "Forbidden" });
 
+    await Listing.update({ guideId: null }, {
+        where: {
+            guideId: guideId
+        }
+    })
+
+    await ListingGuide.destroy({
+        where: {
+            guideId: guideId
+        }
+    })
     await guide.destroy();
 
     return res.json({ message: "Successfully deleted" })

@@ -9,7 +9,7 @@ function UserGuides() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId]?.User);
-    const guides = useSelector(state => state.user[userId]?.Guides);
+    const guides = useSelector(state => state.user[userId]?.Guides).sort((a, b) => b.id - a.id);
     const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {

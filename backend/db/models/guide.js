@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
         {
           through: 'ListingGuide',
           foreignKey: 'guideId',
-          otherKey: 'listingId'
+          otherKey: 'listingId',
+          onDelete: 'CASCADE'
         }
       )
 

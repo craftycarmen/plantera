@@ -11,16 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      ListingGuide.belongsTo(models.Listing, {
+        foreignKey: 'listingId',
+        onDelete: 'CASCADE'
+      });
+
+      ListingGuide.belongsTo(models.Guide, {
+        foreignKey: 'guideId',
+        onDelete: 'CASCADE'
+      })
     }
   }
   ListingGuide.init({
     listingId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     guideId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
   }, {
     sequelize,

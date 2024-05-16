@@ -1,0 +1,24 @@
+.footer {
+    /* display: grid; */
+    /* align-items: center; */
+    padding-top: 100px;
+    padding-bottom: 0px;
+    justify-content: center;
+    text-align: center;
+}
+
+hr {
+    width: 600px;
+    border: .25px solid #8EBAA8;
+    box-shadow: #FDAC8A 4px 3px;
+}
+
+.logos {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    flex-wrap: wrap;
+    height: 18px;
+}

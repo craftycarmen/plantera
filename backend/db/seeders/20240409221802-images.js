@@ -85,7 +85,7 @@ const imagesList = [
   {
     imageableId: 5,
     imageableType: 'Listing',
-    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/ppp.jpeg',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/pppplant.jpeg',
   },
   {
     imageableId: 6,

@@ -59,7 +59,7 @@ const listingsList = [
     stockQty: 2
   },
   {
-    sellerId: 1,
+    sellerId: 8,
     plantName: "Philodendron Micans",
     description: "This is a personal favorite of mine because of the dark velvery leaves.",
     price: 18,
@@ -75,7 +75,7 @@ const listingsList = [
     stockQty: 2
   },
   {
-    sellerId: 1,
+    sellerId: 2,
     plantName: "String of Hearts",
     description: "This one is easy to care for and simply just cute. Oh, and it blooms when it's happy!",
     price: 26,

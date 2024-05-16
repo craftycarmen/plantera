@@ -27,6 +27,42 @@ const imagesList = [
     avatar: true
   },
   {
+    imageableId: 4,
+    imageableType: 'User',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/person1.jpeg',
+    avatar: true
+  },
+  {
+    imageableId: 5,
+    imageableType: 'User',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/person2.jpeg',
+    avatar: true
+  },
+  {
+    imageableId: 6,
+    imageableType: 'User',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/person3.jpeg',
+    avatar: true
+  },
+  {
+    imageableId: 7,
+    imageableType: 'User',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/person4.jpeg',
+    avatar: true
+  },
+  {
+    imageableId: 8,
+    imageableType: 'User',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/person5.jpeg',
+    avatar: true
+  },
+  {
+    imageableId: 9,
+    imageableType: 'User',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/person6.jpeg',
+    avatar: true
+  },
+  {
     imageableId: 1,
     imageableType: 'Listing',
     url: 'https://images.ctfassets.net/rp89vkans22z/14nRWvVjQ02zgRhsi1ESyz/c5c45b11739f4c69b3258755d292c2ae/AdobeStock_299235619.jpeg',
@@ -47,6 +83,76 @@ const imagesList = [
     url: 'https://www.epicgardening.com/wp-content/uploads/2020/02/Rhaphidophora-tetrasperma-1200x667.jpg',
   },
   {
+    imageableId: 5,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/ppp.jpeg',
+  },
+  {
+    imageableId: 6,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/syngoniumalbo.jpeg',
+  },
+  {
+    imageableId: 7,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/micans.jpeg',
+  },
+  {
+    imageableId: 8,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/lemonlime.jpeg',
+  },
+  {
+    imageableId: 9,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/stringofhearts.jpeg',
+  },
+  {
+    imageableId: 10,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/zzraven.jpg',
+  },
+  {
+    imageableId: 11,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/mojito.jpeg',
+  },
+  {
+    imageableId: 12,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/swiss.jpeg',
+  },
+  {
+    imageableId: 13,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/zebrina.jpeg',
+  },
+  {
+    imageableId: 14,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/hoya.jpeg',
+  },
+  {
+    imageableId: 15,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/ficusshr.jpeg',
+  },
+  {
+    imageableId: 16,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/ZZChameleon.jpeg',
+  },
+  {
+    imageableId: 17,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/marble.jpeg',
+  },
+  {
+    imageableId: 18,
+    imageableType: 'Listing',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/njoy.jpeg',
+  },
+  {
     imageableId: 1,
     imageableType: 'Guide',
     url: 'https://www.gardendesign.com/pictures/images/900x705Max/site_3/monstera-deliciosa-monstera-houseplant-swiss-cheese-plant-shutterstock-com_16544.jpg',
@@ -60,6 +166,36 @@ const imagesList = [
     imageableId: 3,
     imageableType: 'Guide',
     url: 'https://cdn.mos.cms.futurecdn.net/4W7J6JbJk7gJNXYLnhpXj9-1920-80.jpg',
+  },
+  {
+    imageableId: 4,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/lighting.jpeg',
+  },
+  {
+    imageableId: 5,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/soil.jpg',
+  },
+  {
+    imageableId: 6,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/winterplants.jpeg',
+  },
+  {
+    imageableId: 7,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/pots.jpeg',
+  },
+  {
+    imageableId: 8,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/organization.jpeg',
+  },
+  {
+    imageableId: 9,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/propagation.jpeg',
   },
 ]
 /** @type {import('sequelize-cli').Migration} */

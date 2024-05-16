@@ -118,7 +118,7 @@ const usersList = [
   {
     firstName: 'Alex',
     lastName: 'Parker',
-    email: 'user6@user.io',
+    email: 'user8@user.io',
     username: 'FloraFanatic',
     hashedPassword: bcrypt.hashSync('password57!'),
     city: 'Atlanta',

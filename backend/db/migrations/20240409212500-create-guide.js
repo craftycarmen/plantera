@@ -33,7 +33,7 @@ module.exports = {
       //   }
       // },
       title: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING(50),
         allowNull: false
       },
       description: {

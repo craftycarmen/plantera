@@ -66,8 +66,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Title is required'
         },
         len: {
-          args: [5, 30],
-          msg: 'Title must be between 5-30 characters'
+          args: [5, 40],
+          msg: 'Title must be between 5-40 characters'
         }
       }
     },
@@ -79,8 +79,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Description is required'
         },
         len: {
-          args: [5, 75],
-          msg: 'Description must be between 5-75 characters'
+          args: [20, 75],
+          msg: 'Description must be between 20-75 characters'
         }
       }
     },

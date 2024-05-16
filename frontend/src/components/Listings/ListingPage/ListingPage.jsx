@@ -9,6 +9,8 @@ import { addCart, addItemToCart, fetchCart, fetchCartItems, updateCartItemInCart
 import ShoppingCartModal from "../../Cart/CartModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { price } from "../../../../utils";
+// import DeleteListingModal from "../DeleteListingModal";
+import OpenModalButton from "../../OpenModalButton";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -246,7 +248,7 @@ function ListingPage() {
                     <p>Pot Size: {listing.potSize}&ldquo;</p>
                     {listing.stockQty && listing.stockQty > 0 ? (
                         <form onSubmit={(e) => { e.preventDefault(); handleAddToCart(); }}>
-                            {listing.Seller?.id !== sessionUser?.id && (
+                            {listing.Seller?.id !== sessionUser?.id ? (
                                 <>
                                     <div className="quantityContainer">
                                         <span className="qtylabel">Quantity:</span>
@@ -297,7 +299,12 @@ function ListingPage() {
                                         </>}
                                         modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}
                                     />
-                                </>)}
+                                </>) : (
+                                <>
+                                    <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
+
+                                </>
+                            )}
                         </form>
                     ) : (<div className="soldOutText">SOLD OUT</div>)
                     }

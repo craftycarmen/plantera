@@ -254,7 +254,13 @@ router.delete('/:listingId', requireAuth, async (req, res) => {
     if (orderedItems.length > 0) {
         return res.status(403).json({ message: "Forbidden — listing is attached to an order" })
     } else {
+        await ListingGuide.destroy({
+            where: {
+                listingId: listingId
+            }
+        })
         await listing.destroy();
+
         return res.json({ message: "Successfully deleted" })
     }
 });

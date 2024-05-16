@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     guideId: {
       type: DataTypes.INTEGER,
-      // allowNull: true
+      allowNull: true
     },
     plantName: {
       type: DataTypes.STRING,

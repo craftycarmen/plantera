@@ -166,7 +166,7 @@ function GuideForm({ guide, formType }) {
                         <div className="error">{errors?.content &&
                             <><i className="fa-solid fa-circle-exclamation" /> {errors.content}</>}</div>
                     </div>
-                    {imageLoading && (<div style={{ marginLeft: "125px" }} className="dots"></div>)}
+                    {imageLoading && (<div style={{ marginLeft: "290px", marginTop: "20px" }} className="dots"></div>)}
                     <div>
                         <button style={{ marginTop: "15px", width: "600px" }}
                             disabled={Object.values(errors).length}

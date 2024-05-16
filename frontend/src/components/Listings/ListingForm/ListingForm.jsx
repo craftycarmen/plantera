@@ -37,16 +37,25 @@ function ListingForm({ listing, formType }) {
         label: guide.title
     }));
 
+    // useEffect(() => {
+    //     const selectedOptions = listing.Guides?.map(guide => ({
+    //         value: guide.id,
+    //         label: guide.title
+    //     })) || [];
+    //     console.log("SELECTEDGUIDES", selectedOptions);
+
+    //     setSelectedGuides(selectedOptions);
+
+    // }, [listing.Guides]);
+
     useEffect(() => {
-        const selectedOptions = listing.Guides?.map(guide => ({
+        const selectedOptions = (listing?.Guides || []).map(guide => ({
             value: guide.id,
             label: guide.title
-        })) || [];
-        console.log("SELECTEDGUIDES", selectedOptions);
-
+        }));
         setSelectedGuides(selectedOptions);
-
     }, [listing.Guides]);
+
 
     const updateFile = e => {
         const file = e.target.files[0];
@@ -257,10 +266,9 @@ function ListingForm({ listing, formType }) {
                                     id='image'
                                 />
                                 <label htmlFor='image' className='floating-label'>Image*</label>
+                                <div className='error'>{errors.image &&
+                                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
                             </div>
-                            {imageLoading && (<div style={{ marginLeft: "125px" }} className="dots"></div>)}
-                            <div className='error'>{errors.image &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
                         </>}
                     {/* <div className='inputContainer'>
                         <input
@@ -275,7 +283,7 @@ function ListingForm({ listing, formType }) {
                         <label htmlFor='guideId' className='floating-label'>Guide ID</label>
                     </div> */}
                     <div className='inputContainer'>
-                        <div>Link Guides (up to 3)</div>
+                        <div>Select up to 3 guides to include:</div>
                         <Select
                             closeMenuOnSelect={false}
                             components={animatedComponents}
@@ -300,6 +308,10 @@ function ListingForm({ listing, formType }) {
                         />
 
                     </div>
+                    {createForm &&
+                        <>
+                            {imageLoading && (<div style={{ marginLeft: "125px", marginTop: "15px" }} className="dots"></div>)}
+                        </>}
                     <button
                         type='submit'
                         disabled={!!Object.values(errors).length}

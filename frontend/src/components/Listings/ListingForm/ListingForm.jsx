@@ -36,6 +36,7 @@ function ListingForm({ listing, formType }) {
         value: guide.id,
         label: guide.title
     }));
+
     useEffect(() => {
         const selectedOptions = listing.Guides?.map(guide => ({
             value: guide.id,
@@ -51,19 +52,10 @@ function ListingForm({ listing, formType }) {
         const file = e.target.files[0];
         if (file) setImage(file);
     };
-    console.log("SELECTED", selectedGuides);
-
+    console.log("SELECTED", selectedGuides.map(guide => guide.value));
+    let guidesArray = selectedGuides.map(guide => guide.value)
     const createForm = formType === 'Create Listing';
     const updateForm = formType === 'Update Listing';
-
-    // useEffect(() => {
-    //     const runDispatches = async () => {
-    //         dispatch(fetchOneListing(listingId)
-    //         );
-
-    //     };
-    //     runDispatches();
-    // }, [dispatch, listingId])
 
     useEffect(() => {
 
@@ -89,7 +81,7 @@ function ListingForm({ listing, formType }) {
         e.preventDefault();
 
         setErrors({})
-
+        // const guideIds = selectedGuides
         listing = {
             ...listing,
             sellerId: sessionUser.id,
@@ -98,10 +90,10 @@ function ListingForm({ listing, formType }) {
             price,
             potSize,
             stockQty,
-            selectedGuides: selectedGuides.map(guide => guide.value),
+            guideIds: guidesArray,
             image
         }
-        console.log("Selected Guides:", selectedGuides);
+        // console.log("Selected Guides:"));
 
         if (createForm) {
             try {

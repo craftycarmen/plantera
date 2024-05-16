@@ -153,8 +153,8 @@ router.get('/:listingId', async (req, res) => {
 
 router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
     try {
-        const { plantName, description, price, potSize, stockQty } = req.body;
-        const selectedGuides = req.body.selectedGuides ? JSON.parse(req.body.selectedGuides) : [];
+        const { plantName, description, price, potSize, stockQty, guideIds } = req.body;
+
         const listingImageUrl = req.file ?
             await singleFileUpload({ file: req.file, public: true }) :
             null;
@@ -165,10 +165,18 @@ router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
             description,
             price,
             potSize,
-            stockQty,
-            selectedGuides,
+            stockQty
             // listingImageUrl
         });
+
+        if (guideIds && guideIds.length > 0) {
+            await Promise.all(guideIds.map(async (guideId) => {
+                await ListingGuide.create({
+                    listingId: listing.id,
+                    guideId: guideId
+                })
+            }))
+        }
 
         await Image.create({
             imageableId: listing.id,

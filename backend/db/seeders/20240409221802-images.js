@@ -140,7 +140,7 @@ const imagesList = [
   {
     imageableId: 16,
     imageableType: 'Listing',
-    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/ZZChameleon.jpeg',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/zzcham.jpeg',
   },
   {
     imageableId: 17,

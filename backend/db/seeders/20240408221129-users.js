@@ -96,9 +96,12 @@ const usersList = [
     hashedPassword: bcrypt.hashSync('password55!'),
     city: 'Gilroy',
     state: 'CA',
-    bio: "At PlantPassion, our love for plants drives everything we do. Explore our curated collection of green wonders and bring nature home.",
+    bio: "🌿 Plant lover, earth advocate, and green soul. 🌱 Finding solace in the quiet beauty of nature's bounty. 🍃",
     favoritePlant: 'Ficus Burgandy',
-    accountType: 'seller'
+    accountType: 'seller',
+    shopDescription: "My love for plants drives everything I do. Explore my curated collection of green wonders and bring nature home.",
+    paymentMethod: 'Bank of Americano',
+    paymentDetails: 1234
   },
   {
     firstName: 'Liam',
@@ -111,7 +114,7 @@ const usersList = [
     bio: "Wanderer in the garden of life, tending to dreams and blossoms alike. Let's grow together, one leaf at a time.",
     favoritePlant: 'Syngonium Albo',
     accountType: 'seller',
-    shopDescription: "At Verdant Vibes, we're passionate about plants! Explore our curated collection of green wonders and bring nature home.",
+    shopDescription: "Step into my botanical wonderland. From rare finds to everyday favorites, I have the perfect plant for every space.",
     paymentMethod: 'Bank of Americano',
     paymentDetails: 1234
   },

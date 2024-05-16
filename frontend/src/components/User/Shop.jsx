@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchProfile } from "../../store/user";
 import './User.css';
 import ProfileImage from "./ProfileImage";
-import { price, plantName } from "../../../utils";
+import { price, listingName } from "../../../utils";
 
 function Shop() {
     const { userId } = useParams();
@@ -56,7 +56,7 @@ function Shop() {
                                                         className="shopImage"
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
-                                                        <h3>{plantName(listing.plantName)}</h3>
+                                                        <h3>{listingName(listing.plantName)}</h3>
                                                         <div className="listingPrice">{price(listing.price)}</div>
                                                     </div>
                                                 </Link>
@@ -88,7 +88,7 @@ function Shop() {
                                                         className="shopImage"
                                                         src={listing.ListingImages?.[0]?.url} />
                                                     <div className="shopInfo">
-                                                        <h3>{plantName(listing.plantName)}</h3>
+                                                        <h3>{listingName(listing.plantName)}</h3>
                                                         <div className="listingPrice">{price(listing.price)}</div>
                                                     </div>
                                                 </div>

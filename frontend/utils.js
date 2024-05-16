@@ -12,8 +12,16 @@ export const hideErrorInProd = (message, ...args) => {
 }
 
 export const plantName = (text) => {
-    if (text?.length > 21) {
-        return text?.substring(0, 21) + "..."
+    if (text?.length > 25) {
+        return text?.substring(0, 25) + "..."
+    } else {
+        return text
+    }
+}
+
+export const listingName = (text) => {
+    if (text?.length > 30) {
+        return text?.substring(0, 30) + "..."
     } else {
         return text
     }

@@ -6,7 +6,7 @@ import OpenModalButton from "../../OpenModalButton";
 import { Link } from "react-router-dom";
 import './ManageListings.css';
 import ErrorHandling from "../../ErrorHandling";
-import { price, plantName } from "../../../../utils";
+import { price, listingName } from "../../../../utils";
 
 function ManageListings() {
     const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function ManageListings() {
                                                 src={listing.ListingImages?.[0]?.url} />
                                         </div>
                                         <div className="manageListingInfo">
-                                            <h3>{plantName(listing.plantName)}</h3>
+                                            <h3>{listingName(listing.plantName)}</h3>
                                             <div className="listingPrice">{price(listing.price)}</div>
                                         </div>
                                     </Link>
@@ -78,7 +78,7 @@ function ManageListings() {
                                                 src={listing.ListingImages[0].url} />
                                         </div>
                                         <div className="manageListingInfo">
-                                            <h3>{plantName(listing.plantName)}</h3>
+                                            <h3>{listingName(listing.plantName)}</h3>
                                             <div className="listingPrice">{price(listing.price)}</div>
                                         </div>
                                     </Link>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editProfile } from "../../store/user";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { titleCase, upperCaseFirst } from "../../../utils";
+import { titleCase } from "../../../utils";
 
 function UserProfileForm({ formType }) {
     const { userId } = useParams();

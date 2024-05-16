@@ -4,7 +4,7 @@ import { fetchListingResults } from "../../../store/search";
 import { useEffect, useState } from "react";
 import './Listings.css';
 import { Link } from "react-router-dom";
-import { price, plantName } from "../../../../utils";
+import { price, listingName } from "../../../../utils";
 import FilterButton from "../../Filter/FilterButton";
 
 function Listings() {
@@ -67,7 +67,7 @@ function Listings() {
                                         src={listing.ListingImages?.[0]?.url} />
                                 </div>
                                 <div className="listingInfo">
-                                    <h2>{plantName(listing.plantName)}</h2>
+                                    <h2>{listingName(listing.plantName)}</h2>
                                     <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
                                     <div>from {listing.Seller?.username}
                                     </div>

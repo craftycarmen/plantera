@@ -14,8 +14,8 @@ function ManageListings() {
     const userId = sessionUser?.id;
     const listings = Object.values(useSelector(state => state.listings)).filter(listing => listing.sellerId === userId);
 
-    const activeListings = listings.filter(listing => listing.stockQty > 0)
-    const soldListings = listings.filter(listing => listing.stockQty === 0)
+    const activeListings = listings.filter(listing => listing.stockQty > 0).sort((a, b) => (b.id - a.id))
+    const soldListings = listings.filter(listing => listing.stockQty === 0).sort((a, b) => (b.id - a.id))
 
     useEffect(() => {
         dispatch(fetchOwnedListings())
@@ -85,10 +85,6 @@ function ManageListings() {
                                     <div className="soldListingButtonContainer">
                                         <div className="soldListingButtons">
                                             <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
-                                            <OpenModalButton
-                                                buttonText="Delete"
-                                                modalComponent={<DeleteListingModal listingId={listing.id} />}
-                                            />
                                         </div>
                                     </div>
                                 </div>

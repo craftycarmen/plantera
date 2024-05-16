@@ -12,8 +12,8 @@ function Shop() {
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId]?.User)
     const shop = useSelector(state => state.user[userId]?.Shop)
-    const activeListings = shop?.filter(listing => listing.stockQty > 0)
-    const soldListings = shop?.filter(listing => listing.stockQty === 0)
+    const activeListings = shop?.filter(listing => listing.stockQty > 0).sort((a, b) => (b.id - a.id))
+    const soldListings = shop?.filter(listing => listing.stockQty === 0).sort((a, b) => (b.id - a.id))
     console.log("hello", shop);
     const sessionUser = useSelector(state => state.session.user)
 

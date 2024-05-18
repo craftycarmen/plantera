@@ -9,6 +9,7 @@ import { addCart, addItemToCart, fetchCart, fetchCartItems, updateCartItemInCart
 import ShoppingCartModal from "../../Cart/CartModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { price } from "../../../../utils";
+import Error404 from "../../ErrorHandling/Error404";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -233,88 +234,95 @@ function ListingPage() {
     }
 
 
-    return (listing &&
+    return (
         <>
-            <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/listings">Shop</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;{listing.plantName}</h3>
-            <div className="listingPageContainer">
-                <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
-                <div>
-                    <h1>{listing.plantName}</h1>
-                    <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link></div>
-                    <p className="price">{price(listing.price)}</p>
-                    <p>{listing.description}</p>
-                    <p>Pot Size: {listing.potSize}&ldquo;</p>
-                    {listing.stockQty && listing.stockQty > 0 ? (
-                        <form onSubmit={(e) => { e.preventDefault(); handleAddToCart(); }}>
-                            {listing.Seller?.id !== sessionUser?.id ? (
-                                <>
-                                    <div className="quantityContainer">
-                                        <span className="qtylabel">Quantity:</span>
-                                        <div className="quantityInput">
-                                            <button
-                                                onClick={addQty}
-                                                disabled={(cartQty === listing.stockQty)}
-                                            >
-                                                <span className="qtyPlusMinus">
-                                                    <i className="fa-solid fa-plus" />
-                                                </span>
-                                            </button>
-                                            <input
-                                                className="inputBox"
-                                                type="number"
-                                                step="1"
-                                                min="1"
-                                                max={listing.stockQty}
-                                                value={cartQty}
-                                                name="cartQty"
-                                                onChange={handleQty} />
+            {listing ? (
+                <>
+                    <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/listings">Shop</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;{listing.plantName}</h3>
+                    <div className="listingPageContainer">
+                        <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
+                        <div>
+                            <h1>{listing.plantName}</h1>
+                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link></div>
+                            <p className="price">{price(listing.price)}</p>
+                            <p>{listing.description}</p>
+                            <p>Pot Size: {listing.potSize}&ldquo;</p>
+                            {listing.stockQty && listing.stockQty > 0 ? (
+                                <form onSubmit={(e) => { e.preventDefault(); handleAddToCart(); }}>
+                                    {listing.Seller?.id !== sessionUser?.id ? (
+                                        <>
+                                            <div className="quantityContainer">
+                                                <span className="qtylabel">Quantity:</span>
+                                                <div className="quantityInput">
+                                                    <button
+                                                        onClick={addQty}
+                                                        disabled={(cartQty === listing.stockQty)}
+                                                    >
+                                                        <span className="qtyPlusMinus">
+                                                            <i className="fa-solid fa-plus" />
+                                                        </span>
+                                                    </button>
+                                                    <input
+                                                        className="inputBox"
+                                                        type="number"
+                                                        step="1"
+                                                        min="1"
+                                                        max={listing.stockQty}
+                                                        value={cartQty}
+                                                        name="cartQty"
+                                                        onChange={handleQty} />
 
-                                            <button
-                                                onClick={removeQty}
-                                                disabled={cartQty === 1}
-                                            >
-                                                <span className="qtyPlusMinus">
-                                                    <i className="fa-solid fa-minus" />
-                                                </span>
-                                            </button>
+                                                    <button
+                                                        onClick={removeQty}
+                                                        disabled={cartQty === 1}
+                                                    >
+                                                        <span className="qtyPlusMinus">
+                                                            <i className="fa-solid fa-minus" />
+                                                        </span>
+                                                    </button>
 
-                                        </div>
-                                        <div className='stockLevelMsg' style={{ marginLeft: "5px" }}>
-                                            {listing.stockQty === 1 && (<div>Only 1 in stock!</div>)}
+                                                </div>
+                                                <div className='stockLevelMsg' style={{ marginLeft: "5px" }}>
+                                                    {listing.stockQty === 1 && (<div>Only 1 in stock!</div>)}
 
-                                            {listing.stockQty === cartQty && listing.stockQty !== 1 && (<div>Only {listing.stockQty} in stock!</div>)}
-                                        </div>
-                                    </div>
+                                                    {listing.stockQty === cartQty && listing.stockQty !== 1 && (<div>Only {listing.stockQty} in stock!</div>)}
+                                                </div>
+                                            </div>
 
 
-                                    <OpenModalMenuItem
-                                        itemText={<>
-                                            <button
-                                                type="submit"
-                                                disabled={error}
-                                                style={{ width: "158px", marginTop: "10px" }}
-                                            >Add to Cart</button>
-                                        </>}
-                                        modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}
-                                    />
-                                </>) : (
-                                <>
-                                    <Link to={`/listings/current`}><button style={{ width: "fit-content" }}>Manage Listing</button></Link>
+                                            <OpenModalMenuItem
+                                                itemText={<>
+                                                    <button
+                                                        type="submit"
+                                                        disabled={error}
+                                                        style={{ width: "158px", marginTop: "10px" }}
+                                                    >Add to Cart</button>
+                                                </>}
+                                                modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}
+                                            />
+                                        </>) : (
+                                        <>
+                                            <Link to={`/listings/current`}><button style={{ width: "fit-content" }}>Manage Listing</button></Link>
 
-                                </>
-                            )}
-                        </form>
-                    ) : (<div className="soldOutText">SOLD OUT</div>)
-                    }
+                                        </>
+                                    )}
+                                </form>
+                            ) : (<div className="soldOutText">SOLD OUT</div>)
+                            }
 
-                </div>
-            </div>
-            <div>
-                <LinkedGuides guides={listing.Guides} />
-            </div>
-            <div>
-                <MeetTheSeller sellerInfo={listing.Seller} />
-            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <LinkedGuides guides={listing.Guides} />
+                    </div>
+                    <div>
+                        <MeetTheSeller sellerInfo={listing.Seller} />
+                    </div>
+                </>
+            ) : (
+                <Error404 type="Listing" />
+            )}
+
         </>
     )
 }

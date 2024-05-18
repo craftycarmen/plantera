@@ -8,6 +8,10 @@
     justify-items: center;
 }
 
+.listingsContainer h2 {
+    font-size: 18px;
+}
+
 .listingImageContainer {
     width: 348.75px;
 }

@@ -51,3 +51,19 @@
 .guideInfo div {
     margin-top: auto;
 }
+
+.tape {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 25px;
+    background-color: rgba(242, 220, 203, 0.6);
+    /* border: 1px solid rgba(253, 172, 138, 0.6); */
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    margin-top: -14px;
+}

@@ -74,7 +74,7 @@ function ProfileButton() {
     return (
         <div className='profileButtonWrapper'>
             <span onClick={toggleMenu}>
-                <i className="fa-regular fa-face-smile" />
+                {currUser ? (<i className="fa-regular fa-laugh-beam" />) : (<i className="fa-regular fa-face-smile" />)}
             </span>
             {location.pathname !== '/checkout/user' && (
                 <div className={ulClassName} ref={ulRef}>

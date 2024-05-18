@@ -20,8 +20,8 @@ export const plantName = (text) => {
 }
 
 export const listingName = (text) => {
-    if (text?.length > 30) {
-        return text?.substring(0, 30) + "..."
+    if (text?.length > 21) {
+        return text?.substring(0, 21) + "..."
     } else {
         return text
     }

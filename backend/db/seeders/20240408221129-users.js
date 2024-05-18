@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === 'production') {
 
 const usersList = [
   {
-    firstName: 'Demorita',
-    lastName: 'Usersmith',
+    firstName: 'Ellie',
+    lastName: 'Bellie',
     email: 'demo@user.io',
     username: 'PlanteraDemo',
     hashedPassword: bcrypt.hashSync('password'),
@@ -38,8 +38,8 @@ const usersList = [
     paymentDetails: 1234
   },
   {
-    firstName: 'Ellie',
-    lastName: 'Bellie',
+    firstName: 'Rachel',
+    lastName: 'Jones',
     email: 'user2@user.io',
     username: 'Plants4Life',
     hashedPassword: bcrypt.hashSync('password51!'),

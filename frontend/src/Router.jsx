@@ -21,6 +21,7 @@ import ManageGuides from './components/Guides/ManageGuides/ManageGuides';
 import UserGuides from './components/User/UserGuides';
 import CreateGuide from './components/Guides/GuideForm/CreateGuide';
 import UpdateGuide from './components/Guides/GuideForm/UpdateGuide';
+import Error404 from './components/ErrorHandling/Error404';
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home />
+            },
+            {
+                path: '*',
+                element: <Error404 type="Page" />
             },
             {
                 path: '/listings',

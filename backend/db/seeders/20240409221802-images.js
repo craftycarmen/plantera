@@ -11,19 +11,19 @@ const imagesList = [
   {
     imageableId: 1,
     imageableType: 'User',
-    url: 'https://img.freepik.com/free-vector/woman-wearing-floral-blouse-character_24877-83212.jpg',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/user1.jpeg',
     avatar: true
   },
   {
     imageableId: 2,
     imageableType: 'User',
-    url: 'https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/user2.jpeg',
     avatar: true
   },
   {
     imageableId: 3,
     imageableType: 'User',
-    url: 'https://static.vecteezy.com/system/resources/thumbnails/002/002/247/small_2x/beautiful-black-woman-avatar-character-icon-free-vector.jpg',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/user3.jpeg',
     avatar: true
   },
   {

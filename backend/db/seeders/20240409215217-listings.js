@@ -152,7 +152,7 @@ const listingsList = [
     description: "Joyful and vibrant, my N'Joy is a delight to behold. Grown with love, she's a constant source of happiness, ready to bring smiles to your home.",
     price: 60,
     potSize: 11,
-    stockQty: 1
+    stockQty: 5
   },
 ]
 /** @type {import('sequelize-cli').Migration} */

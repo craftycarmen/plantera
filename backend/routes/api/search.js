@@ -118,13 +118,13 @@ router.get('/', validateQuery, async (req, res) => {
         where.plantName = {
             [Op.or]: [
                 {
-                    [Op.iLike]: `%${search}%`
+                    [Op.like]: `%${search}%`
                 },
                 {
-                    [Op.iLike]: `${search}%`
+                    [Op.like]: `${search}%`
                 },
                 {
-                    [Op.iLike]: `%${search}`
+                    [Op.like]: `%${search}`
                 },
             ]
         }

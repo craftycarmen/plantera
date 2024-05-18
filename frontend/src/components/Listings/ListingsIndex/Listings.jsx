@@ -18,6 +18,7 @@ function Listings() {
     const [showFilter, setShowFilter] = useState(false);
     const [filters, setFilters] = useState(null);
     const [displayCount, setDisplayCount] = useState(8);
+    const [loading, setLoading] = useState(false);
 
 
     const handleFilterToggle = () => {
@@ -31,16 +32,22 @@ function Listings() {
 
 
     useEffect(() => {
-        dispatch(fetchAllListings())
-    }, [dispatch])
+        dispatch(fetchAllListings());
+    }, [dispatch]);
 
     useEffect(() => {
-        if (filters) dispatch(fetchListingResults(null, filters))
-    }, [dispatch, filters])
+        if (filters) {
+            setLoading(true);
+            dispatch(fetchListingResults(null, filters)).then(() => setTimeout(() => {
+                setLoading(false);
+            }, 500))
+        }
+    }, [dispatch, filters]);
 
     const handleFilterChange = (filterParams) => {
         setFilters(filterParams)
         setDisplayCount(8)
+        setLoading(true)
     }
 
     const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
@@ -57,39 +64,44 @@ function Listings() {
             <br />
             <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
             <br />
-            <div className="listingsContainer" style={listingsContainerStyle}>
-                {displayedListings.length === 0 ? (
-                    <>
-                        <div>No results found. Please refine or clear filters.</div>
-                    </>
-                ) : (
-                    <>
-                        {displayedListings.map((listing) => (
-                            <div key={listing.id}>
-                                <Link to={`/listings/${listing.id}`}>
-                                    <div className="listingImageContainer">
-                                        <img className="listingImage" src={listing.ListingImages?.[0]?.url} />
-                                    </div>
-                                    <div className="listingInfo">
-                                        <h2>{listingName(listing.plantName)}</h2>
-                                        <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
-                                        <div>from {listing.Seller?.username}</div>
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                        {filters ? (filteredListings.length > displayCount && (
-                            <div style={{ width: "100%", textAlign: "center" }}>
-                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
-                            </div>
-                        )) : (listings.length > displayCount && (
-                            <div style={{ width: "100%", textAlign: "center" }}>
-                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
-                            </div>
-                        ))}
-                    </>
-                )}
-            </div>
+            {loading ? (
+                <div style={listingsContainerStyle} className="dots"></div>
+            ) : (
+                <div className="listingsContainer" style={listingsContainerStyle}>
+                    {displayedListings.length === 0 ? (
+                        <>
+                            <div>No results found. Please refine or clear filters.</div>
+                        </>
+                    ) : (
+                        <>
+                            {displayedListings.map((listing) => (
+                                <div key={listing.id}>
+                                    <Link to={`/listings/${listing.id}`}>
+                                        <div className="listingImageContainer">
+                                            <img className="listingImage" src={listing.ListingImages?.[0]?.url} />
+                                        </div>
+                                        <div className="listingInfo">
+                                            <h2>{listingName(listing.plantName)}</h2>
+                                            <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
+                                            <div>from {listing.Seller?.username}</div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))}
+                            {filters ? (filteredListings.length > displayCount && (
+                                <div style={{ width: "100%", textAlign: "center" }}>
+                                    <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                                </div>
+                            )) : (listings.length > displayCount && (
+                                <div style={{ width: "100%", textAlign: "center" }}>
+                                    <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                                </div>
+                            ))}
+                        </>
+                    )}
+                </div>
+            )
+            }
         </>
     );
 }

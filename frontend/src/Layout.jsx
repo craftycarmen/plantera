@@ -16,11 +16,13 @@ function Layout() {
     }, [dispatch]);
 
     return (
-        <>
+        <div className="layout">
             <Navigation isLoaded={isLoaded} />
-            {isLoaded && <Outlet />}
+            <div className="main-content">
+                {isLoaded && <Outlet />}
+            </div>
             <Footer />
-        </>
+        </div>
     );
 }
 

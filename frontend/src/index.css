@@ -190,3 +190,14 @@ button:disabled {
         background-position: 0% 50%, 50% 50%, 100% 100%;
     }
 }
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 80px);
+}
+
+/* Main content area */
+.main-content {
+    flex: 1;
+}

@@ -3,7 +3,7 @@ import './Home.css';
 function Home() {
 
     return (
-        <>
+        <div className='header'>
             <div className='headerContainer'>
                 <img className='headerImage' src='../../IMG_5977.jpg' />
                 <div className='headerImage-outline'></div>
@@ -15,7 +15,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

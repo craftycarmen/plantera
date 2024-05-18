@@ -116,3 +116,7 @@
     border: 1px #6b6b6b solid;
     height: 26.5px;
 }
+
+.noResultsContainer {
+    min-height: 550px;
+}

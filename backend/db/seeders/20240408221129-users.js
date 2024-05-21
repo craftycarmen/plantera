@@ -138,21 +138,6 @@ const usersList = [
     bio: " Seeking serenity in the embrace of leaves and petals. 🌸 Planting seeds of joy and watching them bloom.",
     favoritePlant: 'Golden Pothos',
     accountType: 'seller',
-    shopDescription: "My collection features unique and stunning houseplants, each one cared for with the utmost attention. Discover your new plant buddy today!",
-    paymentMethod: 'Bank of Americano',
-    paymentDetails: 1234
-  },
-  {
-    firstName: 'Alex',
-    lastName: 'Parker',
-    email: 'user8@user.io',
-    username: 'FloraFanatic',
-    hashedPassword: bcrypt.hashSync('password57!'),
-    city: 'Atlanta',
-    state: 'GA',
-    bio: " Seeking serenity in the embrace of leaves and petals. 🌸 Planting seeds of joy and watching them bloom.",
-    favoritePlant: 'Golden Pothos',
-    accountType: 'seller',
     shopDescription: "Welcome to FloraFanatic! As a passionate plant lover, I take pride in offering a diverse selection of healthy, beautiful houseplants. Each plant is carefully nurtured and selected to bring joy and greenery into your home. Let's grow together! 🌿🌸",
     paymentMethod: 'Fells Wargo',
     paymentDetails: 1234
@@ -167,7 +152,10 @@ const usersList = [
     state: "OR",
     bio: "I'm Alice and I've been passionate about plants since I was a child. I love creating indoor jungles and sharing plant care tips.",
     favoritePlant: "Monstera Deliciosa",
-    account: "buyer"
+    accountType: 'seller',
+    shopDescription: "I THRIVE off of plants and I'm so excited to share my collection with you!",
+    paymentMethod: 'Pursuit',
+    paymentDetails: 1534
   },
   {
     firstName: "Ben",
@@ -209,11 +197,11 @@ const usersList = [
     firstName: "Emma",
     lastName: "Davis",
     email: "emma.davis@example.com",
-    username: "SucculentEmma",
+    username: "CactiEmma",
     hashedPassword: bcrypt.hashSync("greenThumb321"),
     city: "San Diego",
     state: "CA",
-    bio: "I'm Emma, and I have a deep love for succulents and desert plants. They add charm and resilience to my garden.",
+    bio: "I'm Emma, and I have a deep love for desert plants. They add charm and resilience to my garden.",
     favoritePlant: "Aloe Vera",
     account: "buyer"
   },

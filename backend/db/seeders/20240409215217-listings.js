@@ -156,7 +156,7 @@ const listingsList = [
   },
   {
     sellerId: 3,
-    name: "Fiddle Leaf Fig",
+    plantName: "Fiddle Leaf Fig",
     description: "This beautiful Fiddle Leaf Fig is perfect for brightening up any room. It's a bit of a diva but totally worth it for its stunning, large leaves.",
     price: 45,
     potSize: 10,
@@ -164,7 +164,7 @@ const listingsList = [
   },
   {
     sellerId: 1,
-    name: "Sansevieria Golden Flame Snake Plant",
+    plantName: "Sansevieria Golden Flame Snake Plant",
     description: "The Snake Plant is a hardy, low-maintenance plant that's perfect for beginners. It tolerates low light and is nearly impossible to kill.",
     price: 5,
     potSize: 4,
@@ -172,7 +172,7 @@ const listingsList = [
   },
   {
     sellerId: 4,
-    name: "Monstera Deliciosa",
+    plantName: "Monstera Deliciosa",
     description: "Monstera Deliciosa adds a tropical vibe to your space with its unique, split leaves.",
     price: 50,
     potSize: 12,
@@ -180,7 +180,7 @@ const listingsList = [
   },
   {
     sellerId: 7,
-    name: "ZZ Plant",
+    plantName: "ZZ Plant",
     description: "The ZZ Plant is perfect for any office or home. It's incredibly low maintenance, tolerating low light and needing minimal water.",
     price: 30,
     potSize: 6,
@@ -188,7 +188,7 @@ const listingsList = [
   },
   {
     sellerId: 2,
-    name: "Peace Lily",
+    plantName: "Peace Lily",
     description: "The Peace Lily is not only beautiful with its glossy leaves and white blooms, but it also helps purify the air in your home.",
     price: 35,
     potSize: 8,
@@ -196,7 +196,7 @@ const listingsList = [
   },
   {
     sellerId: 9,
-    name: "Golden Pothos",
+    plantName: "Golden Pothos",
     description: "This golden pothos is a versatile and easy-to-grow plant, perfect for hanging baskets or trailing over shelves. It's a great starter plant!",
     price: 15,
     potSize: 4,
@@ -204,7 +204,7 @@ const listingsList = [
   },
   {
     sellerId: 6,
-    name: "Spider Plant",
+    plantName: "Spider Plant",
     description: "With its arching green and white striped leaves, the Spider Plant is a classic favorite that's easy to care for and fun to propagate.",
     price: 20,
     potSize: 5,
@@ -212,7 +212,7 @@ const listingsList = [
   },
   {
     sellerId: 10,
-    name: "Aloe Vera",
+    plantName: "Aloe Vera",
     description: "Aloe Vera is not only a beautiful succulent but also a useful one. Its gel can soothe burns and skin irritations, making it a great addition to your home.",
     price: 18,
     potSize: 6,
@@ -220,7 +220,7 @@ const listingsList = [
   },
   {
     sellerId: 5,
-    name: "Ficus Burgundy",
+    plantName: "Ficus Burgundy",
     description: "The Ficus Burgundy is an elegant and easy-care option with its deep green, glossy leaves. It can grow quite large, making it a striking focal point.",
     price: 40,
     potSize: 10,
@@ -228,7 +228,7 @@ const listingsList = [
   },
   {
     sellerId: 8,
-    name: "Jade Plant",
+    plantName: "Jade Plant",
     description: "Jade Plants are lovely succulents that are believed to bring good luck. They're easy to care for and have a charming, tree-like appearance.",
     price: 22,
     potSize: 4,
@@ -236,7 +236,7 @@ const listingsList = [
   },
   {
     sellerId: 3,
-    name: "Boston Fern",
+    plantName: "Boston Fern",
     description: "The Boston Fern is a lush, elegant plant that adds a touch of nature to any space. It's perfect for hanging baskets and requires regular misting.",
     price: 25,
     potSize: 8,
@@ -244,7 +244,7 @@ const listingsList = [
   },
   {
     sellerId: 1,
-    name: "Philodendron Brasil",
+    plantName: "Philodendron Brasil",
     description: "Philodendron Brasil is a vibrant and easy-to-care-for plant with heart-shaped leaves featuring unique yellow and green variegation.",
     price: 20,
     potSize: 6,
@@ -252,7 +252,7 @@ const listingsList = [
   },
   {
     sellerId: 5,
-    name: "Bird's Nest Fern",
+    plantName: "Bird's Nest Fern",
     description: "With its wavy, bright green fronds, the Bird's Nest Fern is a unique addition to any plant collection and thrives in humid environments.",
     price: 22,
     potSize: 8,
@@ -260,7 +260,7 @@ const listingsList = [
   },
   {
     sellerId: 4,
-    name: "Chinese Money Plant",
+    plantName: "Chinese Money Plant",
     description: "The Chinese Money Plant, also known as Pilea, has charming, round leaves and is said to bring good fortune to its owner.",
     price: 18,
     potSize: 4,
@@ -268,7 +268,7 @@ const listingsList = [
   },
   {
     sellerId: 9,
-    name: "String of Pearls",
+    plantName: "String of Pearls",
     description: "String of Pearls is a unique succulent with trailing, bead-like foliage. It looks stunning in hanging baskets or draped over shelves.",
     price: 35,
     potSize: 6,
@@ -276,7 +276,7 @@ const listingsList = [
   },
   {
     sellerId: 2,
-    name: "Hoya Pubicalyx Splash",
+    plantName: "Hoya Pubicalyx Splash",
     description: "Hoya, also known as Wax Plant, has thick, waxy leaves and produces beautiful, fragrant flowers. It's a great option for hanging baskets.",
     price: 30,
     potSize: 5,
@@ -284,7 +284,7 @@ const listingsList = [
   },
   {
     sellerId: 8,
-    name: "Majesty Palm",
+    plantName: "Majesty Palm",
     description: "The Majesty Palm is a tall, elegant plant that brings a tropical feel to your home. It loves bright, indirect light and regular watering.",
     price: 40,
     potSize: 10,
@@ -292,7 +292,7 @@ const listingsList = [
   },
   {
     sellerId: 10,
-    name: "Bromeliad",
+    plantName: "Bromeliad",
     description: "Bromeliads are exotic plants with striking foliage and vibrant flowers. They're low-maintenance and add a tropical touch to any room.",
     price: 25,
     potSize: 6,
@@ -300,7 +300,7 @@ const listingsList = [
   },
   {
     sellerId: 1,
-    name: "Cactus Collection",
+    plantName: "Cactus Collection",
     description: "This collection of miniature cacti is perfect for sunny windowsills. Each set includes a variety of shapes and sizes, adding charm to your home.",
     price: 20,
     potSize: 3,
@@ -308,7 +308,7 @@ const listingsList = [
   },
   {
     sellerId: 4,
-    name: "Croton",
+    plantName: "Croton",
     description: "Crotons are known for their colorful, variegated leaves. They thrive in bright light and add a vibrant touch to any indoor garden.",
     price: 30,
     potSize: 8,
@@ -316,7 +316,7 @@ const listingsList = [
   },
   {
     sellerId: 7,
-    name: "Dieffenbachia",
+    plantName: "Dieffenbachia",
     description: "Dieffenbachia, or Dumb Cane, is a stunning plant with large, variegated leaves. It's easy to care for and brightens up any indoor space.",
     price: 22,
     potSize: 10,
@@ -324,7 +324,7 @@ const listingsList = [
   },
   {
     sellerId: 5,
-    name: "Ficus Audrey",
+    plantName: "Ficus Audrey",
     description: "Ficus Audrey is a trendy plant with velvety leaves and a bold appearance. It prefers bright, indirect light and regular watering.",
     price: 35,
     potSize: 12,
@@ -332,7 +332,7 @@ const listingsList = [
   },
   {
     sellerId: 9,
-    name: "Lucky Bamboo",
+    plantName: "Lucky Bamboo",
     description: "Lucky Bamboo is an easy-to-care-for plant that thrives in water or soil. It's believed to bring good luck and prosperity to its owner.",
     price: 18,
     potSize: 4,
@@ -340,7 +340,7 @@ const listingsList = [
   },
   {
     sellerId: 2,
-    name: "Maidenhair Fern",
+    plantName: "Maidenhair Fern",
     description: "Maidenhair Ferns have delicate, lacy fronds that add elegance to any space. They prefer humid environments and indirect light.",
     price: 20,
     potSize: 6,
@@ -348,7 +348,7 @@ const listingsList = [
   },
   {
     sellerId: 8,
-    name: "Red Maranta Prayer Plant",
+    plantName: "Red Maranta Prayer Plant",
     description: "Maranta, also known as the Prayer Plant, has beautiful, patterned leaves that fold up at night. It's a low-light plant that's easy to care for.",
     price: 22,
     potSize: 4,
@@ -356,7 +356,7 @@ const listingsList = [
   },
   {
     sellerId: 6,
-    name: "Oxalis",
+    plantName: "Oxalis",
     description: "Oxalis, or the Purple Shamrock, has striking, clover-like leaves and delicate flowers. It's a charming plant that adds a pop of color to any space.",
     price: 18,
     potSize: 5,
@@ -364,7 +364,7 @@ const listingsList = [
   },
   {
     sellerId: 3,
-    name: "Parlor Palm",
+    plantName: "Parlor Palm",
     description: "The Parlor Palm is a classic houseplant that's perfect for any room. It thrives in low light and is very low maintenance.",
     price: 28,
     potSize: 8,
@@ -372,15 +372,15 @@ const listingsList = [
   },
   {
     sellerId: 10,
-    name: "Watermelon Peperomia",
-    description: "Watermelon peperomia is a versatile plant with thick, textured leaves that looks like watermelons–hence the name!",
+    plantName: "Watermelon Peperomia",
+    description: "Watermelon peperomia is a versatile plant with thick, textured leaves that looks like watermelons–hence the plantName!",
     price: 15,
     potSize: 4,
     stockQty: 30
   },
   {
     sellerId: 1,
-    name: "Pitcher Plant",
+    plantName: "Pitcher Plant",
     description: "The Pitcher Plant is a fascinating carnivorous plant that traps insects in its pitcher-shaped leaves. It's a unique addition to any plant collection.",
     price: 25,
     potSize: 5,
@@ -388,7 +388,7 @@ const listingsList = [
   },
   {
     sellerId: 4,
-    name: "Ponytail Palm",
+    plantName: "Ponytail Palm",
     description: "Ponytail Palm is a quirky, drought-tolerant plant with a bulbous trunk and long, curly leaves. It's perfect for sunny spots.",
     price: 35,
     potSize: 6,
@@ -396,7 +396,7 @@ const listingsList = [
   },
   {
     sellerId: 7,
-    name: "Purple Heart",
+    plantName: "Purple Heart",
     description: "Purple Heart is a striking plant with vibrant purple leaves. It's easy to grow and looks stunning in hanging baskets or as ground cover.",
     price: 18,
     potSize: 6,
@@ -404,7 +404,7 @@ const listingsList = [
   },
   {
     sellerId: 5,
-    name: "Angel Wing Begonia",
+    plantName: "Angel Wing Begonia",
     description: "Angel Wing Begonia leaves are shaped like ange wings. They're a perfect plant with uniquely-shaped leaves to add to your indoor garden.",
     price: 25,
     potSize: 6,
@@ -412,7 +412,7 @@ const listingsList = [
   },
   {
     sellerId: 2,
-    name: "Satin Pothos",
+    plantName: "Satin Pothos",
     description: "Scindapsus Pictus, or Satin Pothos, has velvety, silver-spotted leaves. It's an easy-care plant that thrives in low to bright indirect light.",
     price: 22,
     potSize: 6,
@@ -420,7 +420,7 @@ const listingsList = [
   },
   {
     sellerId: 8,
-    name: "Burro's Tail",
+    plantName: "Burro's Tail",
     description: "Sedum Morganianum, or Burro's Tail, is a succulent with trailing, bead-like foliage. It's perfect for hanging baskets and sunny spots.",
     price: 28,
     potSize: 6,
@@ -428,7 +428,7 @@ const listingsList = [
   },
   {
     sellerId: 6,
-    name: "Staghorn Fern",
+    plantName: "Staghorn Fern",
     description: "Staghorn Ferns are unique epiphytes with antler-like fronds. They thrive mounted on plaques and make a statement piece for any room.",
     price: 35,
     potSize: 8,
@@ -436,7 +436,7 @@ const listingsList = [
   },
   {
     sellerId: 3,
-    name: "Tradescantia Zebrina",
+    plantName: "Tradescantia Zebrina",
     description: "Tradescantia Zebrina has striking purple and silver striped leaves. It's an easy-care plant that adds color to any space.",
     price: 20,
     potSize: 4,
@@ -444,7 +444,7 @@ const listingsList = [
   },
   {
     sellerId: 10,
-    name: "Venus Flytrap",
+    plantName: "Venus Flytrap",
     description: "The Venus Flytrap is a captivating carnivorous plant that traps insects with its jaw-like leaves. It's a fun and educational plant to grow.",
     price: 18,
     potSize: 3,

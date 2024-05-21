@@ -268,7 +268,7 @@ const imagesList = [
   {
     imageableId: 20,
     imageableType: 'Listing',
-    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/spiderplant.jpeg',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/snakeplant.jpeg',
   },
   {
     imageableId: 21,
@@ -518,7 +518,7 @@ const imagesList = [
   {
     imageableId: 15,
     imageableType: 'Guide',
-    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide151.jpeg',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide15.jpeg',
   },
   {
     imageableId: 16,
@@ -559,6 +559,11 @@ const imagesList = [
     imageableId: 23,
     imageableType: 'Guide',
     url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide23.jpeg',
+  },
+  {
+    imageableId: 24,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide24.jpeg',
   },
 ]
 /** @type {import('sequelize-cli').Migration} */

@@ -164,16 +164,16 @@ const listingsList = [
   },
   {
     sellerId: 1,
-    name: "Snake Plant",
+    name: "Sansevieria Golden Flame Snake Plant",
     description: "The Snake Plant is a hardy, low-maintenance plant that's perfect for beginners. It tolerates low light and is nearly impossible to kill.",
-    price: 25,
-    potSize: 8,
+    price: 5,
+    potSize: 4,
     stockQty: 15
   },
   {
     sellerId: 4,
     name: "Monstera Deliciosa",
-    description: "Also known as the Swiss Cheese Plant, Monstera Deliciosa adds a tropical vibe to your space with its unique, split leaves.",
+    description: "Monstera Deliciosa adds a tropical vibe to your space with its unique, split leaves.",
     price: 50,
     potSize: 12,
     stockQty: 10
@@ -196,8 +196,8 @@ const listingsList = [
   },
   {
     sellerId: 9,
-    name: "Pothos",
-    description: "Pothos is a versatile and easy-to-grow plant, perfect for hanging baskets or trailing over shelves. It's a great starter plant!",
+    name: "Golden Pothos",
+    description: "This golden pothos is a versatile and easy-to-grow plant, perfect for hanging baskets or trailing over shelves. It's a great starter plant!",
     price: 15,
     potSize: 4,
     stockQty: 30
@@ -220,8 +220,8 @@ const listingsList = [
   },
   {
     sellerId: 5,
-    name: "Rubber Plant",
-    description: "The Rubber Plant is an elegant and easy-care option with its deep green, glossy leaves. It can grow quite large, making it a striking focal point.",
+    name: "Ficus Burgundy",
+    description: "The Ficus Burgundy is an elegant and easy-care option with its deep green, glossy leaves. It can grow quite large, making it a striking focal point.",
     price: 40,
     potSize: 10,
     stockQty: 8
@@ -284,7 +284,7 @@ const listingsList = [
   },
   {
     sellerId: 2,
-    name: "Hoya",
+    name: "Hoya Pubicalyx Splash",
     description: "Hoya, also known as Wax Plant, has thick, waxy leaves and produces beautiful, fragrant flowers. It's a great option for hanging baskets.",
     price: 30,
     potSize: 5,
@@ -297,14 +297,6 @@ const listingsList = [
     price: 40,
     potSize: 10,
     stockQty: 9
-  },
-  {
-    sellerId: 6,
-    name: "African Violet",
-    description: "African Violets are small, colorful plants that bloom year-round with proper care. They're perfect for adding a splash of color to your space.",
-    price: 15,
-    potSize: 4,
-    stockQty: 30
   },
   {
     sellerId: 10,
@@ -364,10 +356,10 @@ const listingsList = [
   },
   {
     sellerId: 8,
-    name: "Maranta",
+    name: "Red Maranta Prayer Plant",
     description: "Maranta, also known as the Prayer Plant, has beautiful, patterned leaves that fold up at night. It's a low-light plant that's easy to care for.",
     price: 22,
-    potSize: 6,
+    potSize: 4,
     stockQty: 18
   },
   {
@@ -388,8 +380,8 @@ const listingsList = [
   },
   {
     sellerId: 10,
-    name: "Peperomia",
-    description: "Peperomia is a versatile plant with thick, textured leaves. It's easy to care for and comes in a variety of colors and patterns.",
+    name: "Watermelon Peperomia",
+    description: "Watermelon peperomia is a versatile plant with thick, textured leaves that looks like watermelons–hence the name!",
     price: 15,
     potSize: 4,
     stockQty: 30
@@ -420,8 +412,8 @@ const listingsList = [
   },
   {
     sellerId: 5,
-    name: "Rex Begonia",
-    description: "Rex Begonias have bold, colorful leaves with intricate patterns. They're perfect for adding a splash of color to your indoor garden.",
+    name: "Angel Wing Begonia",
+    description: "Angel Wing Begonia leaves are shaped like ange wings. They're a perfect plant with uniquely-shaped leaves to add to your indoor garden.",
     price: 25,
     potSize: 6,
     stockQty: 16
@@ -436,7 +428,7 @@ const listingsList = [
   },
   {
     sellerId: 2,
-    name: "Scindapsus Pictus",
+    name: "Satin Pothos",
     description: "Scindapsus Pictus, or Satin Pothos, has velvety, silver-spotted leaves. It's an easy-care plant that thrives in low to bright indirect light.",
     price: 22,
     potSize: 6,
@@ -444,7 +436,7 @@ const listingsList = [
   },
   {
     sellerId: 8,
-    name: "Sedum Morganianum",
+    name: "Burro's Tail",
     description: "Sedum Morganianum, or Burro's Tail, is a succulent with trailing, bead-like foliage. It's perfect for hanging baskets and sunny spots.",
     price: 28,
     potSize: 6,
@@ -461,7 +453,7 @@ const listingsList = [
   {
     sellerId: 3,
     name: "Tradescantia Zebrina",
-    description: "Tradescantia Zebrina, or Wandering Jew, has striking purple and silver striped leaves. It's an easy-care plant that adds color to any space.",
+    description: "Tradescantia Zebrina has striking purple and silver striped leaves. It's an easy-care plant that adds color to any space.",
     price: 20,
     potSize: 4,
     stockQty: 22

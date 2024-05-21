@@ -32,78 +32,86 @@ function Shop() {
                 }
             </div>
             <div className="shopInfoContainer">
-
-                <div className="shopDescription">
-                    <span style={{ fontWeight: "800" }}>About {user.username}&#39;s Shop:</span>
-                    <div>{user.shopDescription}</div>
-                </div>
-                <div>
-
-                    {activeListings?.length === 0 &&
-                        <div></div>
-                    }
-                    {activeListings?.length > 0 &&
+                {shop.length === 0 ? (
+                    <div>This user does not have a shop.</div>
+                ) :
+                    (
                         <>
-                            <h2>Current Listings</h2>
-                            <div className="shopListingsContainer">
-                                {
-                                    activeListings && activeListings.map(listing => (
-                                        <div className="currentListings" key={listing.id}>
+                            <div className="shopDescription">
+                                <span style={{ fontWeight: "800" }}>About {user.username}&#39;s Shop:</span>
+                                <div>{user.shopDescription}</div>
+                            </div>
+                            <div>
 
-                                            <div className="shopImageContainer">
-                                                <Link to={`/listings/${listing.id}`}>
-                                                    <img
-                                                        className="shopImage"
-                                                        src={listing.ListingImages?.[0]?.url} />
-                                                    <div className="shopInfo">
-                                                        <h3>{listingName(listing.plantName)}</h3>
-                                                        <div className="listingPrice">{price(listing.price)}</div>
-                                                    </div>
-                                                </Link>
-                                            </div>
-
-                                        </div>
-
-                                    ))
+                                {activeListings?.length === 0 &&
+                                    <div></div>
                                 }
+                                {activeListings?.length > 0 &&
+                                    <>
+                                        <h2>Current Listings</h2>
+                                        <div className="shopListingsContainer">
+                                            {
+                                                activeListings && activeListings.map(listing => (
+                                                    <div className="currentListings" key={listing.id}>
+
+                                                        <div className="shopImageContainer">
+                                                            <Link to={`/listings/${listing.id}`}>
+                                                                <img
+                                                                    className="shopImage"
+                                                                    src={listing.ListingImages?.[0]?.url} />
+                                                                <div className="shopInfo">
+                                                                    <h3>{listingName(listing.plantName)}</h3>
+                                                                    <div className="listingPrice">{price(listing.price)}</div>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+
+                                                    </div>
+
+                                                ))
+                                            }
+                                        </div>
+                                    </>
+
+                                }
+
+                                {soldListings?.length === 0 &&
+                                    <div></div>
+                                }
+                                {soldListings?.length > 0 &&
+                                    <>
+                                        <h2>Sold Listings</h2>
+                                        <div className="shopListingsContainer">
+                                            {
+                                                soldListings && soldListings.map(listing => (
+                                                    <div className="currentListings" key={listing.id}>
+
+                                                        <Link to={`/listings/${listing.id}`}>
+                                                            <div className="shopImageContainer soldOutShopImage">
+                                                                <img
+                                                                    className="shopImage"
+                                                                    src={listing.ListingImages?.[0]?.url} />
+                                                                <div className="shopInfo">
+                                                                    <h3>{listingName(listing.plantName)}</h3>
+                                                                    <div className="listingPrice">{price(listing.price)}</div>
+                                                                </div>
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+
+
+                                                ))
+                                            }
+                                        </div>
+                                    </>
+
+                                }
+
                             </div>
                         </>
 
-                    }
+                    )}
 
-                    {soldListings?.length === 0 &&
-                        <div></div>
-                    }
-                    {soldListings?.length > 0 &&
-                        <>
-                            <h2>Sold Listings</h2>
-                            <div className="shopListingsContainer">
-                                {
-                                    soldListings && soldListings.map(listing => (
-                                        <div className="currentListings" key={listing.id}>
-
-                                            <Link to={`/listings/${listing.id}`}>
-                                                <div className="shopImageContainer soldOutShopImage">
-                                                    <img
-                                                        className="shopImage"
-                                                        src={listing.ListingImages?.[0]?.url} />
-                                                    <div className="shopInfo">
-                                                        <h3>{listingName(listing.plantName)}</h3>
-                                                        <div className="listingPrice">{price(listing.price)}</div>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        </div>
-
-
-                                    ))
-                                }
-                            </div>
-                        </>
-
-                    }
-
-                </div>
             </div>
         </div>
     )

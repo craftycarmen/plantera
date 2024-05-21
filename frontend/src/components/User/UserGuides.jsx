@@ -9,7 +9,7 @@ function UserGuides() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId]?.User);
-    const guides = useSelector(state => state.user[userId]?.Guides).sort((a, b) => b.id - a.id);
+    const guides = useSelector(state => state.user[userId]?.Guides);
     const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
@@ -25,23 +25,34 @@ function UserGuides() {
                     <button onClick={() => navigate(`/guides/current`)}>Manage Guides</button>
                 }
             </div>
-            <div className="guidesContainer" style={{ marginTop: "20px" }}>
-                {guides.map((guide) => (
-                    <div key={guide.id}>
-                        <Link to={`/guides/${guide.id}`}>
-                            <div className="guideImageContainer">
-                                <img
-                                    className="guideImage"
-                                    src={guide.GuideImages?.[0]?.url} />
-                                <div className="guideInfo">
-                                    <h2>{guide.title}</h2>
-                                    <div>by {user?.username}</div>
+            <div>
+                {guides.length === 0 ? (
+                    <div style={{ marginTop: '-28px' }}>This user does not have any guides.</div>
+                ) :
+                    (
+                        <div className="guidesContainer" style={{ marginTop: "20px" }}>
+                            {guides.sort((a, b) => b.id - a.id).map((guide) => (
+                                <div key={guide.id}>
+                                    <Link to={`/guides/${guide.id}`}>
+                                        <div className="guideImageContainer">
+                                            <img
+                                                className="guideImage"
+                                                src={guide.GuideImages?.[0]?.url} />
+                                            <div className="guideInfo">
+                                                <h2>{guide.title}</h2>
+                                                <div>by {user?.username}</div>
+                                            </div>
+                                        </div>
+                                    </Link>
                                 </div>
-                            </div>
-                        </Link>
-                    </div>
-                ))}
-            </div >
+                            ))
+                            }
+
+
+                        </div >
+                    )
+                }
+            </div>
         </div>
     )
 }

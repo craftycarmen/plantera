@@ -27,7 +27,7 @@ function UserGuides() {
             </div>
             <div>
                 {guides.length === 0 ? (
-                    <div style={{ marginTop: '-28px' }}>This user does not have any guides.</div>
+                    <div style={{ marginTop: '-284px' }}>This user does not have any guides.</div>
                 ) :
                     (
                         <div className="guidesContainer" style={{ marginTop: "20px" }}>

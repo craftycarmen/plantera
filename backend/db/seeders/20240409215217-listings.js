@@ -243,14 +243,6 @@ const listingsList = [
     stockQty: 12
   },
   {
-    sellerId: 7,
-    name: "Calathea",
-    description: "Calathea plants are known for their strikingly patterned leaves and are great for adding a pop of color to low-light areas.",
-    price: 28,
-    potSize: 6,
-    stockQty: 15
-  },
-  {
     sellerId: 1,
     name: "Philodendron Brasil",
     description: "Philodendron Brasil is a vibrant and easy-to-care-for plant with heart-shaped leaves featuring unique yellow and green variegation.",
@@ -417,14 +409,6 @@ const listingsList = [
     price: 25,
     potSize: 6,
     stockQty: 16
-  },
-  {
-    sellerId: 9,
-    name: "Sago Palm",
-    description: "The Sago Palm is a unique, prehistoric-looking plant with feathery fronds. It prefers bright light and minimal watering.",
-    price: 40,
-    potSize: 10,
-    stockQty: 8
   },
   {
     sellerId: 2,

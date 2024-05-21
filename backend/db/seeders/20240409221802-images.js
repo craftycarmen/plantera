@@ -490,6 +490,76 @@ const imagesList = [
     imageableType: 'Guide',
     url: 'https://plantera.s3.us-west-1.amazonaws.com/public/propagation.jpeg',
   },
+  {
+    imageableId: 10,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide10.jpeg',
+  },
+  {
+    imageableId: 11,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide11.jpeg',
+  },
+  {
+    imageableId: 12,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide12.jpeg',
+  },
+  {
+    imageableId: 13,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide13.jpeg',
+  },
+  {
+    imageableId: 14,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide14.jpeg',
+  },
+  {
+    imageableId: 15,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide151.jpeg',
+  },
+  {
+    imageableId: 16,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide16.jpeg',
+  },
+  {
+    imageableId: 17,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide17.jpeg',
+  },
+  {
+    imageableId: 18,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide18.jpeg',
+  },
+  {
+    imageableId: 19,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide19.jpeg',
+  },
+  {
+    imageableId: 20,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide20.jpeg',
+  },
+  {
+    imageableId: 21,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide21.jpeg',
+  },
+  {
+    imageableId: 22,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide22.jpeg',
+  },
+  {
+    imageableId: 23,
+    imageableType: 'Guide',
+    url: 'https://plantera.s3.us-west-1.amazonaws.com/public/guide23.jpeg',
+  },
 ]
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

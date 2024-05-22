@@ -55,3 +55,15 @@
 /* .listingsContainer a:hover {
     text-decoration: none;
 } */
+
+@media screen and (max-width: 480px) {
+
+    .listingImageContainer,
+    .listingInfo {
+        width: 75vw;
+    }
+
+    .listingsContainer {
+        width: 80vw;
+    }
+}

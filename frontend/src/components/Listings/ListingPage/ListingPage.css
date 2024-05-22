@@ -212,3 +212,23 @@
     height: fit-content;
     /* align-self: center; */
 }
+
+@media screen and (max-width: 480px) {
+    .listingPageImage {
+        width: 75vw;
+        height: 250px;
+    }
+
+    .listingPageContainer,
+    .meetTheSellerContainer,
+    .linkedGuidesContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .listingGuideCoverContainer,
+    .listingGuideCoverContainer::before {
+        width: 75vw;
+    }
+}

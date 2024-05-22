@@ -181,3 +181,41 @@
     }
 
 }
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .userProfilePageContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .username {
+        display: grid;
+    }
+
+    .userProfileInfo,
+    .shopInfoContainer {
+        margin-top: 0px;
+    }
+
+    .shopImageContainer,
+    .shopInfo,
+    .soldOutShopImage,
+    .soldOutShopImage::before {
+        width: 78vw;
+    }
+
+    .userImageContainer {
+        margin: auto;
+    }
+
+    .shopImage {
+        height: 300px;
+    }
+
+    .userProfilePageContainer .guideImageContainer,
+    .userProfilePageContainer .guideImageContainer::before {
+        width: 78vw;
+    }
+}

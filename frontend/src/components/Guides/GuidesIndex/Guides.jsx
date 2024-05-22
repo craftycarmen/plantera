@@ -15,9 +15,10 @@ function Guides() {
 
     return (guides &&
         <>
-            <h1>Inspire</h1>
-            <div>Get plant-spired with these guides written by the Plantera community!</div>
-            <br />
+            <div className="pageHeader">
+                <h1>Inspire</h1>
+                <div>Get plant-spired with these guides written by the Plantera community!</div>
+            </div>
             <div className="guidesContainer">
                 {guides.map((guide) => (
                     <div key={guide.id}>

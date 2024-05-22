@@ -27,8 +27,8 @@
 
 .shoppingModalListing {
     display: grid;
-    gap: 20px;
     grid-template-columns: 1fr 2fr;
+    gap: 20px;
     padding-bottom: 10px;
     /* height: 100px; */
 }
@@ -105,17 +105,15 @@
 @media screen and (max-width: 480px) {
 
     .shoppingModal {
-        width: 65vw;
+        max-width: 65vw;
     }
 
     .shoppingModalListing {
-        display: flex;
-        flex-direction: column;
-        width: 65vw;
+        grid-template-columns: 1fr;
     }
 
     .shoppingModalImgContainer {
-        width: 65vw;
+        width: 100%;
     }
 
     .shoppingModal img {
@@ -143,4 +141,44 @@
         height: 150px;
     }
 
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .shoppingModal {
+        max-width: 65vw;
+    }
+
+    .shoppingModalListing {
+        grid-template-columns: 1fr;
+    }
+
+    .shoppingModalImgContainer,
+    .subTotal {
+        width: 100%;
+    }
+
+    .shoppingModal img {
+        height: 200px;
+    }
+
+    .smButtons {
+        display: grid;
+    }
+
+    .smButtons button:nth-child(1) {
+        width: 212px;
+    }
+
+    .smDots {
+        margin: 100px auto;
+    }
+
+    .shoppingModalRow {
+        height: fit-content;
+        padding-bottom: 20px;
+    }
+
+    .smInfo {
+        height: 150px;
+    }
 }

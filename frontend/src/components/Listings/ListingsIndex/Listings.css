@@ -1,9 +1,9 @@
 .listingsContainer {
-    /* display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); */
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 348.75px), 1fr));
+    /* display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: row; */
     gap: 35px;
     justify-items: center;
 }
@@ -60,15 +60,17 @@
     }
 
     .listingsContainer {
-        width: 80vw;
+        width: 75vw;
     }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
     .listingImageContainer,
-    .listingInfo {
-        width: 75vw;
+    .listingInfo,
+    .listingsContainer {
+        column-gap: 0;
+        width: 78vw;
     }
 
     .listingImage {

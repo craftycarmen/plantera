@@ -39,8 +39,7 @@ function Listings() {
 
     const listingsContainerStyle = {
         marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
-        marginTop: isMobile && showFilter ? '590px' : '0',
-        marginTop: isTablet && showFilter ? '390px' : '0',
+        marginTop: (isTablet || isMobile) && showFilter ? '0' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 

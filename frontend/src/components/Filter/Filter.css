@@ -10,15 +10,12 @@
 .filter-dropdown {
     position: absolute;
     border: #28635A solid 1.5px;
-    /* box-shadow: 2px 2px 0px #f9ddd2; */
     border-radius: 3px;
     padding: 15px 20px 15px 20px;
     background-color: #F2DCCB;
     width: fit-content;
-    /* bottom: 20px; */
     text-wrap: nowrap;
     margin-top: 20px;
-    /* margin-bottom: 20px; */
     margin-right: -2px;
     left: 1;
     z-index: 2;
@@ -137,16 +134,19 @@
 
     .filter-dropdown {
         width: 70vw;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-
-
+        display: grid;
+        grid-template-areas:
+            "price pot"
+            "clear clear";
     }
 
     .clearFilters {
         width: auto;
         grid-area: clear;
+    }
+
+    .potFilter {
+        grid-area: pot;
     }
 
 }

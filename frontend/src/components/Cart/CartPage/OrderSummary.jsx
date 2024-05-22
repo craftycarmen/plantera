@@ -62,7 +62,7 @@ function OrderSummary({ cartId, checkout }) {
                                 <div className="orderSummaryImgContainer">
                                     <img src={item.Listing?.ListingImages?.[0]?.url} />
                                     <span className="qtyCircle">
-                                        <i style={{ fontSize: "large" }} className="fa-solid fa-circle" />
+                                        <i className="fa-solid fa-circle" />
 
                                         <span className='cartQtyNum'>
                                             {item.cartQty}
@@ -70,15 +70,15 @@ function OrderSummary({ cartId, checkout }) {
 
                                     </span>
                                 </div>
-                                <div>
+                                <div className="orderListingInfo">
                                     <div style={{ fontWeight: '600' }}>
                                         {plantName(item.Listing?.plantName)}
                                     </div>
-                                    <div>{item.Listing?.potSize}&#34;</div>
+                                    <div className="orderSummaryItemSub">
+                                        ${item.cartItemsTotal.toFixed(2)}</div>
+                                    <div className="orderPot">{item.Listing?.potSize}&#34;</div>
                                 </div>
 
-                                <span className="orderSummaryItemSub">
-                                    ${item.cartItemsTotal.toFixed(2)}</span>
 
                             </div>
                         ))}

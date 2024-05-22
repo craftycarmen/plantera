@@ -67,10 +67,13 @@
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
     .listingImageContainer,
-    .listingInfo,
-    .listingsContainer {
-        column-gap: 0;
+    .listingInfo {
         width: 78vw;
+    }
+
+    .listingsContainer {
+        grid-template-columns: auto;
+        width: 100%;
     }
 
     .listingImage {

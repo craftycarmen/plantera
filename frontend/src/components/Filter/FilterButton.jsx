@@ -319,7 +319,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
                             </div>
                         </div>
                         <br />
-                        <div>
+                        <div className="potFilter">
                             <h3>Pot Size</h3>
                             <div className="potSize">
                                 {potSizeOptions.map((size) => (

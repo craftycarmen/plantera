@@ -152,7 +152,7 @@
             "links links";
         align-items: center;
         grid-template-columns: 2fr 1fr;
-        max-width: 75vw;
+        width: 100%;
     }
 
     .planteraLogo {

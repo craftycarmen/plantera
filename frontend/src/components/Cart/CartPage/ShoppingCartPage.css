@@ -70,7 +70,7 @@
     .shoppingCartPageContainer {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 40px;
     }
 }
 
@@ -90,6 +90,6 @@
     .shoppingCartPageContainer {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 40px;
     }
 }

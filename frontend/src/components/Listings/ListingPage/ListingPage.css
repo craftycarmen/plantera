@@ -232,3 +232,33 @@
         width: 75vw;
     }
 }
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .listingPageImage {
+        width: 75vw;
+        height: 300px;
+    }
+
+    .listingPageContainer,
+    .meetTheSellerContainer,
+    .linkedGuidesContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .listingGuideCoverContainer,
+    .listingGuideCoverContainer::before {
+        width: 78vw;
+    }
+
+    .sellerImageContainer {
+        margin: auto;
+    }
+
+    .linkedGuides,
+    .meetTheSeller {
+        margin-top: 50px;
+    }
+}

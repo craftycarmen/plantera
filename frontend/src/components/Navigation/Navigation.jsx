@@ -23,7 +23,7 @@ function Navigation({ isLoaded }) {
 
     return (
         <div className='navigation'>
-            <NavLink to="/"><img style={{ width: "350px" }} src='../../logo.png' /></NavLink>
+            <NavLink to="/"><img className='planteraLogo' src='../../logo.png' /></NavLink>
             <div className='navLinks'>
                 <span><Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;</span>
 
@@ -32,16 +32,15 @@ function Navigation({ isLoaded }) {
                 <span onClick={() => alert('Page coming soon')} >SELL</span>
             </div>
             <div className='rightNav'>
-                {/* <i className="fa-solid fa-magnifying-glass" onClick={() => alert('Feature coming soon')} /> */}
 
                 {isLoaded && (
                     <SearchButton />
-                )}&nbsp;&nbsp;&nbsp;
+                )}
 
 
                 {isLoaded && (
                     <ProfileButton user={user} />
-                )}&nbsp;&nbsp;&nbsp;
+                )}
 
                 {isLoaded && (
                     <ShoppingCartButton cartId={cartId} />

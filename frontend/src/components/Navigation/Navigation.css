@@ -16,6 +16,8 @@
     cursor: default;
     position: relative;
     justify-self: end;
+    display: flex;
+    gap: 20px;
 }
 
 .rightNav i {
@@ -97,4 +99,40 @@
     display: grid;
     grid-template-columns: 25px auto;
     row-gap: 10px;
+}
+
+.planteraLogo {
+    width: 350px;
+}
+
+@media screen and (max-width: 480px) {
+    .navigation {
+        display: grid;
+        column-gap: 50px;
+        row-gap: 20px;
+        grid-template-areas:
+            "logo buttons"
+            "links links";
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .planteraLogo {
+        width: calc(100vw - 250px);
+        grid-area: logo;
+    }
+
+    .rightNav {
+        grid-area: buttons;
+        display: flex;
+        flex-direction: row;
+        justify-items: space-around;
+        gap: 15px;
+    }
+
+    .navLinks {
+        margin: auto;
+        grid-area: links;
+        padding-bottom: 10px;
+    }
 }

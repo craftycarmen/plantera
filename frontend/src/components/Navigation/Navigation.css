@@ -108,17 +108,88 @@
 @media screen and (max-width: 480px) {
     .navigation {
         display: grid;
-        column-gap: 50px;
+        column-gap: 30px;
         row-gap: 20px;
         grid-template-areas:
             "logo buttons"
             "links links";
         align-items: center;
-        grid-template-columns: 1fr 1fr;
+        /* grid-template-columns: 2fr 1fr; */
+        max-width: 75vw;
     }
 
     .planteraLogo {
-        width: calc(100vw - 250px);
+        width: 100%;
+        grid-area: logo;
+    }
+
+    .rightNav {
+        grid-area: buttons;
+        display: flex;
+        flex-direction: row;
+        justify-items: space-around;
+        gap: 10px;
+    }
+
+    .rightNav i {
+        font-size: large;
+    }
+
+    .navLinks {
+        margin: auto;
+        grid-area: links;
+        padding-bottom: 10px;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .navigation {
+        display: grid;
+        column-gap: 30px;
+        row-gap: 20px;
+        grid-template-areas:
+            "logo buttons"
+            "links links";
+        align-items: center;
+        /* grid-template-columns: 2fr 1fr; */
+        max-width: 75vw;
+    }
+
+    .planteraLogo {
+        width: 75%;
+        grid-area: logo;
+    }
+
+    .rightNav {
+        grid-area: buttons;
+        display: flex;
+        flex-direction: row;
+        justify-items: space-around;
+        gap: 15px;
+    }
+
+    .navLinks {
+        margin: auto;
+        grid-area: links;
+        padding-bottom: 10px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .navigation {
+        display: grid;
+        column-gap: 30px;
+        row-gap: 20px;
+        grid-template-areas:
+            "logo buttons"
+            "links links";
+        align-items: center;
+        /* grid-template-columns: 2fr 1fr; */
+        max-width: 75vw;
+    }
+
+    .planteraLogo {
+        width: 50%;
         grid-area: logo;
     }
 

@@ -206,4 +206,32 @@ button:disabled {
     body {
         padding: 40px;
     }
+
+    .top-triangle {
+        border-right: 60vw solid transparent;
+        border-bottom: 100px solid #F2DCCB;
+    }
+
+    .bottom-triangle {
+        border-left: 40vw solid transparent;
+        border-bottom: 50px solid rgba(253, 172, 138, 0.75);
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    body {
+        max-width: 600px;
+        padding: 40px;
+    }
+
+    .top-triangle {
+        border-right: 75vw solid transparent;
+        border-bottom: 100px solid #F2DCCB;
+    }
+
+    .bottom-triangle {
+        border-left: 50vw solid transparent;
+        border-bottom: 50px solid rgba(253, 172, 138, 0.75);
+    }
+
 }

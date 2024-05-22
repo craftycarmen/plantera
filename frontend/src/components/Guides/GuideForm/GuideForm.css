@@ -1,0 +1,35 @@
+.guideForm .inputContainer input {
+    width: 578px;
+}
+
+.guideForm .inputContainer textarea {
+    width: 578px;
+    height: 40px;
+}
+
+.guideForm button {
+    margin-top: 15px;
+    width: 600px
+}
+
+.guideDots {
+    margin-left: 290px;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 480px) {
+
+    .guideForm .inputContainer input,
+    .guideForm .inputContainer textarea {
+        width: 65vw;
+    }
+
+    .guideForm button {
+        width: 70vw;
+    }
+
+    .guideDots {
+        margin: 20px auto;
+    }
+
+}

@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from "react-router-dom";
 import ErrorHandling from "../../ErrorHandling";
 import { titleCase, upperCaseFirst } from "../../../../utils";
+import './GuideForm.css'
 
 function GuideForm({ guide, formType }) {
     const dispatch = useDispatch();
@@ -108,12 +109,12 @@ function GuideForm({ guide, formType }) {
     }
 
     return (
-        <>
+        <section className="guideForm">
             <h1>{formType}</h1>
             {!sessionUser ? (
                 <ErrorHandling />
             ) : (
-                <form onSubmit={handleSubmit} className="guideForm">
+                <form onSubmit={handleSubmit}>
                     <div className="inputContainer">
                         <input
                             type="text"
@@ -121,7 +122,6 @@ function GuideForm({ guide, formType }) {
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder=""
                             id="title"
-                            style={{ width: "578px" }}
                         />
                         <label htmlFor="title" className="floating-label">Title*</label>
                         <div className="error">{errors.title &&
@@ -135,7 +135,6 @@ function GuideForm({ guide, formType }) {
                                     onChange={updateFile}
                                     accept=".jpg, .jpeg, .png"
                                     id='image'
-                                    style={{ width: "578px" }}
                                 />
                                 <label htmlFor='image' className='floating-label'>Cover Image*</label>
                             </div>
@@ -149,7 +148,6 @@ function GuideForm({ guide, formType }) {
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder=""
                             id="description"
-                            style={{ width: "578px", height: "40px" }}
                         />
                         <label htmlFor="description" className="floating-label">Description*</label>
                         <div className="error">{errors?.description &&
@@ -168,15 +166,15 @@ function GuideForm({ guide, formType }) {
                         <div className="error">{errors?.content &&
                             <><i className="fa-solid fa-circle-exclamation" /> {errors.content}</>}</div>
                     </div>
-                    {imageLoading && (<div style={{ marginLeft: "290px", marginTop: "20px" }} className="dots"></div>)}
+                    {imageLoading && (<div className="dots guideDots"></div>)}
                     <div>
-                        <button style={{ marginTop: "15px", width: "600px" }}
+                        <button
                             disabled={Object.values(errors).length}
                             type="submit">{formType}</button>
                     </div>
                 </form >
             )}
-        </>
+        </section>
     )
 }
 

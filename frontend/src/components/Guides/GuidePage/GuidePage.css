@@ -15,3 +15,10 @@
 .guidePageHeader {
     text-align: center;
 }
+
+@media screen and (max-width: 480px) {
+
+    .guidePageImage {
+        height: 250px;
+    }
+}

@@ -120,3 +120,11 @@
 .noResultsContainer {
     min-height: 550px;
 }
+
+@media screen and (max-width: 480px) {
+
+    .filter-dropdown {
+        width: 65vw;
+    }
+
+}

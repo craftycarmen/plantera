@@ -19,14 +19,25 @@ function Listings() {
     const [filters, setFilters] = useState(null);
     const [displayCount, setDisplayCount] = useState(8);
     const [loading, setLoading] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
 
 
     const handleFilterToggle = () => {
         setShowFilter(!showFilter);
     };
 
+    const handleResize = () => {
+        setIsMobile(window.innerWidth <= 480);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize)
+    }, []);
+
     const listingsContainerStyle = {
-        marginLeft: showFilter ? '270px' : '0',
+        marginLeft: !isMobile && showFilter ? '270px' : '0',
+        marginTop: isMobile && showFilter ? '590px' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 

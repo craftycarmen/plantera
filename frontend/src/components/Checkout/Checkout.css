@@ -86,4 +86,17 @@
         width: 65vw;
         gap: 50px;
     }
+
+    .orderSummaryImgContainer {
+        width: 65vw;
+    }
+
+    .orderSummaryImgContainer img {
+        height: 150px;
+    }
+
+    .orderSummaryItem {
+        display: flex;
+        flex-direction: column;
+    }
 }

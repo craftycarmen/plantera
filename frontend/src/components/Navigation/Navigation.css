@@ -114,7 +114,7 @@
             "logo buttons"
             "links links";
         align-items: center;
-        /* grid-template-columns: 2fr 1fr; */
+        grid-template-columns: 2fr 1fr;
         max-width: 75vw;
     }
 

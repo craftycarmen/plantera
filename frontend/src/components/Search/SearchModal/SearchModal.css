@@ -46,3 +46,16 @@
     }
 
 }
+
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .searchModal h1 {
+        margin-left: 45px;
+    }
+
+    .searchModal input {
+        width: 65vw;
+    }
+
+}

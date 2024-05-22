@@ -33,7 +33,6 @@
 .guideButtons {
     display: flex;
     gap: 8px;
-    justify-content: end;
     width: fit-content;
     margin-top: 15px;
 }
@@ -45,6 +44,17 @@
     .ownedGuideImageContainer,
     .ownedGuideImageContainer::before {
         width: 75vw;
+    }
+
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .ownedGuideImage,
+    .ownedGuideImageContainer,
+    .ownedGuideImageContainer::before {
+        width: 78vw;
+        height: 275px;
     }
 
 }

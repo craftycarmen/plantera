@@ -64,3 +64,25 @@
     }
 
 }
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .manageListingInfo {
+        width: 100%;
+        padding-top: 0;
+    }
+
+    .listingButtons {
+        justify-self: end;
+    }
+
+    .soldOutImage {
+        width: 78vw;
+    }
+
+    .soldOutImage::before {
+        width: 78vw;
+        height: 275px;
+    }
+
+}

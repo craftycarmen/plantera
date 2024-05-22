@@ -33,3 +33,19 @@
     }
 
 }
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .guideForm .inputContainer input,
+    .guideForm .inputContainer textarea {
+        width: 75vw;
+    }
+
+    .guideForm button {
+        width: 80vw;
+    }
+
+    .guideDots {
+        margin: 20px auto;
+    }
+}

@@ -155,3 +155,29 @@
     justify-self: center;
     gap: 20px;
 }
+
+@media screen and (max-width: 480px) {
+
+    .userProfilePageContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .username {
+        display: grid;
+    }
+
+    .userProfileInfo,
+    .shopInfoContainer {
+        margin-top: 0px;
+    }
+
+    .shopImageContainer,
+    .shopInfo,
+    .soldOutShopImage,
+    .soldOutShopImage::before {
+        width: 75vw;
+    }
+
+}

@@ -71,7 +71,7 @@ function OrderConfirmation() {
                                         <div className="orderSummaryImgContainer">
                                             <img src={item.Listing?.ListingImages?.[0]?.url} />
                                             <span className="qtyCircle">
-                                                <i style={{ fontSize: "large" }} className="fa-solid fa-circle" />
+                                                <i className="fa-solid fa-circle" />
 
                                                 <span className='cartQtyNum'>
                                                     {item.cartQty}

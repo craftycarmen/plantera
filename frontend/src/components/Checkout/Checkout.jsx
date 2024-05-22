@@ -242,7 +242,6 @@ function Checkout() {
                             <button
                                 type="submit"
                                 disabled={!!Object.values(errors).length}
-                                style={{ marginTop: "15px", width: "321px" }}
                             >Place My Order</button>
                         </form >
                         <OrderSummary checkout={true} />

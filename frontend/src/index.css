@@ -205,6 +205,15 @@ button:disabled {
     width: 190px;
 }
 
+form {
+    width: fit-content;
+}
+
+form>button {
+    margin-top: 15px;
+    width: 100%;
+}
+
 @media screen and (max-width: 480px) {
     body {
         padding: 30px;
@@ -223,6 +232,19 @@ button:disabled {
 
     .deleteModal button {
         width: 60vw;
+    }
+
+    input,
+    textarea {
+        width: 70vw;
+    }
+
+    select {
+        width: 75vw;
+    }
+
+    form {
+        width: 75vw;
     }
 }
 

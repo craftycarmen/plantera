@@ -111,6 +111,7 @@
     .orderSummaryItem {
         display: flex;
         flex-direction: column;
+        gap: 10px;
     }
 }
 
@@ -119,7 +120,7 @@
     .checkoutUserContainer,
     .thankYouContainer {
         grid-template-columns: 1fr;
-        width: 78vw;
+        width: 100%;
         gap: 50px;
     }
 
@@ -134,6 +135,7 @@
     .orderSummaryItem {
         grid-template-columns: 1fr;
         padding-bottom: 20px;
+        gap: 10px;
     }
 
     .qtyCircle {

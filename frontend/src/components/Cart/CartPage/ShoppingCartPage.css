@@ -53,3 +53,23 @@
     font-style: italic;
     color: #E38251;
 }
+
+@media screen and (max-width: 480px) {
+
+    .shoppingCartListing {
+        display: flex;
+        flex-direction: column;
+        width: 65vw;
+        gap: 10px;
+    }
+
+    .shoppingCartListing img {
+        height: 150px;
+    }
+
+    .shoppingCartPageContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}

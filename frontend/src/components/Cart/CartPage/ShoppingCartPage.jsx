@@ -187,7 +187,7 @@ function ShoppingCartPage() {
                                     <div className="shoppingCartImgContainer">
                                         <Link to={`/listings/${item.Listing?.id}`}><img src={item.Listing?.ListingImages?.[0]?.url} alt={item.Listing?.plantName} /></Link>
                                     </div>
-                                    <div className="smInfo" style={{ height: "225px" }}>
+                                    <div className="smInfo" style={{ height: "175px" }}>
                                         <div className="shoppingCartRow">
                                             <div><h3>{item.Listing?.plantName}</h3>
                                                 <div>from {item.Listing?.Seller?.username}</div>

@@ -38,3 +38,16 @@
 .demosignup span {
     color: #F2DCCB;
 }
+
+@media screen and (max-width: 480px) {
+
+    .modal {
+        width: 65vw;
+    }
+
+    .modal input,
+    .modal textarea {
+        width: 60vw;
+    }
+
+}

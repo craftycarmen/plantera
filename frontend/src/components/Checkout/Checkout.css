@@ -76,3 +76,13 @@
     display: flex;
     justify-content: center;
 }
+
+@media screen and (max-width: 480px) {
+
+    .checkoutUserContainer {
+        display: flex;
+        flex-direction: column;
+        width: 65vw;
+        gap: 50px;
+    }
+}

@@ -294,7 +294,8 @@ function SignupFormModal({ navigate }) {
                 </div>
             </form>
             <div className='demosignup'>
-                <div>Already a Plantera user?&nbsp;
+                <div>Already a Plantera user?</div>
+                <div>
                     <OpenModalMenuItem
                         itemText={<span className="modalLink">Log in</span>}
                         modalComponent={<LoginFormModal />}

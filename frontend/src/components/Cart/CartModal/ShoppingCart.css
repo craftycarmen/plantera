@@ -99,7 +99,7 @@
 
 .smDots {
     justify-content: center;
-    margin: 100px 100px;
+    margin: 100px 175px;
 }
 
 @media screen and (max-width: 480px) {
@@ -129,4 +129,18 @@
     .smButtons button:nth-child(1) {
         width: 212px;
     }
+
+    .smDots {
+        margin: 100px 100px;
+    }
+
+    .shoppingModalRow {
+        height: fit-content;
+        padding-bottom: 20px;
+    }
+
+    .smInfo {
+        height: 150px;
+    }
+
 }

@@ -15,10 +15,20 @@ function SearchPage() {
     const searchTermRedux = useSelector(state => state.search.searchTerm);
     const [showFilter, setShowFilter] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
 
     const getSearchFromLocal = () => {
         return localStorage.getItem('searchTerm');
     };
+
+    const handleResize = () => {
+        setIsMobile(window.innerWidth <= 480);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize)
+    }, []);
 
     const getSearchTerm = () => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -74,7 +84,8 @@ function SearchPage() {
     };
 
     const listingsContainerStyle = {
-        marginLeft: showFilter ? '270px' : '0',
+        marginLeft: !isMobile && showFilter ? '270px' : '0',
+        marginTop: isMobile && showFilter ? '590px' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 

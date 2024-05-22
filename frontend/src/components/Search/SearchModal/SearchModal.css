@@ -35,3 +35,14 @@
     width: fit-content;
     margin-left: 20px;
 }
+
+@media screen and (max-width: 480px) {
+    .searchModal h1 {
+        margin-left: 0;
+    }
+
+    .searchModal input {
+        width: 65vw;
+    }
+
+}

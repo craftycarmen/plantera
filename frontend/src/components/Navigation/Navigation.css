@@ -25,10 +25,6 @@
     cursor: pointer;
 }
 
-/* .navLinks a {
-    color: #28635A
-} */
-
 .profile-dropdown {
     position: absolute;
     border: #28635A solid 1.5px;
@@ -184,8 +180,40 @@
             "logo buttons"
             "links links";
         align-items: center;
-        /* grid-template-columns: 2fr 1fr; */
-        max-width: 75vw;
+        max-width: 100%;
+    }
+
+    .planteraLogo {
+        width: 50%;
+        grid-area: logo;
+    }
+
+    .rightNav {
+        grid-area: buttons;
+        display: flex;
+        flex-direction: row;
+        justify-items: space-around;
+        gap: 15px;
+    }
+
+    .navLinks {
+        margin: auto;
+        grid-area: links;
+        padding-bottom: 10px;
+    }
+}
+
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .navigation {
+        display: grid;
+        column-gap: 30px;
+        row-gap: 20px;
+        grid-template-areas:
+            "logo buttons"
+            "links links";
+        align-items: center;
+        max-width: 100%;
     }
 
     .planteraLogo {

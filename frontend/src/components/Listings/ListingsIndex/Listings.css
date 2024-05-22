@@ -52,6 +52,12 @@
     align-self: start;
 }
 
+.showMoreDiv {
+    width: 100%;
+    text-align: center;
+    padding-top: 40px;
+}
+
 @media screen and (max-width: 480px) {
 
     .listingImageContainer,
@@ -68,7 +74,7 @@
 
     .listingImageContainer,
     .listingInfo {
-        width: 78vw;
+        width: 70vw;
     }
 
     .listingsContainer {
@@ -78,5 +84,27 @@
 
     .listingImage {
         height: 275px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+    .listingImageContainer,
+    .listingInfo {
+        width: 34vw;
+    }
+
+    .listingsContainer {
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .listingImage {
+        height: 275px;
+    }
+
+    .showMoreDiv {
+        display: flex;
+        width: 100vw;
     }
 }

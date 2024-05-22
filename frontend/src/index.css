@@ -7,7 +7,8 @@ body {
     font-size: 14px;
     /* letter-spacing: -0.5px; */
     padding: 40px 60px;
-    margin: auto;
+    /* margin: auto; */
+    justify-content: center;
     max-width: 1500px;
 }
 
@@ -250,7 +251,24 @@ form>button {
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
     body {
-        max-width: 600px;
+        max-width: 75vw;
+        padding: 40px;
+    }
+
+    .top-triangle {
+        border-right: 75vw solid transparent;
+        border-bottom: 100px solid #F2DCCB;
+    }
+
+    .bottom-triangle {
+        border-left: 50vw solid transparent;
+        border-bottom: 50px solid rgba(253, 172, 138, 0.75);
+    }
+}
+
+@media screen and (min-width: 469px) and (max-width: 1024px) {
+    body {
+        max-width: 85vw;
         padding: 40px;
     }
 

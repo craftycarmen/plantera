@@ -20,6 +20,7 @@ function Listings() {
     const [displayCount, setDisplayCount] = useState(8);
     const [loading, setLoading] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+    const [isTablet, setIsTablet] = useState(window.innerWidth <= 768 && window.innerWidth >= 481);
 
 
     const handleFilterToggle = () => {
@@ -28,6 +29,7 @@ function Listings() {
 
     const handleResize = () => {
         setIsMobile(window.innerWidth <= 480);
+        setIsTablet(window.innerWidth <= 768 && window.innerWidth >= 481);
     }
 
     useEffect(() => {
@@ -36,8 +38,9 @@ function Listings() {
     }, []);
 
     const listingsContainerStyle = {
-        marginLeft: !isMobile && showFilter ? '270px' : '0',
+        marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
         marginTop: isMobile && showFilter ? '590px' : '0',
+        marginTop: isTablet && showFilter ? '390px' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 

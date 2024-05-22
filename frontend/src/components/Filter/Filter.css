@@ -121,10 +121,32 @@
     min-height: 550px;
 }
 
+.clearFilters {
+    margin-top: 20px;
+}
+
 @media screen and (max-width: 480px) {
 
     .filter-dropdown {
         width: 65vw;
+    }
+
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .filter-dropdown {
+        width: 70vw;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+
+    }
+
+    .clearFilters {
+        width: auto;
+        grid-area: clear;
     }
 
 }

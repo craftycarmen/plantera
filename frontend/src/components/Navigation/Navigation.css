@@ -151,7 +151,7 @@
             "logo buttons"
             "links links";
         align-items: center;
-        /* grid-template-columns: 2fr 1fr; */
+        grid-template-columns: 2fr 1fr;
         max-width: 75vw;
     }
 
@@ -169,7 +169,7 @@
     }
 
     .navLinks {
-        margin: auto;
+        margin: 0px auto;
         grid-area: links;
         padding-bottom: 10px;
     }

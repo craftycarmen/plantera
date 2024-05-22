@@ -52,10 +52,6 @@
     align-self: start;
 }
 
-/* .listingsContainer a:hover {
-    text-decoration: none;
-} */
-
 @media screen and (max-width: 480px) {
 
     .listingImageContainer,
@@ -65,5 +61,17 @@
 
     .listingsContainer {
         width: 80vw;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .listingImageContainer,
+    .listingInfo {
+        width: 75vw;
+    }
+
+    .listingImage {
+        height: 275px;
     }
 }

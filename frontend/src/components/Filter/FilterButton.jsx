@@ -331,7 +331,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
                             </div>
                         </div>
                         <br />
-                        <button style={{ marginTop: "20px" }} onClick={(e) => handleClear(e)}>Clear Filters</button>
+                        <button className="clearFilters" onClick={(e) => handleClear(e)}>Clear Filters</button>
                     </form>
                 )}
             </div>

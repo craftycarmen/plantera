@@ -37,3 +37,14 @@
     width: fit-content;
     margin-top: 15px;
 }
+
+
+
+@media screen and (max-width: 480px) {
+
+    .ownedGuideImageContainer,
+    .ownedGuideImageContainer::before {
+        width: 75vw;
+    }
+
+}

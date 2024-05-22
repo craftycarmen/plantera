@@ -197,9 +197,12 @@ button:disabled {
     min-height: calc(100vh - 80px);
 }
 
-/* Main content area */
 .main-content {
     flex: 1;
+}
+
+.deleteModal button {
+    width: 190px;
 }
 
 @media screen and (max-width: 480px) {
@@ -216,6 +219,10 @@ button:disabled {
     .bottom-triangle {
         border-left: 40vw solid transparent;
         border-bottom: 50px solid rgba(253, 172, 138, 0.75);
+    }
+
+    .deleteModal button {
+        width: 60vw;
     }
 }
 

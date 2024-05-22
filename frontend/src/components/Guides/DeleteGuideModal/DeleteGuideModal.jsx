@@ -16,21 +16,19 @@ function DeleteGuideModal({ guideId }) {
     }
 
     return (
-        <section className="modal">
+        <section className="modal deleteModal">
             <h1>Confirm Delete</h1>
             <>
                 <p>Are you sure you want to delete this guide?</p>
                 <span><button
                     id="yes"
                     onClick={yes}
-                    style={{ width: "190px" }}
                 >
                     Delete Guide
                 </button>&nbsp;
                     <button
                         id="no"
                         onClick={closeModal}
-                        style={{ width: "190px" }}
                     >
                         Cancel
                     </button></span>

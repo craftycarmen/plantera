@@ -67,3 +67,12 @@
     transform: translateX(-50%) rotate(-1deg);
     margin-top: -14px;
 }
+
+@media screen and (max-width: 480px) {
+
+    .guideImageContainer,
+    .guideImageContainer::before {
+        width: 75vw;
+    }
+
+}

@@ -24,7 +24,7 @@ function DeleteListingModal({ listingId }) {
     }
 
     return (
-        <section className="modal">
+        <section className="modal deleteModal">
             <h1>Confirm Delete</h1>
             {!errors ? (
                 <>
@@ -32,14 +32,12 @@ function DeleteListingModal({ listingId }) {
                     <span><button
                         id="yes"
                         onClick={yes}
-                        style={{ width: "190px" }}
                     >
                         Delete Listing
                     </button>&nbsp;
                         <button
                             id="no"
                             onClick={closeModal}
-                            style={{ width: "190px" }}
                         >
                             Cancel
                         </button></span>
@@ -50,7 +48,6 @@ function DeleteListingModal({ listingId }) {
                     <button
                         id="no"
                         onClick={closeModal}
-                        style={{ width: "190px" }}
                     >
                         Cancel
                     </button>

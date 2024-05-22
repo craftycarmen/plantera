@@ -51,12 +51,16 @@
     padding-top: 5px;
 }
 
-.manageListingInfo {
-    display: grid;
-    align-items: center;
-    justify-content: space-between;
-    grid-template-columns: 3fr 1fr;
-    width: 348.75px;
-    column-gap: 20px;
-    padding-top: 5px;
+@media screen and (max-width: 480px) {
+
+    .soldOutImage,
+    .soldOutImage::before {
+        width: 75vw;
+    }
+
+    .manageListingInfo {
+        width: 75vw;
+        padding-top: 0;
+    }
+
 }

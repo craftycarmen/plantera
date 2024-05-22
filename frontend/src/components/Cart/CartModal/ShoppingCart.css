@@ -29,7 +29,7 @@
     display: grid;
     gap: 20px;
     grid-template-columns: 1fr 2fr;
-    /* padding-bottom: 10px; */
+    padding-bottom: 10px;
     /* height: 100px; */
 }
 
@@ -80,4 +80,53 @@
     display: flex;
     justify-content: space-between;
     padding-top: 15px;
+}
+
+.smButtons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.smButtons button {
+    width: fit-content;
+    padding: 0px 14.5px;
+}
+
+.smButtons button:nth-child(2) {
+    flex-direction: no-wrap;
+}
+
+.smDots {
+    justify-content: center;
+    margin: 100px 100px;
+}
+
+@media screen and (max-width: 480px) {
+
+    .shoppingModal {
+        width: 65vw;
+    }
+
+    .shoppingModalListing {
+        display: flex;
+        flex-direction: column;
+        width: 65vw;
+    }
+
+    .shoppingModalImgContainer {
+        width: 65vw;
+    }
+
+    .shoppingModal img {
+        height: 150px;
+    }
+
+    .smButtons {
+        display: grid;
+    }
+
+    .smButtons button:nth-child(1) {
+        width: 212px;
+    }
 }

@@ -88,54 +88,56 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
 
     return (
         <section className="shoppingModal">
-            <h1>Your Shopping Cart</h1>
-            {loading && <div style={{ justifyContent: "center", margin: "100px 175px" }} className="dots"></div>}
-            {!loading && cartItems?.length > 0 && (
-                <div style={{ marginTop: "35px" }}>
-                    {cartItems.map((item) => (
+            <div className="smContainer">
+                <h1>Your Shopping Cart</h1>
+                {loading && <div className="dots smDots"></div>}
+                {!loading && cartItems?.length > 0 && (
+                    <div style={{ marginTop: "35px" }}>
+                        {cartItems.map((item) => (
 
-                        <div key={item.id} className="shoppingModalListing">
-                            <div className="shoppingModalImgContainer">
-                                <img
-                                    src={item.Listing?.ListingImages?.[0]?.url}
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => {
-                                        closeModal();
-                                        navigate(`/listings/${item.Listing.id}`);
-                                    }}
-                                />
-                            </div>
-                            <div className="smInfo">
-                                <div className="shoppingModalRow" style={{ marginTop: "-5px" }}>
-                                    <h3>{plantName(item.Listing?.plantName)}</h3>
-                                    <h3>{calculateItemSubTotal(item)}</h3>
+                            <div key={item.id} className="shoppingModalListing">
+                                <div className="shoppingModalImgContainer">
+                                    <img
+                                        src={item.Listing?.ListingImages?.[0]?.url}
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => {
+                                            closeModal();
+                                            navigate(`/listings/${item.Listing.id}`);
+                                        }}
+                                    />
                                 </div>
-                                <div>Pot Size: {item.Listing?.potSize}&#34;</div>
-                                <div className="shoppingModalRow">
-                                    <span>Quantity: {(item && updatedQty[item.id]) || (item && item.cartQty)}</span>
+                                <div className="smInfo">
+                                    <div className="shoppingModalRow" style={{ marginTop: "-5px" }}>
+                                        <h3>{plantName(item.Listing?.plantName)}</h3>
+                                        <h3>{calculateItemSubTotal(item)}</h3>
+                                    </div>
+                                    <div>Pot Size: {item.Listing?.potSize}&#34;</div>
+                                    <div className="shoppingModalRow">
+                                        <span>Quantity: {(item && updatedQty[item.id]) || (item && item.cartQty)}</span>
 
-                                    <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
+                                        <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
+                                    </div>
                                 </div>
                             </div>
+                        ))
+                        }
+                        <div className="subTotal">
+                            <h3>Subtotal:</h3>
+                            <h3>{calculateSubtotal()}</h3>
                         </div>
-                    ))
-                    }
-                    <div className="subTotal">
-                        <h3>Subtotal:</h3>
-                        <h3>{calculateSubtotal()}</h3>
+                        <div className="smButtons">
+                            <button onClick={closeModal}>Continue Shopping</button>
+                            <button onClick={checkout}>View Cart & Check Out</button>
+                        </div>
                     </div>
-                    <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
-                        <button onClick={closeModal} style={{ width: "fit-content", padding: "0px 14.5px" }}>Continue Shopping</button>
-                        <button style={{ width: 'fit-content', flexWrap: "nowrap", padding: "0px 14.5px" }} onClick={checkout}>View Cart & Check Out</button>
-                    </div>
-                </div>
-            )
-            }
-            {!loading && cartItems?.length === 0 &&
-                (
-                    <div style={{ marginTop: "35px" }}>Your cart is empty!</div>
                 )
-            }
+                }
+                {!loading && cartItems?.length === 0 &&
+                    (
+                        <div style={{ marginTop: "35px" }}>Your cart is empty!</div>
+                    )
+                }
+            </div>
         </section >
     )
 

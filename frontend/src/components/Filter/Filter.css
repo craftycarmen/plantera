@@ -150,3 +150,24 @@
     }
 
 }
+
+@media screen and (min-width: 469px) and (max-width: 1024px) {
+
+    .filter-dropdown {
+        width: 70vw;
+        display: grid;
+        grid-template-areas:
+            "price pot"
+            "clear clear";
+    }
+
+    .clearFilters {
+        width: auto;
+        grid-area: clear;
+    }
+
+    .potFilter {
+        grid-area: pot;
+    }
+
+}

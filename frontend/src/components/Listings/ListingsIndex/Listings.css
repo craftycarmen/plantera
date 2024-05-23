@@ -1,11 +1,13 @@
 .listingsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 348.75px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     /* display: flex;
     flex-wrap: wrap;
     flex-direction: row; */
     gap: 35px;
     justify-items: center;
+    margin: auto;
+    /* width: 100%; */
 }
 
 .listingsContainer h2 {
@@ -13,7 +15,8 @@
 }
 
 .listingImageContainer {
-    width: 348.75px;
+    /* width: 348.75px; */
+    width: 321px;
 }
 
 .listingImage {
@@ -40,7 +43,7 @@
     align-items: center;
     justify-content: space-between;
     grid-template-columns: 3fr 1fr;
-    width: 348.75px;
+    /* width: 348.75px; */
     column-gap: 20px;
     padding-top: 5px;
 }
@@ -60,10 +63,10 @@
 
 @media screen and (max-width: 480px) {
 
-    .listingImageContainer,
+    /* .listingImageContainer,
     .listingInfo {
         width: 75vw;
-    }
+    } */
 
     .listingsContainer {
         width: 75vw;
@@ -88,11 +91,11 @@
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-
+    /* 
     .listingImageContainer,
     .listingInfo {
-        width: 34vw;
-    }
+        max-width: 300px;
+    } */
 
     .listingsContainer {
         grid-template-columns: 1fr 1fr;
@@ -105,6 +108,6 @@
 
     .showMoreDiv {
         display: flex;
-        width: 100vw;
+        justify-content: center;
     }
 }

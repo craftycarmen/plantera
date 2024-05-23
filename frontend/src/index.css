@@ -1,3 +1,10 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 1px solid red;
+} */
+
 body {
     background-color: #B9CDCA;
     color: #28635A;
@@ -5,11 +12,11 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: 14px;
-    /* letter-spacing: -0.5px; */
     padding: 40px 60px;
-    /* margin: auto; */
+    margin: auto;
     justify-content: center;
     max-width: 1500px;
+    overflow-x: hidden;
 }
 
 .top-triangle {
@@ -18,7 +25,7 @@ body {
     left: 0;
     width: 0;
     height: 0;
-    border-right: 1200px solid transparent;
+    border-right: 75vw solid transparent;
     border-bottom: 200px solid #F2DCCB;
     z-index: -1;
 }
@@ -29,7 +36,7 @@ body {
     right: 0;
     width: 0;
     height: 0;
-    border-left: 800px solid transparent;
+    border-left: 50vw solid transparent;
     border-bottom: 100px solid rgba(253, 172, 138, 0.75);
     /* border-bottom: 100px solid #FDAC8A; */
     z-index: -2;
@@ -163,6 +170,13 @@ button:disabled {
     cursor: default;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
 .dots {
     width: 40px;
     height: 19.2px;
@@ -217,18 +231,7 @@ form>button {
 
 @media screen and (max-width: 480px) {
     body {
-        padding: 30px;
-        max-width: 75vw;
-    }
-
-    .top-triangle {
-        border-right: 60vw solid transparent;
-        border-bottom: 100px solid #F2DCCB;
-    }
-
-    .bottom-triangle {
-        border-left: 40vw solid transparent;
-        border-bottom: 50px solid rgba(253, 172, 138, 0.75);
+        padding: 10vw;
     }
 
     .deleteModal button {
@@ -251,35 +254,13 @@ form>button {
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
     body {
-        max-width: 75vw;
-        padding: 40px;
-    }
-
-    .top-triangle {
-        border-right: 75vw solid transparent;
-        border-bottom: 100px solid #F2DCCB;
-    }
-
-    .bottom-triangle {
-        border-left: 50vw solid transparent;
-        border-bottom: 50px solid rgba(253, 172, 138, 0.75);
+        padding: 8vw;
     }
 }
 
 @media screen and (min-width: 469px) and (max-width: 1024px) {
     body {
-        max-width: 85vw;
-        padding: 40px;
-    }
-
-    .top-triangle {
-        border-right: 75vw solid transparent;
-        border-bottom: 100px solid #F2DCCB;
-    }
-
-    .bottom-triangle {
-        border-left: 50vw solid transparent;
-        border-bottom: 50px solid rgba(253, 172, 138, 0.75);
+        padding: 8vw;
     }
 
 }

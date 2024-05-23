@@ -111,7 +111,6 @@
             "links links";
         align-items: center;
         grid-template-columns: 2fr 1fr;
-        max-width: 75vw;
     }
 
     .planteraLogo {
@@ -148,7 +147,6 @@
             "links links";
         align-items: center;
         grid-template-columns: 2fr 1fr;
-        width: 100%;
     }
 
     .planteraLogo {
@@ -180,7 +178,6 @@
             "logo buttons"
             "links links";
         align-items: center;
-        max-width: 100%;
     }
 
     .planteraLogo {
@@ -213,7 +210,6 @@
             "logo buttons"
             "links links";
         align-items: center;
-        max-width: 100%;
     }
 
     .planteraLogo {

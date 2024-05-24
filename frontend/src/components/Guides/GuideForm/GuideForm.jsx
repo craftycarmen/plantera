@@ -169,6 +169,7 @@ function GuideForm({ guide, formType }) {
                     {imageLoading && (<div className="dots guideDots"></div>)}
                     <div>
                         <button
+                            className="submitGuideButton"
                             disabled={Object.values(errors).length}
                             type="submit">{formType}</button>
                     </div>

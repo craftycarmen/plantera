@@ -73,7 +73,8 @@ textarea,
 select {
     display: block;
     border: none;
-    width: 300px;
+    /* width: 300px; */
+    width: 30vw;
     margin-top: 20px;
     margin-bottom: 10px;
     border-radius: 3px;
@@ -91,7 +92,8 @@ select {
 }
 
 select {
-    width: 321px;
+    /* width: 321px; */
+    width: 30vw;
 }
 
 input[type=radio] {
@@ -231,7 +233,7 @@ form>button {
 
 @media screen and (max-width: 480px) {
     body {
-        padding: 10vw;
+        padding: 8vw 10vw;
     }
 
     .deleteModal button {
@@ -254,13 +256,13 @@ form>button {
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
     body {
-        padding: 8vw;
+        padding: 5vw 8vw;
     }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     body {
-        padding: 8vw;
+        padding: 5vw 8vw;
     }
 
 }

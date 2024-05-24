@@ -7,9 +7,9 @@
     height: 40px;
 }
 
-.guideForm button {
+.submitGuideButton {
     margin-top: 15px;
-    width: 600px
+    width: 100%;
 }
 
 .guideDots {
@@ -24,10 +24,6 @@
         width: 65vw;
     }
 
-    .guideForm button {
-        width: 70vw;
-    }
-
     .guideDots {
         margin: 20px auto;
     }
@@ -39,10 +35,6 @@
     .guideForm .inputContainer input,
     .guideForm .inputContainer textarea {
         width: 75vw;
-    }
-
-    .guideForm button {
-        width: 80vw;
     }
 
     .guideDots {

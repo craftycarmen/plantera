@@ -3,14 +3,14 @@
     flex-wrap: wrap;
     flex-direction: row; */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 348.75px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 25px;
     justify-items: center;
 }
 
 .guideImageContainer {
     position: relative;
-    width: 348.75px;
+    width: 321px;
     height: 400px;
 }
 
@@ -25,7 +25,7 @@
 .guideImageContainer::before {
     content: '';
     z-index: 1;
-    width: 348.75px;
+    width: 321px;
     height: 400px;
     object-fit: cover;
     object-position: center;
@@ -91,4 +91,14 @@
         row-gap: 50px;
         margin: auto;
     }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+    .guidesContainer,
+    .guideImageContainer,
+    .guideImageContainer::before {
+        row-gap: 50px;
+    }
+
 }

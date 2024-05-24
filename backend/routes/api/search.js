@@ -114,19 +114,37 @@ router.get('/', validateQuery, async (req, res) => {
         }
     }
 
-    if (search) {
-        where.plantName = {
-            [Op.or]: [
-                {
-                    [Op.iLike]: `%${search}%`
-                },
-                {
-                    [Op.iLike]: `${search}%`
-                },
-                {
-                    [Op.iLike]: `%${search}`
-                },
-            ]
+    if (process.env.NODE_ENV === 'development') {
+        if (search) {
+            where.plantName = {
+                [Op.or]: [
+                    {
+                        [Op.like]: `%${search}%`
+                    },
+                    {
+                        [Op.like]: `${search}%`
+                    },
+                    {
+                        [Op.like]: `%${search}`
+                    },
+                ]
+            }
+        }
+    } else {
+        if (search) {
+            where.plantName = {
+                [Op.or]: [
+                    {
+                        [Op.iLike]: `%${search}%`
+                    },
+                    {
+                        [Op.iLike]: `${search}%`
+                    },
+                    {
+                        [Op.iLike]: `%${search}`
+                    },
+                ]
+            }
         }
     }
 

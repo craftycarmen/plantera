@@ -258,7 +258,7 @@ form>button {
     }
 }
 
-@media screen and (min-width: 469px) and (max-width: 1024px) {
+@media screen and (min-width: 769px) and (max-width: 1024px) {
     body {
         padding: 8vw;
     }

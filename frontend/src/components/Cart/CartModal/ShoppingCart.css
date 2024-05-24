@@ -1,8 +1,9 @@
 .shoppingModal {
     padding: 25px 35px 25px 35px;
     margin-top: 0px;
-    width: 400px;
-    height: calc(100vh - 50px);
+    width: 500px;
+    /* height: calc(100vh - 50px); */
+    height: 100vh;
     position: fixed;
     top: 0;
     right: 0;
@@ -84,13 +85,17 @@
 
 .smButtons {
     display: flex;
-    gap: 8px;
-    justify-content: center;
+    /* gap: 8px; */
+    justify-content: space-between;
 }
 
 .smButtons button {
     width: fit-content;
     padding: 0px 14.5px;
+}
+
+.smButtons button:nth-child(1) {
+    width: fit-content;
 }
 
 .smButtons button:nth-child(2) {
@@ -180,5 +185,11 @@
 
     .smInfo {
         height: 150px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .shoppingModal {
+        max-width: 65vw;
     }
 }

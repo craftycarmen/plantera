@@ -20,12 +20,12 @@ function DeleteGuideModal({ guideId }) {
             <h1>Confirm Delete</h1>
             <>
                 <p>Are you sure you want to delete this guide?</p>
-                <span><button
+                <span className="deleteButtons"><button
                     id="yes"
                     onClick={yes}
                 >
                     Delete Guide
-                </button>&nbsp;
+                </button>
                     <button
                         id="no"
                         onClick={closeModal}

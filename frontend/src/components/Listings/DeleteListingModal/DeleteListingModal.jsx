@@ -29,12 +29,12 @@ function DeleteListingModal({ listingId }) {
             {!errors ? (
                 <>
                     <p>Are you sure you want to delete this listing?</p>
-                    <span><button
+                    <span className="deleteButtons"><button
                         id="yes"
                         onClick={yes}
                     >
                         Delete Listing
-                    </button>&nbsp;
+                    </button>
                         <button
                             id="no"
                             onClick={closeModal}

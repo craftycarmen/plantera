@@ -258,9 +258,16 @@
         height: 300px;
     }
 
-    .userProfilePageContainer .userGuideImageContainer,
-    .userProfilePageContainer .userGuideImageContainer::before {
-        width: 78vw;
+    .userGuidesContainer,
+    .userGuideImageContainer,
+    .userGuideImageContainer::before {
+        row-gap: 50px;
+    }
+
+    .userGuidesContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .shopListingsContainer {

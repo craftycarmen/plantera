@@ -188,6 +188,7 @@ button:disabled {
     background-size: calc(100%/3) 9.6px;
     background-repeat: no-repeat;
     animation: dots-7ar3yq 1.2s infinite linear;
+    margin-left: auto;
 }
 
 @keyframes dots-7ar3yq {
@@ -222,6 +223,12 @@ button:disabled {
     width: 190px;
 }
 
+.deleteButtons {
+    display: flex;
+    gap: 5px;
+    text-wrap: nowrap;
+}
+
 form {
     width: fit-content;
 }
@@ -237,7 +244,7 @@ form>button {
     }
 
     .deleteModal button {
-        width: 60vw;
+        width: auto;
     }
 
     input,
@@ -258,11 +265,19 @@ form>button {
     body {
         padding: 5vw 8vw;
     }
+
+    .deleteModal button {
+        width: auto;
+    }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     body {
         padding: 5vw 8vw;
+    }
+
+    .deleteModal button {
+        width: auto;
     }
 
 }

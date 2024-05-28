@@ -92,11 +92,6 @@
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-    /* 
-    .listingImageContainer,
-    .listingInfo {
-        max-width: 300px;
-    } */
 
     .listingsContainer {
         grid-template-columns: 1fr 1fr;

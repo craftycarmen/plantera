@@ -51,11 +51,11 @@ function Shop() {
                                         }
                                         {activeListings?.length > 0 &&
                                             <>
-                                                <h2>Current Listings</h2>
+                                                <h2 className="soldListingsHeader">Current Listings</h2>
                                                 <div className="shopListingsContainer">
                                                     {
                                                         activeListings && activeListings.map(listing => (
-                                                            <div className="currentListings" key={listing.id}>
+                                                            <div className="shopCurrentListings" key={listing.id}>
 
                                                                 <div className="shopImageContainer">
                                                                     <Link to={`/listings/${listing.id}`}>
@@ -64,7 +64,7 @@ function Shop() {
                                                                             src={listing.ListingImages?.[0]?.url} />
                                                                         <div className="shopInfo">
                                                                             <h3>{listingName(listing.plantName)}</h3>
-                                                                            <div className="listingPrice">{price(listing.price)}</div>
+                                                                            <div className="shopListingPrice">{price(listing.price)}</div>
                                                                         </div>
                                                                     </Link>
                                                                 </div>
@@ -83,11 +83,11 @@ function Shop() {
                                         }
                                         {soldListings?.length > 0 &&
                                             <>
-                                                <h2>Sold Listings</h2>
+                                                <h2 className="soldListingsHeader">Sold Listings</h2>
                                                 <div className="shopListingsContainer">
                                                     {
                                                         soldListings && soldListings.map(listing => (
-                                                            <div className="currentListings" key={listing.id}>
+                                                            <div className="shopCurrentListings" key={listing.id}>
 
                                                                 <Link to={`/listings/${listing.id}`}>
                                                                     <div className="shopImageContainer soldOutShopImage">
@@ -96,7 +96,7 @@ function Shop() {
                                                                             src={listing.ListingImages?.[0]?.url} />
                                                                         <div className="shopInfo">
                                                                             <h3>{listingName(listing.plantName)}</h3>
-                                                                            <div className="listingPrice">{price(listing.price)}</div>
+                                                                            <div className="shopListingPrice">{price(listing.price)}</div>
                                                                         </div>
                                                                     </div>
                                                                 </Link>

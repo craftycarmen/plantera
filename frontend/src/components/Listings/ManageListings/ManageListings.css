@@ -48,53 +48,8 @@
 }
 
 .manageSoldOutImage {
-    filter: grayscale(100%)
+    filter: grayscale(100%) opacity(50%);
 }
-
-@media screen and (max-width: 480px) {
-
-    .manageListingImageContainer,
-    .listingInfo {
-        width: 75vw;
-    }
-
-    .manageListingsContainer {
-        width: 75vw;
-        gap: 0px;
-    }
-}
-
-@media screen and (min-width: 481px) and (max-width: 768px) {
-
-    .manageListingImageContainer,
-    .manageListingInfo {
-        width: auto;
-    }
-
-    .manageListingsContainer {
-        grid-template-columns: auto;
-        width: 100%;
-        gap: 0px;
-    }
-
-    .manageListingImage {
-        height: 275px;
-    }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-
-    .manageListingsContainer {
-        grid-template-columns: 1fr 1fr;
-        width: 100%;
-    }
-
-    .manageListingImage {
-        height: 275px;
-        width: 100%;
-    }
-}
-
 
 
 .listingButtons {
@@ -128,28 +83,54 @@
 
 @media screen and (max-width: 480px) {
 
+    .manageListingImageContainer {
+        width: 75vw;
+    }
+
+    .manageListingsContainer {
+        width: 75vw;
+        gap: 0px;
+    }
+
     .manageListingInfo {
         width: 75vw;
         padding-top: 0;
     }
-
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
-    .manageListingInfo {
-        width: 100%;
-        padding-top: 0;
-    }
-
-}
-
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .manageListingImageContainer,
     .manageListingInfo {
         width: auto;
     }
 
-    .currentListings .listingImageContainer {
+    .manageListingsContainer {
+        grid-template-columns: auto;
+        width: 100%;
+        gap: 0px;
+    }
+
+    .manageListingImage {
+        height: 275px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+    .manageListingsContainer {
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        row-gap: 0px;
+    }
+
+    .manageListingImageContainer,
+    .manageListingInfo {
+        width: auto;
+    }
+
+    .manageListingImage {
+        height: 275px;
         width: 100%;
     }
 }

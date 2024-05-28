@@ -30,14 +30,14 @@ function UserGuides() {
                     <div style={{ marginTop: '-284px' }}>This user does not have any guides.</div>
                 ) :
                     (
-                        <div className="guidesContainer" style={{ marginTop: "20px" }}>
+                        <div className="userGuidesContainer" style={{ marginTop: "20px" }}>
                             {guides.sort((a, b) => b.id - a.id).map((guide) => (
                                 <div key={guide.id}>
                                     <Link to={`/guides/${guide.id}`}>
-                                        <div className="guideImageContainer">
+                                        <div className="userGuideImageContainer">
                                             <div className="tape"></div>
                                             <img
-                                                className="guideImage"
+                                                className="userGuideImage"
                                                 src={guide.GuideImages?.[0]?.url} />
                                             <div className="guideInfo">
                                                 <h2>{guide.title}</h2>

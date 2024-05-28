@@ -1,25 +1,100 @@
-.soldOutImage {
-    width: 348.75px;
+.manageListingsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    /* display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; */
+    gap: 35px;
+    justify-items: center;
+    margin: auto;
+    /* width: 100%; */
 }
 
-.soldOutImage::before {
-    content: '';
-    z-index: 1;
-    width: 348.75px;
+.manageListingsContainer h2 {
+    font-size: 18px;
+}
+
+.manageListingImageContainer {
+    /* width: 348.75px; */
+    width: 321px;
+}
+
+.manageListingImage {
+    width: 100%;
     height: 225px;
     object-fit: cover;
     object-position: center;
-    display: block;
-    position: absolute;
     border-radius: 5px;
-    /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%); */
-    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.manageListingImage-outline {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 3px;
 }
 
 .currentListings {
     margin-top: 20px;
     margin-bottom: 35px;
 }
+
+.soldListingsHeader {
+    margin-top: 40px;
+}
+
+.manageSoldOutImage {
+    filter: grayscale(100%)
+}
+
+@media screen and (max-width: 480px) {
+
+    .manageListingImageContainer,
+    .listingInfo {
+        width: 75vw;
+    }
+
+    .manageListingsContainer {
+        width: 75vw;
+        gap: 0px;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .manageListingImageContainer,
+    .manageListingInfo {
+        width: auto;
+    }
+
+    .manageListingsContainer {
+        grid-template-columns: auto;
+        width: 100%;
+        gap: 0px;
+    }
+
+    .manageListingImage {
+        height: 275px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+    .manageListingsContainer {
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .manageListingImage {
+        height: 275px;
+        width: 100%;
+    }
+}
+
 
 
 .listingButtons {
@@ -53,11 +128,6 @@
 
 @media screen and (max-width: 480px) {
 
-    .soldOutImage,
-    .soldOutImage::before {
-        width: 75vw;
-    }
-
     .manageListingInfo {
         width: 75vw;
         padding-top: 0;
@@ -72,17 +142,14 @@
         padding-top: 0;
     }
 
-    .listingButtons {
-        justify-self: end;
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .manageListingInfo {
+        width: auto;
     }
 
-    .soldOutImage {
-        width: 78vw;
+    .currentListings .listingImageContainer {
+        width: 100%;
     }
-
-    .soldOutImage::before {
-        width: 78vw;
-        height: 275px;
-    }
-
 }

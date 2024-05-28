@@ -35,6 +35,7 @@ function UserGuides() {
                                 <div key={guide.id}>
                                     <Link to={`/guides/${guide.id}`}>
                                         <div className="guideImageContainer">
+                                            <div className="tape"></div>
                                             <img
                                                 className="guideImage"
                                                 src={guide.GuideImages?.[0]?.url} />

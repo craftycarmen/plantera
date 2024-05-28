@@ -31,16 +31,16 @@ function ManageListings() {
                     <div className="currentListings"><Link to={`/listings/new`}><button style={{ width: "fit-content" }}>Create New Listing</button></Link></div>
 
                     <h2>Active Listings</h2>
-                    <div className="listingsContainer">
+                    <div className="manageListingsContainer">
                         {listings && activeListings?.length === 0 ? (
                             <div className="currentListings">No active listings!</div>
                         ) : (
                             activeListings && activeListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>
                                     <Link to={`/listings/${listing.id}`}>
-                                        <div className="listingImageContainer">
+                                        <div className="manageListingImageContainer">
                                             <img
-                                                className="listingImage"
+                                                className="manageListingImage"
                                                 src={listing.ListingImages?.[0]?.url} />
                                         </div>
                                         <div className="manageListingInfo">
@@ -64,17 +64,17 @@ function ManageListings() {
                         }
                     </div>
 
-                    <h2>Sold Listings</h2>
-                    <div className="listingsContainer">
+                    <h2 className="soldListingsHeader">Sold Listings</h2>
+                    <div className="manageListingsContainer">
                         {listings && soldListings?.length === 0 ? (
                             <div className="currentListings">No sold listings!</div>
                         ) : (
                             soldListings && soldListings.map(listing => (
                                 <div className="currentListings" key={listing.id}>
                                     <Link to={`/listings/${listing.id}`}>
-                                        <div className="listingImageContainer soldOutImage">
+                                        <div className="manageListingImageContainer manageSoldOutImage">
                                             <img
-                                                className="listingImage"
+                                                className="manageListingImage"
                                                 src={listing.ListingImages[0].url} />
                                         </div>
                                         <div className="manageListingInfo">

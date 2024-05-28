@@ -92,7 +92,7 @@ function Shop() {
                                                                 <Link to={`/listings/${listing.id}`}>
                                                                     <div className="shopImageContainer soldOutShopImage">
                                                                         <img
-                                                                            className="shopImage"
+                                                                            className="shopImage soldOutImage"
                                                                             src={listing.ListingImages?.[0]?.url} />
                                                                         <div className="shopInfo">
                                                                             <h3>{listingName(listing.plantName)}</h3>

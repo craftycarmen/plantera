@@ -110,7 +110,7 @@
 @media screen and (max-width: 480px) {
 
     .shoppingModal {
-        max-width: 65vw;
+        max-width: 70vw;
     }
 
     .shoppingModalListing {
@@ -127,10 +127,8 @@
 
     .smButtons {
         display: grid;
-    }
-
-    .smButtons button:nth-child(1) {
-        width: 212px;
+        gap: 5px;
+        justify-items: center;
     }
 
     .smDots {
@@ -166,9 +164,9 @@
         height: 200px;
     }
 
-    .smButtons {
+    /* .smButtons {
         display: grid;
-    }
+    } */
 
     .smButtons button:nth-child(1) {
         width: 212px;
@@ -192,4 +190,5 @@
     .shoppingModal {
         max-width: 65vw;
     }
+
 }

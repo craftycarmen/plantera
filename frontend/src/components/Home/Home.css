@@ -69,37 +69,53 @@
 }
 
 @media screen and (max-width: 480px) {
-
     .headerContainer {
         max-width: 100vw;
-        /* Changed max-width to 90vw */
     }
 
     .headerIntro {
         left: 10%;
-        /* Adjusted left positioning */
         bottom: 30%;
-        /* Adjusted bottom positioning */
     }
 
     .headerIntro div {
         max-width: 60vw;
-        /* Adjusted max-width */
     }
 
     .headerText {
         bottom: 55%;
-        /* Adjusted bottom positioning */
         left: 5%;
-        /* Adjusted left positioning */
     }
 
     .headerText h1 {
         font-size: 30px;
-        /* Adjusted font-size */
         max-width: none;
         max-height: none;
-        ;
-        /* Removed max-width to allow for text wrapping */
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .headerContainer {
+        max-width: 100vw;
+    }
+
+    .headerIntro {
+        left: 10%;
+        bottom: 30%;
+    }
+
+    .headerIntro div {
+        max-width: 60vw;
+    }
+
+    /* .headerText {
+        bottom: 55%;
+        left: 5%;
+    } */
+
+    .headerText h1 {
+        /* font-size: 30px; */
+        max-width: none;
+        max-height: none;
     }
 }

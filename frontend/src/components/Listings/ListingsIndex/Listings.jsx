@@ -1,15 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllListings } from "../../../store/listings";
 import { fetchListingResults } from "../../../store/search";
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 import './Listings.css';
 import { Link } from "react-router-dom";
 import { price, listingName } from "../../../../utils";
 import FilterButton from "../../Filter/FilterButton";
+import SortListingsButton from "../SortListingsButton/SortListingsButton";
 
 function Listings() {
     const dispatch = useDispatch();
-    const ulRef = useRef();
+
     const [sortOrder, setSortOrder] = useState('newest');
     let listings = Object.values(useSelector((state) => state.listings))
         .filter(listing => listing.stockQty > 0)
@@ -85,23 +86,9 @@ function Listings() {
 
     const listingsContainerStyle = {
         marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
-        marginRight: (!isTablet && !isMobile) && showSortMenu ? '230px' : '0',
+        marginRight: (!isTablet && !isMobile) && showSortMenu ? '250px' : '0',
         transition: 'margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out'
     };
-
-    useEffect(() => {
-        if (!showSortMenu || !ulRef.current) return;
-
-        const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
-                setShowSortMenu(false);
-            }
-        };
-
-        document.addEventListener('click', closeMenu);
-
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showSortMenu]);
 
     useEffect(() => {
         dispatch(fetchAllListings());
@@ -122,21 +109,14 @@ function Listings() {
         setLoading(true)
     }
 
-    const toggleMenu = (e) => {
-        e.stopPropagation();
-        setShowSortMenu(!showSortMenu);
-    }
-
     const handleSort = (order) => {
         setSortOrder(order);
-        setShowSortMenu(false);
+        setShowSortMenu(!showSortMenu);
     }
     const handleShowMore = () => {
         const newCount = calculateDisplayCount(displayCount + columns);
         setDisplayCount(newCount);
     }
-
-    const ulClassName = "sort-dropdown" + (showSortMenu ? "" : " hidden");
 
     const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
 
@@ -147,23 +127,7 @@ function Listings() {
             <br />
             <div className="filterSort">
                 <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                <div className="sortButtonWrapper">
-                    <span className="sortButton" onClick={toggleMenu}>
-                        <i className="fa-solid fa-sort" /> Sort
-                    </span>
-                    <div className="outerSortWrapper">
-                        {showSortMenu && (
-                            <div className={ulClassName} ref={ulRef}>
-                                <a onClick={() => handleSort('newest')}>Newest</a>
-                                <a onClick={() => handleSort('oldest')}>Oldest</a>
-                                <a onClick={() => handleSort('aToZ')}>Plant Name: A to Z</a>
-                                <a onClick={() => handleSort('zToA')}>Plant Name: Z to A</a>
-                                <a onClick={() => handleSort('lowToHigh')}>Price: Low to High</a>
-                                <a onClick={() => handleSort('highToLow')}>Price: High to Low</a>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} />
             </div>
             <div className="listingsContainer" style={listingsContainerStyle}>
                 {loading ? (

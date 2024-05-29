@@ -18,7 +18,7 @@ function Guides() {
         return 4;
     }
     const [columns, setColumns] = useState(getColumns(window.innerWidth));
-    const [displayCount, setDisplayCount] = useState(columns * 2);
+    const [displayCount, setDisplayCount] = useState(columns);
 
 
     const handleResize = useCallback(() => {

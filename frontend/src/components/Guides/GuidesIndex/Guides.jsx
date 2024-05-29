@@ -1,14 +1,34 @@
 import { useDispatch, useSelector } from "react-redux";
 import './Guides.css';
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { fetchAllGuides } from "../../../store/guides";
 import { Link } from "react-router-dom";
 
 function Guides() {
     const dispatch = useDispatch();
-    const guides = Object.values(useSelector((state) => state.guides))
-        .sort((a, b) => b.id - a.id);
+    let guides = Object.values(useSelector((state) => state.guides))
+    const [sortOrder, setSortOrder] = useState('newest');
+    const ulRef = useRef();
+    const [showSortMenu, setShowSortMenu] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+    const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
 
+    const sortedGuides = (guides) => {
+        switch (sortOrder) {
+            case 'aToZ':
+                return guides.sort((a, b) => a.title.localeCompare(b.title));
+            case 'zToA':
+                return guides.sort((a, b) => b.title.localeCompare(a.title));
+            case 'oldest':
+                return guides.sort((a, b) => (a.id - b.id));
+            case 'newest':
+            default:
+                return guides.sort((a, b) => (b.id - a.id))
+
+        }
+    }
+
+    guides = sortedGuides(guides)
 
     const getColumns = (width) => {
         if (width >= 1425) return 8;
@@ -22,6 +42,9 @@ function Guides() {
 
 
     const handleResize = useCallback(() => {
+        setIsMobile(window.innerWidth <= 480);
+        setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
+
         const newColumns = getColumns(window.innerWidth);
         setColumns(newColumns);
         setDisplayCount(prevCount => calculateDisplayCount(prevCount, newColumns));
@@ -37,7 +60,36 @@ function Guides() {
         return rows * columns;
     };
 
+    const handleSort = (order) => {
+        setSortOrder(order);
+        setShowSortMenu(!showSortMenu);
+    }
+
+    useEffect(() => {
+        if (!showSortMenu || !ulRef.current) return;
+
+        const closeMenu = (e) => {
+            if (!ulRef.current.contains(e.target)) {
+                setShowSortMenu(!showSortMenu);
+            }
+        };
+
+        document.addEventListener('click', closeMenu);
+
+        return () => document.removeEventListener("click", closeMenu);
+    }, [showSortMenu]);
+
+    const toggleMenu = (e) => {
+        e.stopPropagation();
+        setShowSortMenu(!showSortMenu);
+    }
+
     const displayedGuides = guides.slice(0, displayCount);
+
+    const guidesContainerStyle = {
+        marginRight: (!isTablet && !isMobile) && showSortMenu ? '250px' : '0',
+        transition: 'margin-right 0.2s ease-in-out'
+    };
 
     const handleShowMore = () => {
         const newCount = calculateDisplayCount(displayCount + columns, columns);
@@ -49,13 +101,33 @@ function Guides() {
         dispatch(fetchAllGuides())
     }, [dispatch]);
 
+    const ulClassName = "sortGuides-dropdown" + (showSortMenu ? "" : " hidden");
+
     return (guides &&
         <>
             <div className="pageHeader">
                 <h1>Inspire</h1>
                 <div>Get plant-spired with these guides written by the Plantera community!</div>
             </div>
-            <div className="guidesContainer">
+            <div className="sortGuidesContainer">
+                <div className="sortGuidesButtonWrapper">
+                    <span className="sortGuidesButton" onClick={toggleMenu}>
+                        <i className="fa-solid fa-sort" /> Sort
+                    </span>
+                    <div className="outerSortGuidesWrapper">
+                        {showSortMenu && (
+                            <div className={ulClassName} ref={ulRef}>
+                                <a onClick={() => handleSort('newest')}>Recency: Newest First</a>
+                                <a onClick={() => handleSort('oldest')}>Recency: Oldest First</a>
+                                <a onClick={() => handleSort('aToZ')}>Title: A to Z</a>
+                                <a onClick={() => handleSort('zToA')}>Title: Z to A</a>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            <div className="guidesContainer" style={guidesContainerStyle}>
                 {displayedGuides.map((guide) => (
                     <div key={guide.id}>
                         <Link to={`/guides/${guide.id}`}>

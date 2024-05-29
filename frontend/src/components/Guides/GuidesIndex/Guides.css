@@ -74,6 +74,52 @@
     padding-bottom: 40px;
 }
 
+.sortGuidesContainer {
+    display: flex;
+    justify-content: end;
+    padding-bottom: 20px;
+}
+
+.sortGuidesButton:hover {
+    cursor: pointer;
+}
+
+.sortGuidesButtonWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.outerSortGuidesWrapper {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.sortGuides-dropdown {
+    position: absolute;
+    border: #28635A solid 1.5px;
+    border-radius: 3px;
+    padding: 15px 20px 15px 20px;
+    background-color: #F2DCCB;
+    width: fit-content;
+    text-wrap: nowrap;
+    margin-top: 20px;
+    /* margin-right: 60px; */
+    margin-right: auto;
+    right: 0;
+    z-index: 2;
+    display: grid;
+    column-gap: 30px;
+}
+
+.sortGuides-dropdown-hidden {
+    display: none;
+}
+
+.sortGuides-dropdown a {
+    width: fit-content;
+}
+
+
 @media screen and (max-width: 480px) {
 
     .guidesContainer {

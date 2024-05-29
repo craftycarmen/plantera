@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import './SortListingsButton.css';
 
 function SortListingsButton({ handleSort, showSortMenu }) {
 

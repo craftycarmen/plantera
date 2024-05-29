@@ -6,18 +6,40 @@ import './Listings.css';
 import { Link } from "react-router-dom";
 import { price, listingName } from "../../../../utils";
 import FilterButton from "../../Filter/FilterButton";
-import SortListingsButton from "../SortListingsButton/SortListingsButton";
 
 function Listings() {
     const dispatch = useDispatch();
-    const listings = Object.values(useSelector((state) => state.listings))
+    const [sortOrder, setSortOrder] = useState('newest');
+    let listings = Object.values(useSelector((state) => state.listings))
         .filter(listing => listing.stockQty > 0)
-        .sort((a, b) => b.id - a.id)
-    const filteredListings = Object.values(useSelector((state) => state.search))
+    let filteredListings = Object.values(useSelector((state) => state.search))
         .filter(listing => listing.stockQty > 0)
-        .sort((a, b) => b.id - a.id)
+
+    const sortedListings = (listings) => {
+        switch (sortOrder) {
+            case 'aToZ':
+                return listings.sort((a, b) => a.plantName.localeCompare(b.plantName));
+            case 'zToA':
+                return listings.sort((a, b) => b.plantName.localeCompare(a.plantName));
+            case 'lowToHigh':
+                return listings.sort((a, b) => (a.price - b.price));
+            case 'highToLow':
+                return listings.sort((a, b) => (b.price - a.price));
+            case 'oldest':
+                return listings.sort((a, b) => (a.id - b.id));
+            case 'newest':
+            default:
+                return listings.sort((a, b) => (b.id - a.id))
+
+        }
+    }
+
+    listings = sortedListings(listings)
+    filteredListings = sortedListings(filteredListings)
+
     const [showFilter, setShowFilter] = useState(false);
     const [filters, setFilters] = useState(null);
+    const [showSortMenu, setShowSortMenu] = useState(false);
     const [displayCount, setDisplayCount] = useState(8);
     const [loading, setLoading] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
@@ -35,19 +57,11 @@ function Listings() {
         setShowFilter(!showFilter);
     };
 
-    // const handleResize = () => {
-    //     setIsMobile(window.innerWidth <= 480);
-    //     setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
-    //     setColumns(getColumns(window.innerWidth));
-    // }
-
-
     const handleResize = useCallback(() => {
         setIsMobile(window.innerWidth <= 480);
         setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
 
         const newColumns = (getColumns(window.innerWidth));
-        console.log("NEWCOLS", newColumns);
         setColumns(newColumns);
         setDisplayCount(newColumns);
 
@@ -73,7 +87,6 @@ function Listings() {
         transition: 'margin-left 0.2s ease-in-out'
     };
 
-
     useEffect(() => {
         dispatch(fetchAllListings());
     }, [dispatch]);
@@ -93,14 +106,22 @@ function Listings() {
         setLoading(true)
     }
 
-    const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
+    const toggleMenu = (e) => {
+        e.stopPropagation();
+        setShowSortMenu(!showSortMenu);
+    }
 
+    const handleSort = (order) => {
+        setSortOrder(order);
+        setShowSortMenu(false);
+    }
     const handleShowMore = () => {
         const newCount = calculateDisplayCount(displayCount + columns);
         setDisplayCount(newCount);
     }
 
-    console.log("DL", displayedListings.length);
+    const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
+
     return (displayedListings &&
         <>
             <h1>Shop</h1>
@@ -108,7 +129,23 @@ function Listings() {
             <br />
             <div className="filterSort">
                 <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                <SortListingsButton />
+                <div className="sortButtonWrapper">
+                    <span className="sortButton" onClick={toggleMenu}>
+                        <i className="fa-solid fa-sort" /> Sort
+                    </span>
+                    <div className="outerSortWrapper">
+                        {showSortMenu && (
+                            <div>
+                                <div onClick={() => handleSort('newest')}>Newest</div>
+                                <div onClick={() => handleSort('oldest')}>Oldest</div>
+                                <div onClick={() => handleSort('aToZ')}>Alphabetically A to Z</div>
+                                <div onClick={() => handleSort('zToA')}>Alphabetically Z to A</div>
+                                <div onClick={() => handleSort('lowToHigh')}>Price Low to High</div>
+                                <div onClick={() => handleSort('highToLow')}>Price High to Low</div>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
             <br />
             {loading ? (

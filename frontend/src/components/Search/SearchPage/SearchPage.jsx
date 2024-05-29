@@ -16,6 +16,7 @@ function SearchPage() {
     const [showFilter, setShowFilter] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+    const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
 
     const getSearchFromLocal = () => {
         return localStorage.getItem('searchTerm');
@@ -23,6 +24,7 @@ function SearchPage() {
 
     const handleResize = () => {
         setIsMobile(window.innerWidth <= 480);
+        setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
     }
 
     useEffect(() => {
@@ -84,8 +86,8 @@ function SearchPage() {
     };
 
     const listingsContainerStyle = {
-        marginLeft: !isMobile && showFilter ? '270px' : '0',
-        marginTop: isMobile && showFilter ? '590px' : '0',
+        marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
+        marginTop: (isTablet || isMobile) && showFilter ? '0' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 

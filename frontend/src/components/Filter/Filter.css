@@ -133,7 +133,7 @@
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
     .filter-dropdown {
-        width: 70vw;
+        width: auto;
         display: grid;
         grid-template-areas:
             "price pot"
@@ -154,7 +154,7 @@
 @media screen and (min-width: 469px) and (max-width: 1024px) {
 
     .filter-dropdown {
-        width: 70vw;
+        width: auto;
         display: grid;
         grid-template-areas:
             "price pot"

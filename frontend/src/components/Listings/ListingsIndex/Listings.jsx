@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllListings } from "../../../store/listings";
 import { fetchListingResults } from "../../../store/search";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import './Listings.css';
 import { Link } from "react-router-dom";
 import { price, listingName } from "../../../../utils";
@@ -21,21 +21,50 @@ function Listings() {
     const [loading, setLoading] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
-
+    const getColumns = (width) => {
+        if (width >= 1425) return 8;
+        if (width <= 1424 && width >= 1190) return 3;
+        if (width >= 992) return 4;
+        if (width >= 768) return 4;
+        return 4;
+    }
+    const [columns, setColumns] = useState(getColumns(window.innerWidth));
 
     const handleFilterToggle = () => {
         setShowFilter(!showFilter);
     };
 
-    const handleResize = () => {
+    // const handleResize = () => {
+    //     setIsMobile(window.innerWidth <= 480);
+    //     setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
+    //     setColumns(getColumns(window.innerWidth));
+    // }
+
+
+    const handleResize = useCallback(() => {
         setIsMobile(window.innerWidth <= 480);
         setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
-    }
+
+        const newColumns = (getColumns(window.innerWidth));
+        console.log("NEWCOLS", newColumns);
+        setColumns(newColumns);
+        setDisplayCount(newColumns);
+
+    }, []);
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize)
-    }, []);
+    }, [handleResize]);
+
+    const calculateDisplayCount = (currCount) => {
+        const rows = Math.ceil(currCount / columns);
+        return rows * columns;
+    }
+
+    useEffect(() => {
+        setDisplayCount(columns * 2);
+    }, [columns]);
 
     const listingsContainerStyle = {
         marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
@@ -59,14 +88,15 @@ function Listings() {
 
     const handleFilterChange = (filterParams) => {
         setFilters(filterParams)
-        setDisplayCount(8)
+        setDisplayCount(columns * 2)
         setLoading(true)
     }
 
     const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
 
     const handleShowMore = () => {
-        setDisplayCount(prevCount => prevCount + 8);
+        const newCount = calculateDisplayCount(displayCount + columns);
+        setDisplayCount(newCount);
     }
 
     console.log("DL", displayedListings.length);
@@ -90,7 +120,7 @@ function Listings() {
                             <>
                                 {displayedListings.map((listing) => (
                                     <div key={listing.id}>
-                                        <Link to={`/listings/${listing.id}`}>
+                                        <Link to={`/listings/${listing.id}`} target="_blank" rel="noopener noreferrer">
                                             <div className="listingImageContainer">
                                                 <img className="listingImage" src={listing.ListingImages?.[0]?.url} />
                                             </div>
@@ -105,7 +135,7 @@ function Listings() {
                             </>
                         )}
                     </div>
-                    <div className="showMoreDiv">
+                    <div className="showMoreDiv" style={listingsContainerStyle} >
                         {filters ? (filteredListings.length > displayCount && (
 
                             <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>

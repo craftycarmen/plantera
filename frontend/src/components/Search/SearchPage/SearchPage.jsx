@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { price, listingName } from "../../../../utils";
 import { fetchListingResults } from "../../../store/search";
 import FilterButton from "../../Filter/FilterButton";
@@ -18,19 +18,39 @@ function SearchPage() {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
 
+    const getColumns = (width) => {
+        if (width >= 1425) return 8;
+        if (width <= 1424 && width >= 1190) return 3;
+        if (width >= 992) return 4;
+        if (width >= 768) return 4;
+        return 4;
+    };
+
+    const [columns, setColumns] = useState(getColumns(window.innerWidth));
+    const [displayCount, setDisplayCount] = useState(columns * 2);
+
     const getSearchFromLocal = () => {
         return localStorage.getItem('searchTerm');
     };
 
-    const handleResize = () => {
+    const handleResize = useCallback(() => {
         setIsMobile(window.innerWidth <= 480);
         setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
-    }
+
+        const newColumns = getColumns(window.innerWidth);
+        setColumns(newColumns);
+        setDisplayCount(prevCount => calculateDisplayCount(prevCount, newColumns));
+    }, []);
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize)
-    }, []);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [handleResize]);
+
+    const calculateDisplayCount = (currCount, columns) => {
+        const rows = Math.ceil(currCount / columns);
+        return rows * columns;
+    };
 
     const getSearchTerm = () => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -49,16 +69,16 @@ function SearchPage() {
         if (searchTerm) {
             setError(null);
             localStorage.setItem('searchTerm', searchTerm);
-            setLoading(true); // Set loading to true before fetching
+            setLoading(true);
             dispatch(fetchListingResults(searchTerm))
                 .then(() => {
                     setTimeout(() => {
-                        setLoading(false); // Set loading to false after delay
-                    }, 500); // Simulate loading delay
+                        setLoading(false);
+                    }, 500);
                 })
                 .catch(error => {
                     setError('No listings found');
-                    setLoading(false); // Set loading to false on error
+                    setLoading(false);
                     console.error('Error fetching listings:', error);
                 });
         } else {
@@ -71,16 +91,16 @@ function SearchPage() {
     };
 
     const handleFilterChange = (filterParams) => {
-        setLoading(true); // Set loading to true before fetching
+        setLoading(true);
         dispatch(fetchListingResults(searchTerm, filterParams))
             .then(() => {
                 setTimeout(() => {
-                    setLoading(false); // Set loading to false after delay
-                }, 500); // Simulate loading delay
+                    setLoading(false);
+                }, 500);
             })
             .catch(error => {
                 setError('No listings found');
-                setLoading(false); // Set loading to false on error
+                setLoading(false);
                 console.error('Error fetching listings:', error);
             });
     };
@@ -91,10 +111,17 @@ function SearchPage() {
         transition: 'margin-left 0.2s ease-in-out'
     };
 
+    const displayedListings = Object.values(listings).slice(0, displayCount);
+
+    const handleShowMore = () => {
+        const newCount = calculateDisplayCount(displayCount + columns, columns);
+        setDisplayCount(newCount);
+    };
+
     return (
         <>
             <h1>Search Results</h1>
-            {error || listings.length === 0 ? (
+            {error || displayedListings.length === 0 ? (
                 <div className="noResultsContainer">
                     <div>No results found for &#34;{searchTerm}&#34;</div>
                     <br />
@@ -108,9 +135,9 @@ function SearchPage() {
                     <br />
                     <div className="listingsContainer" style={listingsContainerStyle}>
                         {loading ? (
-                            <div className="dots"></div> // Ensure the loading dots are visible
+                            <div className="dots"></div>
                         ) : (
-                            listings.map((listing) => (
+                            displayedListings.map((listing) => (
                                 listing && (
                                     <div key={listing.id}>
                                         <Link to={`/listings/${listing.id}`}>
@@ -128,6 +155,11 @@ function SearchPage() {
                                     </div>
                                 )
                             ))
+                        )}
+                    </div>
+                    <div className="showMoreDiv" style={listingsContainerStyle}>
+                        {listings.length > displayCount && (
+                            <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
                         )}
                     </div>
                 </>

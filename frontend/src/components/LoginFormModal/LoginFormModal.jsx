@@ -144,7 +144,10 @@ function LoginFormModal() {
 
             <div className='demosignup'>
                 <div><a onClick={demoUser}>Log in as Demo User</a></div>
-                <div>Not a Plantera user?&nbsp;
+                <br />
+                <div>Not a Plantera user?
+                </div>
+                <div>
                     <OpenModalMenuItem
                         itemText={<span className="modalLink">Sign up</span>}
                         modalComponent={<SignupFormModal />}

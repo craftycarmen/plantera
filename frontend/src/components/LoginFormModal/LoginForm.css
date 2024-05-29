@@ -4,7 +4,7 @@
     align-items: center;
     justify-items: center;
     flex-basis: auto;
-    padding: 15px 25px 40px 25px;
+    padding: 15px 25px 30px 25px;
     width: 400px;
     background-color: #8EBAA8;
     border-radius: 3px;
@@ -47,7 +47,7 @@
 
     .modal input,
     .modal textarea {
-        width: 60vw;
+        width: 50vw;
     }
 
 }

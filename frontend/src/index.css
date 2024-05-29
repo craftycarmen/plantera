@@ -73,8 +73,8 @@ textarea,
 select {
     display: block;
     border: none;
-    /* width: 300px; */
-    width: 30vw;
+    width: 300px;
+    /* width: 30vw; */
     margin-top: 20px;
     margin-bottom: 10px;
     border-radius: 3px;
@@ -188,7 +188,9 @@ button:disabled {
     background-size: calc(100%/3) 9.6px;
     background-repeat: no-repeat;
     animation: dots-7ar3yq 1.2s infinite linear;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
 }
 
 @keyframes dots-7ar3yq {
@@ -247,17 +249,18 @@ form>button {
         width: auto;
     }
 
+    button {
+        width: 100%;
+    }
+
     input,
-    textarea {
+    textarea,
+    select {
         width: 70vw;
     }
 
-    select {
-        width: 75vw;
-    }
-
     form {
-        width: 75vw;
+        width: auto;
     }
 }
 

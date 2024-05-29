@@ -86,8 +86,7 @@ function Listings() {
     const listingsContainerStyle = {
         marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
         marginRight: (!isTablet && !isMobile) && showSortMenu ? '230px' : '0',
-        marginTop: (isTablet || isMobile) && showFilter ? '0' : '0',
-        transition: 'margin-left 0.2s ease-in-out'
+        transition: 'margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out'
     };
 
     useEffect(() => {
@@ -166,12 +165,11 @@ function Listings() {
                     </div>
                 </div>
             </div>
-            <br />
-            {loading ? (
-                <div style={listingsContainerStyle} className="dots"></div>
-            ) : (
-                <>
-                    <div className="listingsContainer" style={listingsContainerStyle}>
+            <div className="listingsContainer" style={listingsContainerStyle}>
+                {loading ? (
+                    <div className="dots"></div>
+                ) : (
+                    <>
                         {displayedListings.length === 0 ? (
                             <>
                                 <div>No results found. Please refine or clear filters.</div>
@@ -194,21 +192,22 @@ function Listings() {
                                 ))}
                             </>
                         )}
-                    </div>
-                    <div className="showMoreDiv" style={listingsContainerStyle} >
-                        {filters ? (filteredListings.length > displayCount && (
+                        <div className="showMoreDiv" style={listingsContainerStyle} >
+                            {filters ? (filteredListings.length > displayCount && (
 
-                            <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
 
-                        )) : (listings.length > displayCount && (
+                            )) : (listings.length > displayCount && (
 
-                            <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
 
-                        ))}
-                    </div>
-                </>
-            )
-            }
+                            ))}
+                        </div>
+                    </>
+                )
+
+                }
+            </div>
         </>
     );
 }

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import './Guides.css';
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { fetchAllGuides } from "../../../store/guides";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,43 @@ function Guides() {
     const dispatch = useDispatch();
     const guides = Object.values(useSelector((state) => state.guides))
         .sort((a, b) => b.id - a.id);
-    console.log(guides);
+
+
+    const getColumns = (width) => {
+        if (width >= 1425) return 8;
+        if (width <= 1424 && width >= 1190) return 3;
+        if (width >= 992) return 4;
+        if (width >= 768) return 4;
+        return 4;
+    }
+    const [columns, setColumns] = useState(getColumns(window.innerWidth));
+    const [displayCount, setDisplayCount] = useState(columns * 2);
+
+
+    const handleResize = useCallback(() => {
+        const newColumns = getColumns(window.innerWidth);
+        setColumns(newColumns);
+        setDisplayCount(prevCount => calculateDisplayCount(prevCount, newColumns));
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [handleResize]);
+
+    const calculateDisplayCount = (currCount, columns) => {
+        const rows = Math.ceil(currCount / columns);
+        return rows * columns;
+    };
+
+    const displayedGuides = guides.slice(0, displayCount);
+
+    const handleShowMore = () => {
+        const newCount = calculateDisplayCount(displayCount + columns, columns);
+        setDisplayCount(newCount);
+    };
+
+
     useEffect(() => {
         dispatch(fetchAllGuides())
     }, [dispatch]);
@@ -20,7 +56,7 @@ function Guides() {
                 <div>Get plant-spired with these guides written by the Plantera community!</div>
             </div>
             <div className="guidesContainer">
-                {guides.map((guide) => (
+                {displayedGuides.map((guide) => (
                     <div key={guide.id}>
                         <Link to={`/guides/${guide.id}`}>
                             <div className="guideImageContainer">
@@ -37,6 +73,11 @@ function Guides() {
                     </div>
                 ))}
             </div >
+            <div className="showMoreDiv">
+                {guides.length > displayCount && (
+                    <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                )}
+            </div>
         </>
     )
 }

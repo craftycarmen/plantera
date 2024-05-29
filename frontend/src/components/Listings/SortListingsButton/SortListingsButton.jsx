@@ -1,13 +1,30 @@
-import { useState } from "react";
+import { useRef, useEffect } from "react";
 
-function SortListingsButton() {
+function SortListingsButton({ handleSort, showSortMenu }) {
 
-    const [showMenu, setShowMenu] = useState(false);
+    const ulRef = useRef();
+
+
+    useEffect(() => {
+        if (!showSortMenu || !ulRef.current) return;
+
+        const closeMenu = (e) => {
+            if (!ulRef.current.contains(e.target)) {
+                handleSort(null); // Close the menu by setting showSortMenu to false
+            }
+        };
+
+        document.addEventListener('click', closeMenu);
+
+        return () => document.removeEventListener("click", closeMenu);
+    }, [showSortMenu, handleSort]);
 
     const toggleMenu = (e) => {
         e.stopPropagation();
-        setShowMenu(!showMenu);
+        handleSort(null)
     }
+
+    const ulClassName = "sort-dropdown" + (showSortMenu ? "" : " hidden");
 
     return (
         <div className="sortButtonWrapper">
@@ -15,14 +32,14 @@ function SortListingsButton() {
                 <i className="fa-solid fa-sort" /> Sort
             </span>
             <div className="outerSortWrapper">
-                {showMenu && (
-                    <div>
-                        <div>Newest</div>
-                        <div>Oldest</div>
-                        <div>Alphabetically A to Z</div>
-                        <div>Alphabetically Z to A</div>
-                        <div>Price Low to High</div>
-                        <div>Price High to Low</div>
+                {showSortMenu && (
+                    <div className={ulClassName} ref={ulRef}>
+                        <a onClick={() => handleSort('newest')}>Newest</a>
+                        <a onClick={() => handleSort('oldest')}>Oldest</a>
+                        <a onClick={() => handleSort('aToZ')}>Plant Name: A to Z</a>
+                        <a onClick={() => handleSort('zToA')}>Plant Name: Z to A</a>
+                        <a onClick={() => handleSort('lowToHigh')}>Price: Low to High</a>
+                        <a onClick={() => handleSort('highToLow')}>Price: High to Low</a>
                     </div>
                 )}
             </div>

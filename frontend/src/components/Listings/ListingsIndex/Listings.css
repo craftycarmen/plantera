@@ -66,6 +66,45 @@
     justify-content: space-between;
 }
 
+.sortButton:hover {
+    cursor: pointer;
+}
+
+.sortButtonWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.outerSortWrapper {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.sort-dropdown {
+    position: absolute;
+    border: #28635A solid 1.5px;
+    border-radius: 3px;
+    padding: 15px 20px 15px 20px;
+    background-color: #F2DCCB;
+    width: fit-content;
+    text-wrap: nowrap;
+    margin-top: 20px;
+    /* margin-right: 60px; */
+    margin-right: auto;
+    right: 0;
+    z-index: 2;
+    display: grid;
+    column-gap: 30px;
+}
+
+.sort-dropdown-hidden {
+    display: none;
+}
+
+.sort-dropdown a {
+    width: fit-content;
+}
+
 @media screen and (max-width: 480px) {
 
     .listingImageContainer,

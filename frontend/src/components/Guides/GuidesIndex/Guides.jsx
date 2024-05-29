@@ -105,10 +105,10 @@ function Guides() {
 
     return (guides &&
         <>
-            <div className="pageHeader">
-                <h1>Inspire</h1>
-                <div>Get plant-spired with these guides written by the Plantera community!</div>
-            </div>
+
+            <h1>Inspire</h1>
+            <div>Get plant-spired with these guides written by the Plantera community!</div>
+            <br />
             <div className="sortGuidesContainer">
                 <div className="sortGuidesButtonWrapper">
                     <span className="sortGuidesButton" onClick={toggleMenu}>

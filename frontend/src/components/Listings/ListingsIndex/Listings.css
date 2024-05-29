@@ -105,6 +105,14 @@
     width: fit-content;
 }
 
+.searchResultsContainer .listingsContainer {
+    margin-top: 20px;
+}
+
+.searchResultsContainer .filterSort {
+    margin-top: 20px;
+}
+
 @media screen and (max-width: 480px) {
 
     .listingImageContainer,

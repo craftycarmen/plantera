@@ -1,15 +1,39 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { price, listingName } from "../../../../utils";
 import { fetchListingResults } from "../../../store/search";
 import FilterButton from "../../Filter/FilterButton";
 
 function SearchPage() {
     const dispatch = useDispatch();
-    const listings = Object.values(useSelector(state => state.search))
+    const ulRef = useRef();
+    const [sortOrder, setSortOrder] = useState('newest');
+    const [showSortMenu, setShowSortMenu] = useState(false);
+    let listings = Object.values(useSelector(state => state.search))
         .filter(listing => listing.stockQty > 0)
-        .sort((a, b) => b.id - a.id);
+
+    const sortedListings = (listings) => {
+        switch (sortOrder) {
+            case 'aToZ':
+                return listings.sort((a, b) => a.plantName.localeCompare(b.plantName));
+            case 'zToA':
+                return listings.sort((a, b) => b.plantName.localeCompare(a.plantName));
+            case 'lowToHigh':
+                return listings.sort((a, b) => (a.price - b.price));
+            case 'highToLow':
+                return listings.sort((a, b) => (b.price - a.price));
+            case 'oldest':
+                return listings.sort((a, b) => (a.id - b.id));
+            case 'newest':
+            default:
+                return listings.sort((a, b) => (b.id - a.id))
+
+        }
+    }
+
+    listings = sortedListings(listings)
+
     const [error, setError] = useState(null);
     const { search: urlSearchTerm } = useParams();
     const searchTermRedux = useSelector(state => state.search.searchTerm);
@@ -107,9 +131,34 @@ function SearchPage() {
 
     const listingsContainerStyle = {
         marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
-        marginTop: (isTablet || isMobile) && showFilter ? '0' : '0',
+        marginRight: (!isTablet && !isMobile) && showSortMenu ? '230px' : '0',
+        // marginTop: (isTablet || isMobile) && showFilter ? '0' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
+
+    useEffect(() => {
+        if (!showSortMenu || !ulRef.current) return;
+
+        const closeMenu = (e) => {
+            if (!ulRef.current.contains(e.target)) {
+                setShowSortMenu(false);
+            }
+        };
+
+        document.addEventListener('click', closeMenu);
+
+        return () => document.removeEventListener("click", closeMenu);
+    }, [showSortMenu]);
+
+    const toggleMenu = (e) => {
+        e.stopPropagation();
+        setShowSortMenu(!showSortMenu);
+    }
+
+    const handleSort = (order) => {
+        setSortOrder(order);
+        setShowSortMenu(false);
+    }
 
     const displayedListings = Object.values(listings).slice(0, displayCount);
 
@@ -117,6 +166,8 @@ function SearchPage() {
         const newCount = calculateDisplayCount(displayCount + columns, columns);
         setDisplayCount(newCount);
     };
+
+    const ulClassName = "sort-dropdown" + (showSortMenu ? "" : " hidden");
 
     return (
         <>
@@ -128,11 +179,28 @@ function SearchPage() {
                     <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
                 </div>
             ) : (
-                <>
+                <div className="searchResultsContainer">
                     <div>{results(listings.length)} for &#34;{searchTerm}&#34;</div>
-                    <br />
-                    <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                    <br />
+                    <div className="filterSort">
+                        <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
+                        <div className="sortButtonWrapper">
+                            <span className="sortButton" onClick={toggleMenu}>
+                                <i className="fa-solid fa-sort" /> Sort
+                            </span>
+                            <div className="outerSortWrapper">
+                                {showSortMenu && (
+                                    <div className={ulClassName} ref={ulRef}>
+                                        <a onClick={() => handleSort('newest')}>Newest</a>
+                                        <a onClick={() => handleSort('oldest')}>Oldest</a>
+                                        <a onClick={() => handleSort('aToZ')}>Plant Name: A to Z</a>
+                                        <a onClick={() => handleSort('zToA')}>Plant Name: Z to A</a>
+                                        <a onClick={() => handleSort('lowToHigh')}>Price: Low to High</a>
+                                        <a onClick={() => handleSort('highToLow')}>Price: High to Low</a>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                     <div className="listingsContainer" style={listingsContainerStyle}>
                         {loading ? (
                             <div className="dots"></div>
@@ -157,13 +225,15 @@ function SearchPage() {
                             ))
                         )}
                     </div>
-                    <div className="showMoreDiv" style={listingsContainerStyle}>
+                    {!loading && <div className="showMoreDiv" style={listingsContainerStyle}>
                         {listings.length > displayCount && (
                             <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
                         )}
                     </div>
-                </>
-            )}
+                    }
+                </div>
+            )
+            }
         </>
     );
 }

@@ -35,12 +35,12 @@ function SortListingsButton({ handleSort, showSortMenu }) {
             <div className="outerSortWrapper">
                 {showSortMenu && (
                     <div className={ulClassName} ref={ulRef}>
+                        <a onClick={() => handleSort('newest')}>Newest First</a>
+                        <a onClick={() => handleSort('oldest')}>Oldest First</a>
                         <a onClick={() => handleSort('aToZ')}>Plant Name: A to Z</a>
                         <a onClick={() => handleSort('zToA')}>Plant Name: Z to A</a>
                         <a onClick={() => handleSort('lowToHigh')}>Price: Low to High</a>
                         <a onClick={() => handleSort('highToLow')}>Price: High to Low</a>
-                        <a onClick={() => handleSort('newest')}>Recency: Newest First</a>
-                        <a onClick={() => handleSort('oldest')}>Recency: Oldest First</a>
                     </div>
                 )}
             </div>

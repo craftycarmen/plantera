@@ -156,22 +156,24 @@ function Listings() {
                                 ))}
                             </>
                         )}
-                        <div className="showMoreDiv" style={listingsContainerStyle} >
-                            {filters ? (filteredListings.length > displayCount && (
-
-                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
-
-                            )) : (listings.length > displayCount && (
-
-                                <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
-
-                            ))}
-                        </div>
                     </>
                 )
 
                 }
             </div>
+            {!loading &&
+                <div className="showMoreDiv" style={listingsContainerStyle} >
+                    {filters ? (filteredListings.length > displayCount && (
+
+                        <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+
+                    )) : (listings.length > displayCount && (
+
+                        <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+
+                    ))}
+                </div>
+            }
         </>
     );
 }

@@ -117,8 +117,8 @@ function Guides() {
                     <div className="outerSortGuidesWrapper">
                         {showSortMenu && (
                             <div className={ulClassName} ref={ulRef}>
-                                <a onClick={() => handleSort('newest')}>Recency: Newest First</a>
-                                <a onClick={() => handleSort('oldest')}>Recency: Oldest First</a>
+                                <a onClick={() => handleSort('newest')}>Newest First</a>
+                                <a onClick={() => handleSort('oldest')}>Oldest First</a>
                                 <a onClick={() => handleSort('aToZ')}>Title: A to Z</a>
                                 <a onClick={() => handleSort('zToA')}>Title: Z to A</a>
                             </div>

@@ -6,6 +6,7 @@ import './Listings.css';
 import { Link } from "react-router-dom";
 import { price, listingName } from "../../../../utils";
 import FilterButton from "../../Filter/FilterButton";
+import SortListingsButton from "../SortListingsButton/SortListingsButton";
 
 function Listings() {
     const dispatch = useDispatch();
@@ -105,7 +106,10 @@ function Listings() {
             <h1>Shop</h1>
             <div>Shop for plants from fellow plant lovers!</div>
             <br />
-            <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
+            <div className="filterSort">
+                <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
+                <SortListingsButton />
+            </div>
             <br />
             {loading ? (
                 <div style={listingsContainerStyle} className="dots"></div>

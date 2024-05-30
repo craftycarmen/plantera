@@ -1,19 +1,61 @@
 import './Sell.css';
+import { PiNumberCircleOneFill, PiNumberCircleTwoFill, PiNumberCircleThreeFill } from "react-icons/pi";
+import { useSelector } from 'react-redux';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import SignupFormModal from '../SignupFormModal';
+import { Link } from 'react-router-dom';
+
 
 function Sell() {
+
+    const sessionUser = useSelector(state => state.session.user);
+    const user = useSelector(state => state.user[sessionUser?.id]?.User)
+    const currUser = user || sessionUser;
+    const isSeller = currUser && currUser.accountType !== 'seller';
+
     return (
         <>
             <h1>Sell</h1>
-            <div>Ready to purge some plants?</div>
+            <div>Purge your plants and plant babies on Plantera, and get paid!</div>
             <br />
             <div className='sellContainer'>
-                <div>You know what they say... selling is easy as...</div>
-                <div>1. Sign up to be a seller on Plantera</div>
-                <div>After becoming a Plantera member, complete or edit your profile and fill out the seller section!</div>
-                <div>2. List your plants</div>
-                <div>Take a picture of your plant and share the details!</div>
-                <div>3. Earn money from your sales!</div>
-                <div>Once your plant sells, ship it and see that money hit that bank account!</div>
+                <div className='sellSteps'>
+                    <div className='step'>
+                        <div>
+                            <img src='../../logo-monstera.png' />
+                        </div>
+                        <h2><span style={{ fontSize: "30px", marginTop: "5px" }}><PiNumberCircleOneFill /></span> Be a Seller on Plantera</h2>
+                        <div>Fill out the seller section on your Plantera profile.</div>
+                    </div>
+                    <div className='step'>
+                        <div>
+
+                            <img src='../../plant-listing.png' />
+                        </div>
+
+                        <h2><span style={{ fontSize: "30px", marginTop: "5px" }}><PiNumberCircleTwoFill /></span> List Your Plants</h2>
+                        <div>Take a picture of your plant and share the details.</div>
+                    </div>
+                    <div className='step'>
+                        <div>
+                            <img src='../../get-paid.png' />
+                        </div>
+                        <h2><span style={{ fontSize: "30px", marginTop: "5px" }}><PiNumberCircleThreeFill /></span> Earn Money from Your Sales</h2>
+                        <div>Once your plant sells, ship it, and see that money hit that bank account!</div>
+                    </div>
+                </div>
+                <div className='signUp'>
+                    <h2><span style={{ fontStyle: "italic" }}>...Ready For It?</span></h2>
+                    {isSeller &&
+                        <Link to={`/user/${sessionUser?.id}/editprofile`}><button><h3>Be a seller now!</h3></button></Link>
+                    }
+                    {!sessionUser &&
+                        <OpenModalMenuItem
+                            itemText={<button><h3>Sign up for Plantera now!</h3></button>}
+                            modalComponent={<SignupFormModal />}
+                        />
+                    }
+                </div>
             </div>
         </>
     )

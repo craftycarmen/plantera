@@ -130,6 +130,7 @@
         display: grid;
         gap: 5px;
         justify-items: center;
+        text-wrap: wrap;
     }
 
     .smDots {
@@ -165,9 +166,10 @@
         height: 200px;
     }
 
-    /* .smButtons {
+    .smButtons {
         display: grid;
-    } */
+        justify-content: center;
+    }
 
     .smButtons button:nth-child(1) {
         width: 212px;

@@ -68,7 +68,7 @@ function ManageListings() {
                         }
                     </div>
 
-                    <h2 className="soldListingsHeader">Sold Listings</h2>
+                    <h2 className="soldListingsHeader">Inactive & Sold Listings</h2>
                     <div className="manageListingsContainer">
                         {listings && soldListings?.length === 0 ? (
                             <div className="currentListings">No sold listings!</div>

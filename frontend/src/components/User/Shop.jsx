@@ -85,7 +85,7 @@ function Shop() {
                                         }
                                         {soldListings?.length > 0 &&
                                             <>
-                                                <h2 className="soldListingsHeader">Sold Listings</h2>
+                                                <h2 className="soldListingsHeader">Past Listings</h2>
                                                 <div className="shopListingsContainer">
                                                     {
                                                         soldListings && soldListings.map(listing => (

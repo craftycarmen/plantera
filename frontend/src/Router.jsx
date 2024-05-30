@@ -22,6 +22,7 @@ import UserGuides from './components/User/UserGuides';
 import CreateGuide from './components/Guides/GuideForm/CreateGuide';
 import UpdateGuide from './components/Guides/GuideForm/UpdateGuide';
 import Error404 from './components/ErrorHandling/Error404';
+import Sell from './components/Sell/Sell';
 
 const router = createBrowserRouter([
     {
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
             {
                 path: '/guides/:guideId/edit',
                 element: <UpdateGuide />
+            },
+            {
+                path: '/sell',
+                element: <Sell />
             },
         ]
     }

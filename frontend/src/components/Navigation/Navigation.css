@@ -8,8 +8,10 @@
 }
 
 .navLinks {
+    display: flex;
     font-size: 18px;
     margin-right: 25%;
+    gap: 40px;
 }
 
 .rightNav {

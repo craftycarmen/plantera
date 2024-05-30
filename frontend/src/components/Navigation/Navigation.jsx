@@ -25,11 +25,11 @@ function Navigation({ isLoaded }) {
         <div className='navigation'>
             <NavLink to="/"><img className='planteraLogo' src='../../logo.png' /></NavLink>
             <div className='navLinks'>
-                <span><Link to="/listings">SHOP</Link>&nbsp;&nbsp;&nbsp;</span>
+                <span><Link to="/listings">SHOP</Link></span>
 
-                <span><Link to="/guides">INSPIRE</Link>&nbsp;&nbsp;&nbsp;</span>
+                <span><Link to="/guides">INSPIRE</Link></span>
 
-                <span onClick={() => alert('Page coming soon')} >SELL</span>
+                <span><Link to="/sell">SELL</Link></span>
             </div>
             <div className='rightNav'>
 

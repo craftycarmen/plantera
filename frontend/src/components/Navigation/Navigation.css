@@ -1,7 +1,7 @@
 .navigation {
     display: grid;
     grid-template-columns: auto 2fr auto;
-    gap: 50px;
+    /* gap: 50px; */
     justify-items: center;
     align-items: center;
     padding-bottom: 20px;
@@ -142,7 +142,7 @@
 @media screen and (min-width: 481px) and (max-width: 768px) {
     .navigation {
         display: grid;
-        column-gap: 30px;
+        /* column-gap: 30px; */
         row-gap: 20px;
         grid-template-areas:
             "logo buttons"
@@ -174,7 +174,7 @@
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     .navigation {
         display: grid;
-        column-gap: 30px;
+        /* column-gap: 30px; */
         row-gap: 20px;
         grid-template-areas:
             "logo buttons"
@@ -206,7 +206,7 @@
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     .navigation {
         display: grid;
-        column-gap: 30px;
+        /* column-gap: 30px; */
         row-gap: 20px;
         grid-template-areas:
             "logo buttons"

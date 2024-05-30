@@ -15,7 +15,11 @@ function ManageListings() {
     const listings = Object.values(useSelector(state => state.listings)).filter(listing => listing.sellerId === userId);
 
     const activeListings = listings.filter(listing => listing.stockQty > 0).sort((a, b) => (b.id - a.id))
-    const soldListings = listings.filter(listing => listing.stockQty === 0).sort((a, b) => (b.id - a.id))
+    const soldListings = listings.filter(listing => listing.stockQty === 0).sort((a, b) => {
+        a = (new Date(a.updatedAt)).getTime();
+        b = (new Date(b.updatedAt)).getTime();
+        return b - a;
+    })
 
     useEffect(() => {
         dispatch(fetchOwnedListings())

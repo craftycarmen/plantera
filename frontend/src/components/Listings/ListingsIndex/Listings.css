@@ -43,7 +43,7 @@
     display: grid;
     align-items: center;
     justify-content: space-between;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: auto auto;
     /* width: 348.75px; */
     column-gap: 20px;
     padding-top: 5px;

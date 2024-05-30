@@ -14,13 +14,15 @@ function Shop() {
     const user = useSelector(state => state.user[userId]?.User)
     const shop = useSelector(state => state.user[userId]?.Shop)
     const activeListings = shop?.filter(listing => listing.stockQty > 0).sort((a, b) => (b.id - a.id))
-    const soldListings = shop?.filter(listing => listing.stockQty === 0).sort((a, b) => (b.id - a.id))
-    console.log("hello", shop);
+    const soldListings = shop?.filter(listing => listing.stockQty === 0).sort((a, b) => {
+        a = (new Date(a.updatedAt)).getTime();
+        b = (new Date(b.updatedAt)).getTime();
+        return b - a;
+    })
     const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(fetchProfile(userId))
-        // .then(() => dispatch(fetchShop(userId)))
     }, [dispatch, userId])
 
     return (

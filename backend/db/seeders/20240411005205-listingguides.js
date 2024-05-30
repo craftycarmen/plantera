@@ -73,11 +73,11 @@ const listingGuidesList = [
     guideId: 8
   },
   {
-    listingId: 6,
+    listingId: 16,
     guideId: 3
   },
   {
-    listingId: 6,
+    listingId: 16,
     guideId: 9
   },
   {

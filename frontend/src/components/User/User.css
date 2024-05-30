@@ -138,7 +138,7 @@
 }
 
 .soldOutImage {
-    filter: grayscale(100%) opacity(50%);
+    filter: grayscale(100%);
 }
 
 .profileShop {

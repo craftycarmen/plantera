@@ -31,15 +31,14 @@ function Guides() {
     guides = sortedGuides(guides)
 
     const getColumns = (width) => {
-        if (width >= 1425) return 8;
-        if (width <= 1424 && width >= 1190) return 3;
-        if (width >= 992) return 4;
+        if (width >= 1425 && width <= 1191) return 8;
+        if (width >= 1190 && width <= 1424) return 3;
+        if (width >= 992 && width <= 1189) return 3;
         if (width >= 768) return 4;
         return 4;
     }
     const [columns, setColumns] = useState(getColumns(window.innerWidth));
-    const [displayCount, setDisplayCount] = useState(columns);
-
+    const [displayCount, setDisplayCount] = useState(columns * 2);
 
     const handleResize = useCallback(() => {
         setIsMobile(window.innerWidth <= 480);

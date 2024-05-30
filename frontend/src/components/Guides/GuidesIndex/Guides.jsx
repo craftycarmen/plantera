@@ -60,9 +60,9 @@ function Guides() {
         return rows * columns;
     };
 
-    const toggleSortMenu = () => {
+    const toggleSortMenu = useCallback(() => {
         setShowSortMenu(prevState => !prevState);
-    };
+    }, []);
 
     const handleSort = (order) => {
         setSortOrder(order);
@@ -82,11 +82,6 @@ function Guides() {
 
         return () => document.removeEventListener("click", closeMenu);
     }, [showSortMenu, toggleSortMenu]);
-
-    const toggleMenu = (e) => {
-        e.stopPropagation();
-        setShowSortMenu(!showSortMenu);
-    }
 
     const sortOptions = [
         { value: 'newest', label: 'Newest First' },

@@ -18,7 +18,7 @@
     border-radius: 3px;
     padding: 15px 20px 15px 20px;
     background-color: #F2DCCB;
-    width: fit-content;
+    width: 215px;
     text-wrap: nowrap;
     margin-top: 20px;
     /* margin-right: 60px; */
@@ -35,4 +35,19 @@
 
 .sort-dropdown a {
     width: fit-content;
+    margin-bottom: 10px;
+}
+
+.sort-dropdown a:last-child {
+    margin-bottom: 0px;
+}
+
+.hidden {
+    display: none;
+}
+
+.inactiveSortOption {
+    pointer-events: none;
+    color: #28635a;
+    font-weight: 400;
 }

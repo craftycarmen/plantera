@@ -60,6 +60,10 @@ function Guides() {
         return rows * columns;
     };
 
+    const toggleSortMenu = () => {
+        setShowSortMenu(prevState => !prevState);
+    };
+
     const handleSort = (order) => {
         setSortOrder(order);
         setShowSortMenu(!showSortMenu);
@@ -70,19 +74,26 @@ function Guides() {
 
         const closeMenu = (e) => {
             if (!ulRef.current.contains(e.target)) {
-                setShowSortMenu(!showSortMenu);
+                toggleSortMenu();
             }
         };
 
         document.addEventListener('click', closeMenu);
 
         return () => document.removeEventListener("click", closeMenu);
-    }, [showSortMenu]);
+    }, [showSortMenu, toggleSortMenu]);
 
     const toggleMenu = (e) => {
         e.stopPropagation();
         setShowSortMenu(!showSortMenu);
     }
+
+    const sortOptions = [
+        { value: 'newest', label: 'Newest First' },
+        { value: 'oldest', label: 'Oldest First' },
+        { value: 'aToZ', label: 'Title: A to Z' },
+        { value: 'zToA', label: 'Title: Z to A' }
+    ];
 
     const displayedGuides = guides.slice(0, displayCount);
 
@@ -111,16 +122,28 @@ function Guides() {
             <br />
             <div className="sortGuidesContainer">
                 <div className="sortGuidesButtonWrapper">
-                    <span className="sortGuidesButton" onClick={toggleMenu}>
+                    <span className="sortGuidesButton" onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSortMenu();
+                    }}>
                         <i className="fa-solid fa-sort" /> Sort
                     </span>
                     <div className="outerSortGuidesWrapper">
                         {showSortMenu && (
                             <div className={ulClassName} ref={ulRef}>
-                                <a onClick={() => handleSort('newest')}>Newest First</a>
-                                <a onClick={() => handleSort('oldest')}>Oldest First</a>
-                                <a onClick={() => handleSort('aToZ')}>Title: A to Z</a>
-                                <a onClick={() => handleSort('zToA')}>Title: Z to A</a>
+                                {sortOptions.map((option) => (
+                                    <a key={option.value}
+                                        onClick={() => {
+                                            handleSort(option.value);
+                                            toggleSortMenu();
+                                        }}
+
+                                        className={option.value === sortOrder ? "inactiveSortOption" : ""}
+                                    >
+                                        {sortOrder === option.value && <i className="fa-solid fa-check" style={{ marginRight: "5px" }} />}
+                                        {option.label}
+                                    </a>
+                                ))}
                             </div>
                         )}
                     </div>
@@ -145,11 +168,12 @@ function Guides() {
                     </div>
                 ))}
             </div >
-            <div className="showMoreDiv">
+            <div className="showMoreDiv" style={guidesContainerStyle}>
                 {guides.length > displayCount && (
                     <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
                 )}
             </div>
+
         </>
     )
 }

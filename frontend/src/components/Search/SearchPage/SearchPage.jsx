@@ -130,11 +130,14 @@ function SearchPage() {
             });
     };
 
-
     const handleSort = (order) => {
         setSortOrder(order);
-        setShowSortMenu(!showSortMenu);
+        setShowSortMenu(false);
     }
+
+    const toggleSortMenu = () => {
+        setShowSortMenu(prevState => !prevState);
+    };
 
     const listingsContainerStyle = {
         marginLeft: (!isTablet && !isMobile) && showFilter ? '270px' : '0',
@@ -164,7 +167,7 @@ function SearchPage() {
                     <div>{results(listings.length)} for &#34;{searchTerm}&#34;</div>
                     <div className="filterSort">
                         <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                        <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} />
+                        <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} toggleSortMenu={toggleSortMenu} currentSortOrder={sortOrder} />
                     </div>
                     <div className="listingsContainer" style={listingsContainerStyle}>
                         {loading ? (

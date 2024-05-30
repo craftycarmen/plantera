@@ -1,46 +1,59 @@
 import { useRef, useEffect } from "react";
 import './SortListingsButton.css';
 
-function SortListingsButton({ handleSort, showSortMenu }) {
+function SortListingsButton({ handleSort, showSortMenu, toggleSortMenu, currentSortOrder }) {
 
     const ulRef = useRef();
-
 
     useEffect(() => {
         if (!showSortMenu || !ulRef.current) return;
 
         const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
-                handleSort(null); // Close the menu by setting showSortMenu to false
+            if (ulRef.current && !ulRef.current.contains(e.target)) {
+                toggleSortMenu();
             }
         };
 
         document.addEventListener('click', closeMenu);
 
         return () => document.removeEventListener("click", closeMenu);
-    }, [showSortMenu, handleSort]);
+    }, [showSortMenu, toggleSortMenu]);
 
-    const toggleMenu = (e) => {
-        e.stopPropagation();
-        handleSort(null)
-    }
+    const sortOptions = [
+        { value: 'newest', label: 'Newest First' },
+        { value: 'oldest', label: 'Oldest First' },
+        { value: 'aToZ', label: 'Plant Name: A to Z' },
+        { value: 'zToA', label: 'Plant Name: Z to A' },
+        { value: 'lowToHigh', label: 'Price: Low to High' },
+        { value: 'highToLow', label: 'Price: High to Low' }
+    ];
 
     const ulClassName = "sort-dropdown" + (showSortMenu ? "" : " hidden");
 
     return (
         <div className="sortButtonWrapper">
-            <span className="sortButton" onClick={toggleMenu}>
+            <span className="sortButton" onClick={(e) => {
+                e.stopPropagation();
+                toggleSortMenu();
+            }}>
                 <i className="fa-solid fa-sort" /> Sort
             </span>
             <div className="outerSortWrapper">
                 {showSortMenu && (
                     <div className={ulClassName} ref={ulRef}>
-                        <a onClick={() => handleSort('newest')}>Newest First</a>
-                        <a onClick={() => handleSort('oldest')}>Oldest First</a>
-                        <a onClick={() => handleSort('aToZ')}>Plant Name: A to Z</a>
-                        <a onClick={() => handleSort('zToA')}>Plant Name: Z to A</a>
-                        <a onClick={() => handleSort('lowToHigh')}>Price: Low to High</a>
-                        <a onClick={() => handleSort('highToLow')}>Price: High to Low</a>
+                        {sortOptions.map((option) => (
+                            <a key={option.value}
+                                onClick={() => {
+                                    handleSort(option.value);
+                                    toggleSortMenu();
+                                }}
+
+                                className={option.value === currentSortOrder ? "inactiveSortOption" : ""}
+                            >
+                                {currentSortOrder === option.value && <i className="fa-solid fa-check" style={{ marginRight: "5px" }} />}
+                                {option.label}
+                            </a>
+                        ))}
                     </div>
                 )}
             </div>
@@ -48,4 +61,4 @@ function SortListingsButton({ handleSort, showSortMenu }) {
     )
 }
 
-export default SortListingsButton
+export default SortListingsButton;

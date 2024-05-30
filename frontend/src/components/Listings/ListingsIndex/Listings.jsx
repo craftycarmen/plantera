@@ -111,8 +111,13 @@ function Listings() {
 
     const handleSort = (order) => {
         setSortOrder(order);
-        setShowSortMenu(!showSortMenu);
+        setShowSortMenu(false);
     }
+
+    const toggleSortMenu = () => {
+        setShowSortMenu(prevState => !prevState);
+    };
+
     const handleShowMore = () => {
         const newCount = calculateDisplayCount(displayCount + columns);
         setDisplayCount(newCount);
@@ -127,7 +132,7 @@ function Listings() {
             <br />
             <div className="filterSort">
                 <FilterButton onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} />
+                <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} toggleSortMenu={toggleSortMenu} currentSortOrder={sortOrder} />
             </div>
             <div className="listingsContainer" style={listingsContainerStyle}>
                 {loading ? (

@@ -96,7 +96,7 @@
     border-radius: 3px;
     padding: 15px 20px 15px 20px;
     background-color: #F2DCCB;
-    width: fit-content;
+    width: 172px;
     text-wrap: nowrap;
     margin-top: 20px;
     /* margin-right: 60px; */
@@ -113,6 +113,12 @@
 
 .sortGuides-dropdown a {
     width: fit-content;
+    margin-bottom: 10px;
+}
+
+
+.sortGuides-dropdown a:last-child {
+    margin-bottom: 0px;
 }
 
 

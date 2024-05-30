@@ -5,7 +5,7 @@
 
 .ownedGuideImageContainer {
     position: relative;
-    width: 348.75px;
+    width: 321px;
     height: 225px;
 }
 
@@ -20,7 +20,7 @@
 .ownedGuideImageContainer::before {
     content: '';
     z-index: 1;
-    width: 348.75px;
+    width: 321px;
     height: 225px;
     object-fit: cover;
     object-position: center;
@@ -46,6 +46,18 @@
     width: auto;
     column-gap: 20px;
     padding-top: 5px;
+}
+
+.ownedGuidesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    /* display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; */
+    gap: 35px;
+    justify-items: center;
+    margin: auto;
+    /* width: 100%; */
 }
 
 @media screen and (max-width: 480px) {

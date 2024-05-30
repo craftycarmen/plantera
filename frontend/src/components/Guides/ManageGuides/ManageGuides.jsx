@@ -34,7 +34,7 @@ function ManageGuides() {
                     <div className='currentGuides'>
                         <Link to={`/guides/new`}><button style={{ width: "fit-content" }}>Create New Guide</button></Link>
                     </div>
-                    <div className="guidesContainer">
+                    <div className="ownedGuidesContainer">
                         {guides.map((guide) => (
                             <div key={guide.id}>
                                 <Link to={`/guides/${guide.id}`}>

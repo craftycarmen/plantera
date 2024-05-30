@@ -22,7 +22,7 @@ import UserGuides from './components/User/UserGuides';
 import CreateGuide from './components/Guides/GuideForm/CreateGuide';
 import UpdateGuide from './components/Guides/GuideForm/UpdateGuide';
 import Error404 from './components/ErrorHandling/Error404';
-import Sell from './components/Sell/Sell';
+import Sell from './components/Sell/SellPage/Sell';
 
 const router = createBrowserRouter([
     {

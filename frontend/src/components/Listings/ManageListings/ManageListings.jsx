@@ -86,9 +86,14 @@ function ManageListings() {
                                             <div className="listingPrice">{price(listing.price)}</div>
                                         </div>
                                     </Link>
-                                    <div className="soldListingButtonContainer">
-                                        <div className="soldListingButtons">
+                                    <div className="manageListingInfo">
+                                        <div></div>
+                                        <div className="listingButtons">
                                             <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
+                                            <OpenModalButton
+                                                buttonText="Delete"
+                                                modalComponent={<DeleteListingModal listingId={listing.id} />}
+                                            />
                                         </div>
                                     </div>
                                 </div>

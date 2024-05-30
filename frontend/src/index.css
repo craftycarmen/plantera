@@ -91,11 +91,6 @@ select {
     border-left: 1px solid #28635A;
 }
 
-select {
-    /* width: 321px; */
-    width: 30vw;
-}
-
 input[type=radio] {
     accent-color: #E38251;
 }
@@ -128,6 +123,7 @@ button:hover {
 
 .inputContainer {
     position: relative;
+    width: fit-content;
 }
 
 .inputContainer input:focus~label,
@@ -222,7 +218,7 @@ button:disabled {
 }
 
 .deleteModal button {
-    width: 190px;
+    width: auto;
 }
 
 .deleteButtons {

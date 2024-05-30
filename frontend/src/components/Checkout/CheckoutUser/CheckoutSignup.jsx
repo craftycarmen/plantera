@@ -311,10 +311,10 @@ function CheckoutSignup() {
                     />
                     <label htmlFor='image' className='floating-label'>Profile Image*</label>
                 </div>
-                {imageLoading && (<div style={{ marginLeft: "125px" }} className="dots"></div>)}
+                {imageLoading && (<div className="dots"></div>)}
                 <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
-                    <button style={{ marginTop: "15px", width: "321px" }}
+                    <button style={{ marginTop: "15px" }}
                         disabled={Object.values(errors).length}
                         type="submit">Sign Up</button>
                 </div>

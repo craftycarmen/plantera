@@ -101,10 +101,10 @@
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
-    .manageListingImageContainer,
+    /* .manageListingImageContainer,
     .manageListingInfo {
         width: auto;
-    }
+    } */
 
     .manageListingsContainer {
         grid-template-columns: auto;
@@ -112,9 +112,9 @@
         gap: 0px;
     }
 
-    .manageListingImage {
+    /* .manageListingImage {
         height: 275px;
-    }
+    } */
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
@@ -125,13 +125,13 @@
         row-gap: 0px;
     }
 
-    .manageListingImageContainer,
+    /* .manageListingImageContainer,
     .manageListingInfo {
         width: auto;
-    }
+    } */
 
     .manageListingImage {
-        height: 275px;
+        /* height: 275px; */
         width: 100%;
     }
 }

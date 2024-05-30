@@ -73,58 +73,66 @@ function ProfileButton() {
 
     return (
         <div className='profileButtonWrapper'>
-            <span onClick={toggleMenu}>
-                {currUser ? (<i className="fa-regular fa-laugh-beam" />) : (<i className="fa-regular fa-face-smile" />)}
-            </span>
-            {location.pathname !== '/checkout/user' && (
-                <div className={ulClassName} ref={ulRef}>
-                    {currUser ? (
-                        <div className='userInfo'>
-                            <div>Hey, {currUser.username}!</div>
-                            <div className='profileOptions'>
-                                <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
-                                    closeMenu()
-                                    navigate(`/user/${currUser.id}`)
-                                }}>Profile</a></div>
-                                {isSeller && (
-                                    <>
-                                        <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
-                                            closeMenu()
-                                            navigate(`/listings/current`)
-                                        }}>Listings</a></div>
-                                    </>
-                                )
-                                }
-                                <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
-                                    closeMenu()
-                                    navigate(`/guides/current`)
-                                }}>Guides</a></div>
-                                {/* <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div>Orders</div> */}
-                            </div>
-                            <button onClick={logout}>Log Out</button>
+            {location.pathname !== '/checkout/user' ? (
+                <>
 
-                        </div>
-                    ) : (
-                        <>
+                    <span onClick={toggleMenu}>
+                        {currUser ? (<i className="fa-regular fa-laugh-beam" />) : (<i className="fa-regular fa-face-smile" />)}
+                    </span>
 
-                            <div className='profileLink'>
-                                <OpenModalMenuItem
-                                    itemText="Log In"
-                                    onItemClick={closeMenu}
-                                    modalComponent={<LoginFormModal navigate={navigate} />}
-                                />
-                            </div>
-                            <div className='profileLink'>
-                                <OpenModalMenuItem
-                                    itemText="Sign Up"
-                                    onItemClick={closeMenu}
-                                    modalComponent={<SignupFormModal navigate={navigate} />}
-                                />
-                            </div>
+                    <div className={ulClassName} ref={ulRef}>
+                        {currUser ? (
+                            <div className='userInfo'>
+                                <div>Hey, {currUser.username}!</div>
+                                <div className='profileOptions'>
+                                    <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                        closeMenu()
+                                        navigate(`/user/${currUser.id}`)
+                                    }}>Profile</a></div>
+                                    {isSeller && (
+                                        <>
+                                            <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                                closeMenu()
+                                                navigate(`/listings/current`)
+                                            }}>Listings</a></div>
+                                        </>
+                                    )
+                                    }
+                                    <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                        closeMenu()
+                                        navigate(`/guides/current`)
+                                    }}>Guides</a></div>
+                                    {/* <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div>Orders</div> */}
+                                </div>
+                                <button onClick={logout}>Log Out</button>
 
-                        </>
-                    )}
-                </div>
+                            </div>
+                        ) : (
+                            <>
+
+                                <div className='profileLink'>
+                                    <OpenModalMenuItem
+                                        itemText="Log In"
+                                        onItemClick={closeMenu}
+                                        modalComponent={<LoginFormModal navigate={navigate} />}
+                                    />
+                                </div>
+                                <div className='profileLink'>
+                                    <OpenModalMenuItem
+                                        itemText="Sign Up"
+                                        onItemClick={closeMenu}
+                                        modalComponent={<SignupFormModal navigate={navigate} />}
+                                    />
+                                </div>
+
+                            </>
+                        )}
+                    </div>
+                </>
+            ) : (
+                <span onClick={toggleMenu} style={{ cursor: "default" }}>
+                    <i className="fa-regular fa-face-smile" style={{ cursor: "default" }} />
+                </span>
             )}
         </div>
     );

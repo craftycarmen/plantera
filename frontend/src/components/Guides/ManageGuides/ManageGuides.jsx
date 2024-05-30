@@ -47,12 +47,15 @@ function ManageGuides() {
                                         </div>
                                     </div>
                                 </Link>
-                                <div className='guideButtons'>
-                                    <Link to={`/guides/${guide.id}/edit`}><button>Edit</button></Link>
-                                    <OpenModalButton
-                                        buttonText="Delete"
-                                        modalComponent={<DeleteGuideModal guideId={guide.id} />}
-                                    />
+                                <div className='manageGuides'>
+                                    <div></div>
+                                    <div className='guideButtons'>
+                                        <Link to={`/guides/${guide.id}/edit`}><button>Edit</button></Link>
+                                        <OpenModalButton
+                                            buttonText="Delete"
+                                            modalComponent={<DeleteGuideModal guideId={guide.id} />}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         ))}

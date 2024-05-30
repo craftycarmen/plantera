@@ -166,7 +166,7 @@ function CheckoutLogin({ cartId }) {
                 <div>
                     <button
                         disabled={Object.values(charCount).length}
-                        style={{ marginTop: "15px", width: "321px" }}
+                        style={{ marginTop: "15px" }}
                         type="submit">Log In</button>
                 </div>
             </form>

@@ -108,7 +108,7 @@ function Checkout() {
     return (
         <>
             <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/cart">Shopping Cart</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;Checkout</h3>
-            {cart.cartId === null && <div>Your cart is empty!</div>}
+            {cart.cartId === null && <div style={{ marginTop: "35px" }}>Your cart is empty!</div>}
             {!sessionUser && cart.cartId !== null && (<ErrorHandling />)}
             {sessionUser && cart.cartId !== null &&
                 (<>

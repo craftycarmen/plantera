@@ -176,7 +176,7 @@ function UserProfileForm({ formType }) {
                             name="accountType"
                             defaultChecked={accountType === "seller"}
                             onClick={() => setAccountType("seller")}
-                        /><span>Yes</span>&nbsp;&nbsp;
+                        /><span>Yes</span>
 
                         <input
                             type="radio"

@@ -2,11 +2,11 @@
     padding-top: 10px;
     margin-left: 8px;
     /* width: 321px; */
-    width: 30vw;
+    width: 300px !important;
 }
 
 .accountType input {
-    width: auto;
+    width: fit-content;
 }
 
 .radioInput {
@@ -14,6 +14,7 @@
     align-items: center;
     gap: 5px;
     height: 20px;
+    width: fit-content;
 }
 
 .radioInput span {

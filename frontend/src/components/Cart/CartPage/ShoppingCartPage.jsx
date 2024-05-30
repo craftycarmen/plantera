@@ -15,8 +15,6 @@ function ShoppingCartPage() {
     const cartItems = useSelector(state => state.cart.cartItems)
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-    console.log("CT", cartItems);
-
     cartItems.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     useEffect(() => {
         const runDispatches = async () => {
@@ -189,7 +187,7 @@ function ShoppingCartPage() {
                                     </div>
                                     <div className="smInfo" style={{ height: "175px" }}>
                                         <div className="shoppingCartRow">
-                                            <div><h3>{item.Listing?.plantName}</h3>
+                                            <div><h3><Link to={`/listings/${item.Listing?.id}`}>{item.Listing?.plantName}</Link></h3>
                                                 <div>from {item.Listing?.Seller?.username}</div>
                                             </div>
                                             <div className="shoppingCartPrice">

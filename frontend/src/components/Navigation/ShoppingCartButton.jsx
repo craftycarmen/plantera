@@ -118,9 +118,9 @@ function ShoppingCartButton({ cartId }) {
             ) : (
 
 
-                <div style={{ cursor: "pointer" }}>
+                <div style={{ cursor: "default" }}>
 
-                    <i style={{ color: "#28635A" }} className="fa-solid fa-cart-shopping" />
+                    <i style={{ color: "#28635A", cursor: "default" }} className="fa-solid fa-cart-shopping" />
 
                     {cartId && numCartItems > 0 &&
                         (

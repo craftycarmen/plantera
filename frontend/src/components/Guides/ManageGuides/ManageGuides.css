@@ -37,7 +37,16 @@
     margin-top: 15px;
 }
 
-
+.manageGuides {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: auto auto;
+    /* width: 348.75px; */
+    width: auto;
+    column-gap: 20px;
+    padding-top: 5px;
+}
 
 @media screen and (max-width: 480px) {
 

@@ -285,7 +285,7 @@ function SignupFormModal({ navigate }) {
                     />
                     <label htmlFor='image' className='floating-label'>Profile Image*</label>
                 </div>
-                {imageLoading && (<div style={{ marginLeft: "125px", marginTop: "5px", padding: "0px" }} className="dots"></div>)}
+                {imageLoading && (<div className="dots" style={{ marginTop: "0" }}></div>)}
                 <input type="hidden" name="cartId" value={cartId || ""} />
                 <div>
                     <button style={{ marginTop: "15px" }}

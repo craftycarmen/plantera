@@ -193,6 +193,10 @@
     align-self: start;
 }
 
+.formContainer form {
+    width: 578px;
+}
+
 @media screen and (max-width: 480px) {
 
     .userProfilePageContainer {
@@ -254,9 +258,9 @@
         margin: auto;
     }
 
-    .shopImage {
-        height: 300px;
-    }
+    /* .shopImage {
+        height: 225px;
+    } */
 
     .userGuidesContainer,
     .userGuideImageContainer,
@@ -303,9 +307,9 @@
         margin: auto;
     }
 
-    .shopImage {
-        height: 250px;
-    }
+    /* .shopImage {
+        height: 225px;
+    } */
 
     .userGuidesContainer,
     .userGuideImageContainer,

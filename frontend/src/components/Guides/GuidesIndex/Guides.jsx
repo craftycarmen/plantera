@@ -3,10 +3,13 @@ import './Guides.css';
 import { useEffect, useState, useCallback, useRef } from "react";
 import { fetchAllGuides } from "../../../store/guides";
 import { Link } from "react-router-dom";
+import LoginFormModal from "../../LoginFormModal";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 function Guides() {
     const dispatch = useDispatch();
     let guides = Object.values(useSelector((state) => state.guides))
+    const sessionUser = useSelector(state => state.session.user);
     const [sortOrder, setSortOrder] = useState('newest');
     const ulRef = useRef();
     const [showSortMenu, setShowSortMenu] = useState(false);
@@ -112,7 +115,8 @@ function Guides() {
         <>
 
             <h1>Inspire</h1>
-            <div>Get plant-spired with these guides written by the Plantera community!</div>
+            <div>Get plant-spired with these guides written by the Plantera community.
+            </div>
             <br />
             <div className="sortGuidesContainer">
                 <div className="sortGuidesButtonWrapper">
@@ -165,6 +169,18 @@ function Guides() {
             <div className="showMoreDiv" style={guidesContainerStyle}>
                 {guides.length > displayCount && (
                     <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                )}
+            </div>
+            <div className="createGuideDiv">
+                Feelin&#39; plant-spirational?&nbsp;
+
+                {sessionUser ? (
+                    <span><Link to='/guides/new'>Create a guide!</Link></span>
+                ) : (
+                    <OpenModalMenuItem
+                        itemText="Create a guide!"
+                        modalComponent={<LoginFormModal />}
+                    />
                 )}
             </div>
 

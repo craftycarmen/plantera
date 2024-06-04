@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
-const { User, Image, ShoppingCart, Listing, Guide, CartItem } = require('../../db/models');
+const { User, Image, ShoppingCart, Listing, Guide, CartItem, Order } = require('../../db/models');
 
 const router = express.Router();
 
@@ -9,23 +9,25 @@ router.get('/', requireAuth, async (req, res) => {
     const { user } = req;
 
     if (user) {
-        let orders = await CartItem.findAll({
+        let orderItems = await CartItem.findAll({
             where: {
                 orderId: {
                     [Op.ne]: null
                 }
             },
-            include: {
+            include:
+            {
                 model: Listing,
                 where: {
                     sellerId: user.id,
                 },
+
             }
         })
 
-        if (orders.length === 0) orders === null;
+        if (orderItems.length === 0) orderItems === null;
 
-        return res.json({ ShopOrders: orders })
+        return res.json({ ShopOrders: orderItems })
     }
 })
 

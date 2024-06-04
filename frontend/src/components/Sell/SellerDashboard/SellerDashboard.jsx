@@ -17,7 +17,16 @@ function SellerDashboard() {
         return total + (order.cartQty || 0)
     }, 0);
 
-    const totalOrders = new Set(shopOrders.map(order => order.orderId)).size
+    const totalOrders = new Set(shopOrders.map(order => order.orderId)).size;
+
+    let earnings = 0;
+
+    shopOrders.forEach(order => {
+        let orderTotal = order.Listing.price * order.cartQty
+        earnings = earnings + orderTotal
+    })
+
+    console.log(earnings);
 
     return (
         <>
@@ -26,6 +35,7 @@ function SellerDashboard() {
                 <>
                     <div>{totalItems} total items sold</div>
                     <div>{totalOrders} total orders</div>
+                    <div>${earnings} total earninigs</div>
                 </>
             }
 

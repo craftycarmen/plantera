@@ -1,9 +1,8 @@
 const express = require('express')
 const bcrypt = require('bcryptjs');
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Image, ShoppingCart, Listing, Guide } = require('../../db/models');
+const { User, Image, ShoppingCart, Listing, Guide, CartItem } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -181,7 +180,7 @@ router.get('/:userId', async (req, res) => {
     })
 
     if (shop.length === 0) shop === null;
-    if (guides.length === 0) guides === null
+    if (guides.length === 0) guides === null;
 
     return res.json({ User: user, Shop: shop, Guides: guides })
 })

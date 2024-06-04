@@ -12,6 +12,7 @@ import * as orderActions from './store/order';
 import * as userActions from './store/user';
 import * as searchActions from './store/search';
 import * as guideActions from './store/guides';
+import * as sellActions from './store/sell';
 import { Modal, ModalProvider } from './context/Modal';
 
 const store = configureStore();
@@ -28,6 +29,7 @@ if (import.meta.env.MODE !== 'production') {
   window.userActions = userActions;
   window.searchActions = searchActions;
   window.guideActions = guideActions;
+  window.sellActions = sellActions;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(

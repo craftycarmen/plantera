@@ -9,6 +9,7 @@ import ordersReducer from './order';
 import userReducer from './user';
 import searchReducer from './search';
 import guidesReducer from './guides';
+import sellReducer from './sell';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   orders: ordersReducer,
   user: userReducer,
   search: searchReducer,
-  guides: guidesReducer
+  guides: guidesReducer,
+  sell: sellReducer
 });
 
 let enhancer;

@@ -7,6 +7,7 @@ const checkoutRouter = require('./checkout.js');
 const orderRouter = require('./order.js');
 const searchRouter = require('./search.js');
 const guideRouter = require('./guides.js');
+const sellRouter = require('./sell.js');
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -29,5 +30,7 @@ router.use('/order', orderRouter);
 router.use('/search', searchRouter);
 
 router.use('/guides', guideRouter);
+
+router.use('/sell', sellRouter)
 
 module.exports = router;

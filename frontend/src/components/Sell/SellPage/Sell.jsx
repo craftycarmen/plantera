@@ -21,7 +21,7 @@ function Sell() {
             <br />
             <div className='sellContainer'>
                 {sessionUser && !isSeller ? (
-                    <SellerDashboard />
+                    <SellerDashboard sessionUser={sessionUser} />
                 ) : (
                     <>
                         <div className='sellSteps'>

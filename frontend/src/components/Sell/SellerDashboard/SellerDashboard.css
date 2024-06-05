@@ -15,6 +15,7 @@
 
 .sellerRightContainer {
     padding-left: 40px;
+    width: 100%;
 }
 
 .sellerLeftNav.fixed {
@@ -36,9 +37,10 @@
 }
 
 .vertical-line {
-    border-left: 1px solid #28635A;
-    height: 40vh;
-    margin: 0 10px;
+    padding-top: 20px;
+    border-left: 1px solid #8EBAA8;
+    height: auto;
+    margin: 20px 10px;
 }
 
 .sellerStats div,
@@ -84,6 +86,94 @@
     background-color: transparent;
 }
 
+.manageListingsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    /* display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; */
+    column-gap: 35px;
+    justify-items: center;
+    margin: auto;
+    /* width: 100%; */
+}
+
+.manageListingsContainer h2 {
+    font-size: 18px;
+}
+
+.manageListingImageContainer {
+    /* width: 348.75px; */
+    width: 321px;
+}
+
+.manageListingImage {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.manageListingImage-outline {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: calc(100%);
+    height: calc(100%);
+    border: 2px solid #FDAC8A;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.manageListingsSection {
+    padding-top: 20px;
+}
+
+.currentListings {
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+.soldListingsHeader {
+    margin-top: 40px;
+}
+
+.manageSoldOutImage {
+    filter: grayscale(100%);
+}
+
+
+.listingButtons {
+    display: flex;
+    gap: 8px;
+    justify-content: end;
+    width: fit-content;
+}
+
+.soldListingButtonContainer {
+    display: flex;
+    justify-content: end;
+}
+
+.soldListingButtons {
+    display: flex;
+    gap: 8px;
+    justify-content: end;
+    width: fit-content;
+}
+
+.manageListingInfo {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: auto auto;
+    /* width: 348.75px; */
+    width: auto;
+    column-gap: 20px;
+    padding-top: 5px;
+}
+
 @media screen and (max-width: 480px) {
     .sellerContainer {
         display: grid;
@@ -104,6 +194,24 @@
     .sellerStats h2 {
         justify-content: start;
     }
+
+    .sellerRightContainer {
+        padding-left: 0;
+    }
+
+    .manageListingImageContainer {
+        width: 75vw;
+    }
+
+    .manageListingsContainer {
+        width: 75vw;
+        gap: 0px;
+    }
+
+    .manageListingInfo {
+        width: 75vw;
+        padding-top: 0;
+    }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
@@ -111,6 +219,10 @@
         display: grid;
         grid-template-columns: auto;
         gap: 10px;
+    }
+
+    .sellerRightContainer {
+        padding-left: 0;
     }
 
     .vertical-line {
@@ -126,6 +238,12 @@
     .sellerStats div,
     .sellerStats h2 {
         justify-content: start;
+    }
+
+    .manageListingsContainer {
+        grid-template-columns: auto;
+        width: 100%;
+        gap: 0px;
     }
 }
 
@@ -149,5 +267,20 @@
     .sellerStats div,
     .sellerStats h2 {
         justify-content: start;
+    }
+
+    .sellerRightContainer {
+        padding-left: 0;
+    }
+
+    .manageListingsContainer {
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        row-gap: 0px;
+    }
+
+    .manageListingImage {
+        /* height: 275px; */
+        width: 100%;
     }
 }

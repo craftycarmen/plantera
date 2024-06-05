@@ -3,7 +3,6 @@ import Listings from './components/Listings/ListingsIndex';
 import ListingPage from './components/Listings/ListingPage';
 import CreateListingForm from './components/Listings/ListingForm/CreateListingForm';
 import UpdateListingForm from './components/Listings/ListingForm/UpdateListingForm';
-import ManageListings from './components/listings/ManageListings';
 import ShoppingCartPage from './components/Cart/CartPage';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/Checkout/OrderConfirmation';
@@ -23,6 +22,7 @@ import CreateGuide from './components/Guides/GuideForm/CreateGuide';
 import UpdateGuide from './components/Guides/GuideForm/UpdateGuide';
 import Error404 from './components/ErrorHandling/Error404';
 import Sell from './components/Sell/SellPage/Sell';
+import ManageSellerListings from './components/Sell/SellerDashboard/ManageListings';
 
 const router = createBrowserRouter([
     {
@@ -39,10 +39,6 @@ const router = createBrowserRouter([
             {
                 path: '/listings',
                 element: <Listings />
-            },
-            {
-                path: '/listings/current',
-                element: <ManageListings />
             },
             {
                 path: '/listings/:listingId',
@@ -119,6 +115,10 @@ const router = createBrowserRouter([
             {
                 path: '/sell',
                 element: <Sell />
+            },
+            {
+                path: '/sell/listings/current',
+                element: <ManageSellerListings />
             },
         ]
     }

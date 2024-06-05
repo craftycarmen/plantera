@@ -52,7 +52,7 @@ function Menu({ sessionUser }) {
                         {showMenu && (
                             <div className={ulClassName} ref={ulRef}>
                                 <div>Your Latest Stats</div>
-                                <div><Link to='/listings/current'>Manage Listings</Link></div>
+                                <div><Link to='/listings/current'>Manage Your Listings</Link></div>
                                 <div><Link to='/listings/new'>Create New Listing</Link></div>
                             </div>
                         )}
@@ -61,7 +61,7 @@ function Menu({ sessionUser }) {
             ) : (
                 <div className="sellerLeftNav">
                     <div>Your Latest Stats</div>
-                    <div><Link to='/listings/current'>Manage Listings</Link></div>
+                    <div><Link to='/listings/current'>Manage Your Listings</Link></div>
                     <div><Link to='/listings/new'>Create New Listing</Link></div>
                     <div><Link to={`/user/${sessionUser?.id}/shop`}>View Shop</Link></div>
                 </div>

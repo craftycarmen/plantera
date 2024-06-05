@@ -1,0 +1,149 @@
+.sellerContainer {
+    display: flex;
+    grid-template-columns: 1fr auto auto;
+    gap: 40px;
+}
+
+.sellerLeftNav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 250px;
+    position: relative;
+    z-index: 1;
+}
+
+.sellerLeftNav.fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #F2DCCB;
+    padding: 20px;
+}
+
+
+.sellerStats {
+    display: flex;
+    gap: 50px;
+    margin: auto;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.vertical-line {
+    border-left: 1px solid #28635A;
+    height: 40vh;
+    margin: 0 10px;
+}
+
+.sellerStats div,
+.sellerStats h2 {
+    display: grid;
+    justify-content: center;
+}
+
+.sellerMenuButton {
+    cursor: pointer;
+    outline: none;
+}
+
+.sellerMenuButton:active,
+.sellerMenuButton:hover {
+    outline: none;
+    background-color: transparent;
+}
+
+.seller-dropdown {
+    display: grid;
+    height: auto;
+    padding-bottom: 20px;
+    position: absolute;
+    border: #28635A solid 1.5px;
+    border-radius: 3px;
+    padding: 15px 20px 15px 20px;
+    background-color: #F2DCCB;
+    width: fit-content;
+    text-wrap: nowrap;
+    margin-top: 10px;
+    margin-right: -2px;
+    left: 1;
+    z-index: 2;
+    cursor: text;
+    display: grid;
+    column-gap: 30px;
+}
+
+.outerSellMenuWrapper {
+    height: 100%;
+    overflow-y: auto;
+    background-color: transparent;
+}
+
+@media screen and (max-width: 480px) {
+    .sellerContainer {
+        display: grid;
+        grid-template-columns: auto;
+        gap: 10px;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+
+    .sellerStats {
+        gap: 30px;
+        padding-top: 10px;
+    }
+
+    .sellerStats div,
+    .sellerStats h2 {
+        justify-content: start;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .sellerContainer {
+        display: grid;
+        grid-template-columns: auto;
+        gap: 10px;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+
+    .sellerStats {
+        gap: 30px;
+        padding-top: 10px;
+        justify-content: start;
+    }
+
+    .sellerStats div,
+    .sellerStats h2 {
+        justify-content: start;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .sellerContainer {
+        display: grid;
+        grid-template-columns: auto;
+        gap: 10px;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+
+    .sellerStats {
+        gap: 30px;
+        padding-top: 10px;
+        justify-content: start;
+    }
+
+    .sellerStats div,
+    .sellerStats h2 {
+        justify-content: start;
+    }
+}

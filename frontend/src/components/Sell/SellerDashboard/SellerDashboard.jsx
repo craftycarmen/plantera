@@ -30,28 +30,30 @@ function SellerDashboard({ sessionUser }) {
     console.log(earnings);
 
     return (
-        <div className="sellerContainer">
-            <Menu sessionUser={sessionUser} />
-            {shopOrders && (
-                <div style={sellerContainerStyle} className="sellerRightContainer">
-                    <h2>Your Latest Stats</h2>
-                    <div className="sellerStats">
-                        <div>
-                            <h2>{price(earnings)}</h2>
-                            <div>total earnings</div>
-                        </div>
-                        <div>
-                            <h2>{totalItems}</h2>
-                            <div>total items sold</div>
-                        </div>
-                        <div>
-                            <h2>{totalOrders}</h2>
-                            <div>total orders</div>
+        <>
+            <div className="sellerContainer">
+                <Menu sessionUser={sessionUser} />
+                {shopOrders && (
+                    <div style={sellerContainerStyle} className="sellerRightContainer">
+                        <h2>Your Latest Stats</h2>
+                        <div className="sellerStats">
+                            <div>
+                                <h2>{price(earnings)}</h2>
+                                <div>total earnings</div>
+                            </div>
+                            <div>
+                                <h2>{totalItems}</h2>
+                                <div>total items sold</div>
+                            </div>
+                            <div>
+                                <h2>{totalOrders}</h2>
+                                <div>total orders</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </>
     );
 }
 

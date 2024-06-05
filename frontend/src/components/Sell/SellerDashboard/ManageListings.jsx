@@ -34,85 +34,90 @@ function ManageSellerListings() {
 
 
     return (
-        <div className="sellerContainer">
-            <Menu sessionUser={sessionUser} />
-            <div style={sellerContainerStyle} className="sellerRightContainer">
-                <h2>Manage Your Listings</h2>
-                {!sessionUser ? (
-                    <ErrorHandling />
-                ) : (listings &&
-                    <div className="manageListingsSection">
-                        <h3>Active Listings</h3>
-                        <div className="manageListingsContainer">
-                            {listings && activeListings?.length === 0 ? (
-                                <div className="currentListings">No active listings!</div>
-                            ) : (
-                                activeListings && activeListings.map(listing => (
-                                    <div className="currentListings" key={listing.id}>
-                                        <Link to={`/listings/${listing.id}`}>
-                                            <div className="manageListingImageContainer">
-                                                <img
-                                                    className="manageListingImage"
-                                                    src={listing.ListingImages?.[0]?.url} />
-                                            </div>
+        <>
+            <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
+            <div>Purge your plants and plant babies on Plantera, and get paid!</div>
+            <br />
+            <div className="sellerContainer">
+                <Menu sessionUser={sessionUser} />
+                <div style={sellerContainerStyle} className="sellerRightContainer">
+                    <h2>Manage Your Listings</h2>
+                    {!sessionUser ? (
+                        <ErrorHandling />
+                    ) : (listings &&
+                        <div className="manageListingsSection">
+                            <h3>Active Listings</h3>
+                            <div className="manageListingsContainer">
+                                {listings && activeListings?.length === 0 ? (
+                                    <div className="currentListings">No active listings!</div>
+                                ) : (
+                                    activeListings && activeListings.map(listing => (
+                                        <div className="currentListings" key={listing.id}>
+                                            <Link to={`/listings/${listing.id}`}>
+                                                <div className="manageListingImageContainer">
+                                                    <img
+                                                        className="manageListingImage"
+                                                        src={listing.ListingImages?.[0]?.url} />
+                                                </div>
+                                                <div className="manageListingInfo">
+                                                    <h3>{listingName(listing.plantName)}</h3>
+                                                    <div className="listingPrice">{price(listing.price)}</div>
+                                                </div>
+                                            </Link>
                                             <div className="manageListingInfo">
-                                                <h3>{listingName(listing.plantName)}</h3>
-                                                <div className="listingPrice">{price(listing.price)}</div>
-                                            </div>
-                                        </Link>
-                                        <div className="manageListingInfo">
-                                            <div>In Stock: {listing.stockQty}</div>
-                                            <div className="listingButtons">
-                                                <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
-                                                <OpenModalButton
-                                                    buttonText="Delete"
-                                                    modalComponent={<DeleteListingModal listingId={listing.id} />}
-                                                />
+                                                <div>In Stock: {listing.stockQty}</div>
+                                                <div className="listingButtons">
+                                                    <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
+                                                    <OpenModalButton
+                                                        buttonText="Delete"
+                                                        modalComponent={<DeleteListingModal listingId={listing.id} />}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))
-                            )
-                            }
-                        </div>
+                                    ))
+                                )
+                                }
+                            </div>
 
-                        <h3 className="soldListingsHeader">Inactive & Sold Listings</h3>
-                        <div className="manageListingsContainer">
-                            {listings && soldListings?.length === 0 ? (
-                                <div className="currentListings">No sold listings!</div>
-                            ) : (
-                                soldListings && soldListings.map(listing => (
-                                    <div className="currentListings" key={listing.id}>
-                                        <Link to={`/listings/${listing.id}`}>
-                                            <div className="manageListingImageContainer manageSoldOutImage">
-                                                <img
-                                                    className="manageListingImage"
-                                                    src={listing.ListingImages[0].url} />
-                                            </div>
+                            <h3 className="soldListingsHeader">Inactive & Sold Listings</h3>
+                            <div className="manageListingsContainer">
+                                {listings && soldListings?.length === 0 ? (
+                                    <div className="currentListings">No sold listings!</div>
+                                ) : (
+                                    soldListings && soldListings.map(listing => (
+                                        <div className="currentListings" key={listing.id}>
+                                            <Link to={`/listings/${listing.id}`}>
+                                                <div className="manageListingImageContainer manageSoldOutImage">
+                                                    <img
+                                                        className="manageListingImage"
+                                                        src={listing.ListingImages[0].url} />
+                                                </div>
+                                                <div className="manageListingInfo">
+                                                    <h3>{listingName(listing.plantName)}</h3>
+                                                    <div className="listingPrice">{price(listing.price)}</div>
+                                                </div>
+                                            </Link>
                                             <div className="manageListingInfo">
-                                                <h3>{listingName(listing.plantName)}</h3>
-                                                <div className="listingPrice">{price(listing.price)}</div>
-                                            </div>
-                                        </Link>
-                                        <div className="manageListingInfo">
-                                            <div></div>
-                                            <div className="listingButtons">
-                                                <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
-                                                <OpenModalButton
-                                                    buttonText="Delete"
-                                                    modalComponent={<DeleteListingModal listingId={listing.id} />}
-                                                />
+                                                <div></div>
+                                                <div className="listingButtons">
+                                                    <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
+                                                    <OpenModalButton
+                                                        buttonText="Delete"
+                                                        modalComponent={<DeleteListingModal listingId={listing.id} />}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))
-                            )
-                            }
+                                    ))
+                                )
+                                }
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

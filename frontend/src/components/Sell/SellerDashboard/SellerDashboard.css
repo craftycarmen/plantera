@@ -1,6 +1,7 @@
 .sellerContainer {
     display: flex;
     grid-template-columns: 1fr auto auto;
+    padding-top: 20px;
     /* gap: 40px; */
 }
 

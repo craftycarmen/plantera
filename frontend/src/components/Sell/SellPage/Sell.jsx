@@ -22,7 +22,7 @@ function Sell() {
                 <h1>Sell</h1>)}
             <div>Purge your plants and plant babies on Plantera, and get paid!</div>
             <br />
-            <div className='sellContainer'>
+            <div>
                 {sessionUser && !isSeller ? (
                     <SellerDashboard sessionUser={sessionUser} />
                 ) : (

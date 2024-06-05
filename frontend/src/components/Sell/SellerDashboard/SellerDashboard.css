@@ -1,7 +1,7 @@
 .sellerContainer {
     display: flex;
     grid-template-columns: 1fr auto auto;
-    gap: 40px;
+    /* gap: 40px; */
 }
 
 .sellerLeftNav {
@@ -11,6 +11,10 @@
     width: 250px;
     position: relative;
     z-index: 1;
+}
+
+.sellerRightContainer {
+    padding-left: 40px;
 }
 
 .sellerLeftNav.fixed {

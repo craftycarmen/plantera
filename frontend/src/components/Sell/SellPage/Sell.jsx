@@ -17,7 +17,7 @@ function Sell() {
     return (
         <>
             {sessionUser && !isSeller ? (
-                <h1>Sell(er Dashboard)</h1>
+                <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
             ) : (
                 <h1>Sell</h1>)}
             <div>Purge your plants and plant babies on Plantera, and get paid!</div>

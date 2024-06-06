@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Listings from './components/Listings/ListingsIndex';
 import ListingPage from './components/Listings/ListingPage';
-import CreateListingForm from './components/Listings/ListingForm/CreateListingForm';
-import UpdateListingForm from './components/Listings/ListingForm/UpdateListingForm';
+import CreateListingForm from './components/Sell/SellerDashboard/ListingForm/CreateListingForm';
+import UpdateListingForm from './components/Sell/SellerDashboard/ListingForm/UpdateListingForm';
 import ShoppingCartPage from './components/Cart/CartPage';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/Checkout/OrderConfirmation';
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
                 element: <ListingPage />
             },
             {
-                path: '/listings/new',
+                path: '/sell/listings/new',
                 element: <CreateListingForm />
             },
             {

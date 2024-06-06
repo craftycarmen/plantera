@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import ListingForm from "./ListingForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchOneListing } from "../../../store/listings";
+import { fetchOneListing } from "../../../../store/listings";
 
 function UpdateListingForm() {
     const { listingId } = useParams();

@@ -1,13 +1,13 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import './SellerDashboard.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Menu({ sessionUser }) {
     const ulRef = useRef();
     const [showMenu, setShowMenu] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
-
+    const location = useLocation();
     const handleResize = useCallback(() => {
         setIsMobile(window.innerWidth <= 480);
         setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
@@ -51,9 +51,12 @@ function Menu({ sessionUser }) {
                     <div className="outerSellMenuWrapper">
                         {showMenu && (
                             <div className={ulClassName} ref={ulRef}>
-                                <div>Your Latest Stats</div>
-                                <div><Link to='/sell/listings/current'>Manage Your Listings</Link></div>
-                                <div><Link to='/listings/new'>Create New Listing</Link></div>
+                                {location.pathname === '/sell' ? (<div>Your Latest Stats</div>) : (<div><Link to='/sell'>Your Latest Stats</Link></div>)}
+
+                                {location.pathname === '/sell/listings/current' ? (<div>Manage Your Listings</div>) : (<div><Link to='/sell/listings/current'>Manage Your Listings</Link></div>)}
+
+                                {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
+
                                 <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop</Link></div>
                             </div>
                         )}
@@ -61,9 +64,12 @@ function Menu({ sessionUser }) {
                 </div>
             ) : (
                 <div className="sellerLeftNav">
-                    <div>Your Latest Stats</div>
-                    <div><Link to='/sell/listings/current'>Manage Your Listings</Link></div>
-                    <div><Link to='/listings/new'>Create New Listing</Link></div>
+                    {location.pathname === '/sell' ? (<div>Your Latest Stats</div>) : (<div><Link to='/sell'>Your Latest Stats</Link></div>)}
+
+                    {location.pathname === '/sell/listings/current' ? (<div>Manage Your Listings</div>) : (<div><Link to='/sell/listings/current'>Manage Your Listings</Link></div>)}
+
+                    {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
+
                     <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop</Link></div>
                 </div>
             )}

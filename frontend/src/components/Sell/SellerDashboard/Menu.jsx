@@ -57,6 +57,8 @@ function Menu({ sessionUser }) {
 
                                 {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
 
+                                {location.pathname === '/sell/orders' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
+
                                 <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop</Link></div>
                             </div>
                         )}
@@ -69,6 +71,8 @@ function Menu({ sessionUser }) {
                     {location.pathname === '/sell/listings' ? (<div>Manage Your Listings</div>) : (<div><Link to='/sell/listings'>Manage Your Listings</Link></div>)}
 
                     {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
+
+                    {location.pathname === '/sell/orders' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
 
                     <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop</Link></div>
                 </div>

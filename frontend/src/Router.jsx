@@ -24,6 +24,7 @@ import Error404 from './components/ErrorHandling/Error404';
 import Sell from './components/Sell/SellPage/Sell';
 import ManageSellerListings from './components/Sell/SellerDashboard/ManageListings';
 import Orders from './components/Orders';
+import ManageOrders from './components/Sell/SellerDashboard/ManageOrders';
 
 const router = createBrowserRouter([
     {
@@ -124,6 +125,10 @@ const router = createBrowserRouter([
             {
                 path: '/orders',
                 element: <Orders />
+            },
+            {
+                path: 'sell/orders',
+                element: <ManageOrders />
             },
         ]
     }

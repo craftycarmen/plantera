@@ -1,16 +1,36 @@
 const express = require('express');
-const { CartItem, Order, Listing, Image } = require('../../db/models');
+const { CartItem, Order, Listing, Image, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
-router.get('/buyer-orders', requireAuth, async (req, res) => {
+router.get('/orders', requireAuth, async (req, res) => {
     const { user } = req;
 
     if (user) {
         let orders = await Order.findAll({
             where: {
                 buyerId: user.id
+            },
+            include: {
+                model: CartItem,
+                attributes: ['cartQty'],
+                include: {
+                    model: Listing,
+                    attributes: ['plantName', 'price', 'potSize'],
+                    include: [
+                        {
+                            model: User,
+                            as: 'Seller',
+                            attributes: ['id', 'username']
+                        },
+                        {
+                            model: Image,
+                            as: 'ListingImages',
+                            attributes: ['url']
+                        }
+                    ]
+                }
             }
         });
 

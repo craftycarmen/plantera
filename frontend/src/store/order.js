@@ -53,12 +53,13 @@ export const fetchOrderItems = (orderId) => async (dispatch) => {
 }
 
 export const fetchOwnedBuyerOrders = () => async (dispatch) => {
-    const res = await ('/api/order/buyer-orders');
+    const res = await fetch('/api/order/orders');
 
     if (res.ok) {
         const orders = await res.json();
+        console.log("RES!!!", orders);
         dispatch(loadOwnedBuyerOrders(orders));
-        return orderItems;
+        return orders;
     } else {
         const errors = await res.json();
         return errors;
@@ -86,6 +87,7 @@ const ordersReducer = (state = {}, action) => {
 
         case LOAD_OWNED_BUYERORDERS: {
             const ordersState = {};
+            console.log("ACTION!!", action.orders);
             action.orders.Orders.forEach(order => {
                 ordersState[order.id] = order
             });

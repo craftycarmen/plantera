@@ -302,7 +302,7 @@ function ListingPage() {
                                             />
                                         </>) : (
                                         <>
-                                            <Link to={`/listings/current`}><button style={{ width: "fit-content" }}>Manage Listing</button></Link>
+                                            <Link to={`/sell/listings/current`}><button style={{ width: "fit-content" }}>Manage Listing</button></Link>
 
                                         </>
                                     )}

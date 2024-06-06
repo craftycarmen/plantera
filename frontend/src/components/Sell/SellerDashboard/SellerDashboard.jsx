@@ -7,9 +7,10 @@ import Menu from "./Menu";
 
 function SellerDashboard({ sessionUser }) {
     const dispatch = useDispatch();
-
+    const shop = Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop))
+    const activeListings = shop?.filter(listing => listing.stockQty > 0).length
+    const soldListings = shop?.filter(listing => listing.stockQty === 0).length
     const shopOrders = Object.values(useSelector((state) => state.sell));
-
 
     const [showMenu] = useState(false);
     const [isTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
@@ -27,8 +28,6 @@ function SellerDashboard({ sessionUser }) {
     const totalOrders = new Set(shopOrders.map(order => order.orderId)).size;
     const earnings = shopOrders.reduce((total, order) => total + (order.Listing.price * order.cartQty), 0);
 
-    console.log(earnings);
-
     return (
         <>
             <div className="sellerContainer">
@@ -43,11 +42,19 @@ function SellerDashboard({ sessionUser }) {
                             </div>
                             <div>
                                 <h2>{totalItems}</h2>
-                                <div>total items sold</div>
+                                <div>{totalItems === 1 ? 'item sold' : 'total items sold'}</div>
                             </div>
                             <div>
                                 <h2>{totalOrders}</h2>
-                                <div>total orders</div>
+                                <div>{totalOrders === 1 ? 'order' : 'total orders'}</div>
+                            </div>
+                            <div>
+                                <h2>{activeListings}</h2>
+                                <div>{activeListings === 1 ? 'active listing' : 'active listings'}</div>
+                            </div>
+                            <div>
+                                <h2>{soldListings}</h2>
+                                <div>{soldListings === 1 ? 'inactive listing' : 'inactive listings'}</div>
                             </div>
                         </div>
                     </div>

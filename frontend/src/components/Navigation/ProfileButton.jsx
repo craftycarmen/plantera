@@ -6,6 +6,8 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { clearCart, resetCartId } from '../../store/cart';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { RiPlantFill } from "react-icons/ri";
+
 
 function ProfileButton() {
     const dispatch = useDispatch();
@@ -91,10 +93,10 @@ function ProfileButton() {
                                     }}>Profile</a></div>
                                     {isSeller && (
                                         <>
-                                            <div><i className="fa-solid fa-seedling" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                            <div><RiPlantFill style={{ fontSize: "small" }} /></div><div><a onClick={() => {
                                                 closeMenu()
-                                                navigate(`/listings/current`)
-                                            }}>Listings</a></div>
+                                                navigate(`/sell`)
+                                            }}>Seller Dashboard</a></div>
                                         </>
                                     )
                                     }

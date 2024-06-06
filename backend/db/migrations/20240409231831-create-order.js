@@ -32,6 +32,14 @@ module.exports = {
           key: 'id'
         },
       },
+      firstName: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      lastName: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
       address: {
         type: Sequelize.STRING(100),
         allowNull: false,

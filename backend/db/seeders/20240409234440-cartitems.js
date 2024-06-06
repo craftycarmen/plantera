@@ -9,17 +9,17 @@ if (process.env.NODE_ENV === 'production') {
 
 const cartItemsList = [
   {
-    cartId: 1,
+    orderId: 1,
     listingId: 2,
     cartQty: 2
   },
   {
-    cartId: 2,
+    orderId: 2,
     listingId: 1,
     cartQty: 1
   },
   {
-    cartId: 2,
+    orderId: 2,
     listingId: 3,
     cartQty: 1
   }

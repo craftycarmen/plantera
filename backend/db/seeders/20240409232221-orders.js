@@ -11,6 +11,8 @@ const ordersList = [
   {
     buyerId: 2,
     orderId: 1,
+    firstName: 'Ellie',
+    lastName: 'Bellie',
     address: '123 Test St',
     city: 'San Francisco',
     state: 'CA',
@@ -23,6 +25,8 @@ const ordersList = [
   {
     buyerId: 3,
     orderId: 2,
+    firstName: 'Kingston',
+    lastName: 'Shmingston',
     address: '456 Third St',
     city: 'New York',
     state: 'NY',

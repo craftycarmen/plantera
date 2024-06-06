@@ -4,6 +4,20 @@ const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
+router.get('/buyerOrders', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    if (user) {
+        let orders = await Order.findAll({
+            where: {
+                buyerId: user.id
+            }
+        });
+
+        return res.json({ Orders: orders })
+    }
+});
+
 router.get('/:orderId', requireAuth, async (req, res) => {
     const orderId = Number(req.params.orderId);
     const order = await Order.findOne({

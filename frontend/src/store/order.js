@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 
 const CREATE_ORDER = 'orders/CREATE_ORDER';
 const LOAD_ORDER_ITEMS = 'orders/LOAD_ORDER_ITEMS';
+const LOAD_OWNED_BUYERORDERS = 'orders/LOAD_OWNED_BUYERORDERS';
 
 export const createOrder = (order) => ({
     type: CREATE_ORDER,
@@ -15,6 +16,11 @@ export const loadOrderItems = (orderId, orderItems) => ({
     orderItems
 })
 
+export const loadOwnedBuyerOrders = (orders) => ({
+    type: LOAD_OWNED_BUYERORDERS,
+    orders
+})
+
 export const addOrder = (order) => async (dispatch) => {
     const res = await csrfFetch('/api/checkout', {
         method: "POST",
@@ -24,7 +30,6 @@ export const addOrder = (order) => async (dispatch) => {
 
     if (res.ok) {
         const order = await res.json();
-        console.log("ORDERRRRR", order)
         dispatch(createOrder(order));
         dispatch(removeCart(order.deletedCartId))
         return order
@@ -47,12 +52,22 @@ export const fetchOrderItems = (orderId) => async (dispatch) => {
     }
 }
 
+export const fetchOwnedBuyerOrders = () => async (dispatch) => {
+    const res = await ('/api/order/buyer-orders');
+
+    if (res.ok) {
+        const orders = await res.json();
+        dispatch(loadOwnedBuyerOrders(orders));
+        return orderItems;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 const ordersReducer = (state = {}, action) => {
     switch (action.type) {
         case CREATE_ORDER: {
-            // const orderState = {}
-            // orderState[action.order.id] = action.order
-            // return orderState
             return {
                 ...state,
                 [action.order.id]: action.order
@@ -67,6 +82,14 @@ const ordersReducer = (state = {}, action) => {
                     orderItems: action.orderItems
                 }
             }
+        }
+
+        case LOAD_OWNED_BUYERORDERS: {
+            const ordersState = {};
+            action.orders.Orders.forEach(order => {
+                ordersState[order.id] = order
+            });
+            return ordersState;
         }
         default:
             return { ...state }

@@ -11,7 +11,7 @@ function SellerDashboard({ sessionUser }) {
     const activeListings = shop?.filter(listing => listing.stockQty > 0).length
     const soldListings = shop?.filter(listing => listing.stockQty === 0).length
     const shopOrders = Object.values(useSelector((state) => state.sell));
-
+    console.log("SHOPORDERS", shopOrders);
     const [showMenu] = useState(false);
     const [isTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
 
@@ -24,9 +24,19 @@ function SellerDashboard({ sessionUser }) {
         transition: 'margin-left 0.2s ease-in-out'
     };
 
-    const totalItems = shopOrders.reduce((total, order) => total + (order.cartQty || 0), 0);
-    const totalOrders = new Set(shopOrders.map(order => order.orderId)).size;
-    const earnings = shopOrders.reduce((total, order) => total + (order.Listing.price * order.cartQty), 0);
+    // const totalItems = shopOrders.reduce((total, order) => total + (order.cartQty || 0), 0);
+    // const earnings = shopOrders.reduce((total, order) => total + (order.Listing.price * order.cartQty), 0);
+
+    let totalEarnings = 0;
+    let totalItems = 0;
+
+    shopOrders.forEach(order => {
+        order.CartItems.forEach(item => {
+            totalEarnings += item.cartQty * item.Listing.price
+            totalItems += item.cartQty;
+        })
+    })
+
 
     return (
         <>
@@ -37,7 +47,7 @@ function SellerDashboard({ sessionUser }) {
                         <h2>Your Latest Stats</h2>
                         <div className="sellerStats">
                             <div>
-                                <h2>{price(earnings)}</h2>
+                                <h2>{price(totalEarnings)}</h2>
                                 <div>total earnings</div>
                             </div>
                             <div>
@@ -45,8 +55,8 @@ function SellerDashboard({ sessionUser }) {
                                 <div>{totalItems === 1 ? 'item sold' : 'total items sold'}</div>
                             </div>
                             <div>
-                                <h2>{totalOrders}</h2>
-                                <div>{totalOrders === 1 ? 'order' : 'total orders'}</div>
+                                <h2>{shopOrders.length}</h2>
+                                <div>{shopOrders.lengths === 1 ? 'order' : 'total orders'}</div>
                             </div>
                             <div>
                                 <h2>{activeListings}</h2>

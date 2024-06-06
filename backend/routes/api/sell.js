@@ -9,27 +9,37 @@ router.get('/', requireAuth, async (req, res) => {
     const { user } = req;
 
     if (user) {
-        let orderItems = await CartItem.findAll({
-            where: {
-                orderId: {
-                    [Op.ne]: null
+        const orders = await Order.findAll({
+            include: [
+                {
+                    model: CartItem,
+                    where: {
+                        orderId: {
+                            [Op.ne]: null
+                        }
+                    },
+                    include: [
+                        {
+                            model: Listing,
+                            where: {
+                                sellerId: user.id
+                            },
+                            include: [
+                                {
+                                    model: User,
+                                    as: 'Seller'
+                                }
+                            ]
+                        }
+                    ]
                 }
-            },
-            include:
-            {
-                model: Listing,
-                where: {
-                    sellerId: user.id,
-                },
-
-            }
+            ]
         })
 
-        if (orderItems.length === 0) orderItems === null;
+        if (orders.length === 0) orders === null;
 
-        return res.json({ ShopOrders: orderItems })
+        return res.json({ ShopOrders: orders })
     }
 })
-
 
 module.exports = router;

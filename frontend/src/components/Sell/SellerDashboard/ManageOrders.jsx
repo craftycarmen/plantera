@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ErrorHandling from "../../ErrorHandling";
 import Menu from "./Menu";
+import { fetchOwnedShopOrders } from "../../../store/sell";
 
 function ManageOrders() {
     const dispatch = useDispatch();
@@ -12,6 +13,13 @@ function ManageOrders() {
         transition: 'margin-left 0.2s ease-in-out'
     };
     const sessionUser = useSelector(state => state.session.user);
+    const shopOrders = Object.values(useSelector((state) => state.sell));
+
+    useEffect(() => {
+        dispatch(fetchOwnedShopOrders());
+    }, [dispatch]);
+
+    console.log("SHOP!", shopOrders);
     return (
         <>
             <h1>Sell(er Dashboard) for {sessionUser.username}</h1>

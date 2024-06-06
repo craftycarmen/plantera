@@ -19,6 +19,16 @@ function ManageOrders() {
         dispatch(fetchOwnedShopOrders());
     }, [dispatch]);
 
+    const dateFormat = (date) => {
+        let newDate = new Date(date)
+        const enUSFormatter = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+        return enUSFormatter.format(newDate)
+    }
+
     console.log("SHOP!", shopOrders);
     return (
         <>
@@ -32,8 +42,27 @@ function ManageOrders() {
                     {!sessionUser ? (
                         <ErrorHandling />
                     ) : (
-                        <div className="manageListingsSection">
-                        </div>
+                        shopOrders && (
+                            <div className="manageListingsSection">
+                                {shopOrders.length === 0 ? (
+                                    <div>No orders yet!</div>
+                                ) : (
+                                    <div>
+                                        {shopOrders.map(order => (
+                                            <>
+                                                <div>
+                                                    Order #{order.id}
+                                                </div>
+                                                <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
+                                                <div>Order Status: {order.orderStatus}</div>
+                                                <div>View & Update Order Status</div>
+                                                <hr />
+                                            </>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )
                     )}
                 </div>
             </div>

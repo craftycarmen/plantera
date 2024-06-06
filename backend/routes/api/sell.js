@@ -13,6 +13,7 @@ router.get('/', requireAuth, async (req, res) => {
             include: [
                 {
                     model: CartItem,
+                    attributes: ['cartQty'],
                     where: {
                         orderId: {
                             [Op.ne]: null
@@ -21,15 +22,10 @@ router.get('/', requireAuth, async (req, res) => {
                     include: [
                         {
                             model: Listing,
+                            attributes: ['id', 'plantName', 'price', 'potSize'],
                             where: {
                                 sellerId: user.id
-                            },
-                            include: [
-                                {
-                                    model: User,
-                                    as: 'Seller'
-                                }
-                            ]
+                            }
                         }
                     ]
                 }

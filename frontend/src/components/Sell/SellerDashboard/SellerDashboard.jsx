@@ -24,9 +24,6 @@ function SellerDashboard({ sessionUser }) {
         transition: 'margin-left 0.2s ease-in-out'
     };
 
-    // const totalItems = shopOrders.reduce((total, order) => total + (order.cartQty || 0), 0);
-    // const earnings = shopOrders.reduce((total, order) => total + (order.Listing.price * order.cartQty), 0);
-
     let totalEarnings = 0;
     let totalItems = 0;
 
@@ -36,7 +33,6 @@ function SellerDashboard({ sessionUser }) {
             totalItems += item.cartQty;
         })
     })
-
 
     return (
         <>

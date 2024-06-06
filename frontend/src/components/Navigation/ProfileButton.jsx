@@ -6,7 +6,9 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { clearCart, resetCartId } from '../../store/cart';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RiPlantFill } from "react-icons/ri";
+import { RiPlantLine } from "react-icons/ri";
+import { BsSun, BsBoxSeam } from "react-icons/bs";
+import { FiSun } from "react-icons/fi";
 
 
 function ProfileButton() {
@@ -87,24 +89,24 @@ function ProfileButton() {
                             <div className='userInfo'>
                                 <div>Hey, {currUser.username}!</div>
                                 <div className='profileOptions'>
-                                    <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                    <div><i className="fa-regular fa-face-smile" style={{ fontSize: "small", alignContent: "center" }} /></div><div><a onClick={() => {
                                         closeMenu()
                                         navigate(`/user/${currUser.id}`)
                                     }}>Profile</a></div>
                                     {isSeller && (
                                         <>
-                                            <div><RiPlantFill style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                            <div><RiPlantLine style={{ marginTop: "4px" }} /></div><div><a onClick={() => {
                                                 closeMenu()
                                                 navigate(`/sell`)
                                             }}>Seller Dashboard</a></div>
                                         </>
                                     )
                                     }
-                                    <div><i className="fa-solid fa-sun" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                    <div><FiSun style={{ marginTop: "4px" }} /></div><div><a onClick={() => {
                                         closeMenu()
                                         navigate(`/guides/current`)
                                     }}>Guides</a></div>
-                                    <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                    <div><BsBoxSeam style={{ marginTop: "4px" }} /></div><div><a onClick={() => {
                                         closeMenu()
                                         navigate(`/orders`)
                                     }}>Orders</a></div>

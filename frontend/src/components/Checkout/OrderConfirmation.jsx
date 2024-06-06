@@ -39,9 +39,7 @@ function OrderConfirmation() {
             {sessionUser?.id === buyerId && order &&
                 <>
 
-                    <h1>Thank you for your order! <i className="fa-regular fa-hand-peace" /></h1>
-                    <div style={{ marginBottom: "20px" }}>We apreciate your support!
-                    </div>
+                    <h1 style={{ marginBottom: "20px" }}>Thank you for your order! <i className="fa-regular fa-hand-peace" /></h1>
                     <div className="thankYouContainer">
                         <div>
                             <h2 style={{ marginBottom: "20px" }}>Order Details</h2>

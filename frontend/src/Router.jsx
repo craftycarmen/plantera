@@ -23,6 +23,7 @@ import UpdateGuide from './components/Guides/GuideForm/UpdateGuide';
 import Error404 from './components/ErrorHandling/Error404';
 import Sell from './components/Sell/SellPage/Sell';
 import ManageSellerListings from './components/Sell/SellerDashboard/ManageListings';
+import Orders from './components/Orders';
 
 const router = createBrowserRouter([
     {
@@ -117,8 +118,12 @@ const router = createBrowserRouter([
                 element: <Sell />
             },
             {
-                path: '/sell/listings/current',
+                path: '/sell/listings',
                 element: <ManageSellerListings />
+            },
+            {
+                path: '/orders',
+                element: <Orders />
             },
         ]
     }

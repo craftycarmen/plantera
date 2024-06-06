@@ -104,7 +104,10 @@ function ProfileButton() {
                                         closeMenu()
                                         navigate(`/guides/current`)
                                     }}>Guides</a></div>
-                                    {/* <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div>Orders</div> */}
+                                    <div><i className="fa-solid fa-box-open" style={{ fontSize: "small" }} /></div><div><a onClick={() => {
+                                        closeMenu()
+                                        navigate(`/orders`)
+                                    }}>Orders</a></div>
                                 </div>
                                 <button onClick={logout}>Log Out</button>
 

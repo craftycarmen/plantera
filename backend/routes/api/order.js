@@ -4,7 +4,7 @@ const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
-router.get('/buyerOrders', requireAuth, async (req, res) => {
+router.get('/buyer-orders', requireAuth, async (req, res) => {
     const { user } = req;
 
     if (user) {

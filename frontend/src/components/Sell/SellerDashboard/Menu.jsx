@@ -53,7 +53,7 @@ function Menu({ sessionUser }) {
                             <div className={ulClassName} ref={ulRef}>
                                 {location.pathname === '/sell' ? (<div>Your Latest Stats</div>) : (<div><Link to='/sell'>Your Latest Stats</Link></div>)}
 
-                                {location.pathname === '/sell/listings/current' ? (<div>Manage Your Listings</div>) : (<div><Link to='/sell/listings/current'>Manage Your Listings</Link></div>)}
+                                {location.pathname === '/sell/listings' ? (<div>Manage Your Listings</div>) : (<div><Link to='/sell/listings'>Manage Your Listings</Link></div>)}
 
                                 {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
 
@@ -66,7 +66,7 @@ function Menu({ sessionUser }) {
                 <div className="sellerLeftNav">
                     {location.pathname === '/sell' ? (<div>Your Latest Stats</div>) : (<div><Link to='/sell'>Your Latest Stats</Link></div>)}
 
-                    {location.pathname === '/sell/listings/current' ? (<div>Manage Your Listings</div>) : (<div><Link to='/sell/listings/current'>Manage Your Listings</Link></div>)}
+                    {location.pathname === '/sell/listings' ? (<div>Manage Your Listings</div>) : (<div><Link to='/sell/listings'>Manage Your Listings</Link></div>)}
 
                     {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
 

@@ -8,7 +8,7 @@
     max-width: 100vw;
 }
 
-hr {
+.footer hr {
     max-width: calc(100vh - 200px);
     border: .25px solid #8EBAA8;
     box-shadow: #FDAC8A 4px 3px;

@@ -40,7 +40,7 @@ function OrderConfirmation() {
                 <>
 
                     <h1>Thank you for your order! <i className="fa-regular fa-hand-peace" /></h1>
-                    <div style={{ marginBottom: "20px" }}>We apreciate your support! We&#39;ve emailed you this order confirmation.
+                    <div style={{ marginBottom: "20px" }}>We apreciate your support!
                     </div>
                     <div className="thankYouContainer">
                         <div>

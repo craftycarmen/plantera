@@ -1,0 +1,16 @@
+.orderWrapper {
+    max-width: 500px;
+}
+
+.orderWrapper hr {
+    border: .25px solid #8EBAA8;
+    width: 95%;
+}
+
+.orderSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

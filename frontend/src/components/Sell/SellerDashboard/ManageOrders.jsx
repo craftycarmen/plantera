@@ -50,12 +50,15 @@ function ManageOrders() {
                                     <div>
                                         {shopOrders.map(order => (
                                             <>
+                                                <div>Order #{order.id}</div>
                                                 <div>
-                                                    Order #{order.id}
+                                                    <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
+                                                    <div>Order Status: {order.orderStatus}</div>
                                                 </div>
-                                                <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                                <div>Order Status: {order.orderStatus}</div>
-                                                <div>View & Update Order Status</div>
+                                                <div>
+                                                    <div>Ship to:</div>
+                                                    <div></div>
+                                                </div>
                                                 <hr />
                                             </>
                                         ))}

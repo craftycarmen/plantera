@@ -64,19 +64,23 @@ function ManageOrders() {
                                     <div>No orders yet!</div>
                                 ) : (
                                     <div>
+                                        <h3>Unfulfilled Orders</h3>
                                         {shopOrders.map(order => (
-                                            <div>
-                                                <h3>Order #{order.id}</h3>
+                                            <div key={order.id} className="manageOrdersSection">
+                                                <h4>Order #{order.id}</h4>
                                                 <div className="orderInfo">
                                                     <div>
                                                         <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
                                                         <div>Order Status: {order.orderStatus}</div>
+                                                        <button>Update Status</button>
                                                     </div>
-                                                    <div>
+                                                    <div className="shipTo">
                                                         <div>Ship to:</div>
-                                                        <div>{order.firstName} {order.lastName}</div>
-                                                        <div>{order.address}</div>
-                                                        <div>{order.city}, {order.state} {order.zipCode}</div>
+                                                        <div>
+                                                            <div>{order.firstName} {order.lastName}</div>
+                                                            <div>{order.address}</div>
+                                                            <div>{order.city}, {order.state} {order.zipCode}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="items">

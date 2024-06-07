@@ -10,6 +10,9 @@ router.get('/', requireAuth, async (req, res) => {
 
     if (user) {
         const orders = await Order.findAll({
+            attributes: {
+                exclude: ['cartId']
+            },
             include: [
                 {
                     model: CartItem,

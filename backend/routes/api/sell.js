@@ -16,7 +16,7 @@ router.get('/', requireAuth, async (req, res) => {
             include: [
                 {
                     model: CartItem,
-                    attributes: ['cartQty'],
+                    attributes: ['cartQty', 'orderStatus'],
                     where: {
                         orderId: {
                             [Op.ne]: null
@@ -43,12 +43,20 @@ router.get('/', requireAuth, async (req, res) => {
 
 router.put('/orders/:orderId', requireAuth, async (req, res) => {
     const orderId = Number(req.params.orderId);
-    const order = await Order.findByPk(orderId)
+    const order = await Order.findOne({
+        where: {
+            order: orderId
+        },
+        include: {
+            model: CartItem,
+            attributes: ['cartQty', 'orderStatus'],
+        }
+    })
 
     if (!order) return res.status(404).json({ message: "Order couldn't be found" });
 
     const { orderStatus } = req.body;
-    order.set({
+    order.CartItem.set({
         orderStatus: orderStatus
     });
 

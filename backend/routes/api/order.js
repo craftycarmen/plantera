@@ -14,7 +14,7 @@ router.get('/orders', requireAuth, async (req, res) => {
             },
             include: {
                 model: CartItem,
-                attributes: ['cartQty'],
+                attributes: ['cartQty', 'orderStatus'],
                 include: {
                     model: Listing,
                     attributes: ['plantName', 'price', 'potSize'],

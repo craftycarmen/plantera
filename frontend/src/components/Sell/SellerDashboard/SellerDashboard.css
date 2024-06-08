@@ -91,6 +91,13 @@
     background-color: transparent;
 }
 
+.manageListingsSection hr {
+    margin: 30px 0px;
+    border: .25px solid #8EBAA8;
+    width: 95%;
+}
+
+
 .manageListingsContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));

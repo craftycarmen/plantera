@@ -30,7 +30,7 @@ export const editOrder = (orderId, order) => async (dispatch) => {
     const res = await csrfFetch(`/api/sell/orders/${orderId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON({ ...order })
+        body: JSON.stringify({ ...order })
     });
 
     if (res.ok) {

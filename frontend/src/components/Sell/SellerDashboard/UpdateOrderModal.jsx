@@ -3,16 +3,16 @@ import { useModal } from "../../../context/Modal";
 import { editOrder } from "../../../store/sell";
 import { useState } from "react";
 
-function UpdateOrderModal({ orderId, orderStatus }) {
+function UpdateOrderModal({ orderId, status }) {
     const { closeModal } = useModal();
     const dispatch = useDispatch();
-    const [status, setStatus] = useState(orderStatus)
+    const [orderStatus, setOrderStatus] = useState(status)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const order = {
-            status
+            orderStatus
         }
 
         try {
@@ -26,26 +26,28 @@ function UpdateOrderModal({ orderId, orderStatus }) {
         <section className="modal orderModal">
             <h1>Update Order Status</h1>
             <h2>Order #{orderId}</h2>
-            <div style={{ marginTop: "10px" }}>Current Status: {orderStatus}</div>
+            <div style={{ marginTop: "10px" }}>Current Status: {status}</div>
             <div style={{ marginTop: "15px" }}>New Status:</div>
             <form onSubmit={handleSubmit}>
                 <div className="orderStatusOptions">
                     <div className="radio">
                         <input type="radio"
-                            value="inProgress"
+                            value="In Progress"
                             name="status"
-                            onClick={() => setStatus("inProgress")}
+                            defaultChecked={orderStatus === "In Progress"}
+                            onClick={() => setOrderStatus("In Progress")}
                         /><span>In Progress</span>
                     </div>
                     <div className="radio">
                         <input type="radio"
-                            value="shipped"
+                            value="Shipped"
                             name="status"
-                            onClick={() => setStatus("shipped")}
+                            defaultChecked={orderStatus === "Shipped"}
+                            onClick={() => setOrderStatus("Shipped")}
                         /><span>Shipped</span>
                     </div>
                 </div>
-                <span className="deleteButtons" style={{ marginTop: "20px" }}><button>Update Order Status</button>
+                <span className="deleteButtons" style={{ marginTop: "20px" }}><button onSubmit={handleSubmit}>Update Order Status</button>
                     <button
                         onClick={closeModal}
                     >

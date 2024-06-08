@@ -7,6 +7,7 @@ import { price } from "../../../../utils";
 import { Link } from "react-router-dom";
 import OpenModalButton from "../../OpenModalButton";
 import UpdateOrderModal from "./UpdateOrderModal";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 function ManageOrders() {
     const dispatch = useDispatch();
@@ -33,16 +34,11 @@ function ManageOrders() {
         return enUSFormatter.format(newDate)
     }
 
-    console.log("SHOP!", shopOrders);
-    shopOrders.map(order => {
-        order.CartItems.map(item => console.log("ITEM", item.Listing))
-    })
-
     let totalEarnings = 0;
     let totalItems = 0;
 
     shopOrders.forEach(order => {
-        order.CartItems.forEach(item => {
+        order?.CartItems?.forEach(item => {
             totalEarnings += item.cartQty * item.Listing.price
             totalItems += item.cartQty;
         })
@@ -73,11 +69,13 @@ function ManageOrders() {
                                                 <div className="orderInfo">
                                                     <div>
                                                         <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                                        <div>Order Status: {order.orderStatus}</div>
-                                                        <OpenModalButton
+                                                        <div>Order Status: <OpenModalMenuItem
+                                                            itemText={`${order.orderStatus}`}
+                                                            modalComponent={<UpdateOrderModal orderId={order.id} status={order.orderStatus} />} /></div>
+                                                        {/* <OpenModalButton
                                                             buttonText="Update Order Status"
-                                                            modalComponent={<UpdateOrderModal orderId={order.id} orderStatus={order.orderStatus} />}
-                                                        />
+                                                            modalComponent={<UpdateOrderModal orderId={order.id} status={order.orderStatus} />}
+                                                        /> */}
                                                     </div>
                                                     <div className="shipTo">
                                                         <div>Ship to:</div>

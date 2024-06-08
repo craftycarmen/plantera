@@ -16,6 +16,7 @@
 
 .modal h1 {
     margin-top: 20px;
+    font-size: 28px;
 }
 
 .modal a {
@@ -26,7 +27,7 @@
     width: 100%;
 }
 
-.modal input,
+.modal input:not([type=radio]),
 .modal textarea {
     width: 347px !important;
     background-color: #8EBAA8;
@@ -34,9 +35,9 @@
     border-left: 1px solid #28635A;
 }
 
-.modal button {
-    width: 347px;
-}
+/* .modal button {
+    width: auto;
+} */
 
 .demosignup {
     display: grid;
@@ -54,7 +55,7 @@
         width: 65vw;
     }
 
-    .modal input,
+    .modal input:not([type=radio]),
     .modal textarea,
     .modal button {
         width: 50vw !important;

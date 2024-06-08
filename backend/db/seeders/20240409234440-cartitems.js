@@ -22,7 +22,22 @@ const cartItemsList = [
     orderId: 2,
     listingId: 3,
     cartQty: 1
-  }
+  },
+  {
+    orderId: 3,
+    listingId: 50,
+    cartQty: 1
+  },
+  {
+    orderId: 3,
+    listingId: 47,
+    cartQty: 1
+  },
+  {
+    orderId: 3,
+    listingId: 48,
+    cartQty: 1
+  },
 ]
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

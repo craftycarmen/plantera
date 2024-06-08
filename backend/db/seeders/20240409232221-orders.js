@@ -47,8 +47,8 @@ const ordersList = [
     zipCode: '10001',
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
-    subTotal: 80.00,
-    orderTotal: 86.66
+    subTotal: 85.00,
+    orderTotal: 92.01
   },
 ]
 

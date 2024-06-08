@@ -66,7 +66,12 @@ module.exports = (sequelize, DataTypes) => {
     cartQty: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    orderStatus: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "Received"
+    },
   }, {
     sequelize,
     modelName: 'CartItem',

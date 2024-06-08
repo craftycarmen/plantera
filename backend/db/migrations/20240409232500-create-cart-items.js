@@ -45,6 +45,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      orderStatus: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "Received"
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -32,7 +32,7 @@ function Orders() {
                     <h1>Orders</h1>
                     <div>Review your orders below.</div>
                     <br />
-                    {orders.length === 0 ? (
+                    {orders?.length === 0 ? (
                         <div>No orders placed yet. <Link to='/listings'>Shop now!</Link></div>
                     ) :
                         (
@@ -44,7 +44,12 @@ function Orders() {
                                         <h3> <Link to={`/order/${order.id}`}>Order #{order.id}</Link></h3>
                                         <div>
                                             <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                            <div>Order Status: {order.orderStatus}</div>
+                                            {order?.CartItems.map(item => (
+                                                <div key={item.id}>
+                                                    <div>Order Status: {item.orderStatus}</div>
+                                                </div>
+                                            ))}
+
                                         </div>
                                     </div>
                                     <hr />

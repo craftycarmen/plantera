@@ -146,16 +146,16 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    orderStatus: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "Received",
-      validate: {
-        notNull: {
-          msg: 'Order status is required'
-        }
-      }
-    },
+    // orderStatus: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   defaultValue: "Received",
+    //   validate: {
+    //     notNull: {
+    //       msg: 'Order status is required'
+    //     }
+    //   }
+    // },
   }, {
     sequelize,
     modelName: 'Order',

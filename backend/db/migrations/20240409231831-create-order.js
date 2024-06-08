@@ -72,11 +72,11 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      orderStatus: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: "Received"
-      },
+      // orderStatus: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      //   defaultValue: "Received"
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -167,7 +167,7 @@ const usersList = [
     state: "TX",
     bio: "Hi, I'm Ben! I enjoy collecting rare houseplants and experimenting with propagation techniques.",
     favoritePlant: "Fiddle Leaf Fig",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Clara",
@@ -179,7 +179,7 @@ const usersList = [
     state: "CA",
     bio: "I'm Clara, a plant enthusiast who loves decorating with ferns and tropical plants. They bring peace to my home.",
     favoritePlant: "Boston Fern",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "David",
@@ -191,7 +191,7 @@ const usersList = [
     state: "AZ",
     bio: "Hello! I'm David, and I specialize in growing and caring for various types of cacti and succulents.",
     favoritePlant: "Saguaro Cactus",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Emma",
@@ -203,7 +203,7 @@ const usersList = [
     state: "CA",
     bio: "I'm Emma, and I have a deep love for desert plants. They add charm and resilience to my garden.",
     favoritePlant: "Aloe Vera",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Frank",
@@ -215,7 +215,7 @@ const usersList = [
     state: "WA",
     bio: "Hey, I'm Frank! My passion is urban gardening, and I love sharing my plant journey with others.",
     favoritePlant: "Snake Plant",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Grace",
@@ -227,7 +227,7 @@ const usersList = [
     state: "IL",
     bio: "I'm Grace, a houseplant lover who enjoys filling my home with lush greenery and learning new plant care techniques.",
     favoritePlant: "ZZ Plant",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Henry",
@@ -239,7 +239,7 @@ const usersList = [
     state: "NY",
     bio: "Hello, I'm Henry! I'm dedicated to cultivating a diverse plant collection and creating a green oasis in my apartment.",
     favoritePlant: "Philodendron Brasil",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Isabella",
@@ -251,7 +251,7 @@ const usersList = [
     state: "CA",
     bio: "I'm Isabella, and my passion lies in growing tropical plants and creating a serene indoor garden space.",
     favoritePlant: "Calathea",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Jack",
@@ -263,7 +263,7 @@ const usersList = [
     state: "FL",
     bio: "Hi, I'm Jack! I love experimenting with different plant species and turning my home into a lush paradise.",
     favoritePlant: "Bird of Paradise",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Karen",
@@ -275,7 +275,7 @@ const usersList = [
     state: "CO",
     bio: "I'm Karen, and I adore indoor plants that purify the air and add a touch of nature to my living space.",
     favoritePlant: "Peace Lily",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Liam",
@@ -287,7 +287,7 @@ const usersList = [
     state: "MA",
     bio: "Hey, I'm Liam! I'm passionate about sustainable gardening and love growing plants that thrive in urban environments.",
     favoritePlant: "Spider Plant",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Mia",
@@ -299,7 +299,7 @@ const usersList = [
     state: "NC",
     bio: "I'm Mia, a plant enthusiast who finds joy in nurturing rare and exotic plants in my home.",
     favoritePlant: "Rubber Plant",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Noah",
@@ -311,7 +311,7 @@ const usersList = [
     state: "TN",
     bio: "Hello, I'm Noah! I enjoy creating vibrant plant displays and sharing my love for greenery with the community.",
     favoritePlant: "Jade Plant",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Olivia",
@@ -323,7 +323,7 @@ const usersList = [
     state: "GA",
     bio: "I'm Olivia, a dedicated plant lover who enjoys turning any space into a green sanctuary with my collection.",
     favoritePlant: "Pothos",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Paul",
@@ -335,7 +335,7 @@ const usersList = [
     state: "TX",
     bio: "Hi, I'm Paul! My love for plants drives me to cultivate a diverse collection and share the joy of gardening with others.",
     favoritePlant: "Orchid",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Quinn",
@@ -347,7 +347,7 @@ const usersList = [
     state: "OH",
     bio: "I'm Quinn, a plant enthusiast who loves creating lush green corners in my home and experimenting with different plant species.",
     favoritePlant: "Ficus",
-    account: "buyer"
+    accountType: "buyer"
   },
   {
     firstName: "Rachel",
@@ -359,7 +359,7 @@ const usersList = [
     state: "CA",
     bio: "Hello, I'm Rachel! I have a passion for growing houseplants and turning my living space into an indoor jungle.",
     favoritePlant: "African Violet",
-    account: "buyer"
+    accountType: "buyer"
   }
 ]
 

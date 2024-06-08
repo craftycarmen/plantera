@@ -193,10 +193,6 @@
     align-self: start;
 }
 
-.formContainer form {
-    width: 578px;
-}
-
 @media screen and (max-width: 480px) {
 
     .userProfilePageContainer {

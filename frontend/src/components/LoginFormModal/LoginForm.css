@@ -22,11 +22,20 @@
     color: #F2DCCB;
 }
 
+.modal form {
+    width: 100%;
+}
+
 .modal input,
 .modal textarea {
+    width: 347px !important;
     background-color: #8EBAA8;
     border-bottom: 1px solid #28635A;
     border-left: 1px solid #28635A;
+}
+
+.modal button {
+    width: 347px;
 }
 
 .demosignup {
@@ -46,8 +55,14 @@
     }
 
     .modal input,
-    .modal textarea {
-        width: 50vw;
+    .modal textarea,
+    .modal button {
+        width: 50vw !important;
     }
+
+    .modal form {
+        width: 100%;
+    }
+
 
 }

@@ -204,7 +204,7 @@ function UserProfileForm({ formType }) {
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.shopDescription}</>}</div>
                         </div>
 
-                        <div className='inputContainer accountType'>Where do you want us to send your earnings?*</div>
+                        <div className='inputContainer accountType' style={{ paddingBottom: "0px" }}>Where do you want us to send your earnings?*</div>
                         <div className='inputContainer'>
                             <select
                                 value={paymentMethod}
@@ -245,7 +245,6 @@ function UserProfileForm({ formType }) {
                 <button
                     type='submit'
                     disabled={errors && !!Object.values(errors)?.length}
-                    style={{ width: "321px" }}
                 >{formType}</button>
 
             </form >

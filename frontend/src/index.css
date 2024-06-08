@@ -69,12 +69,13 @@ a:hover {
     cursor: pointer;
 }
 
-input,
+input:not([type=radio]),
 textarea,
 select {
     display: block;
     border: none;
-    width: 300px;
+    width: 578px;
+    /* width: 300px; */
     /* width: 30vw; */
     margin-top: 20px;
     margin-bottom: 10px;
@@ -94,6 +95,10 @@ select {
 
 input[type=radio] {
     accent-color: #E38251;
+}
+
+input[type=radio]:hover {
+    cursor: pointer;
 }
 
 input[type=file] {
@@ -157,6 +162,18 @@ select:focus {
 
 select:hover {
     cursor: pointer;
+}
+
+.radioInput {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    width: fit-content;
+    padding-top: 15px;
+}
+
+.radioInput span {
+    margin-right: 20px;
 }
 
 .error {
@@ -229,7 +246,7 @@ button:disabled {
 }
 
 form {
-    width: fit-content;
+    width: 578px;
 }
 
 form>button {
@@ -250,20 +267,36 @@ form>button {
         width: 100%;
     }
 
-    input,
+    input:not([type=radio]),
     textarea,
-    select {
+    select,
+    form>button,
+    .inputContainer {
         width: 70vw;
     }
 
     form {
         width: auto;
     }
+
+
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
     body {
         padding: 5vw 8vw;
+    }
+
+    input:not([type=radio]),
+    textarea,
+    select,
+    form>button,
+    .inputContainer {
+        width: 70vw;
+    }
+
+    form {
+        width: auto;
     }
 
     .deleteModal button {

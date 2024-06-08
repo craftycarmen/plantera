@@ -233,6 +233,11 @@ tbody tr:last-child {
     background-color: rgba(142, 186, 168, 0.5)
 }
 
+.radio {
+    display: flex;
+    gap: 10px;
+}
+
 @media screen and (max-width: 480px) {
     .sellerContainer {
         display: grid;

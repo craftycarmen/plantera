@@ -5,6 +5,8 @@ import Menu from "./Menu";
 import { fetchOwnedShopOrders } from "../../../store/sell";
 import { price } from "../../../../utils";
 import { Link } from "react-router-dom";
+import OpenModalButton from "../../OpenModalButton";
+import UpdateOrderModal from "./UpdateOrderModal";
 
 function ManageOrders() {
     const dispatch = useDispatch();
@@ -72,7 +74,10 @@ function ManageOrders() {
                                                     <div>
                                                         <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
                                                         <div>Order Status: {order.orderStatus}</div>
-                                                        <button>Update Status</button>
+                                                        <OpenModalButton
+                                                            buttonText="Update Order Status"
+                                                            modalComponent={<UpdateOrderModal orderId={order.id} orderStatus={order.orderStatus} />}
+                                                        />
                                                     </div>
                                                     <div className="shipTo">
                                                         <div>Ship to:</div>

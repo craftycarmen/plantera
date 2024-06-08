@@ -41,4 +41,20 @@ router.get('/', requireAuth, async (req, res) => {
     }
 })
 
+router.put('/orders/:orderId', requireAuth, async (req, res) => {
+    const orderId = Number(req.params.orderId);
+    const order = await Order.findByPk(orderId)
+
+    if (!order) return res.status(404).json({ message: "Order couldn't be found" });
+
+    const { orderStatus } = req.body;
+    order.set({
+        orderStatus: orderStatus
+    });
+
+    await order.save();
+
+    return res.json(order)
+})
+
 module.exports = router;

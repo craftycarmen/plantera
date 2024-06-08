@@ -1,28 +1,11 @@
 .accountType {
     padding-top: 10px;
     margin-left: 8px;
-    /* width: 321px; */
-    width: 300px !important;
+    width: 100%;
 }
 
 .accountType input {
     width: fit-content;
-}
-
-.radioInput {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    height: 20px;
-    width: fit-content;
-}
-
-.radioInput span {
-    margin-top: 8px;
-}
-
-input[type='radio']:hover {
-    cursor: pointer;
 }
 
 .signupModal {

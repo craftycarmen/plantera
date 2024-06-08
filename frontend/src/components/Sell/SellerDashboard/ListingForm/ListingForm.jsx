@@ -147,7 +147,7 @@ function ListingForm({ listing, formType }) {
             },
             color: "#28635A",
             cursor: "pointer",
-            width: "322px"
+            width: "100%"
         }),
         menu: base => ({
             ...base,
@@ -155,7 +155,7 @@ function ListingForm({ listing, formType }) {
             background: "#B9CDCA",
             cursor: "pointer",
             borderRadius: "3px",
-            width: "322px"
+            width: "auto"
         }),
         menuList: base => ({
             ...base,
@@ -320,12 +320,11 @@ function ListingForm({ listing, formType }) {
                             </div>
                             {createForm &&
                                 <>
-                                    {imageLoading && (<div style={{ marginLeft: "125px", marginTop: "15px" }} className="dots"></div>)}
+                                    {imageLoading && (<div className="dots"></div>)}
                                 </>}
                             <button
                                 type='submit'
                                 disabled={!!Object.values(errors).length}
-                                style={{ marginTop: "15px", width: "321px" }}
                             >
                                 {formType}
                             </button>

@@ -36,6 +36,20 @@ const ordersList = [
     subTotal: 80.00,
     orderTotal: 86.66
   },
+  {
+    buyerId: 10,
+    orderId: 3,
+    firstName: 'Alice',
+    lastName: 'Greenfield',
+    address: '456 Fifth St',
+    city: 'New York',
+    state: 'NY',
+    zipCode: '10001',
+    paymentMethod: 'Americano Expresso',
+    paymentDetails: '0000',
+    subTotal: 80.00,
+    orderTotal: 86.66
+  },
 ]
 
 

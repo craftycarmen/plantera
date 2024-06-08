@@ -230,7 +230,7 @@ function ShoppingCartPage() {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer", marginTop: "8px" }} onClick={() => handleRemoveItem(item.id)} /></span>
+                                            <span><i className="fa-solid fa-trash-can" style={{ cursor: "pointer" }} onClick={() => handleRemoveItem(item.id)} /></span>
                                         </div>
                                         <div className="stockLevelMsg">
                                             {item.Listing.stockQty === 1 && (<div >Only 1 in stock!</div>)}

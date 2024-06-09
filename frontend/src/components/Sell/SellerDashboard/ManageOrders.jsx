@@ -21,18 +21,30 @@ function ManageOrders() {
     console.log("1111", shopOrders);
 
     const unfulfilled = shopOrders?.map(order => {
-        const items = order?.CartItems?.filter(item => item.orderStatus === "Received" || item.orderStatus === "In Progress")
-        return {
-            ...order,
-            CartItems: items
+        const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);
+        console.log("selleritems", sellerItems);
+        const unshippedItems = sellerItems?.some(item => item.orderStatus === "Received" || item.orderStatus === "In Progress")
+        console.log("unshippedItems", unshippedItems);
+        if (unshippedItems) {
+            return {
+                ...order,
+                CartItems: sellerItems
+            }
         }
+
     }).filter(order => order?.CartItems?.length > 0)
 
+    console.log("UNFULFILLED", unfulfilled);
     const fulfilled = shopOrders?.map(order => {
-        const items = order?.CartItems?.filter(item => item.orderStatus === "Shipped")
-        return {
-            ...order,
-            CartItems: items
+        const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);
+
+        const allShipped = sellerItems?.every(item => item.orderStatus === "Shipped");
+
+        if (allShipped && sellerItems.length > 0) {
+            return {
+                ...order,
+                CartItems: sellerItems
+            }
         }
     }).filter(order => order?.CartItems?.length > 0)
 
@@ -68,128 +80,137 @@ function ManageOrders() {
                                 {shopOrders.length === 0 ? (
                                     <div>No orders yet!</div>
                                 ) : (
-                                    <>
-                                        {unfulfilled && unfulfilled.length > 0 &&
-                                            <div>
-                                                <h3>Unfulfilled Orders</h3>
-                                                {unfulfilled.map(order => {
-                                                    let orderTotalEarnings = 0;
-                                                    let orderTotalItems = 0;
-                                                    order?.CartItems?.forEach(item => {
-                                                        orderTotalEarnings += item.cartQty * item?.Listing?.price;
-                                                        orderTotalItems += item?.cartQty;
-                                                    });
-                                                    return (
-                                                        <div key={order.id} className="manageOrdersSection">
-                                                            <h4>Order #{order.id}</h4>
-                                                            <div className="orderInfo">
-                                                                <div>
-                                                                    <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                                                </div>
-                                                                <div className="shipTo">
-                                                                    <div>Ship to:</div>
+                                    <div className="unfulfilledFulfilled">
+                                        <div>
+                                            <h3>Unfulfilled Orders</h3>
+                                            {unfulfilled && unfulfilled.length === 0 ? (
+                                                <div>No unfulfilled orders!</div>
+                                            ) : (
+                                                <div>
+                                                    <div style={{ paddingBottom: "10px" }}>Please fulfill all orders within 3 business days from order date.</div>
+                                                    {unfulfilled.map(order => {
+                                                        let orderTotalEarnings = 0;
+                                                        let orderTotalItems = 0;
+                                                        order?.CartItems?.forEach(item => {
+                                                            orderTotalEarnings += item.cartQty * item?.Listing?.price;
+                                                            orderTotalItems += item?.cartQty;
+                                                        });
+                                                        return (
+                                                            <div key={order.id} className="manageOrdersSection">
+                                                                <h4>Order #{order.id}</h4>
+                                                                <div className="orderInfo">
                                                                     <div>
-                                                                        <div>{order.firstName} {order.lastName}</div>
-                                                                        <div>{order.address}</div>
-                                                                        <div>{order.city}, {order.state} {order.zipCode}</div>
+                                                                        <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
+                                                                    </div>
+                                                                    <div className="shipTo">
+                                                                        <div>Ship to:</div>
+                                                                        <div>
+                                                                            <div>{order.firstName} {order.lastName}</div>
+                                                                            <div>{order.address}</div>
+                                                                            <div>{order.city}, {order.state} {order.zipCode}</div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div className="items">
-                                                                <table>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Item</th>
-                                                                            <th>Qty</th>
-                                                                            <th>Price</th>
-                                                                            <th>Order Item Status</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {order.CartItems?.map(item => (
-                                                                            <tr key={item.Listing?.id}>
-                                                                                <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
-                                                                                <td>{item.cartQty}</td>
-                                                                                <td>{price(item.Listing?.price)}</td>
-                                                                                <td><OpenModalMenuItem
-                                                                                    itemText={<span>{item.orderStatus} <i className="fa-solid fa-pen" /></span>}
-                                                                                    modalComponent={<UpdateOrderModal orderId={order.id} status={item.orderStatus} name={item.Listing?.plantName} itemId={item.id} />} /></td>
+                                                                <div className="items">
+                                                                    <table>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Item</th>
+                                                                                <th>Qty</th>
+                                                                                <th>Price</th>
+                                                                                <th>Order Item Status</th>
                                                                             </tr>
-                                                                        ))}
-                                                                        <tr>
-                                                                            <td>Total</td>
-                                                                            <td>{orderTotalItems}</td>
-                                                                            <td>{price(orderTotalEarnings)}</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <hr />
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        }
-                                        {fulfilled && fulfilled.length > 0 &&
-                                            <div>
-                                                <h3>Fulfilled Orders</h3>
-                                                {fulfilled.map(order => {
-                                                    let orderTotalEarnings = 0;
-                                                    let orderTotalItems = 0;
-                                                    order?.CartItems?.forEach(item => {
-                                                        orderTotalEarnings += item.cartQty * item.Listing.price;
-                                                        orderTotalItems += item.cartQty;
-                                                    });
-                                                    return (
-                                                        <div key={order.id} className="manageOrdersSection">
-                                                            <h4>Order #{order.id}</h4>
-                                                            <div className="orderInfo">
-                                                                <div>
-                                                                    <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            {order.CartItems?.map(item => (
+                                                                                <tr key={item.Listing?.id}>
+                                                                                    <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
+                                                                                    <td>{item.cartQty}</td>
+                                                                                    <td>{price(item.Listing?.price)}</td>
+                                                                                    <td><OpenModalMenuItem
+                                                                                        itemText={<span>{item.orderStatus} <i className="fa-solid fa-pen" /></span>}
+                                                                                        modalComponent={<UpdateOrderModal orderId={order.id} status={item.orderStatus} name={item.Listing?.plantName} itemId={item.id} />} /></td>
+                                                                                </tr>
+                                                                            ))}
+                                                                            <tr>
+                                                                                <td>Total</td>
+                                                                                <td>{orderTotalItems}</td>
+                                                                                <td>{price(orderTotalEarnings)}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
-                                                                <div className="shipTo">
-                                                                    <div>Ship to:</div>
-                                                                    <div>
-                                                                        <div>{order.firstName} {order.lastName}</div>
-                                                                        <div>{order.address}</div>
-                                                                        <div>{order.city}, {order.state} {order.zipCode}</div>
+                                                                <hr />
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h3>Fulfilled Orders</h3>
+                                            {fulfilled && fulfilled.length === 0 ? (
+                                                <div>No fulfilled orders!</div>)
+                                                : (
+                                                    <div>
+                                                        {fulfilled.map(order => {
+                                                            let orderTotalEarnings = 0;
+                                                            let orderTotalItems = 0;
+                                                            order?.CartItems?.forEach(item => {
+                                                                orderTotalEarnings += item.cartQty * item?.Listing?.price;
+                                                                orderTotalItems += item.cartQty;
+                                                            });
+                                                            return (
+                                                                <div key={order.id} className="manageOrdersSection">
+                                                                    <h4>Order #{order.id}</h4>
+                                                                    <div className="orderInfo">
+                                                                        <div>
+                                                                            <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
+                                                                        </div>
+                                                                        <div className="shipTo">
+                                                                            <div>Ship to:</div>
+                                                                            <div>
+                                                                                <div>{order.firstName} {order.lastName}</div>
+                                                                                <div>{order.address}</div>
+                                                                                <div>{order.city}, {order.state} {order.zipCode}</div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
+                                                                    <div className="items">
+                                                                        <table>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Item</th>
+                                                                                    <th>Qty</th>
+                                                                                    <th>Price</th>
+                                                                                    <th>Order Item Status</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                {order.CartItems?.map(item => (
+                                                                                    <tr key={item.Listing?.id}>
+                                                                                        <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
+                                                                                        <td>{item.cartQty}</td>
+                                                                                        <td>{price(item.Listing?.price)}</td>
+                                                                                        <td>{item.orderStatus}</td>
+                                                                                    </tr>
+                                                                                ))}
+                                                                                <tr>
+                                                                                    <td>Total</td>
+                                                                                    <td>{orderTotalItems}</td>
+                                                                                    <td>{price(orderTotalEarnings)}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <hr />
                                                                 </div>
-                                                            </div>
-                                                            <div className="items">
-                                                                <table>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Item</th>
-                                                                            <th>Qty</th>
-                                                                            <th>Price</th>
-                                                                            <th>Order Item Status</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {order.CartItems?.map(item => (
-                                                                            <tr key={item.Listing?.id}>
-                                                                                <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
-                                                                                <td>{item.cartQty}</td>
-                                                                                <td>{price(item.Listing?.price)}</td>
-                                                                                <td>{item.orderStatus}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                        <tr>
-                                                                            <td>Total</td>
-                                                                            <td>{orderTotalItems}</td>
-                                                                            <td>{price(orderTotalEarnings)}</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <hr />
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        }
-                                    </>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                )}
+                                        </div>
+                                    </div>
 
                                 )}
                             </div>

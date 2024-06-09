@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
-import { editOrder } from "../../../store/sell";
+import { editOrder, fetchOwnedShopOrders } from "../../../store/sell";
 import { useState } from "react";
 
 function UpdateOrderModal({ orderId, itemId, status, name }) {
@@ -17,6 +17,7 @@ function UpdateOrderModal({ orderId, itemId, status, name }) {
             if (result.errors) {
                 console.error('Error updating order item status:', result.errors);
             } else {
+                await dispatch(fetchOwnedShopOrders());
                 closeModal();
             }
         } catch (error) {

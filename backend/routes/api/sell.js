@@ -25,7 +25,7 @@ router.get('/', requireAuth, async (req, res) => {
                     include: [
                         {
                             model: Listing,
-                            attributes: ['id', 'plantName', 'price', 'potSize'],
+                            attributes: ['id', 'sellerId', 'plantName', 'price', 'potSize'],
                             where: {
                                 sellerId: user.id
                             }

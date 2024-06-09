@@ -12,18 +12,18 @@ function Sell() {
     const sessionUser = useSelector(state => state.session.user);
     const user = useSelector(state => state.user[sessionUser?.id]?.User)
     const currUser = user || sessionUser;
-    const isSeller = currUser && currUser.accountType !== 'seller';
+    const isSeller = currUser && currUser.accountType === 'seller';
 
     return (
         <>
-            {sessionUser && !isSeller ? (
+            {sessionUser && isSeller ? (
                 <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
             ) : (
                 <h1>Sell</h1>)}
             <div>Purge your plants and plant babies on Plantera, and get paid!</div>
             <br />
             <div>
-                {sessionUser && !isSeller ? (
+                {sessionUser && isSeller ? (
                     <SellerDashboard sessionUser={sessionUser} />
                 ) : (
                     <>

@@ -28,7 +28,7 @@ function SellerDashboard({ sessionUser }) {
     let totalItems = 0;
 
     shopOrders.forEach(order => {
-        order.CartItems.forEach(item => {
+        order?.CartItems?.forEach(item => {
             totalEarnings += item.cartQty * item.Listing.price
             totalItems += item.cartQty;
         })

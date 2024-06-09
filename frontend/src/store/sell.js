@@ -26,11 +26,11 @@ export const fetchOwnedShopOrders = () => async (dispatch) => {
     }
 }
 
-export const editOrder = (orderId, order) => async (dispatch) => {
+export const editOrder = (orderId, itemId, orderStatus) => async (dispatch) => {
     const res = await csrfFetch(`/api/sell/orders/${orderId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...order })
+        body: JSON.stringify({ itemId, orderStatus })
     });
 
     if (res.ok) {

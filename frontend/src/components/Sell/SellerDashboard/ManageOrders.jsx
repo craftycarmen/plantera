@@ -20,10 +20,23 @@ function ManageOrders() {
     const shopOrders = Object.values(useSelector((state) => state.sell));
     console.log("1111", shopOrders);
 
-    const unfulfilled = shopOrders?.filter(order => order.orderStatus === "Received" || order.orderStatus === "In Progress");
-    const fulfilled = shopOrders?.filter(order => order.orderStatus === "Shipped");
+    const unfulfilled = shopOrders?.map(order => {
+        const items = order?.CartItems?.filter(item => item.orderStatus === "Received" || item.orderStatus === "In Progress")
+        return {
+            ...order,
+            CartItems: items
+        }
+    }).filter(order => order?.CartItems?.length > 0)
 
-    console.log(fulfilled);
+    const fulfilled = shopOrders?.map(order => {
+        const items = order?.CartItems?.filter(item => item.orderStatus === "Shipped")
+        return {
+            ...order,
+            CartItems: items
+        }
+    }).filter(order => order?.CartItems?.length > 0)
+
+    console.log("FULFILLED", fulfilled);
     useEffect(() => {
         dispatch(fetchOwnedShopOrders());
     }, [dispatch]);
@@ -72,9 +85,6 @@ function ManageOrders() {
                                                             <div className="orderInfo">
                                                                 <div>
                                                                     <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                                                    <div>Order Status: <OpenModalMenuItem
-                                                                        itemText={`${order.orderStatus}`}
-                                                                        modalComponent={<UpdateOrderModal orderId={order.id} status={order.orderStatus} />} /></div>
                                                                 </div>
                                                                 <div className="shipTo">
                                                                     <div>Ship to:</div>
@@ -92,6 +102,7 @@ function ManageOrders() {
                                                                             <th>Item</th>
                                                                             <th>Qty</th>
                                                                             <th>Price</th>
+                                                                            <th>Order Item Status</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -100,6 +111,9 @@ function ManageOrders() {
                                                                                 <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
                                                                                 <td>{item.cartQty}</td>
                                                                                 <td>{price(item.Listing?.price)}</td>
+                                                                                <td><OpenModalMenuItem
+                                                                                    itemText={<span>{item.orderStatus} <i className="fa-solid fa-pen" /></span>}
+                                                                                    modalComponent={<UpdateOrderModal orderId={order.id} status={item.orderStatus} name={item.Listing?.plantName} itemId={item.id} />} /></td>
                                                                             </tr>
                                                                         ))}
                                                                         <tr>
@@ -117,7 +131,7 @@ function ManageOrders() {
                                             </div>
                                         }
                                         {fulfilled && fulfilled.length > 0 &&
-                                            <div style={{ marginTop: "20px" }}>
+                                            <div>
                                                 <h3>Fulfilled Orders</h3>
                                                 {fulfilled.map(order => {
                                                     let orderTotalEarnings = 0;
@@ -132,7 +146,6 @@ function ManageOrders() {
                                                             <div className="orderInfo">
                                                                 <div>
                                                                     <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                                                    <div>Order Status: {order.orderStatus}</div>
                                                                 </div>
                                                                 <div className="shipTo">
                                                                     <div>Ship to:</div>
@@ -150,6 +163,7 @@ function ManageOrders() {
                                                                             <th>Item</th>
                                                                             <th>Qty</th>
                                                                             <th>Price</th>
+                                                                            <th>Order Item Status</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -158,6 +172,7 @@ function ManageOrders() {
                                                                                 <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
                                                                                 <td>{item.cartQty}</td>
                                                                                 <td>{price(item.Listing?.price)}</td>
+                                                                                <td>{item.orderStatus}</td>
                                                                             </tr>
                                                                         ))}
                                                                         <tr>

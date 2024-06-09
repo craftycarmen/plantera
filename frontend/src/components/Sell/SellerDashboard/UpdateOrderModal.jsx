@@ -3,29 +3,31 @@ import { useModal } from "../../../context/Modal";
 import { editOrder } from "../../../store/sell";
 import { useState } from "react";
 
-function UpdateOrderModal({ orderId, status }) {
+function UpdateOrderModal({ orderId, itemId, status, name }) {
     const { closeModal } = useModal();
     const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(status)
 
+    console.log(orderId, itemId, status, name);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const order = {
-            orderStatus
-        }
-
         try {
-            await dispatch(editOrder(orderId, order))
-            closeModal();
+            const result = await dispatch(editOrder(orderId, itemId, orderStatus));
+            if (result.errors) {
+                console.error('Error updating order item status:', result.errors);
+            } else {
+                closeModal();
+            }
         } catch (error) {
-            console.error('Error updating order status:', error)
+            console.error('Error updating order item status:', error);
         }
-    }
+    };
+
     return (
         <section className="modal orderModal">
-            <h1>Update Order Status</h1>
-            <h2>Order #{orderId}</h2>
+            <h1 style={{ textAlign: "center" }}>Update Order Item Status</h1>
+            <h2>Order #{orderId} - {name}</h2>
             <div style={{ marginTop: "10px" }}>Current Status: {status}</div>
             <div style={{ marginTop: "15px" }}>New Status:</div>
             <form onSubmit={handleSubmit}>

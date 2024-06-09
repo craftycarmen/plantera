@@ -16,7 +16,7 @@ router.get('/', requireAuth, async (req, res) => {
             include: [
                 {
                     model: CartItem,
-                    attributes: ['cartQty', 'orderStatus'],
+                    attributes: ['id', 'cartQty', 'orderStatus'],
                     where: {
                         orderId: {
                             [Op.ne]: null
@@ -43,24 +43,49 @@ router.get('/', requireAuth, async (req, res) => {
 
 router.put('/orders/:orderId', requireAuth, async (req, res) => {
     const orderId = Number(req.params.orderId);
+    console.log("orderId!!!!!!!", orderId);
     const order = await Order.findOne({
-        where: {
-            order: orderId
+        attributes: {
+            exclude: ['cartId']
         },
-        include: {
-            model: CartItem,
-            attributes: ['cartQty', 'orderStatus'],
-        }
-    })
+        include: [
+            {
+                model: CartItem,
+                attributes: ['id', 'cartQty', 'orderStatus'],
+                where: {
+                    orderId: orderId
+                },
+                include: [
+                    {
+                        model: Listing,
+                        attributes: ['id', 'plantName', 'price', 'potSize'],
+                    }
+                ]
+            }
+        ]
+
+    });
 
     if (!order) return res.status(404).json({ message: "Order couldn't be found" });
 
-    const { orderStatus } = req.body;
-    order.CartItem.set({
+    const { itemId, orderStatus } = req.body;
+    console.log('Item ID:', itemId, 'Order Status:', orderStatus);
+
+    const item = await CartItem.findOne({
+        where: {
+            id: itemId,
+            orderId: orderId
+        }
+    })
+
+    if (!item) return res.status(404).json({ message: "Order item couldn't be found" });
+
+    item.set({
+        id: item.Id,
         orderStatus: orderStatus
     });
 
-    await order.save();
+    await item.save();
 
     return res.json(order)
 })

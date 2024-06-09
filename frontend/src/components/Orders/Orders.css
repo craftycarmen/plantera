@@ -1,6 +1,6 @@
-.orderWrapper {
-    max-width: 500px;
-}
+/* .orderWrapper {
+    max-width: 800px;
+} */
 
 .orderWrapper hr {
     border: .25px solid #8EBAA8;
@@ -8,9 +8,49 @@
 }
 
 .orderSection {
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: space-between;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.orderSection table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.orderSection th,
+.orderSection td {
+    text-align: left;
+    padding: 5px 15px;
+    border: 1px solid #8EBAA8;
+}
+
+.orderSection table th:first-child,
+.orderSection table td:first-child {
+    border-left: none;
+    text-align: center;
+}
+
+.orderSection table th:nth-child(2),
+.orderSection table td:nth-child(2) {
+    border-left: none;
+    width: 40vw;
+}
+
+.orderSection table th:last-child,
+.orderSection table td:last-child {
+    border-right: none;
+}
+
+.orderSection table tr:first-child th,
+.orderSection table tr:first-child td {
+    border-top: none;
+}
+
+.orderSection table tr:last-child td {
+    border-bottom: none;
 }

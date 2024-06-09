@@ -28,7 +28,7 @@ router.get('/', requireAuth, async (req, res) => {
                             attributes: ['id', 'sellerId', 'plantName', 'price', 'potSize'],
                             where: {
                                 sellerId: user.id
-                            }
+                            },
                         }
                     ]
                 }

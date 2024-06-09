@@ -199,40 +199,40 @@
     gap: 20px;
 }
 
-table {
+.items table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
 }
 
-th,
-td {
+.items th,
+.items td {
     text-align: left;
     padding: 5px 15px;
     border: 1px solid #8EBAA8;
 }
 
-table th:first-child,
-table td:first-child {
+.items table th:first-child,
+.items table td:first-child {
     border-left: none;
     width: 40vw;
 }
 
-table th:last-child,
-table td:last-child {
+.items table th:last-child,
+.items table td:last-child {
     border-right: none;
 }
 
-table tr:first-child th,
-table tr:first-child td {
+.items table tr:first-child th,
+.items table tr:first-child td {
     border-top: none;
 }
 
-table tr:last-child td {
+.items table tr:last-child td {
     border-bottom: none;
 }
 
-tbody tr:last-child {
+.items tbody tr:last-child {
     font-style: italic;
     background-color: rgba(142, 186, 168, 0.5)
 }

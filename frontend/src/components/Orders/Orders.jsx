@@ -42,15 +42,30 @@ function Orders() {
                                     <div className="orderSection">
 
                                         <h3> <Link to={`/order/${order.id}`}>Order #{order.id}</Link></h3>
-                                        <div>
-                                            <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                            {order?.CartItems.map(item => (
-                                                <div key={item.id}>
-                                                    <div>Order Status: {item.orderStatus}</div>
-                                                </div>
-                                            ))}
+                                        <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Qty</th>
+                                                    <th>Item</th>
+                                                    <th>Seller</th>
+                                                    <th>Order Item Status</th>
+                                                </tr>
+                                            </thead>
 
-                                        </div>
+                                            <tbody>
+                                                {order?.CartItems.map(item => (
+                                                    <tr key={item.id}>
+                                                        <td>{item.cartQty}</td>
+                                                        <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
+                                                        <td><Link to={`/user/${item.Listing?.Seller?.id}/shop`} target="_blank" rel="noopener noreferrer">{item.Listing?.Seller?.username}</Link></td>
+                                                        <td>{item.orderStatus}</td>
+                                                    </tr>
+
+                                                ))}
+                                            </tbody>
+
+                                        </table>
                                     </div>
                                     <hr />
                                 </>

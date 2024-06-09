@@ -17,7 +17,7 @@ router.get('/orders', requireAuth, async (req, res) => {
                 attributes: ['cartQty', 'orderStatus'],
                 include: {
                     model: Listing,
-                    attributes: ['plantName', 'price', 'potSize'],
+                    attributes: ['id', 'plantName', 'price', 'potSize'],
                     include: [
                         {
                             model: User,
@@ -52,7 +52,7 @@ router.get('/:orderId', requireAuth, async (req, res) => {
     const orderItems = await CartItem.findAll({
         include: {
             model: Listing,
-            attributes: ['plantName', 'price', 'potSize'],
+            attributes: ['id', 'plantName', 'price', 'potSize'],
             include: {
                 model: Image,
                 as: 'ListingImages',

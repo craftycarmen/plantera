@@ -42,12 +42,8 @@ function OrderConfirmation() {
                     <h1 style={{ marginBottom: "20px" }}>Thank you for your order! <i className="fa-regular fa-hand-peace" /></h1>
                     <div className="thankYouContainer">
                         <div>
-                            <h2 style={{ marginBottom: "20px" }}>Order Details</h2>
+                            <h2 style={{ marginBottom: "20px" }}>Order #{orderId}</h2>
                             <div className="orderDetails">
-                                <div>
-                                    <div>Order: #{orderId}</div>
-                                    <div>Order Status: {order.orderStatus}</div>
-                                </div>
                                 <div>
                                     <h3>Shipping Details</h3>
                                     <div>{sessionUser.firstName} {sessionUser.lastName}</div>

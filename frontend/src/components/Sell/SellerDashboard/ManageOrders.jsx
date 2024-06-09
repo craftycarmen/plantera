@@ -76,8 +76,8 @@ function ManageOrders() {
                                                     let orderTotalEarnings = 0;
                                                     let orderTotalItems = 0;
                                                     order?.CartItems?.forEach(item => {
-                                                        orderTotalEarnings += item.cartQty * item.Listing.price;
-                                                        orderTotalItems += item.cartQty;
+                                                        orderTotalEarnings += item.cartQty * item?.Listing?.price;
+                                                        orderTotalItems += item?.cartQty;
                                                     });
                                                     return (
                                                         <div key={order.id} className="manageOrdersSection">

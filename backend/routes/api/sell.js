@@ -43,51 +43,58 @@ router.get('/', requireAuth, async (req, res) => {
 
 router.put('/orders/:orderId', requireAuth, async (req, res) => {
     const orderId = Number(req.params.orderId);
-    console.log("orderId!!!!!!!", orderId);
-    const order = await Order.findOne({
-        attributes: {
-            exclude: ['cartId']
-        },
-        include: [
+    const { user } = req;
+
+    if (!user) return res.status(403).json({ message: "Forbidden" })
+
+    try {
+        const order = await Order.findOne({
+            where: {
+                id: orderId
+            },
+            attributes: {
+                exclude: ['cartId']
+            },
+            include:
             {
                 model: CartItem,
-                attributes: ['id', 'cartQty', 'orderStatus'],
-                where: {
-                    orderId: orderId
-                },
-                include: [
-                    {
-                        model: Listing,
-                        attributes: ['id', 'plantName', 'price', 'potSize'],
-                    }
-                ]
+                attributes: ['id', 'cartQty', 'orderStatus', 'listingId'],
             }
-        ]
+        })
 
-    });
+        if (!order) return res.status(404).json({ message: "Order couldn't be found" });
 
-    if (!order) return res.status(404).json({ message: "Order couldn't be found" });
+        const cartItems = await CartItem.findAll({
+            where: {
+                orderId: orderId
+            },
+            include:
+            {
+                model: Listing,
+                attributes: ['id', 'sellerId', 'plantName', 'price', 'potSize'],
+            }
+        })
 
-    const { itemId, orderStatus } = req.body;
-    console.log('Item ID:', itemId, 'Order Status:', orderStatus);
+        if (!cartItems.length) return res.status(404).json({ message: "No items found for this order" });
 
-    const item = await CartItem.findOne({
-        where: {
-            id: itemId,
-            orderId: orderId
-        }
-    })
+        const { itemId, orderStatus } = req.body;
+        const item = cartItems.find(cartItem => cartItem.id === itemId)
 
-    if (!item) return res.status(404).json({ message: "Order item couldn't be found" });
+        if (!item) return res.status(404).json({ message: "Order item couldn't be found" });
 
-    item.set({
-        id: item.Id,
-        orderStatus: orderStatus
-    });
+        if (item.Listing.sellerId !== user.id) return res.status(403).json({ message: "Forbidden" })
 
-    await item.save();
+        item.orderStatus = orderStatus;
+        await item.save()
 
-    return res.json(order)
-})
+        console.log('Item ID:', itemId, 'Order Status:', orderStatus);
+        console.log("Order item updated:", item);
+
+        return res.json(order);
+    } catch (error) {
+        console.error("Error updating order:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 module.exports = router;

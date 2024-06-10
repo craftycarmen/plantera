@@ -218,6 +218,11 @@
     width: 40vw;
 }
 
+.items table th:nth-child(2),
+.items table td:nth-child(2) {
+    text-align: center;
+}
+
 .items table th:last-child,
 .items table td:last-child {
     border-right: none;

@@ -45,7 +45,8 @@ const cartItemsList = [
   {
     orderId: 4,
     listingId: 51,
-    cartQty: 2
+    cartQty: 2,
+    orderStatus: "Processing"
   },
   {
     orderId: 4,
@@ -75,6 +76,16 @@ const cartItemsList = [
     listingId: 44,
     cartQty: 1,
     orderStatus: "Shipped"
+  },
+  {
+    orderId: 7,
+    listingId: 40,
+    cartQty: 1
+  },
+  {
+    orderId: 8,
+    listingId: 38,
+    cartQty: 1
   },
 ]
 /** @type {import('sequelize-cli').Migration} */

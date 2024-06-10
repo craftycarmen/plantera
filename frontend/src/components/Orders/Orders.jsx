@@ -54,7 +54,7 @@ function Orders() {
                                             </thead>
 
                                             <tbody>
-                                                {order?.CartItems.map(item => (
+                                                {order?.CartItems?.map(item => (
                                                     <tr key={item.id}>
                                                         <td>{item.cartQty}</td>
                                                         <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>

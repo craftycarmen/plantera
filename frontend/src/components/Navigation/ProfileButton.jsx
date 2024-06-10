@@ -7,7 +7,7 @@ import SignupFormModal from '../SignupFormModal';
 import { clearCart, resetCartId } from '../../store/cart';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RiPlantLine } from "react-icons/ri";
-import { BsSun, BsBoxSeam } from "react-icons/bs";
+import { BsBoxSeam } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
 
 

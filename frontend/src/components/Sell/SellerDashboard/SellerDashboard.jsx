@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOwnedShopOrders } from "../../../store/sell";
+import { fetchOwnedListings } from "../../../store/listings";
 import './SellerDashboard.css';
 import { price } from "../../../../utils";
 import Menu from "./Menu";
 
 function SellerDashboard({ sessionUser }) {
+    const userId = sessionUser?.id
     const dispatch = useDispatch();
-
-    const shop = () => {
-        if (Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop)) !== null) return Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop))
-    }
-
-    console.log("HELLO", Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop)))
+    const shop = Object.values(useSelector(state => state.listings)).filter(listing => listing.sellerId === userId);
     const activeListings = shop?.filter(listing => listing.stockQty > 0).length
     const soldListings = shop?.filter(listing => listing.stockQty === 0).length
     const shopOrders = Object.values(useSelector((state) => state.sell));
-    console.log("SHOPORDERS", shopOrders);
     const [showMenu] = useState(false);
     const [isTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
 
     useEffect(() => {
+        dispatch(fetchOwnedListings())
         dispatch(fetchOwnedShopOrders());
     }, [dispatch]);
 

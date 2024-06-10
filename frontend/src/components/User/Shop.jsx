@@ -12,6 +12,7 @@ function Shop() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId]?.User)
+    console.log("USER!", user);
     const shop = useSelector(state => state.user[userId]?.Shop)
     const activeListings = shop?.filter(listing => listing.stockQty > 0).sort((a, b) => (b.id - a.id))
     const soldListings = shop?.filter(listing => listing.stockQty === 0).sort((a, b) => {
@@ -38,7 +39,13 @@ function Shop() {
                     </div>
                     <div className="shopInfoContainer">
                         {shop.length === 0 ? (
-                            <div>This user does not have a shop.</div>
+                            <>
+                                {user?.accountType === "seller" ? (
+                                    <div>No current or past listings.</div>
+                                ) : (
+                                    <div>This user does not have a shop.</div>
+                                )}
+                            </>
                         ) :
                             (
                                 <>
@@ -118,10 +125,11 @@ function Shop() {
                             )}
 
                     </div>
-                </div>
+                </div >
             ) : (
                 <Error404 type="User" />
-            )}
+            )
+            }
         </>
     )
 }

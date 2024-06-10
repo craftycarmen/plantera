@@ -35,11 +35,11 @@ function UpdateOrderModal({ orderId, itemId, status, name }) {
                 <div className="orderStatusOptions">
                     <div className="radio">
                         <input type="radio"
-                            value="In Progress"
+                            value="Processing"
                             name="status"
-                            defaultChecked={orderStatus === "In Progress"}
-                            onClick={() => setOrderStatus("In Progress")}
-                        /><span>In Progress</span>
+                            defaultChecked={orderStatus === "Processing"}
+                            onClick={() => setOrderStatus("Processing")}
+                        /><span>Processing</span>
                     </div>
                     <div className="radio">
                         <input type="radio"

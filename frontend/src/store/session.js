@@ -133,6 +133,7 @@ const initialState = { user: null, cartId: null };
 const sessionReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER:
+            console.log("ACTION222", action.payload)
             return { ...state, user: action.payload };
         case REMOVE_USER:
             return { ...state, user: null, cartId: null };

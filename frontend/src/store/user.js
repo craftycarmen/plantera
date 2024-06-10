@@ -96,6 +96,7 @@ export const editProfile = (userId, user) => async (dispatch) => {
 const userReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_PROFILE: {
+            console.log("ACTION333", action);
             const { userId, user } = action;
             const updatedUser = {
                 ...user,

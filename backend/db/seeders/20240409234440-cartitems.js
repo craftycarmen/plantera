@@ -10,33 +10,71 @@ if (process.env.NODE_ENV === 'production') {
 const cartItemsList = [
   {
     orderId: 1,
-    listingId: 2,
-    cartQty: 2
+    listingId: 4,
+    cartQty: 2,
+    orderStatus: "Shipped"
   },
   {
     orderId: 2,
     listingId: 1,
-    cartQty: 1
+    cartQty: 1,
+    orderStatus: "Shipped"
   },
   {
     orderId: 2,
     listingId: 3,
+    cartQty: 1,
+    orderStatus: "Shipped"
+  },
+  {
+    orderId: 3,
+    listingId: 6,
     cartQty: 1
   },
   {
     orderId: 3,
-    listingId: 50,
-    cartQty: 1
-  },
-  {
-    orderId: 3,
-    listingId: 47,
-    cartQty: 1
+    listingId: 30,
+    cartQty: 1,
+    orderStatus: "Processing"
   },
   {
     orderId: 3,
     listingId: 48,
     cartQty: 1
+  },
+  {
+    orderId: 4,
+    listingId: 51,
+    cartQty: 2
+  },
+  {
+    orderId: 4,
+    listingId: 52,
+    cartQty: 3,
+    orderStatus: "Shipped"
+  },
+  {
+    orderId: 5,
+    listingId: 20,
+    cartQty: 1,
+    orderStatus: "Shipped"
+  },
+  {
+    orderId: 6,
+    listingId: 37,
+    cartQty: 3,
+    orderStatus: "Processing"
+  },
+  {
+    orderId: 6,
+    listingId: 47,
+    cartQty: 1
+  },
+  {
+    orderId: 6,
+    listingId: 44,
+    cartQty: 1,
+    orderStatus: "Shipped"
   },
 ]
 /** @type {import('sequelize-cli').Migration} */

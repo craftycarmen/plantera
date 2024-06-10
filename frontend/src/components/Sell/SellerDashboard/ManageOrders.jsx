@@ -87,7 +87,7 @@ function ManageOrders() {
                                                 <div>No unfulfilled orders!</div>
                                             ) : (
                                                 <div>
-                                                    <div style={{ paddingBottom: "10px" }}>Please fulfill all orders within 3 business days from order date.</div>
+                                                    <div style={{ paddingBottom: "20px" }}>Please fulfill all orders within 3 business days from order date.</div>
                                                     {unfulfilled.map(order => {
                                                         let orderTotalEarnings = 0;
                                                         let orderTotalItems = 0;

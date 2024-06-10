@@ -87,9 +87,11 @@ function Checkout() {
         }
 
         let orderId = null;
-        const res = await dispatch(addOrder(order))
 
+        const res = await dispatch(addOrder(order))
+        console.log("111ORDER", order);
         if (res) {
+            console.log("1222", res, res.order, res.order.id)
             orderId = res.order.id
 
             localStorage.removeItem('cartId');

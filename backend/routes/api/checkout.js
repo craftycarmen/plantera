@@ -65,7 +65,7 @@ router.post('/', requireAuth, async (req, res) => {
     try {
 
         const { user } = req
-        const { cartId, address, city, state, zipCode, paymentMethod, paymentDetails, subTotal, orderTotal } = req.body;
+        const { cartId, firstName, lastName, address, city, state, zipCode, paymentMethod, paymentDetails, subTotal, orderTotal } = req.body;
 
         const cart = await ShoppingCart.findOne({
             where: {
@@ -79,6 +79,8 @@ router.post('/', requireAuth, async (req, res) => {
 
         const order = await Order.create({
             buyerId: user.id,
+            firstName,
+            lastName,
             cartId,
             address,
             city,

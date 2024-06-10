@@ -144,28 +144,7 @@ function ShoppingCartPage() {
         await dispatch(fetchCart(cartId))
     };
 
-    // const removeQty = (itemId) => {
-    //     if (localCartQty[itemId] > 1) {
-    //         const updatedQty = localCartQty[itemId] - 1;
-    //         setLocalCartQty(prevCartQty => ({
-    //             ...prevCartQty,
-    //             [itemId]: updatedQty
-    //         }));
-    //     }
-    // };
-
-    // const handleUpdateCart = async () => {
-    //     await Promise.all(cartItems.map(async (item) => {
-    //         const updatedItem = {
-    //             ...item,
-    //             cartQty: localCartQty[item.id]
-    //         };
-    //         await dispatch(updateCartItemInCart(cartId, updatedItem));
-    //     }));
-
-    //     await dispatch(fetchCartItems());
-    //     await dispatch(fetchCart(cartId))
-    // }
+    console.log("CARTID", cartId);
 
     return (
         <>

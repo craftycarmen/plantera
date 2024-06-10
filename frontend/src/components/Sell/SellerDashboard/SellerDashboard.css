@@ -28,19 +28,6 @@
     padding: 20px;
 }
 
-
-.sellerStats {
-    display: flex;
-    gap: 50px;
-    margin: auto;
-    justify-content: center;
-    padding-top: 30px;
-}
-
-/* .sellerStats div div {
-    width: 150px;
-} */
-
 .vertical-line {
     padding-top: 20px;
     border-left: 1px solid #8EBAA8;
@@ -48,10 +35,27 @@
     margin: 20px 10px;
 }
 
-.sellerStats div,
-.sellerStats h2 {
+.sellerStats {
     display: grid;
-    justify-content: center;
+    gap: 50px;
+    margin: auto;
+    /* justify-content: center; */
+    padding-top: 30px;
+}
+
+.sellerStats h2 {
+    display: flex;
+    justify-content: start;
+}
+
+.sellerStatsRow {
+    display: flex;
+    gap: 30px;
+    justify-content: start;
+}
+
+.sellerStatsRow div {
+    width: 200px;
 }
 
 .sellerMenuButton {
@@ -279,6 +283,10 @@
         padding-top: 10px;
     }
 
+    .sellerStatsRow {
+        display: grid;
+    }
+
     .sellerStats div,
     .sellerStats h2 {
         justify-content: start;
@@ -319,9 +327,9 @@
     }
 
     .sellerStats {
+        display: grid;
         gap: 30px;
         padding-top: 10px;
-        justify-content: start;
     }
 
     .sellerStats div,

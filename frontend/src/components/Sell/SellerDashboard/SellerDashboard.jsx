@@ -36,6 +36,33 @@ function SellerDashboard({ sessionUser }) {
         })
     })
 
+    const unfulfilled = shopOrders?.map(order => {
+        const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);
+
+        const unshippedItems = sellerItems?.some(item => item.orderStatus === "Received" || item.orderStatus === "In Progress")
+            ;
+        if (unshippedItems) {
+            return {
+                ...order,
+                CartItems: sellerItems
+            }
+        }
+    }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0).length
+
+
+    const fulfilled = shopOrders?.map(order => {
+        const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);
+
+        const allShipped = sellerItems?.every(item => item.orderStatus === "Shipped");
+
+        if (allShipped && sellerItems.length > 0) {
+            return {
+                ...order,
+                CartItems: sellerItems
+            }
+        }
+    }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0).length
+
     return (
         <>
             <div className="sellerContainer">
@@ -44,25 +71,39 @@ function SellerDashboard({ sessionUser }) {
                     <div style={sellerContainerStyle} className="sellerRightContainer">
                         <h2>Your Latest Stats</h2>
                         <div className="sellerStats">
-                            <div>
-                                <h2>{price(totalEarnings)}</h2>
-                                <div>total earnings</div>
+                            <div className="sellerStatsRow">
+                                <div>
+                                    <h2>{price(totalEarnings)}</h2>
+                                    <div>total earnings</div>
+                                </div>
+                                <div>
+                                    <h2>{totalItems}</h2>
+                                    <div>{totalItems === 1 ? 'item sold' : 'total items sold'}</div>
+                                </div>
                             </div>
-                            <div>
-                                <h2>{totalItems}</h2>
-                                <div>{totalItems === 1 ? 'item sold' : 'total items sold'}</div>
+                            <div className="sellerStatsRow">
+                                <div>
+                                    <h2>{shopOrders.length}</h2>
+                                    <div>{shopOrders.lengths === 1 ? 'order' : 'total orders'}</div>
+                                </div>
+                                <div>
+                                    <h2>{unfulfilled}</h2>
+                                    <div>{unfulfilled === 1 ? 'unfulfilled order' : 'unfulfilled orders'}</div>
+                                </div>
+                                <div>
+                                    <h2>{fulfilled}</h2>
+                                    <div>{fulfilled === 1 ? 'fulfilled order' : 'fulfilled orders'}</div>
+                                </div>
                             </div>
-                            <div>
-                                <h2>{shopOrders.length}</h2>
-                                <div>{shopOrders.lengths === 1 ? 'order' : 'total orders'}</div>
-                            </div>
-                            <div>
-                                <h2>{activeListings}</h2>
-                                <div>{activeListings === 1 ? 'active listing' : 'active listings'}</div>
-                            </div>
-                            <div>
-                                <h2>{soldListings}</h2>
-                                <div>{soldListings === 1 ? 'inactive listing' : 'inactive listings'}</div>
+                            <div className="sellerStatsRow">
+                                <div>
+                                    <h2>{activeListings}</h2>
+                                    <div>{activeListings === 1 ? 'active listing' : 'active listings'}</div>
+                                </div>
+                                <div>
+                                    <h2>{soldListings}</h2>
+                                    <div>{soldListings === 1 ? 'inactive listing' : 'inactive listings'}</div>
+                                </div>
                             </div>
                         </div>
                     </div>

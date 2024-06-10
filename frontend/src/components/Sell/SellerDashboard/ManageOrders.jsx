@@ -22,19 +22,18 @@ function ManageOrders() {
 
     const unfulfilled = shopOrders?.map(order => {
         const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);
-        console.log("selleritems", sellerItems);
+
         const unshippedItems = sellerItems?.some(item => item.orderStatus === "Received" || item.orderStatus === "In Progress")
-        console.log("unshippedItems", unshippedItems);
+            ;
         if (unshippedItems) {
             return {
                 ...order,
                 CartItems: sellerItems
             }
         }
-
     }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0)
 
-    console.log("UNFULFILLED", unfulfilled);
+
     const fulfilled = shopOrders?.map(order => {
         const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);
 
@@ -48,7 +47,7 @@ function ManageOrders() {
         }
     }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0)
 
-    console.log("FULFILLED", fulfilled);
+
     useEffect(() => {
         dispatch(fetchOwnedShopOrders());
     }, [dispatch]);

@@ -7,7 +7,11 @@ import Menu from "./Menu";
 
 function SellerDashboard({ sessionUser }) {
     const dispatch = useDispatch();
-    const shop = Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop))
+
+    const shop = () => {
+        if (Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop)) !== null) return Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop))
+    }
+
     console.log("HELLO", Object.values(useSelector(state => state.user[sessionUser?.id]?.Shop)))
     const activeListings = shop?.filter(listing => listing.stockQty > 0).length
     const soldListings = shop?.filter(listing => listing.stockQty === 0).length

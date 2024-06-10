@@ -32,7 +32,7 @@ function ManageOrders() {
             }
         }
 
-    }).filter(order => order?.CartItems?.length > 0)
+    }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0)
 
     console.log("UNFULFILLED", unfulfilled);
     const fulfilled = shopOrders?.map(order => {
@@ -46,7 +46,7 @@ function ManageOrders() {
                 CartItems: sellerItems
             }
         }
-    }).filter(order => order?.CartItems?.length > 0)
+    }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0)
 
     console.log("FULFILLED", fulfilled);
     useEffect(() => {

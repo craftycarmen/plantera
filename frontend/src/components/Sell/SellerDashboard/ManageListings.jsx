@@ -102,10 +102,6 @@ function ManageSellerListings() {
                                                 <div></div>
                                                 <div className="listingButtons">
                                                     <Link to={`/listings/${listing.id}/edit`}><button>Edit</button></Link>
-                                                    <OpenModalButton
-                                                        buttonText="Delete"
-                                                        modalComponent={<DeleteListingModal listingId={listing.id} />}
-                                                    />
                                                 </div>
                                             </div>
                                         </div>

@@ -285,7 +285,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
                                             onClick={fetchListings}
 
                                         />
-                                        <span style={{ marginTop: "8px" }}>{range.name}</span>
+                                        <span>{range.name}</span>
 
                                     </label>
                                 ))}

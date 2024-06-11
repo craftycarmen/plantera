@@ -29,12 +29,12 @@
 }
 
 .filterInputBox {
-    border: none;
-    padding: 2px 5px;
-    margin-top: 5px;
+    border: none !important;
+    padding: 2px 5px !important;
+    margin-top: 3px !important;
     outline: none;
-    background-color: #efefef;
-    border-radius: 3px;
+    background-color: #efefef !important;
+    border-radius: 3px !important;
 }
 
 .filterInputBox::-webkit-inner-spin-button,
@@ -87,16 +87,17 @@
 }
 
 .customPrice input {
-    margin-top: 10px;
-    width: 26px;
+    width: 40px !important;
 }
 
 .customPrice span {
-    margin-top: 0px;
+    margin-top: -8px;
+    margin-right: 3px;
 }
 
 .customPrice button {
     margin-left: 10px;
+    margin-top: -6px;
     width: 30px;
 }
 

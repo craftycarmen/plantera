@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const ordersList = [
   {
-    buyerId: 1,
+    buyerId: 2,
     orderId: 1,
     firstName: "Ellie",
     lastName: "Bellie",
@@ -103,8 +103,8 @@ const ordersList = [
     zipCode: '94107',
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
-    subTotal: 35.00,
-    orderTotal: 37.89
+    subTotal: 79.00,
+    orderTotal: 85.52
   },
   {
     buyerId: 11,
@@ -119,6 +119,34 @@ const ordersList = [
     paymentDetails: '0000',
     subTotal: 30.00,
     orderTotal: 32.48
+  },
+  {
+    buyerId: 15,
+    orderId: 9,
+    firstName: "Frank",
+    lastName: "Johnson",
+    address: '2222 Fifth St',
+    city: "Seattle",
+    state: "WA",
+    zipCode: '98040',
+    paymentMethod: 'Americano Expresso',
+    paymentDetails: '0000',
+    subTotal: 48.00,
+    orderTotal: 51.96
+  },
+  {
+    buyerId: 1,
+    orderId: 10,
+    firstName: "Ellie",
+    lastName: "Bellie",
+    address: '555 Mission Blvd',
+    city: "San Francisco",
+    state: "CA",
+    zipCode: '94107',
+    paymentMethod: 'Americano Expresso',
+    paymentDetails: '0000',
+    subTotal: 18.00,
+    orderTotal: 19.49
   },
 ]
 

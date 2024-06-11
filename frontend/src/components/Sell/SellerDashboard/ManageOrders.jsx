@@ -123,9 +123,11 @@ function ManageOrders() {
                                                                         <tbody>
                                                                             {order.CartItems?.map(item => (
                                                                                 <tr key={item.Listing?.id}>
-                                                                                    <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
+                                                                                    <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link> ({price(item.Listing?.price)}/ea)</td>
                                                                                     <td>{item.cartQty}</td>
-                                                                                    <td>{price(item.Listing?.price)}</td>
+                                                                                    <td>
+                                                                                        <div>{price(item.cartQty * item.Listing?.price)}</div>
+                                                                                    </td>
                                                                                     <td><OpenModalMenuItem
                                                                                         itemText={<span>{item.orderStatus} <i className="fa-solid fa-pen" /></span>}
                                                                                         modalComponent={<UpdateOrderModal orderId={order.id} status={item.orderStatus} name={item.Listing?.plantName} itemId={item.id} />} /></td>
@@ -188,9 +190,11 @@ function ManageOrders() {
                                                                             <tbody>
                                                                                 {order.CartItems?.map(item => (
                                                                                     <tr key={item.Listing?.id}>
-                                                                                        <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link></td>
+                                                                                        <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link> ({price(item.Listing?.price)}/ea)</td>
                                                                                         <td>{item.cartQty}</td>
-                                                                                        <td>{price(item.Listing?.price)}</td>
+                                                                                        <td>
+                                                                                            <div>{price(item.cartQty * item.Listing?.price)}</div>
+                                                                                        </td>
                                                                                         <td>{item.orderStatus}</td>
                                                                                     </tr>
                                                                                 ))}

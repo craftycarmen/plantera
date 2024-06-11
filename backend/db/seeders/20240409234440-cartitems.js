@@ -11,7 +11,7 @@ const cartItemsList = [
   {
     orderId: 1,
     listingId: 4,
-    cartQty: 2,
+    cartQty: 1,
     orderStatus: "Shipped"
   },
   {
@@ -29,7 +29,8 @@ const cartItemsList = [
   {
     orderId: 3,
     listingId: 6,
-    cartQty: 1
+    cartQty: 1,
+    orderStatus: "Shipped"
   },
   {
     orderId: 3,
@@ -46,7 +47,7 @@ const cartItemsList = [
     orderId: 4,
     listingId: 51,
     cartQty: 2,
-    orderStatus: "Processing"
+    orderStatus: "Shipped"
   },
   {
     orderId: 4,
@@ -80,11 +81,37 @@ const cartItemsList = [
   {
     orderId: 7,
     listingId: 40,
-    cartQty: 1
+    cartQty: 1,
+    orderStatus: "Processing"
+  },
+  {
+    orderId: 7,
+    listingId: 39,
+    cartQty: 2,
   },
   {
     orderId: 8,
     listingId: 38,
+    cartQty: 1
+  },
+  {
+    orderId: 9,
+    listingId: 56,
+    cartQty: 1
+  },
+  {
+    orderId: 9,
+    listingId: 57,
+    cartQty: 1
+  },
+  {
+    orderId: 9,
+    listingId: 60,
+    cartQty: 1
+  },
+  {
+    orderId: 10,
+    listingId: 41,
     cartQty: 1
   },
 ]

@@ -449,7 +449,48 @@ const listingsList = [
     price: 18,
     potSize: 3,
     stockQty: 25
+  },
+  {
+    sellerId: 1,
+    plantName: "Zebra Plant",
+    description: "The Zebra Plant is perfect for adding a touch of the wild to your home. Its striking white-striped leaves are sure to catch the eye.",
+    price: 15,
+    potSize: 6,
+    stockQty: 0
+  },
+  {
+    sellerId: 1,
+    plantName: "Calathea Medallion",
+    description: "The Calathea Medallion is known for its beautiful, large leaves with a unique pattern. A stunning addition to any indoor garden.",
+    price: 20,
+    potSize: 8,
+    stockQty: 0
+  },
+  {
+    sellerId: 2,
+    plantName: "String of Dolphins",
+    description: "The String of Dolphins is a charming succulent with leaves that resemble jumping dolphins, adding a playful touch to any space.",
+    price: 18,
+    potSize: 6,
+    stockQty: 0
+  },
+  {
+    sellerId: 2,
+    plantName: "Dragon Tree",
+    description: "The Dragon Tree is a striking, easy-to-grow plant with long, sword-like leaves and a bold, architectural presence.",
+    price: 30,
+    potSize: 10,
+    stockQty: 0
+  },
+  {
+    sellerId: 1,
+    plantName: "Peperomia Rosso",
+    description: "The Peperomia Rosso is a compact plant with striking red undersides and glossy green leaves, perfect for tabletops or small spaces.",
+    price: 13,
+    potSize: 4,
+    stockQty: 0
   }
+
 ]
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

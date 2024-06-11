@@ -1,5 +1,5 @@
 .orderWrapper {
-    max-width: 1000px;
+    width: 1000px;
 }
 
 .orderWrapper hr {
@@ -55,4 +55,50 @@
 
 .orderSection table tr:last-child td {
     border-bottom: none;
+}
+
+
+@media screen and (max-width: 480px) {
+    .orderWrapper {
+        width: 77vw;
+    }
+
+    .orderSection table {
+        width: 77vw;
+    }
+
+    .orderSection table th:nth-child(2),
+    .orderSection table td:nth-child(2) {
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .orderWrapper {
+        width: 77vw;
+    }
+
+    .orderSection table {
+        width: 77vw;
+    }
+
+    .orderSection table th:nth-child(2),
+    .orderSection table td:nth-child(2) {
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .orderWrapper {
+        width: 60vw;
+    }
+
+    .orderSection table {
+        width: 60vw;
+    }
+
+    .orderSection table th:nth-child(2),
+    .orderSection table td:nth-child(2) {
+        width: auto;
+    }
 }

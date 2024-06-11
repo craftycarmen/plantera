@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { editOrder, fetchOwnedShopOrders } from "../../../store/sell";
 import { useState } from "react";
+import './SellerDashboard.css';
 
 function UpdateOrderModal({ orderId, itemId, status, name }) {
     const { closeModal } = useModal();

@@ -84,13 +84,12 @@ function ManageOrders() {
                                     <div>No orders yet!</div>
                                 ) : (
                                     <div className="unfulfilledFulfilled">
-                                        <div>
+                                        <div className="ordersWrapper">
                                             <ManageOrdersTabs />
                                             <UnfulfilledOrders unfulfilled={unfulfilled} shopOrders={shopOrders} dateFormat={dateFormat} />
                                         </div>
                                         {location.pathname === '/sell/orders/fulfilled' &&
-                                            <div>
-
+                                            <div className="ordersWrapper">
                                                 <FulfilledOrders fulfilled={fulfilled} shopOrders={shopOrders} dateFormat={dateFormat} />
                                             </div>
                                         }

@@ -89,3 +89,53 @@
     background-color: #8EBAA8;
     cursor: default;
 }
+
+.unfulfilled {
+    padding-bottom: 20px;
+}
+
+
+@media screen and (max-width: 480px) {
+
+    .orderInfo {
+        display: grid;
+        gap: 20px;
+    }
+
+    .ordersWrapper {
+        width: 77vw;
+    }
+
+    .orderTabs {
+        width: 77vw;
+    }
+
+    .items table {
+        width: 50vw;
+    }
+
+    .items table th:first-child,
+    .items table td:first-child {
+        width: auto;
+    }
+
+    .unfulfilled {
+        width: 77vw;
+    }
+
+    .orderModal .deleteButtons {
+        display: grid;
+    }
+
+    .orderModal h2 {
+        text-align: center;
+    }
+
+    .orderStatusOptions {
+        display: grid;
+        grid-template-columns: auto;
+        padding-top: 10px;
+        gap: 0px;
+        justify-items: start;
+    }
+}

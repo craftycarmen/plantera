@@ -1,0 +1,91 @@
+.orderInfo {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 100px;
+    padding-bottom: 20px;
+}
+
+.shipTo {
+    display: flex;
+    gap: 20px;
+}
+
+.items table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.items th,
+.items td {
+    text-align: left;
+    padding: 5px 15px;
+    border: 1px solid #8EBAA8;
+}
+
+.items table th:first-child,
+.items table td:first-child {
+    border-left: none;
+    width: 40vw;
+}
+
+.items table th:nth-child(2),
+.items table td:nth-child(2) {
+    text-align: center;
+}
+
+.items table th:last-child,
+.items table td:last-child {
+    border-right: none;
+}
+
+.items table tr:first-child th,
+.items table tr:first-child td {
+    border-top: none;
+}
+
+.items table tr:last-child td {
+    border-bottom: none;
+}
+
+.items tbody tr:last-child {
+    font-style: italic;
+    background-color: rgba(142, 186, 168, 0.5)
+}
+
+.orderStatusOptions,
+.radio {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.radio span {
+    margin-right: 20px;
+}
+
+.unfulfilledFulfilled {
+    display: flex;
+}
+
+.orderTabs div {
+    border: 1px solid #8EBAA8;
+    border-bottom: none;
+    padding: 10px 15px;
+    width: fit-content;
+    border-radius: 3px;
+}
+
+.orderTabs div:first-child {
+    border-right: none;
+}
+
+.orderTabs {
+    display: flex;
+    border-bottom: 1px solid #8EBAA8;
+}
+
+.currentTab {
+    background-color: #8EBAA8;
+    cursor: default;
+}

@@ -72,7 +72,7 @@ function Menu({ sessionUser }) {
 
                     {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
 
-                    {location.pathname === '/sell/orders' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
+                    {location.pathname === '/sell/orders' || location.pathname === '/sell/orders/fulfilled' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
 
                     <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop</Link></div>
                 </div>

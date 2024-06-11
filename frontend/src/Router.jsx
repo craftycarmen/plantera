@@ -25,6 +25,7 @@ import Sell from './components/Sell/SellPage/Sell';
 import ManageSellerListings from './components/Sell/SellerDashboard/ManageListings';
 import Orders from './components/Orders';
 import ManageOrders from './components/Sell/SellerDashboard/ManageOrders';
+import FulfilledOrders from './components/Sell/SellerDashboard/ManageOrders/FulfilledOrders';
 
 const router = createBrowserRouter([
     {
@@ -129,6 +130,10 @@ const router = createBrowserRouter([
             {
                 path: 'sell/orders',
                 element: <ManageOrders />
+            },
+            {
+                path: 'sell/orders/fulfilled',
+                element: <FulfilledOrders />
             },
         ]
     }

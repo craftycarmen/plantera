@@ -28,7 +28,7 @@ function ManageGuides() {
                     <div className='currentGuides'>
                         <Link to={`/guides/new`}><button style={{ width: "fit-content" }}>Create New Guide</button></Link>
                     </div>
-                    No guides listed!</>
+                    No guides published!</>
             ) : (
                 <>
                     <div className='currentGuides'>

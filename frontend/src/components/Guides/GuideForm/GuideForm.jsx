@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addGuide, editGuide } from "../../../store/guides";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
+import { useQuill } from "react-quilljs";
+import 'quill/dist/quill.snow.css';
 import { useNavigate } from "react-router-dom";
 import ErrorHandling from "../../ErrorHandling";
 import { titleCase, upperCaseFirst } from "../../../../utils";
@@ -20,34 +20,54 @@ function GuideForm({ guide, formType }) {
     const [errors, setErrors] = useState({});
     const [imageLoading, setImageLoading] = useState(false);
 
-    const modules = {
-        toolbar: {
-            container: [
-                [{ header: [1, 2, false] }],
-                ["bold", "italic", "underline", "strike"],
-                [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
-                // ["link", "image"],
-                ["link"],
-                ["clean"]
-            ],
-            // handlers: {
-            //     'image': handleImageUpload
-            // }
-        }
-    }
+    const theme = 'snow';
 
-    const formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "list",
-        "bullet",
-        "indent",
-        "link",
-        // "image"
-    ]
+    const modules = {
+        toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
+            // ["link", "image"],
+            ["link"],
+            ["clean"]
+        ],
+    };
+
+    // const placeholder = 'Compose an epic...';
+
+    // const formats = ['bold', 'italic', 'underline', 'strike'];
+
+
+    const { quillRef } = useQuill({ theme, modules });
+
+    // const modules = {
+    //     toolbar: {
+    //         container: [
+    //             [{ header: [1, 2, false] }],
+    //             ["bold", "italic", "underline", "strike"],
+    //             [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
+    //             // ["link", "image"],
+    //             ["link"],
+    //             ["clean"]
+    //         ],
+    //         // handlers: {
+    //         //     'image': handleImageUpload
+    //         // }
+    //     }
+    // }
+
+    // const formats = [
+    //     "header",
+    //     "bold",
+    //     "italic",
+    //     "underline",
+    //     "strike",
+    //     "list",
+    //     "bullet",
+    //     "indent",
+    //     "link",
+    //     // "image"
+    // ]
 
     const updateFile = e => {
         const file = e.target.files[0];
@@ -56,7 +76,7 @@ function GuideForm({ guide, formType }) {
 
     const createGuide = formType === 'Create Guide';
     const updateGuide = formType === 'Update Guide';
-
+    console.log("CONTENT", typeof content);
     useEffect(() => {
         const errs = {};
 
@@ -155,12 +175,13 @@ function GuideForm({ guide, formType }) {
                     </div>
                     <div className="inputContainer">
                         <div>Content*</div>
-                        <ReactQuill
-                            theme="snow"
+                        <textarea
+                            ref={quillRef}
+                            type="text"
                             value={content}
-                            onChange={setContent}
-                            modules={modules}
-                            formats={formats}
+                            onChange={(e) => setContent(e.target.value)}
+                            placeholder=""
+                            id="description"
                         />
 
                         <div className="error">{errors?.content &&

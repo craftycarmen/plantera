@@ -66,7 +66,7 @@ function GuideForm({ guide, formType }) {
 
 
     useEffect(() => {
-        if (quill) {
+        if (quill && content !== quill.root.innerHTML) {
             quill.clipboard.dangerouslyPasteHTML(content);
             quill.on('text-change', () => {
                 setContent(quill.root.innerHTML);

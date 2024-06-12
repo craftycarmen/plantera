@@ -16,12 +16,6 @@ function SignupFormModal({ navigate }) {
     const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    // const [bio, setBio] = useState("");
-    // const [favoritePlant, setFavoritePlant] = useState("");
-    // const [accountType, setAccountType] = useState("");
-    // const [shopDescription, setShopDescription] = useState("");
-    // const [paymentMethod, setPaymentMethod] = useState("");
-    // const [paymentDetails, setPaymentDetails] = useState("");
     const [image, setImage] = useState("");
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState({});

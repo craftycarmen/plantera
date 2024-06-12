@@ -26,18 +26,20 @@ function SearchModal({ navigate }) {
 
     return (
         <section className="searchModal">
-            <h1>Search</h1>
             <form onSubmit={handleSubmit} className='searchForm'>
-                <input
-                    type='text'
-                    value={searchQuery}
-                    placeholder='monstera, ficus, pothos'
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    id='searchQuery'
-                />
-                <button
-                    type='submit'
-                ><i style={{ fontSize: "x-large" }} className="fa-solid fa-magnifying-glass" /></button>
+                <h1>Search</h1>
+                <div>
+                    <input
+                        type='text'
+                        value={searchQuery}
+                        placeholder='monstera, ficus, pothos'
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        id='searchQuery'
+                    />
+                    <button
+                        type='submit'
+                    ><i style={{ fontSize: "x-large" }} className="fa-solid fa-magnifying-glass" /></button>
+                </div>
             </form>
         </section>
     )

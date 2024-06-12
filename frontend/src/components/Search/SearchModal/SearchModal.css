@@ -22,8 +22,13 @@
 }
 
 .searchForm {
-    display: flex;
+    display: grid;
     justify-content: center;
+    width: auto;
+}
+
+.searchForm div {
+    display: flex;
 }
 
 .searchModal input {
@@ -34,7 +39,8 @@
     background-color: transparent;
     border: none;
     width: fit-content;
-    margin-left: 20px;
+    margin-top: 8px;
+    margin-left: 10px;
 }
 
 @media screen and (max-width: 480px) {

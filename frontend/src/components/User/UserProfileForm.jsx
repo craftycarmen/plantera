@@ -247,8 +247,8 @@ function UserProfileForm({ formType }) {
                     disabled={errors && !!Object.values(errors)?.length}
                 >{formType}</button>
 
+                {isCompleteProfile && <div className="skip"><Link to='/'>Skip for Now</Link></div>}
             </form >
-            {isCompleteProfile && <div className="skip"><Link to='/'>Skip for Now</Link></div>}
         </section>
     )
 }

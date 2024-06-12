@@ -117,6 +117,7 @@ function SearchPage() {
     };
 
     const handleFilterChange = (filterParams) => {
+        setFiltersApplied(true)
         setLoading(true);
         dispatch(fetchListingResults(searchTerm, filterParams))
             .then(() => {
@@ -157,12 +158,18 @@ function SearchPage() {
     return (
         <>
             <h1>Search Results</h1>
-            <div>{results(listings?.length)} for &#34;{searchTerm}&#34;</div>
-            <br />
-            <div className="filterSort">
-                <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} toggleSortMenu={toggleSortMenu} currentSortOrder={sortOrder} />
-            </div>
+            {error || displayedListings?.length === 0 && !filtersApplied ? (
+                <div>No results found for &#34;{searchTerm}&#34;. Please try a different search term.</div>
+            ) : (
+                <>
+                    <div>{results(listings?.length)} for &#34;{searchTerm}&#34;</div>
+                    <br />
+                    <div className="filterSort">
+                        <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
+                        <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} toggleSortMenu={toggleSortMenu} currentSortOrder={sortOrder} />
+                    </div>
+                </>
+            )}
             <div className="listingsContainer" style={listingsContainerStyle}>
                 {loading ? (
                     <div className="dots"></div>
@@ -170,7 +177,9 @@ function SearchPage() {
                     <>
                         {displayedListings?.length === 0 ? (
                             <>
-                                <div>No results found. Please refine or clear filters.</div>
+                                {filtersApplied &&
+                                    <div>No results found with given filters. Please refine or clear filters.</div>
+                                }
                             </>
                         ) : (
                             <>

@@ -18,9 +18,9 @@ function SearchModal({ navigate }) {
         searchTermLocalStorage(searchQuery);
         dispatch(fetchListingResults(searchQuery))
             .then(() => {
+                closeModal();
                 navigate(`/search?search=${searchQuery}`)
                 setSearchQuery('')
-                closeModal();
             })
     }
 

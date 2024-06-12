@@ -257,6 +257,8 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
     useEffect(() => {
         setMinPrice(undefined);
         setMaxPrice(undefined);
+        setCustomMinPrice(undefined);
+        setCustomMaxPrice(undefined);
         setPotSize(undefined);
         setSelectedPrice({});
     }, [searchTerm]);

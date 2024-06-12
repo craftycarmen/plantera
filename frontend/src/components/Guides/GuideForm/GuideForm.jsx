@@ -114,7 +114,6 @@ function GuideForm({ guide, formType }) {
     return (
         <section className="guideForm">
             <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/guides/current">Manage Guides</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;{formType}</h3>
-            <br />
             {!sessionUser ? (
                 <ErrorHandling />
             ) : (

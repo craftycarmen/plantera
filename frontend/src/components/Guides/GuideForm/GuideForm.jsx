@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addGuide, editGuide } from "../../../store/guides";
 import { useQuill } from "react-quilljs";
 import 'quill/dist/quill.snow.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ErrorHandling from "../../ErrorHandling";
 import { titleCase, upperCaseFirst } from "../../../../utils";
 import './GuideForm.css'
@@ -24,7 +24,7 @@ function GuideForm({ guide, formType }) {
 
     const modules = {
         toolbar: [
-            [{ header: [1, 2, false] }],
+            [{ header: '2' }, { header: '3' }],
             ['bold', 'italic', 'underline', 'strike'],
             [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
             // ["link", "image"],
@@ -72,7 +72,7 @@ function GuideForm({ guide, formType }) {
                 setContent(quill.root.innerHTML);
             });
         }
-    }, [quill]);
+    }, [content, quill]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -113,7 +113,8 @@ function GuideForm({ guide, formType }) {
 
     return (
         <section className="guideForm">
-            <h1>{formType}</h1>
+            <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/guides/current">Manage Guides</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;{formType}</h3>
+            <br />
             {!sessionUser ? (
                 <ErrorHandling />
             ) : (

@@ -3,10 +3,7 @@ import { useState, useEffect } from "react";
 import ErrorHandling from "../../../ErrorHandling";
 import Menu from "../Menu";
 import { fetchOwnedShopOrders } from "../../../../store/sell";
-import { price } from "../../../../../utils";
-import { Link, useLocation } from "react-router-dom";
-import UpdateOrderModal from "../UpdateOrderModal";
-import OpenModalMenuItem from "../../../Navigation/OpenModalMenuItem";
+import { useLocation } from "react-router-dom";
 import './ManageOrders.css';
 import UnfulfilledOrders from "./UnfulfilledOrders";
 import FulfilledOrders from "./FulfilledOrders";
@@ -27,7 +24,7 @@ function ManageOrders() {
     const unfulfilled = shopOrders?.map(order => {
         const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);
 
-        const unshippedItems = sellerItems?.some(item => item.orderStatus === "Received" || item.orderStatus === "In Progress")
+        const unshippedItems = sellerItems?.some(item => item.orderStatus === "Received" || item.orderStatus === "Processing")
             ;
         if (unshippedItems) {
             return {
@@ -36,7 +33,6 @@ function ManageOrders() {
             }
         }
     }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0)
-
 
     const fulfilled = shopOrders?.map(order => {
         const sellerItems = order?.CartItems?.filter(item => item.Listing?.sellerId === sessionUser?.id);

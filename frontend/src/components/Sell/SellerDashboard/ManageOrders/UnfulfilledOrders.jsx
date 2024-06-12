@@ -1,8 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import ErrorHandling from "../../../ErrorHandling";
-import Menu from "../Menu";
-import { fetchOwnedShopOrders } from "../../../../store/sell";
 import { price } from "../../../../../utils";
 import { Link } from "react-router-dom";
 import UpdateOrderModal from "../UpdateOrderModal";

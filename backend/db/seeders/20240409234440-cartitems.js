@@ -29,8 +29,7 @@ const cartItemsList = [
   {
     orderId: 3,
     listingId: 6,
-    cartQty: 1,
-    orderStatus: "Shipped"
+    cartQty: 1
   },
   {
     orderId: 3,

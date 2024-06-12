@@ -265,6 +265,8 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         e.preventDefault();
         setMinPrice(undefined);
         setMaxPrice(undefined);
+        setCustomMinPrice(undefined);
+        setCustomMaxPrice(undefined);
         setPotSize(undefined);
         setSelectedPrice({});
         setPotSizeButtonClicked(false);

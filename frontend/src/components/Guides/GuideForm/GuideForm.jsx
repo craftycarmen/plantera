@@ -29,45 +29,18 @@ function GuideForm({ guide, formType }) {
             [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
             // ["link", "image"],
             ["link"],
-            ["clean"]
         ],
     };
 
-    // const placeholder = 'Compose an epic...';
+    const formats = [
+        'bold', 'italic', 'underline', 'strike',
+        'align', 'list', 'indent',
+        'size', 'header',
+        'link', 'image', 'video',
+        'color', 'background',
+    ]
 
-    // const formats = ['bold', 'italic', 'underline', 'strike'];
-
-
-    const { quillRef } = useQuill({ theme, modules });
-
-    // const modules = {
-    //     toolbar: {
-    //         container: [
-    //             [{ header: [1, 2, false] }],
-    //             ["bold", "italic", "underline", "strike"],
-    //             [{ list: "ordered" }, { list: "bullet" }, { 'indent': '-1' }, { 'indent': '+1' }],
-    //             // ["link", "image"],
-    //             ["link"],
-    //             ["clean"]
-    //         ],
-    //         // handlers: {
-    //         //     'image': handleImageUpload
-    //         // }
-    //     }
-    // }
-
-    // const formats = [
-    //     "header",
-    //     "bold",
-    //     "italic",
-    //     "underline",
-    //     "strike",
-    //     "list",
-    //     "bullet",
-    //     "indent",
-    //     "link",
-    //     // "image"
-    // ]
+    const { quill, quillRef } = useQuill({ theme, modules, formats });
 
     const updateFile = e => {
         const file = e.target.files[0];
@@ -76,7 +49,7 @@ function GuideForm({ guide, formType }) {
 
     const createGuide = formType === 'Create Guide';
     const updateGuide = formType === 'Update Guide';
-    console.log("CONTENT", typeof content);
+
     useEffect(() => {
         const errs = {};
 
@@ -90,6 +63,16 @@ function GuideForm({ guide, formType }) {
 
         setErrors(errs);
     }, [title, description, image, content, createGuide])
+
+
+    useEffect(() => {
+        if (quill) {
+            quill.clipboard.dangerouslyPasteHTML(content);
+            quill.on('text-change', () => {
+                setContent(quill.root.innerHTML);
+            });
+        }
+    }, [quill]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -175,14 +158,17 @@ function GuideForm({ guide, formType }) {
                     </div>
                     <div className="inputContainer">
                         <div>Content*</div>
-                        <textarea
+                        <div ref={quillRef} />
+                        {/* <textarea
                             ref={quillRef}
                             type="text"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                             placeholder=""
                             id="description"
-                        />
+                        /> */}
+                        {/* </div> */}
+
 
                         <div className="error">{errors?.content &&
                             <><i className="fa-solid fa-circle-exclamation" /> {errors.content}</>}</div>

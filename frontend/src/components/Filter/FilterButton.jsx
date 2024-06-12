@@ -58,14 +58,22 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
     useEffect(() => {
         const errs = {};
 
+        const min = Number(customMinPrice);
+        const max = Number(customMaxPrice);
+
         if (
-            customMinPrice !== undefined &&
-            customMaxPrice !== undefined &&
-            customMinPrice !== "" &&
-            customMaxPrice !== "" &&
-            customMinPrice >= 0 &&
-            customMaxPrice >= 0 &&
-            customMinPrice >= customMaxPrice
+            // customMinPrice !== undefined &&
+            // customMaxPrice !== undefined &&
+            // customMinPrice !== "" &&
+            // customMaxPrice !== "" &&
+            // customMinPrice >= 0 &&
+            // customMaxPrice >= 0 &&
+            // customMinPrice >= customMaxPrice
+            !isNaN(min) &&
+            !isNaN(max) &&
+            min >= 0 &&
+            max >= 0 &&
+            min >= max
         ) {
             errs.customMinPrice = "Minimum price must be less than maximum price";
         } else {
@@ -102,22 +110,33 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
     const handleCustomApply = (e) => {
         e.preventDefault()
         // const { minPrice: newMinPrice, maxPrice: newMaxPrice } = option.value;
-        if (customMinPrice !== undefined &&
-            customMaxPrice !== undefined &&
-            customMinPrice !== "" &&
-            customMaxPrice !== "" &&
-            customMinPrice >= 0 &&
-            customMaxPrice >= 0 &&
-            customMinPrice >= customMaxPrice) {
+
+        const min = Number(customMinPrice);
+        const max = Number(customMaxPrice);
+
+        if (
+            // customMinPrice !== undefined &&
+            // customMaxPrice !== undefined &&
+            // customMinPrice !== "" &&
+            // customMaxPrice !== "" &&
+            // customMinPrice >= 0 &&
+            // customMaxPrice >= 0 &&
+            // customMinPrice >= customMaxPrice
+            !isNaN(min) &&
+            !isNaN(max) &&
+            min >= 0 &&
+            max >= 0 &&
+            min >= max
+        ) {
             setErrors({ customMinPrice: "Minimum price must be less than maximum price" })
             return;
         }
 
         setSelectedPrice(priceOptions.find(option => option.name === ''))
         setErrors({});
-        setMinPrice(customMinPrice);
-        setMaxPrice(customMaxPrice);
-        const filters = { minPrice: customMinPrice, maxPrice: customMaxPrice };
+        setMinPrice(min);
+        setMaxPrice(max);
+        const filters = { minPrice: min, maxPrice: max };
         dispatch(fetchListingResults(searchTerm, filters));
         if (onFilterChange) onFilterChange(filters);
     }
@@ -254,6 +273,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         onFilterToggle()
     }
 
+    console.log("PRICING", customMinPrice, customMaxPrice);
     return (
         <div className="filterButtonWrapper">
             <span className="filterButton" onClick={toggleMenu}>
@@ -297,7 +317,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
                                         step="1"
                                         min="0"
                                         value={customMinPrice === "" ? "" : customMinPrice || ""}
-                                        onChange={(e) => setCustomMinPrice(e.target.value === "" ? undefined : e.target.value)}
+                                        onChange={(e) => setCustomMinPrice(e.target.value === "" ? undefined : Number(e.target.value))}
                                     /><span>&nbsp;—&nbsp;</span>
                                     <span>$</span><input
                                         className="filterInputBox"
@@ -305,7 +325,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
                                         step="1"
                                         min="0"
                                         value={customMaxPrice === "" ? "" : customMaxPrice || ""}
-                                        onChange={(e) => setCustomMaxPrice(e.target.value === "" ? undefined : e.target.value)}
+                                        onChange={(e) => setCustomMaxPrice(e.target.value === "" ? undefined : Number(e.target.value))}
                                     />
                                     <button
                                         disabled={(!customMinPrice && !customMaxPrice) || errors && !!Object.values(errors)?.length

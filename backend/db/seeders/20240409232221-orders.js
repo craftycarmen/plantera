@@ -20,7 +20,8 @@ const ordersList = [
     paymentMethod: 'VIZZA',
     paymentDetails: '1234',
     subTotal: 15.00,
-    orderTotal: 16.24
+    orderTotal: 16.24,
+    createdAt: "2024-05-12T00:00:26.369Z"
   },
   {
     buyerId: 3,
@@ -34,7 +35,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 130.00,
-    orderTotal: 140.73
+    orderTotal: 140.73,
+    createdAt: "2024-05-18T00:00:26.369Z"
   },
   {
     buyerId: 10,
@@ -48,7 +50,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 85.00,
-    orderTotal: 92.01
+    orderTotal: 92.01,
+    createdAt: "2024-05-19T00:00:26.369Z"
   },
   {
     buyerId: 1,
@@ -62,7 +65,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 128.00,
-    orderTotal: 138.56
+    orderTotal: 138.56,
+    createdAt: "2024-05-19T00:00:00.369Z"
   },
   {
     buyerId: 12,
@@ -76,7 +80,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 5.00,
-    orderTotal: 5.41
+    orderTotal: 5.41,
+    createdAt: "2024-05-25T00:00:26.369Z"
   },
   {
     buyerId: 13,
@@ -90,7 +95,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 100.00,
-    orderTotal: 108.25
+    orderTotal: 108.25,
+    createdAt: "2024-05-27T00:00:26.369Z"
   },
   {
     buyerId: 1,
@@ -104,7 +110,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 79.00,
-    orderTotal: 85.52
+    orderTotal: 85.52,
+    createdAt: "2024-06-01T00:00:26.369Z"
   },
   {
     buyerId: 11,
@@ -118,7 +125,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 30.00,
-    orderTotal: 32.48
+    orderTotal: 32.48,
+    createdAt: "2024-06-02T00:00:26.369Z"
   },
   {
     buyerId: 15,
@@ -132,7 +140,8 @@ const ordersList = [
     paymentMethod: 'Americano Expresso',
     paymentDetails: '0000',
     subTotal: 48.00,
-    orderTotal: 51.96
+    orderTotal: 51.96,
+    createdAt: "2024-06-02T00:00:26.369Z"
   },
   {
     buyerId: 1,

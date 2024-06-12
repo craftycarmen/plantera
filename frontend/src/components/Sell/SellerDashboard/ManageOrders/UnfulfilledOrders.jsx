@@ -19,7 +19,7 @@ function UnfulfilledOrders({ unfulfilled, shopOrders, dateFormat }) {
                                         <div>No unfulfilled orders!</div>
                                     ) : (
                                         <div>
-                                            <div className="unfulfilled">Please fulfill all orders within 3 business days from order date.</div>
+                                            {/* <div className="unfulfilled">Please fulfill all orders within 3 business days from order date.</div> */}
                                             {unfulfilled.map(order => {
                                                 let orderTotalEarnings = 0;
                                                 let orderTotalItems = 0;

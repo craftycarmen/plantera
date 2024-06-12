@@ -11,6 +11,7 @@ function SearchPage() {
 
     const [sortOrder, setSortOrder] = useState('newest');
     const [showSortMenu, setShowSortMenu] = useState(false);
+    const [filtersApplied, setFiltersApplied] = useState(false);
     let listings = Object.values(useSelector(state => state.search))
         .filter(listing => listing.stockQty > 0)
 
@@ -156,54 +157,56 @@ function SearchPage() {
     return (
         <>
             <h1>Search Results</h1>
-            {error || displayedListings.length === 0 ? (
-                <div className="noResultsContainer">
-                    <div>No results found for &#34;{searchTerm}&#34;</div>
-                    <br />
-                    <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                </div>
-            ) : (
-                <div className="searchResultsContainer">
-                    <div>{results(listings.length)} for &#34;{searchTerm}&#34;</div>
-                    <div className="filterSort">
-                        <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
-                        <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} toggleSortMenu={toggleSortMenu} currentSortOrder={sortOrder} />
-                    </div>
-                    <div className="listingsContainer" style={listingsContainerStyle}>
-                        {loading ? (
-                            <div className="dots"></div>
+            <div>{results(listings?.length)} for &#34;{searchTerm}&#34;</div>
+            <br />
+            <div className="filterSort">
+                <FilterButton searchTerm={searchTerm} onFilterToggle={handleFilterToggle} onFilterChange={handleFilterChange} />
+                <SortListingsButton handleSort={handleSort} showSortMenu={showSortMenu} toggleSortMenu={toggleSortMenu} currentSortOrder={sortOrder} />
+            </div>
+            <div className="listingsContainer" style={listingsContainerStyle}>
+                {loading ? (
+                    <div className="dots"></div>
+                ) : (
+                    <>
+                        {displayedListings?.length === 0 ? (
+                            <>
+                                <div>No results found. Please refine or clear filters.</div>
+                            </>
                         ) : (
-                            displayedListings.map((listing) => (
-                                listing && (
-                                    <div key={listing.id}>
-                                        <Link to={`/listings/${listing.id}`}>
-                                            <div className="listingImageContainer">
-                                                <img
-                                                    className="listingImage"
-                                                    src={listing.ListingImages?.[0]?.url} />
-                                            </div>
-                                            <div className="listingInfo">
-                                                <h2>{listingName(listing.plantName)}</h2>
-                                                <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
-                                                <div>from {listing.Seller?.username}</div>
-                                            </div>
-                                        </Link>
+                            <>
+                                {displayedListings?.map((listing) => (
+                                    listing && (
+                                        <div key={listing.id}>
+                                            <Link to={`/listings/${listing.id}`}>
+                                                <div className="listingImageContainer">
+                                                    <img
+                                                        className="listingImage"
+                                                        src={listing.ListingImages?.[0]?.url} />
+                                                </div>
+                                                <div className="listingInfo">
+                                                    <h2>{listingName(listing.plantName)}</h2>
+                                                    <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
+                                                    <div>from {listing.Seller?.username}</div>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    )
+                                ))}
+
+                                {!loading &&
+                                    <div className="showMoreDiv" style={listingsContainerStyle}>
+                                        {listings.length > displayCount && (
+                                            <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
+                                        )}
                                     </div>
-                                )
-                            ))
+                                }
+                            </>
                         )}
-                    </div>
-                    {!loading && <div className="showMoreDiv" style={listingsContainerStyle}>
-                        {listings.length > displayCount && (
-                            <button onClick={handleShowMore} style={{ width: "fit-content" }}>Show More</button>
-                        )}
-                    </div>
-                    }
-                </div>
-            )
-            }
+                    </>
+                )}
+            </div>
         </>
-    );
+    )
 }
 
 export default SearchPage;

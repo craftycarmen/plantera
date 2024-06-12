@@ -9,7 +9,7 @@
 
 .submitGuideButton {
     margin-top: 15px;
-    width: 100%;
+    max-width: 578px;
 }
 
 .guideDots {

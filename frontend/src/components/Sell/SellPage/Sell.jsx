@@ -54,7 +54,7 @@ function Sell() {
                         </div>
                         <div className='signUp'>
                             <h2><span style={{ fontStyle: "italic" }}>...Ready For It?</span></h2>
-                            {!isSeller &&
+                            {sessionUser && !isSeller &&
                                 <Link to={`/user/${sessionUser?.id}/editprofile`}><button><h3>Be a seller now!</h3></button></Link>
                             }
                             {!sessionUser &&

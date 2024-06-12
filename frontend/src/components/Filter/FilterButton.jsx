@@ -58,8 +58,8 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
     useEffect(() => {
         const errs = {};
 
-        const min = Number(customMinPrice);
-        const max = Number(customMaxPrice);
+        const min = customMinPrice !== undefined ? Number(customMinPrice) : undefined;
+        const max = customMaxPrice !== undefined ? Number(customMaxPrice) : undefined;
 
         if (
             // customMinPrice !== undefined &&
@@ -69,6 +69,8 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
             // customMinPrice >= 0 &&
             // customMaxPrice >= 0 &&
             // customMinPrice >= customMaxPrice
+            min !== undefined &&
+            max !== undefined &&
             !isNaN(min) &&
             !isNaN(max) &&
             min >= 0 &&
@@ -111,8 +113,8 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         e.preventDefault()
         // const { minPrice: newMinPrice, maxPrice: newMaxPrice } = option.value;
 
-        const min = Number(customMinPrice);
-        const max = Number(customMaxPrice);
+        const min = customMinPrice !== undefined ? Number(customMinPrice) : undefined;
+        const max = customMaxPrice !== undefined ? Number(customMaxPrice) : undefined;
 
         if (
             // customMinPrice !== undefined &&
@@ -122,6 +124,8 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
             // customMinPrice >= 0 &&
             // customMaxPrice >= 0 &&
             // customMinPrice >= customMaxPrice
+            min !== undefined &&
+            max !== undefined &&
             !isNaN(min) &&
             !isNaN(max) &&
             min >= 0 &&

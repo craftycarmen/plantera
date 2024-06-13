@@ -89,7 +89,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     return (
         <section className="shoppingModal">
             <h1>Your Shopping Cart</h1>
-            {loading && <div className="dots smDots"></div>}
+            {loading && <div style={{ marginTop: "40px" }} className="dots smDots"></div>}
             {!loading && cartItems?.length > 0 && (
                 <div style={{ marginTop: "35px" }}>
                     {cartItems.map((item) => (

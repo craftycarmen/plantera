@@ -13,9 +13,9 @@ function SellerDashboard({ sessionUser }) {
     const activeListings = shop?.filter(listing => listing.stockQty > 0).length
     const soldListings = shop?.filter(listing => listing.stockQty === 0).length
     const shopOrders = Object.values(useSelector((state) => state.sell));
-    const [showMenu, setShowMenu] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
+    const [showMenu, setShowMenu] = useState(!(isMobile || isTablet));
 
     useEffect(() => {
         dispatch(fetchOwnedListings())
@@ -23,7 +23,7 @@ function SellerDashboard({ sessionUser }) {
     }, [dispatch]);
 
     const sellerContainerStyle = {
-        marginLeft: (!isTablet && !isMobile) && showMenu ? '270px' : '0',
+        marginLeft: (!isTablet && !isMobile) && showMenu ? '250px' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 

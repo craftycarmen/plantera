@@ -314,10 +314,8 @@ function ListingPage() {
 
                         </div>
                     </div>
-                    <div>
+                    <div className={`otherSection ${listing?.Guides?.length === 1 ? 'singleGuide' : ''}`}>
                         <LinkedGuides guides={listing.Guides} />
-                    </div>
-                    <div>
                         <MeetTheSeller sellerInfo={listing.Seller} />
                     </div>
                 </>

@@ -85,6 +85,10 @@ const listingGuidesList = [
     guideId: 24
   },
   {
+    listingId: 55,
+    guideId: 16
+  },
+  {
     listingId: 54,
     guideId: 21
   },

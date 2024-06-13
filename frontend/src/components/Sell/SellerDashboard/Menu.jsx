@@ -4,9 +4,9 @@ import { Link, useLocation } from "react-router-dom";
 
 function Menu({ sessionUser, handleToggle }) {
     const ulRef = useRef();
-    const [showMenu, setShowMenu] = useState(false);
-    const [setIsMobile] = useState(window.innerWidth <= 480);
-    const [setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+    const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
+    const [showMenu, setShowMenu] = useState(!(isMobile || isTablet));
     const location = useLocation();
     const handleResize = useCallback(() => {
         setIsMobile(window.innerWidth <= 480);
@@ -22,19 +22,19 @@ function Menu({ sessionUser, handleToggle }) {
         setShowMenu(prevState => !prevState);
     }, []);
 
-    useEffect(() => {
-        if (!showMenu || !ulRef.current) return;
+    // useEffect(() => {
+    //     if (!showMenu || !ulRef.current) return;
 
-        const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
-                toggleMenu();
-            }
-        };
+    //     const closeMenu = (e) => {
+    //         if (!ulRef.current.contains(e.target)) {
+    //             toggleMenu();
+    //         }
+    //     };
 
-        document.addEventListener('click', closeMenu);
+    //     document.addEventListener('click', closeMenu);
 
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showMenu, toggleMenu]);
+    //     return () => document.removeEventListener("click", closeMenu);
+    // }, [showMenu, toggleMenu]);
 
     // const ulClassName = "seller-dropdown" + (showMenu ? "" : " hidden");
 
@@ -57,7 +57,7 @@ function Menu({ sessionUser, handleToggle }) {
 
                             {location.pathname === '/sell/listings/new' ? (<div>Create New Listing</div>) : (<div><Link to='/sell/listings/new'>Create New Listing</Link></div>)}
 
-                            {location.pathname === '/sell/orders' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
+                            {location.pathname === '/sell/orders' || location.pathname === '/sell/orders/fulfilled' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
 
                             <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop <i className="fa-solid fa-up-right-from-square" /></Link></div>
                         </div>

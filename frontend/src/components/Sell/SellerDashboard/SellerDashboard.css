@@ -22,8 +22,8 @@
 
 .sellerRightContainer {
     /* padding-left: 40px; */
-    width: 100%;
-    margin-top: 20px;
+    /* width: 100%; */
+    margin-top: 25px;
 }
 
 .sellerLeftNav.fixed {
@@ -91,23 +91,6 @@
     cursor: text;
     display: grid;
     column-gap: 30px;
-    /* display: grid;
-    height: auto;
-    padding-bottom: 20px;
-    position: absolute;
-    border: #28635A solid 1.5px;
-    border-radius: 3px;
-    padding: 15px 20px 15px 20px;
-    background-color: #F2DCCB;
-    width: fit-content;
-    text-wrap: nowrap;
-    margin-top: 10px;
-    margin-right: -2px;
-    left: 1;
-    z-index: 2;
-    cursor: text;
-    display: grid;
-    column-gap: 30px; */
 }
 
 .outerSellMenuWrapper {
@@ -176,7 +159,7 @@
 }
 
 .soldListingsHeader {
-    margin-top: 40px;
+    margin-top: 80px;
 }
 
 .manageSoldOutImage {
@@ -249,7 +232,7 @@
 
     .manageListingsContainer {
         width: 75vw;
-        gap: 0px;
+        row-gap: 40px;
     }
 
     .manageListingInfo {
@@ -287,7 +270,7 @@
     .manageListingsContainer {
         grid-template-columns: auto;
         width: 100%;
-        gap: 0px;
+        row-gap: 40px;
     }
 }
 
@@ -320,7 +303,7 @@
     .manageListingsContainer {
         grid-template-columns: 1fr 1fr;
         width: 100%;
-        row-gap: 0px;
+        row-gap: 40px;
     }
 
     .manageListingImage {

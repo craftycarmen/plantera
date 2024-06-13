@@ -7,7 +7,7 @@ import commonjs from 'vite-plugin-commonjs';
 
 export default defineConfig(({ mode }) => ({
   optimizeDeps: {
-    include: ['react-quilljs']
+    exclude: ['react-quilljs']
   },
   plugins: [
     react(),

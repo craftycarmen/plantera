@@ -39,6 +39,7 @@
     "postinstall-postinstall": "^2.1.0",
     "redux-logger": "^3.0.6",
     "vite": "^4.4.5",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-require-transform": "^1.0.21"
   }
 }

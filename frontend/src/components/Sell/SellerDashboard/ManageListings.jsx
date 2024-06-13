@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './SellerDashboard.css';
 import Menu from "./Menu";
@@ -11,10 +11,13 @@ import { price, listingName } from "../../../../utils";
 
 function ManageSellerListings() {
     const dispatch = useDispatch();
-    const [showMenu] = useState(false);
-    const [isTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
+    const [showMenu, setShowMenu] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+    const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
+
     const sellerContainerStyle = {
-        marginLeft: isTablet && showMenu ? '225px' : '0',
+        marginLeft: (!isTablet && !isMobile) && showMenu ? '270px' : '0',
+        width: (!isTablet && !isMobile) && showMenu ? 'auto' : 'auto',
         transition: 'margin-left 0.2s ease-in-out'
     };
     const sessionUser = useSelector(state => state.session.user);
@@ -33,15 +36,32 @@ function ManageSellerListings() {
     }, [dispatch])
 
 
+    const handleToggle = () => {
+        setShowMenu(!showMenu);
+    };
+
+    const handleResize = useCallback(() => {
+        setIsMobile(window.innerWidth <= 480);
+        setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
+
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize)
+    }, [handleResize]);
+
     return (
         <>
             <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
             <div>Purge your plants and plant babies on Plantera, and get paid!</div>
             <br />
-            <div className="sellerContainer">
-                <Menu sessionUser={sessionUser} />
+            <div>
+                <div className="filterSort">
+                    <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
+                </div>
                 <div style={sellerContainerStyle} className="sellerRightContainer">
-                    <h2>Manage Your Listings</h2>
+                    <h2>Manage Listings</h2>
                     {!sessionUser ? (
                         <ErrorHandling />
                     ) : (listings &&

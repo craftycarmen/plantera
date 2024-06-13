@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOwnedShopOrders } from "../../../store/sell";
 import { fetchOwnedListings } from "../../../store/listings";
@@ -13,8 +13,9 @@ function SellerDashboard({ sessionUser }) {
     const activeListings = shop?.filter(listing => listing.stockQty > 0).length
     const soldListings = shop?.filter(listing => listing.stockQty === 0).length
     const shopOrders = Object.values(useSelector((state) => state.sell));
-    const [showMenu] = useState(false);
-    const [isTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
+    const [showMenu, setShowMenu] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+    const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth >= 481);
 
     useEffect(() => {
         dispatch(fetchOwnedListings())
@@ -22,7 +23,7 @@ function SellerDashboard({ sessionUser }) {
     }, [dispatch]);
 
     const sellerContainerStyle = {
-        marginLeft: isTablet && showMenu ? '225px' : '0',
+        marginLeft: (!isTablet && !isMobile) && showMenu ? '270px' : '0',
         transition: 'margin-left 0.2s ease-in-out'
     };
 
@@ -63,12 +64,30 @@ function SellerDashboard({ sessionUser }) {
         }
     }).sort((a, b) => (b.id - a.id)).filter(order => order?.CartItems?.length > 0).length
 
+
+    const handleToggle = () => {
+        setShowMenu(!showMenu);
+    };
+
+    const handleResize = useCallback(() => {
+        setIsMobile(window.innerWidth <= 480);
+        setIsTablet(window.innerWidth <= 1024 && window.innerWidth >= 481);
+
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize)
+    }, [handleResize]);
+
     return (
         <>
-            <div className="sellerContainer">
-                <Menu sessionUser={sessionUser} />
+            <div>
+                <div className="filterSort">
+                    <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
+                </div>
                 {shopOrders && (
-                    <div style={sellerContainerStyle} className="sellerRightContainer">
+                    <div style={sellerContainerStyle} className="sellerDashContainer">
                         <h2>Your Latest Stats</h2>
                         <div className="sellerStats">
                             <div className="sellerStatsRow">

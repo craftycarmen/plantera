@@ -37,7 +37,7 @@ function Guides() {
         if (width >= 1425 && width <= 1191) return 8;
         if (width >= 1190 && width <= 1424) return 3;
         if (width >= 992 && width <= 1189) return 3;
-        if (width >= 768) return 4;
+        if (width <= 768) return 4;
         return 4;
     }
     const [columns, setColumns] = useState(getColumns(window.innerWidth));
@@ -100,7 +100,7 @@ function Guides() {
     };
 
     const handleShowMore = () => {
-        const newCount = calculateDisplayCount(displayCount + columns, columns);
+        const newCount = calculateDisplayCount(displayCount + columns, columns * 2);
         setDisplayCount(newCount);
     };
 

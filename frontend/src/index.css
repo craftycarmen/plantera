@@ -233,6 +233,7 @@ button:disabled {
 
 .main-content {
     flex: 1;
+    max-width: 1380px;
 }
 
 .deleteModal button,

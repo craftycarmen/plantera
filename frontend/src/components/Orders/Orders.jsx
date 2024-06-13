@@ -10,7 +10,7 @@ function Orders() {
 
     const sessionUser = useSelector(state => state.session.user);
     const orders = Object.values(useSelector(state => state.orders)).sort((a, b) => (b.id - a.id));
-    console.log(orders)
+
     useEffect(() => {
         dispatch(fetchOwnedBuyerOrders())
     }, [dispatch]);

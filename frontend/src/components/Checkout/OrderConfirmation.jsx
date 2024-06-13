@@ -28,7 +28,7 @@ function OrderConfirmation() {
         };
         runDispatches();
     }, [dispatch, orderId]);
-    console.log("ORDERITEMS", orderItems);
+
 
     return (
         <>

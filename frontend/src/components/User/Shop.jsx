@@ -12,7 +12,7 @@ function Shop() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(state => state.user[userId]?.User)
-    console.log("USER!", user);
+
     const shop = useSelector(state => state.user[userId]?.Shop)
     const activeListings = shop?.filter(listing => listing.stockQty > 0).sort((a, b) => (b.id - a.id))
     const soldListings = shop?.filter(listing => listing.stockQty === 0).sort((a, b) => {

@@ -22,7 +22,7 @@ function ProfileButton() {
     const currUser = user || sessionUser;
     const isSeller = currUser && currUser.accountType === 'seller';
     const location = useLocation();
-    console.log(currUser);
+
 
     const toggleMenu = (e) => {
         e.stopPropagation();
@@ -63,7 +63,7 @@ function ProfileButton() {
 
         if (currUser && cartId) {
             localStorage.removeItem('cartId');
-            console.log('CartId cleared from localStorage');
+
 
             localStorage.removeItem('cartItems')
             dispatch(resetCartId())

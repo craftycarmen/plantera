@@ -144,7 +144,7 @@ function ShoppingCartPage() {
         await dispatch(fetchCart(cartId))
     };
 
-    console.log("CARTID", cartId);
+
 
     return (
         <>

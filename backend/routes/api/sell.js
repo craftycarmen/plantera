@@ -87,8 +87,8 @@ router.put('/orders/:orderId', requireAuth, async (req, res) => {
         item.orderStatus = orderStatus;
         await item.save()
 
-        console.log('Item ID:', itemId, 'Order Status:', orderStatus);
-        console.log("Order item updated:", item);
+
+
 
         return res.json(order);
     } catch (error) {

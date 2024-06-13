@@ -59,7 +59,7 @@ function Menu({ sessionUser }) {
 
                                 {location.pathname === '/sell/orders' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
 
-                                <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop <i class="fa-solid fa-up-right-from-square" /></Link></div>
+                                <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop <i className="fa-solid fa-up-right-from-square" /></Link></div>
                             </div>
                         )}
                     </div>
@@ -74,7 +74,7 @@ function Menu({ sessionUser }) {
 
                     {location.pathname === '/sell/orders' || location.pathname === '/sell/orders/fulfilled' ? (<div>Manage Orders</div>) : (<div><Link to='/sell/orders'>Manage Orders</Link></div>)}
 
-                    <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop <i class="fa-solid fa-up-right-from-square" /></Link></div>
+                    <div><Link to={`/user/${sessionUser?.id}/shop`} target="_blank" rel="noopener noreferrer">View Shop <i className="fa-solid fa-up-right-from-square" /></Link></div>
                 </div>
             )}
             <div className="vertical-line"></div>

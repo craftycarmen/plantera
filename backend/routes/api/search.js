@@ -65,9 +65,9 @@ const validateQuery = [
 
 router.get('/', validateQuery, async (req, res) => {
     let { page, size, minPrice, maxPrice, search, potSize } = req.query
-    // console.log("POT SIZING", potSize.split(",").map(Number));
+    // 
     potSize = potSize?.split(",").map(Number)
-    // console.log("POT SIZING", potSize, potSize.length);
+    // 
     const results = {}
     const pagination = {}
     const where = {}

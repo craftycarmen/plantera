@@ -83,7 +83,7 @@ function SignupFormModal({ navigate }) {
                 const reduxStateString = localStorage.getItem('reduxState');
                 const reduxState = JSON.parse(reduxStateString);
                 const userId = reduxState.session.user.id;
-                console.log("USERIDHELLO", userId);
+
 
                 closeModal();
                 if (!location.pathname.startsWith('/checkout/user')) {

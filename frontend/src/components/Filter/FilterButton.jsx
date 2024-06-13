@@ -281,7 +281,7 @@ function FilterButton({ searchTerm, onFilterToggle, onFilterChange }) {
         onFilterToggle()
     }
 
-    console.log("PRICING", customMinPrice, customMaxPrice);
+
     return (
         <div className="filterButtonWrapper">
             <span className="filterButton" onClick={toggleMenu}>

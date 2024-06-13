@@ -159,7 +159,7 @@ router.post('/', singleMulterUpload("image"), requireAuth, async (req, res) => {
         if (guideIdsArray.length === 1 && !isNaN(guideIdsArray[0])) {
             guideIdsArray.push(guideIdsArray[0])
         }
-        console.log("RECEIVED DATA:", req.body);
+
 
         const listingImageUrl = req.file ?
             await singleFileUpload({ file: req.file, public: true }) :

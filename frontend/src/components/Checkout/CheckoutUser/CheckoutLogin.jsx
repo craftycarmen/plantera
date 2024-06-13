@@ -36,11 +36,11 @@ function CheckoutLogin({ cartId }) {
                 await dispatch(editCart(cartId))
             }
 
-            const sellerItems = (cartItems, userId) => {
+            const sellerItems = (cartItems) => {
                 return cartItems.some(item => {
-                    console.log("Item:", item);
-                    console.log("User ID:", userId);
-                    console.log("Seller ID:", item.Listing?.Seller?.id);
+
+
+
                     return item.Listing?.Seller?.id === data.user?.id;
                 })
             }
@@ -72,11 +72,11 @@ function CheckoutLogin({ cartId }) {
 
             let data;
 
-            const sellerItems = (cartItems, userId) => {
+            const sellerItems = (cartItems) => {
                 return cartItems.some(item => {
-                    console.log("Item:", item);
-                    console.log("User ID:", userId);
-                    console.log("Seller ID:", item.Listing?.Seller?.id);
+
+
+
                     return item.Listing?.Seller?.id === data?.user?.id;
                 })
             }
@@ -92,7 +92,7 @@ function CheckoutLogin({ cartId }) {
                     localStorage.setItem('cartId', data.cartId);
                 }
 
-                console.log("DATAAAAAA", data);
+
 
                 if (cartItems.length > 0 && data.user?.id) {
                     const ownedItems = sellerItems(cartItems, data.user?.id)
@@ -139,7 +139,7 @@ function CheckoutLogin({ cartId }) {
                 {errors.credential &&
                     <><i className="fa-solid fa-circle-exclamation" /> {errors.credential}</>}
             </p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
                 <div className="inputContainer">
                     <input
                         type="text"

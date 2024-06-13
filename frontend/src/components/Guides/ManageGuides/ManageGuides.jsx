@@ -12,7 +12,7 @@ function ManageGuides() {
     const sessionUser = useSelector((state) => state.session.user);
     const userId = sessionUser?.id;
     const guides = Object.values(useSelector(state => state.guides)).filter(guide => guide.userId === userId).sort((a, b) => b.id - a.id);
-    console.log(guides);
+
 
     useEffect(() => {
         dispatch(fetchOwnedGuides())

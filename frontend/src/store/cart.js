@@ -70,7 +70,7 @@ export const resetCartId = () => ({
 
 export const fetchCart = () => async (dispatch) => {
     let cartId = Number(localStorage.getItem('cartId'));
-    console.log('CartId fetched from localStorage:', cartId);
+
 
     if (cartId > 0) {
         const res = await fetch(`/api/cart/${cartId}`);
@@ -96,7 +96,7 @@ export const fetchCart = () => async (dispatch) => {
 
 // export const fetchCart = () => async (dispatch) => {
 //     let cartId = Number(localStorage.getItem('cartId'));
-//     console.log('CartId fetched from localStorage:', cartId);
+//     
 
 //     if (cartId > 0) {
 //         try {
@@ -119,7 +119,7 @@ export const fetchCart = () => async (dispatch) => {
 //             } else {
 //                 if (res.status === 404) {
 //                     if (process.env.NODE_ENV === 'development') {
-//                         console.log('Cart not found:', cartId);
+//                         
 //                     }
 //                     localStorage.removeItem('cartId');
 //                     localStorage.removeItem('cartItems');
@@ -220,7 +220,7 @@ export const fetchCartItems = () => async (dispatch) => {
 
         if (res.ok) {
             const cartItems = await res.json();
-            console.log("CARTITEMSINSTORE", cartItems.ShoppingCart)
+
             if (cartItems.ShoppingCart && cartItems.ShoppingCart.CartItems.length > 0) {
                 dispatch(loadCartItems(cartItems.ShoppingCart.CartItems));
                 return cartItems
@@ -310,7 +310,7 @@ export const addItemToCart = (cartId, cartItem) => async (dispatch, getState) =>
 
 //     if (res.ok) {
 //         const updatedCartItem = await res.json();
-//         console.log("Updated cart item:", updatedCartItem);
+//         
 //         dispatch(updateCartItem(updatedCartItem));
 //         const cartItems = await dispatch(fetchCartItems(cartId));
 //         localStorage.setItem('cartItems', JSON.stringify(cartItems.ShoppingCart.CartItems));
@@ -373,7 +373,7 @@ const cartReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case LOAD_CART: {
-            console.log("CARTTOTAL", action);
+
             return {
                 ...state,
                 cartId: action.cartId,

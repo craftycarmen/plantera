@@ -1,7 +1,7 @@
 .shoppingCartPageContainer {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 75px;
+    grid-template-columns: auto auto;
+    /* gap: 75px; */
     margin-top: 35px;
 }
 
@@ -72,9 +72,35 @@
         flex-direction: column;
         gap: 40px;
     }
+
+    .checkoutUserContainer button,
+
+    .checkoutUserContainer p {
+        width: 70vw;
+    }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .shoppingCartListing {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .shoppingCartListing img {
+        height: 250px;
+    }
+
+    .shoppingCartPageContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
 
     .shoppingCartListing {
         display: flex;

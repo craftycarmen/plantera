@@ -30,7 +30,7 @@ function ListingPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log("FETCHING CART ID", cartId)
+
             await dispatch(fetchCart(cartId));
         };
         fetchData();
@@ -76,11 +76,9 @@ function ListingPage() {
                             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
                             dispatch({ type: 'cart/setCartItems', payload: updatedCartItems });
-                        } else {
-                            console.log("fetchedItems is undefined or ShoppingCart is not available");
                         }
                     } else {
-                        console.log("Cart does not exist, resetting cart state and local storage");
+
                         localStorage.removeItem('cartId');
                         localStorage.removeItem('cartItems');
                         dispatch(resetCartId());
@@ -90,7 +88,7 @@ function ListingPage() {
                     console.error("Error fetching cart items:", error);
                 }
             } else {
-                console.log("Cart ID is not found in local storage");
+
                 localStorage.removeItem('cartId');
                 localStorage.removeItem('cartItems');
                 dispatch(resetCartId());
@@ -132,21 +130,21 @@ function ListingPage() {
     const handleQty = (e) => {
         e.preventDefault();
         const newQty = parseInt(e.target.value);
-        console.log("New Quantity:", newQty);
+
         setCartQty(newQty);
         // setUpdateQty(prevUpdatedQty => ({ ...prevUpdatedQty, [listingId]: newQty }));
-        // console.log("Updated Quantity:", updatedQty);
+        // 
     };
 
     useEffect(() => {
-        console.log("Updated Quantity:", updatedQty);
+
     }, [updatedQty]);
 
 
     const handleAddToCart = async () => {
         let newCartId = cartId;
         let cartItemExists = false;
-        console.log("CARTSTUFF", newCartId);
+
 
 
         if (cartId === null || !localStorage.getItem('cartId')) {
@@ -155,7 +153,7 @@ function ListingPage() {
                 newCartId = res.id;
                 localStorage.setItem('cartId', newCartId);
                 setCartId(newCartId);
-                console.log("New cart created with ID:", newCartId);
+
             } else {
                 console.error('Error creating cart:', res);
                 return;
@@ -219,7 +217,7 @@ function ListingPage() {
         }
 
         if (cartItemExists && !existingCartItem) {
-            console.log("existingCartItem not found, adding item to the cart...");
+
             const newCartItem = {
                 cartId: Number(newCartId),
                 listingId: Number(listingId),

@@ -57,7 +57,7 @@ export const fetchOwnedBuyerOrders = () => async (dispatch) => {
 
     if (res.ok) {
         const orders = await res.json();
-        console.log("RES!!!", orders);
+
         dispatch(loadOwnedBuyerOrders(orders));
         return orders;
     } else {
@@ -87,7 +87,7 @@ const ordersReducer = (state = {}, action) => {
 
         case LOAD_OWNED_BUYERORDERS: {
             const ordersState = {};
-            console.log("ACTION!!", action.orders);
+
             action.orders.Orders.forEach(order => {
                 ordersState[order.id] = order
             });

@@ -47,7 +47,7 @@ const sellReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_OWNED_SHOPORDERS: {
             const orderItemsState = {};
-            console.log("SHOPPP", action);
+
             action.orderItems.ShopOrders.forEach(item => {
                 orderItemsState[item.id] = item;
             });

@@ -52,7 +52,7 @@ function ListingForm({ listing, formType }) {
     useEffect(() => {
         dispatch(fetchAllGuides())
     }, [dispatch])
-    console.log(listing.Guides);
+
     useEffect(() => {
         const selectedOptions = (listing?.Guides || []).map(guide => ({
             value: guide.id,
@@ -106,7 +106,7 @@ function ListingForm({ listing, formType }) {
             guideIds: guidesArray,
             image
         }
-        // console.log("Selected Guides:"));
+        // 
 
         if (createForm) {
             try {

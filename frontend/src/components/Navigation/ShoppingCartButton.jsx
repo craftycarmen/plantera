@@ -51,11 +51,9 @@ function ShoppingCartButton({ cartId }) {
                                 qty[item.id] = item.cartQty;
                             });
                             setUpdatedQty(qty);
-                        } else {
-                            console.log("Fetched items are undefined or ShoppingCart is not available");
                         }
                     } else {
-                        console.log("Cart does not exist, resetting cart state and local storage");
+
                         localStorage.removeItem('cartId');
                         localStorage.removeItem('cartItems');
                         dispatch(resetCartId());
@@ -65,7 +63,7 @@ function ShoppingCartButton({ cartId }) {
                     console.error("Error fetching cart and cart items:", error);
                 }
             } else {
-                console.log("Cart ID is not found in local storage");
+
                 localStorage.removeItem('cartId');
                 localStorage.removeItem('cartItems');
                 dispatch(resetCartId());

@@ -25,8 +25,8 @@ export const setSearchTerm = (searchTerm) => ({
 //         url += `?${queryParams.join('&')}`
 //     }
 
-//     console.log("QUERY", queryParams);
-//     console.log("URL", url);
+//     
+//     
 
 export const fetchListingResults = (searchQuery, filters = {}) => async (dispatch) => {
     let url = '/api/search';
@@ -48,15 +48,15 @@ export const fetchListingResults = (searchQuery, filters = {}) => async (dispatc
         url += `?${queryParams.join('&')}`
     }
 
-    console.log("QUERY", queryParams);
-    console.log("URL", url);
-    console.log("FILTERS", filters);
+
+
+
     const res = await fetch(url);
-    console.log("SEARCH RES", res);
+
     if (res.ok) {
         const listings = await res.json();
         dispatch(loadListingResults(listings))
-        console.log("LISTINGS HERE", listings);
+
     } else if (res.status === 404) {
         dispatch(loadListingResults([]))
     } else {
@@ -72,7 +72,7 @@ const initialState = {
 const searchReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_SEARCH_TERM: {
-            console.log("ACTION!!", action.searchTerm);
+
             return {
                 ...state,
                 searchTerm: action.searchTerm

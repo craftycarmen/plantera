@@ -15,8 +15,8 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     const sessionUser = useSelector(state => state.session.user);
     const userId = sessionUser?.id;
     const [loading, setLoading] = useState(true);
-    // console.log("CARTTOTALMODAL", cartTotal);
-    console.log("CARTITEMSMODAL", cartItems);
+    // 
+
 
     // const calculateSubtotal = () => {
     //     const total = cartItems.reduce((total, item) => {
@@ -52,7 +52,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
         runDispatches();
     }, [dispatch, cartId])
 
-    console.log("Updated Quantity in ShoppingCartModal:", updatedQty);
+
 
     const handleRemoveItem = async (itemId) => {
         await dispatch(removeCartItem(cartId, itemId));
@@ -68,9 +68,9 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
 
     const sellerItems = (cartItems, userId) => {
         return cartItems.some(item => {
-            console.log("Item:", item);
-            console.log("User ID:", userId);
-            console.log("Seller ID:", item.Listing?.Seller?.id);
+
+
+
             return item.Listing?.Seller?.id === userId;
         });
     };

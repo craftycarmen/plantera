@@ -10,7 +10,7 @@ function OrderSummary({ cartId, checkout }) {
     const cartTotal = useSelector(state => state.cart.cartTotal);
     const sessionUser = useSelector(state => state.session.user);
     const cartItems = useSelector(state => state.cart.cartItems)
-    console.log(cartItems);
+
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
@@ -29,11 +29,11 @@ function OrderSummary({ cartId, checkout }) {
         return price(total)
     }
 
-    const sellerItems = (cartItems, userId) => {
+    const sellerItems = (cartItems) => {
         return cartItems.some(item => {
-            console.log("Item:", item);
-            console.log("User ID:", userId);
-            console.log("Seller ID:", item.Listing?.Seller?.id);
+
+
+
             return item.Listing?.Seller?.id === sessionUser?.id;
         })
     }

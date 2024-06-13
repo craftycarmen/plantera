@@ -9,7 +9,7 @@ function UpdateOrderModal({ orderId, itemId, status, name }) {
     const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(status)
 
-    console.log(orderId, itemId, status, name);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 

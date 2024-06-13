@@ -23,7 +23,8 @@
     "react-select": "^5.8.0",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "vite-plugin-commonjs": "^0.10.1"
+    "vite-plugin-commonjs": "^0.10.1",
+    "vite-plugin-require": "^1.2.14"
   },
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",

@@ -12,6 +12,7 @@ function GuidePage({ guideId: propsGuideId }) {
     const guideId = propsGuideId || paramsGuideId;
     const dispatch = useDispatch();
     const guide = useSelector(state => (state.guides[guideId]));
+    const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
         dispatch(fetchOneGuide(guideId))
@@ -34,6 +35,8 @@ function GuidePage({ guideId: propsGuideId }) {
                             src={guide.GuideImages?.[0].url}
                         />
                         <div>{parse(guide.content)}</div>
+                        {sessionUser?.id === guide.Author?.id &&
+                            <Link to={`/guides/${guide.id}/edit`}><button style={{ width: "fit-content" }}>Edit Guide</button></Link>}
                     </div>
                 </>
             ) : (

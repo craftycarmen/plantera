@@ -302,12 +302,16 @@ function ListingPage() {
                                             />
                                         </>) : (
                                         <>
-                                            <Link to={`/sell/listings`}><button style={{ width: "fit-content" }}>Manage Listing</button></Link>
+                                            <Link to={`/listings/${listing.id}/edit`}><button style={{ width: "fit-content" }}>Edit Listing</button></Link>
 
                                         </>
                                     )}
                                 </form>
-                            ) : (<div className="soldOutText">NOT AVAILABLE</div>)
+                            ) : (<>
+                                <div className="soldOutText">NOT AVAILABLE</div>
+                                {listing.Seller?.id === sessionUser?.id && <Link to={`/listings/${listing.id}/edit`}><button style={{ width: "fit-content", marginTop: "20px" }}>Edit Listing</button></Link>}
+                            </>
+                            )
                             }
 
                         </div>

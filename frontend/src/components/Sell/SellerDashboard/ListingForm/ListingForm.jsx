@@ -147,7 +147,7 @@ function ListingForm({ listing, formType }) {
             },
             color: "#28635A",
             cursor: "pointer",
-            width: "100%"
+            width: "auto"
         }),
         menu: base => ({
             ...base,
@@ -162,17 +162,18 @@ function ListingForm({ listing, formType }) {
             // kill the white space on first and last option
             padding: 0,
             background: "#B9CDCA",
-            cursor: "pointer"
+            cursor: "pointer",
+            width: "auto"
         }),
         dropdownIndicator: base => ({
             ...base,
             color: "#28635A",
-            "&:hover": { color: "#FDAC8A" }
+            "&:hover": { color: "#E38251" }
         }),
         clearIndicator: (base, state) => ({
             ...base,
             color: state.isFocused ? "#28635A" : "#28635A",
-            "&:hover": { color: "#FDAC8A" }
+            "&:hover": { color: "#E38251" }
         }),
         option: (base, state) => ({
             ...base,
@@ -181,9 +182,24 @@ function ListingForm({ listing, formType }) {
             backgroundColor: state.isSelected ? '#B9CDCA' : 'inherit',
             '&:hover': {
                 // backgroundColor: state.isSelected ? '#B9CDCA' : '#FDAC8A',
-                backgroundColor: state.isDisabled ? '#B9CDCA' : '#FDAC8A'
-            }
+                backgroundColor: state.isDisabled ? '#B9CDCA' : '#FDAC8A',
+            },
+            width: "auto"
         }),
+        valueContainer: (base) => ({
+            ...base,
+            width: "578px",
+        }),
+        multiValueRemove: (base, state) => ({
+            ...base,
+            backgroundColor: state.isSelected ? '#B9CDCA' : 'inherit',
+            '&:hover': {
+                // backgroundColor: state.isSelected ? '#B9CDCA' : '#E38251',
+                // backgroundColor: state.isDisabled ? '#B9CDCA' : '#E38251',
+                backgroundColor: '#E6E6E6',
+                color: '#E38251'
+            },
+        })
     };
 
     return (
@@ -280,18 +296,6 @@ function ListingForm({ listing, formType }) {
                                             <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
                                     </div>
                                 </>}
-                            {/* <div className='inputContainer'>
-                        <input
-                            type='number'
-                            step='1'
-                            min='1'
-                            value={guideId}
-                            onChange={updateGuideId}
-                            placeholder=''
-                            id='guideId'
-                        />
-                        <label htmlFor='guideId' className='floating-label'>Guide ID</label>
-                    </div> */}
                             <div className='inputContainer'>
                                 <div>Select up to 3 guides to include:</div>
                                 <Select

@@ -34,7 +34,7 @@ function Shop() {
                     <div className="username">
                         <h1>{user.username} <i className="fa-solid fa-angle-right" style={{ fontSize: "large" }} /> Shop</h1>
                         {sessionUser?.id === user.id &&
-                            <button onClick={() => navigate(`/sell/listings`)}>Manage Your Listings</button>
+                            <button onClick={() => navigate(`/sell/listings`)}>Manage Listings</button>
                         }
                     </div>
                     <div className="shopInfoContainer">

@@ -94,6 +94,9 @@
     padding-bottom: 20px;
 }
 
+.manageOrdersSection {
+    padding: 0px 15px;
+}
 
 @media screen and (max-width: 480px) {
 

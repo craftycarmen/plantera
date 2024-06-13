@@ -14,7 +14,7 @@ function UnfulfilledOrders({ unfulfilled, shopOrders, dateFormat }) {
                             <div>No orders yet!</div>
                         ) : (
                             <div className="unfulfilledFulfilled">
-                                <div>
+                                <div >
                                     {unfulfilled && unfulfilled.length === 0 ? (
                                         <div>No unfulfilled orders!</div>
                                     ) : (

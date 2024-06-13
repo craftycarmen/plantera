@@ -6,9 +6,6 @@ import commonjs from 'vite-plugin-commonjs';
 // https://vitejs.dev/config/
 
 export default defineConfig(({ mode }) => ({
-  optimizeDeps: {
-    exclude: ['react-quilljs']
-  },
   plugins: [
     react(),
     commonjs(),
@@ -22,5 +19,10 @@ export default defineConfig(({ mode }) => ({
       '/api': 'http://localhost:8000'
     },
     open: true
+  },
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
   }
 }));

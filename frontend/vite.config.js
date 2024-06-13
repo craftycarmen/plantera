@@ -11,11 +11,11 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
+    commonjs(),
     eslint({
       lintOnStart: true,
       failOnError: mode === "production"
     }),
-    commonjs()
   ],
   server: {
     proxy: {

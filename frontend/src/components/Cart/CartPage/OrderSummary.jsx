@@ -101,7 +101,7 @@ function OrderSummary({ cartId, checkout }) {
                     <h2>Total:</h2>
                     <h2>{orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
                 </div>
-                {checkout ? (<div></div>) : (<><button style={{ width: "100%" }} onClick={handleCheckOut}>Check Out</button></>)}
+                {checkout ? (<div></div>) : (<><button style={{ width: "100%", marginTop: "15px" }} onClick={handleCheckOut}>Check Out</button></>)}
             </div >
         </div >
     )

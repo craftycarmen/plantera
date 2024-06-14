@@ -51,13 +51,13 @@ function UpdateOrderModal({ orderId, itemId, status, name }) {
                         /><span>Shipped</span>
                     </div>
                 </div>
-                <span className="deleteButtons" style={{ marginTop: "20px" }}><button onSubmit={handleSubmit}>Update Order Status</button>
-                    <button
-                        onClick={closeModal}
-                    >
-                        Cancel
-                    </button></span>
             </form>
+            <span className="deleteButtons" style={{ marginTop: "20px" }}><button onSubmit={handleSubmit}>Update Order Status</button>
+                <button
+                    onClick={closeModal}
+                >
+                    Cancel
+                </button></span>
 
         </section>
     )

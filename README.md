@@ -1,4 +1,8 @@
 # plantera
+![image](https://github.com/craftycarmen/plantera/assets/131481577/09d40289-75e0-464c-a12a-6c568c65d06e)
+
+
+
 ## USER AUTHENTICATION/AUTHORIZATION
 
 ### All endpoints that require authentication
@@ -358,6 +362,9 @@ Returns the details of a user specified by its id.
     ```
 
 ## PLANT LISTINGS
+
+![image](https://github.com/craftycarmen/plantera/assets/131481577/865859cf-af43-42ed-8504-c8516f1babcd)
+
 
 ### Get all Plant Listings
 
@@ -763,6 +770,9 @@ Deletes an existing listing.
 
 ## SHOPPING CART
 
+![image](https://github.com/craftycarmen/plantera/assets/131481577/133852df-92b8-4541-81da-0fce2468a1e9)
+
+
 ### Get All Shopping Cart items Added by Current User
 
 Returns all the listings added to the Shopping Cart by the current user.
@@ -1146,6 +1156,9 @@ Creates (adds) and returns orders based on shopping cart ID
 
 ## SEARCH AND FILTER
 
+![image](https://github.com/craftycarmen/plantera/assets/131481577/e946e775-e84e-41be-a67e-09291d25f4a0)
+
+
 Return listings filtered by query parameters.
 
 * Require Authentication: false
@@ -1221,6 +1234,9 @@ Return listings filtered by query parameters.
     ```
 
 ## PLANT GUIDES
+
+![image](https://github.com/craftycarmen/plantera/assets/131481577/b7f99746-dd16-407e-a9c8-0b1681402881)
+
 
 ### Get All Plant Guides
 
@@ -2279,6 +2295,9 @@ Delete an existing comment.
 
 
 ## !BONUS! -- ORDER DETAILS
+
+![image](https://github.com/craftycarmen/plantera/assets/131481577/6185a084-6b89-43be-add9-901ef20f8481)
+
 
 ### Get all Orders of the Current User
 

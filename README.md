@@ -3,6 +3,8 @@
 
 Welcome to Plantera! This web application, hosted at https://plantera.onrender.com, is _the_ plant marketplace community where plant enthuasists come together to shop and sell plants, and inspire each other with plant care guides.
 
+For the full Plantera experience, please log in as Demo User (link in login modal) or create your own account!
+
 Designed and developed by [Carmen Shiu](https://carmenshiu.com).
 
 
@@ -48,5 +50,6 @@ _Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) fo
 [![image](https://github.com/craftycarmen/plantera/assets/131481577/6185a084-6b89-43be-add9-901ef20f8481)](https://plantera.onrender.com/orders)
 
 ### Seller Dashboard
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/4595b836-5fe3-4887-9fac-98a3d496afc6)](https://plantera.onrender.com/sell)
 
 [![image](https://github.com/craftycarmen/plantera/assets/131481577/b2844c36-1f8b-4647-910a-a66ee131c11f)](https://plantera.onrender.com/sell/orders)

@@ -1,7 +1,7 @@
 # plantera
 [![image](https://github.com/craftycarmen/plantera/assets/131481577/09d40289-75e0-464c-a12a-6c568c65d06e)](https://plantera.onrender.com)
 
-Welcome to Plantera! This web application, hosted at https://plantera.onrender.com, is _the_ plant marketplace community where plant enthuasists come together to shop and sell plants, and inspire each other with plant care guides.
+Welcome to Plantera! This web application, hosted at https://plantera.onrender.com, is _the_ plant marketplace community where plant enthusiasts come together to shop and sell plants, and inspire each other with plant care guides.
 
 For the full Plantera experience, please log in as Demo User (link in login modal) or create your own account!
 

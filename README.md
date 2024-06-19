@@ -29,9 +29,15 @@ _Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) fo
 
 [![image](https://github.com/craftycarmen/plantera/assets/131481577/865859cf-af43-42ed-8504-c8516f1babcd)](https://plantera.onrender.com/listings)
 
-### Shopping Cart
+### Listing Page
+[![listingpage](https://github.com/craftycarmen/plantera/assets/131481577/26b9c8b2-4b4d-46d3-9d8a-4359b17f2bd7)](https://plantera.onrender.com/listings/1)
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/133852df-92b8-4541-81da-0fce2468a1e9)](https://plantera.onrender.com/listings/48)
+
+
+### Shopping Cart
+[![shoppingcart](https://github.com/craftycarmen/plantera/assets/131481577/dacdba6b-35ca-40b8-9317-fcc1c2aa736b)](https://plantera.onrender.com/listings/48)
+
+
 
 ### Search & Filter
 

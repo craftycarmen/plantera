@@ -19,6 +19,8 @@ Designed and developed by [Carmen Shiu](https://carmenshiu.com).
 <a href="https://aws.amazon.com/"><img src="https://github.com/craftycarmen/plantera/assets/131481577/f3924820-96d9-40a7-9c99-f9905be3a1ee" width="100px"></a>
 
 
+_Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) for API documentation, user stories, and initial wireframe._
+
 ## PREVIEW
 
 ### Shop

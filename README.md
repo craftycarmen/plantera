@@ -1,7 +1,7 @@
 # plantera
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/09d40289-75e0-464c-a12a-6c568c65d06e)](https://plantera.onrender.com)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/09d40289-75e0-464c-a12a-6c568c65d06e)](https://plantera.carmenshiu.com)
 
-Welcome to Plantera! This web application, hosted at https://plantera.onrender.com, is _the_ plant marketplace community where plant enthusiasts come together to shop and sell plants, and inspire each other with plant care guides.
+Welcome to Plantera! This web application, hosted at https://plantera.carmenshiu.com, is _the_ plant marketplace community where plant enthusiasts come together to shop and sell plants, and inspire each other with plant care guides.
 
 For the full Plantera experience, please log in as Demo User (link in login modal) or create your own account!
 
@@ -27,35 +27,34 @@ _Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) fo
 
 ### Shop
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/865859cf-af43-42ed-8504-c8516f1babcd)](https://plantera.onrender.com/listings)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/865859cf-af43-42ed-8504-c8516f1babcd)](https://plantera.carmenshiu.com/listings)
 
 ### Listing Page
-[![listingpage](https://github.com/craftycarmen/plantera/assets/131481577/26b9c8b2-4b4d-46d3-9d8a-4359b17f2bd7)](https://plantera.onrender.com/listings/1)
-
+[![listing-page](https://github.com/craftycarmen/plantera/assets/131481577/99e35961-67a1-49f3-9e5f-495dd7b5d0ac)](https://plantera.carmenshiu.com/listings/1)
 
 
 ### Shopping Cart
-[![shoppingcart](https://github.com/craftycarmen/plantera/assets/131481577/dacdba6b-35ca-40b8-9317-fcc1c2aa736b)](https://plantera.onrender.com/listings/48)
+[![shoppingcart](https://github.com/craftycarmen/plantera/assets/131481577/dacdba6b-35ca-40b8-9317-fcc1c2aa736b)](https://plantera.carmenshiu.com/listings/48)
 
 
 
 ### Search & Filter
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/e946e775-e84e-41be-a67e-09291d25f4a0)](https://plantera.onrender.com/search?search=monstera)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/e946e775-e84e-41be-a67e-09291d25f4a0)](https://plantera.carmenshiu.com/search?search=monstera)
 
 ### Plant Guides
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/b7f99746-dd16-407e-a9c8-0b1681402881)](https://plantera.onrender.com/guides)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/b7f99746-dd16-407e-a9c8-0b1681402881)](https://plantera.carmenshiu.com/guides)
 
 ### Create Guide
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/d81017b0-cdf0-4036-bc6c-05a82e81fd03)](https://plantera.onrender.com/guides/new)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/d81017b0-cdf0-4036-bc6c-05a82e81fd03)](https://plantera.carmenshiu.com/guides/new)
 
 ### Order Details
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/6185a084-6b89-43be-add9-901ef20f8481)](https://plantera.onrender.com/orders)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/6185a084-6b89-43be-add9-901ef20f8481)](https://plantera.carmenshiu.com/orders)
 
 ### Seller Dashboard
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/4595b836-5fe3-4887-9fac-98a3d496afc6)](https://plantera.onrender.com/sell)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/4595b836-5fe3-4887-9fac-98a3d496afc6)](https://plantera.carmenshiu.com/sell)
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/b2844c36-1f8b-4647-910a-a66ee131c11f)](https://plantera.onrender.com/sell/orders)
+[![image](https://github.com/craftycarmen/plantera/assets/131481577/b2844c36-1f8b-4647-910a-a66ee131c11f)](https://plantera.carmenshiu.com/sell/orders)

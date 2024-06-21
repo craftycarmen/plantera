@@ -70,7 +70,7 @@
 }
 
 .clickedButton {
-    background-color: #FDAC8A;
+    background-color: #FDAC8A !important;
     border-radius: 3px;
     box-shadow: #FDAC8A 2px 2px;
     height: 26.5px;

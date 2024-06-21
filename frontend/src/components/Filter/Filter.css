@@ -131,11 +131,19 @@
 
     .clearFilters {
         width: auto;
+        -webkit-appearance: none !important;
     }
 
     .potSize {
         gap: 5px;
+    }
 
+    .potSize button {
+        -webkit-appearance: none !important;
+    }
+
+    .customPrice button {
+        -webkit-appearance: none !important;
     }
 }
 

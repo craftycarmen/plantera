@@ -60,6 +60,7 @@
 
 .potSize button {
     width: 42px;
+    height: 26.5px;
     background-color: #F2DCCB;
     box-shadow: #FDAC8A 2px 2px;
     display: flex;
@@ -67,6 +68,18 @@
     text-align: center;
     align-items: center;
 }
+
+.clickedButton {
+    background-color: #FDAC8A;
+    border-radius: 3px;
+    box-shadow: #FDAC8A 2px 2px;
+    height: 26.5px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
 
 .filterRange input {
     width: 24px;
@@ -119,13 +132,6 @@
     inline-size: 160px;
     white-space: pre-wrap;
     margin-top: 10px;
-}
-
-.clickedButton {
-    background-color: #FDAC8A;
-    border-radius: 3px;
-    border: 1px #6b6b6b solid;
-    height: 26.5px;
 }
 
 .noResultsContainer {

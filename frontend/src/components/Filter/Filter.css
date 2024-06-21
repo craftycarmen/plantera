@@ -131,7 +131,6 @@
 
     .clearFilters {
         width: auto;
-        -webkit-appearance: none !important;
     }
 
     .potSize {
@@ -139,11 +138,13 @@
     }
 
     .potSize button {
-        -webkit-appearance: none !important;
+        justify-content: center;
+        text-align: center;
     }
 
     .customPrice button {
-        -webkit-appearance: none !important;
+        justify-content: center;
+        text-align: center;
     }
 }
 

@@ -62,6 +62,10 @@
     width: 42px;
     background-color: #F2DCCB;
     box-shadow: #FDAC8A 2px 2px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
 .filterRange input {
@@ -101,8 +105,13 @@
     margin-left: 10px;
     margin-top: -6px;
     width: 30px;
+    height: 25px;
     background-color: #F2DCCB;
     box-shadow: #FDAC8A 2px 2px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
 .filterRange div.error {
@@ -127,6 +136,10 @@
     margin-top: 20px;
     background-color: #F2DCCB;
     box-shadow: #FDAC8A 2px 2px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 480px) {

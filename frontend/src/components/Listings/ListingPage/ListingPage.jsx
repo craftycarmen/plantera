@@ -293,7 +293,7 @@ function ListingPage() {
                                                     <button
                                                         type="submit"
                                                         disabled={error}
-                                                        style={{ width: "158px", marginTop: "10px" }}
+                                                        style={{ width: "158px", marginTop: "10px", backgroundColor: "#EFEFEF" }}
                                                     >Add to Cart</button>
                                                 </>}
                                                 modalComponent={<ShoppingCartModal cartId={cartId} navigate={navigate} updatedQty={updatedQty} />}

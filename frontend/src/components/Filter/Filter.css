@@ -139,12 +139,14 @@
 
     .potSize button {
         justify-content: center;
-        text-align: center;
+        justify-items: center;
+        justify-self: center;
     }
 
     .customPrice button {
         justify-content: center;
-        text-align: center;
+        justify-items: center;
+        justify-self: center;
     }
 }
 

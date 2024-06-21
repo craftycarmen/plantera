@@ -20,12 +20,17 @@
 @media screen and (max-width: 480px) {
 
     .guideForm .inputContainer input,
-    .guideForm .inputContainer textarea {
-        width: 65vw;
+    .guideForm .inputContainer textarea,
+    .submitGuideButton {
+        width: 70vw;
     }
 
     .guideDots {
         margin: 20px auto;
+    }
+
+    #description {
+        height: 60px;
     }
 
 }

@@ -30,7 +30,8 @@ function UpdateOrderModal({ orderId, itemId, status, name }) {
         <section className="modal orderModal">
             <h1 style={{ textAlign: "center" }}>Update Order Item Status</h1>
             <h2>Order #{orderId} - {name}</h2>
-            <div style={{ marginTop: "10px" }}>Current Status: {status}</div>
+            <div style={{ marginTop: "10px" }}>Current Status:</div>
+            <div>{status}</div>
             <div style={{ marginTop: "15px" }}>New Status:</div>
             <form onSubmit={handleSubmit}>
                 <div className="orderStatusOptions">

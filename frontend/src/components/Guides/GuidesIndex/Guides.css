@@ -138,7 +138,11 @@
     .guideImageContainer,
     .guideImageContainer::before {
         width: 75vw;
+    }
 
+    .createGuideDiv {
+        display: grid;
+        justify-items: center;
     }
 
 }

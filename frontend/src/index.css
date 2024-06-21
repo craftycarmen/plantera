@@ -276,6 +276,10 @@ form>button {
         width: auto;
     }
 
+    .deleteButtons {
+        display: grid;
+    }
+
     button {
         width: 100%;
     }
@@ -284,6 +288,7 @@ form>button {
     textarea,
     select,
     form>button,
+    .deleteButtons,
     .inputContainer {
         width: 70vw;
     }
@@ -291,6 +296,7 @@ form>button {
     form {
         width: auto;
     }
+
 
 
 }

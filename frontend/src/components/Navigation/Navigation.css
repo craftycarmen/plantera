@@ -43,6 +43,12 @@
     cursor: text;
 }
 
+.profile-dropdown button {
+    background-color: #F2DCCB;
+    box-shadow: #FDAC8A 2px 2px;
+}
+
+
 .hidden {
     display: none;
 }

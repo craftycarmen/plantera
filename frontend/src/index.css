@@ -121,6 +121,9 @@ button {
     /* letter-spacing: -0.5px; */
     color: #28635A;
     width: 100%;
+    border-radius: 3px;
+    border: #28635a 1px solid;
+    background-color: #EFEFEE;
 }
 
 button:hover {
@@ -265,11 +268,7 @@ form>button {
     }
 
     button {
-        -webkit-appearance: none !important;
         width: 100%;
-        border-radius: 3px;
-        border: #28635a 1px solid;
-        background-color: #EFEFEF
     }
 
     input:not([type=radio]),
@@ -298,13 +297,6 @@ form>button {
     form>button,
     .inputContainer {
         width: 70vw;
-    }
-
-    button {
-        -webkit-appearance: none !important;
-        border-radius: 3px;
-        border: #28635a 1px solid;
-        background-color: #EFEFEF
     }
 
     form {

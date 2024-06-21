@@ -67,6 +67,7 @@
     border-radius: 3px;
     width: auto;
     /* margin-right: 5px; */
+    box-shadow: none;
 }
 
 .quantityInput button:disabled {

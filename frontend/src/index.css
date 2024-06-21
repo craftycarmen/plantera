@@ -121,9 +121,13 @@ button {
     /* letter-spacing: -0.5px; */
     color: #28635A;
     width: 100%;
-    border-radius: 3px;
+    /* border-radius: 3px;
     border: #28635a 1px solid;
-    background-color: #EFEFEE;
+    background-color: #EFEFEE; */
+    background-color: #FDAC8A;
+    border-radius: 3px;
+    border: #28635A 1px solid;
+    box-shadow: #F2DCCB 2px 2px;
 }
 
 button:hover {

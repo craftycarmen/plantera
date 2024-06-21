@@ -37,10 +37,6 @@
 
 .signUp button {
     padding: 10px;
-    background-color: #FDAC8A;
-    border-radius: 3px;
-    border: #28635A 1px solid;
-    box-shadow: #F2DCCB 4px 3px;
 }
 
 @media screen and (max-width: 480px) {

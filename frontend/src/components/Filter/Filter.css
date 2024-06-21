@@ -60,6 +60,8 @@
 
 .potSize button {
     width: 42px;
+    background-color: #F2DCCB;
+    box-shadow: #FDAC8A 2px 2px;
 }
 
 .filterRange input {
@@ -99,6 +101,8 @@
     margin-left: 10px;
     margin-top: -6px;
     width: 30px;
+    background-color: #F2DCCB;
+    box-shadow: #FDAC8A 2px 2px;
 }
 
 .filterRange div.error {
@@ -121,6 +125,8 @@
 
 .clearFilters {
     margin-top: 20px;
+    background-color: #F2DCCB;
+    box-shadow: #FDAC8A 2px 2px;
 }
 
 @media screen and (max-width: 480px) {

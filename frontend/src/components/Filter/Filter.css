@@ -126,9 +126,17 @@
 @media screen and (max-width: 480px) {
 
     .filter-dropdown {
-        width: 65vw;
+        width: auto;
     }
 
+    .clearFilters {
+        width: auto;
+    }
+
+    .potSize {
+        gap: 5px;
+
+    }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {

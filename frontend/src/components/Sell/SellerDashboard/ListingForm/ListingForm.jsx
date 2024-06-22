@@ -8,6 +8,7 @@ import makeAnimated from 'react-select/animated';
 import { fetchAllGuides } from '../../../../store/guides';
 import { titleCase, upperCaseFirst } from '../../../../../utils';
 import Menu from '../Menu';
+import Sell from '../../SellPage/Sell';
 
 function ListingForm({ listing, formType }) {
     const dispatch = useDispatch();
@@ -22,7 +23,9 @@ function ListingForm({ listing, formType }) {
         transition: 'margin-left 0.2s ease-in-out'
     };
     const sessionUser = useSelector(state => state.session.user);
-
+    const user = useSelector(state => state.user[sessionUser?.id]?.User)
+    const currUser = user || sessionUser;
+    const isSeller = currUser && currUser.accountType === 'seller';
     const [plantName, setPlantName] = useState(listing?.plantName || "");
     const [description, setDescription] = useState(listing?.description || "");
     const [price, setPrice] = useState(listing?.price || "");
@@ -222,140 +225,147 @@ function ListingForm({ listing, formType }) {
 
     return (
         <>
-            <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
-            <div>Purge your plants and plant babies on Plantera, and get paid!</div>
-            <br />
-            <div>
-                <div className="filterSort">
-                    <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
-                </div>
-                <div style={sellerContainerStyle} className="sellerDashContainer">
-                    <h2>{formType}</h2>
-                    {!sessionUser ? (
-                        <ErrorHandling />
-                    ) : (
-                        <form onSubmit={handleSubmit}>
-                            <div className='inputContainer' style={{ marginTop: '20px' }}>
-                                <input
-                                    type='text'
-                                    value={plantName}
-                                    onChange={updatePlantName}
-                                    placeholder=''
-                                    id='plantName'
-                                />
-                                <label htmlFor='plantName' className='floating-label'>Plant Name*</label>
-                            </div>
-                            <div className='error'>{errors.plantName &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.plantName}</>}</div>
-                            <div className='inputContainer'>
-                                <textarea
-                                    value={description}
-                                    onChange={updateDescription}
-                                    placeholder=''
-                                    id='description'
-                                />
-                                <label htmlFor='description' className='floating-label'>Description*</label>
-                            </div>
-                            <div className='error'>{errors.description &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.description}</>}</div>
-                            <div className='inputContainer'>
-                                <input
-                                    type='number'
-                                    step='0.01'
-                                    min='1'
-                                    value={price}
-                                    onChange={updatePrice}
-                                    placeholder=''
-                                    id='price'
-                                />
-                                <label htmlFor='price' className='floating-label'>Price*</label>
-                            </div>
-                            <div className='error'>{errors.price &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.price}</>}</div>
-                            <div className='inputContainer'>
-                                <input
-                                    type='number'
-                                    step='1'
-                                    min='2'
-                                    max='12'
-                                    value={potSize}
-                                    onChange={updatePotSize}
-                                    placeholder=''
-                                    id='potSize'
-                                />
-                                <label htmlFor='potSize' className='floating-label'>Pot Size (inches)*</label>
-                            </div>
-                            <div className='error'>{errors.potSize &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.potSize}</>}</div>
-                            <div className='inputContainer'>
-                                <input
-                                    type='number'
-                                    step='1'
-                                    min='0'
-                                    value={stockQty}
-                                    onChange={updateStockQty}
-                                    placeholder=''
-                                    id='stockQty'
-                                />
-                                <label htmlFor='stockQty' className='floating-label'>Stock Quantity*</label>
-                            </div>
-                            <div className='error'>{errors.stockQty &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
-                            {createForm &&
-                                <>
+            {(!sessionUser || (sessionUser && !isSeller)) &&
+                <Sell />
+            }
+            {sessionUser && isSeller &&
+                <>
+                    <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
+                    <div>Purge your plants and plant babies on Plantera, and get paid!</div>
+                    <br />
+                    <div>
+                        <div className="filterSort">
+                            <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
+                        </div>
+                        <div style={sellerContainerStyle} className="sellerDashContainer">
+                            <h2>{formType}</h2>
+                            {!sessionUser ? (
+                                <ErrorHandling />
+                            ) : (
+                                <form onSubmit={handleSubmit}>
+                                    <div className='inputContainer' style={{ marginTop: '20px' }}>
+                                        <input
+                                            type='text'
+                                            value={plantName}
+                                            onChange={updatePlantName}
+                                            placeholder=''
+                                            id='plantName'
+                                        />
+                                        <label htmlFor='plantName' className='floating-label'>Plant Name*</label>
+                                    </div>
+                                    <div className='error'>{errors.plantName &&
+                                        <><i className="fa-solid fa-circle-exclamation" /> {errors.plantName}</>}</div>
+                                    <div className='inputContainer'>
+                                        <textarea
+                                            value={description}
+                                            onChange={updateDescription}
+                                            placeholder=''
+                                            id='description'
+                                        />
+                                        <label htmlFor='description' className='floating-label'>Description*</label>
+                                    </div>
+                                    <div className='error'>{errors.description &&
+                                        <><i className="fa-solid fa-circle-exclamation" /> {errors.description}</>}</div>
                                     <div className='inputContainer'>
                                         <input
-                                            type="file"
-                                            accept=".jpg, .jpeg, .png"
-                                            // multiple
-                                            onChange={updateFile}
-                                            id='image'
+                                            type='number'
+                                            step='0.01'
+                                            min='1'
+                                            value={price}
+                                            onChange={updatePrice}
+                                            placeholder=''
+                                            id='price'
                                         />
-                                        <label htmlFor='image' className='floating-label'>Image*</label>
-                                        <div className='error'>{errors.image &&
-                                            <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                                        <label htmlFor='price' className='floating-label'>Price*</label>
                                     </div>
-                                </>}
-                            <div className='inputContainer'>
-                                <div>Select up to 3 guides to include:</div>
-                                <Select
-                                    closeMenuOnSelect={false}
-                                    components={animatedComponents}
-                                    isMulti
-                                    value={selectedGuides}
-                                    onChange={(e) => setSelectedGuides(e)}
-                                    options={guideOptions}
-                                    name="guides"
-                                    isOptionDisabled={() => selectedGuides.length >= 3}
-                                    theme={(theme) => ({
-                                        ...theme,
-                                        borderRadius: 0,
-                                        colors: {
-                                            ...theme.colors,
-                                            primary25: '#FDAC8A',
-                                            primary: '#FDAC8A',
-                                            neutral80: '#28635A',
-                                            color: '#28635A',
-                                        },
-                                    })}
-                                    styles={customSelectStyle}
-                                />
+                                    <div className='error'>{errors.price &&
+                                        <><i className="fa-solid fa-circle-exclamation" /> {errors.price}</>}</div>
+                                    <div className='inputContainer'>
+                                        <input
+                                            type='number'
+                                            step='1'
+                                            min='2'
+                                            max='12'
+                                            value={potSize}
+                                            onChange={updatePotSize}
+                                            placeholder=''
+                                            id='potSize'
+                                        />
+                                        <label htmlFor='potSize' className='floating-label'>Pot Size (inches)*</label>
+                                    </div>
+                                    <div className='error'>{errors.potSize &&
+                                        <><i className="fa-solid fa-circle-exclamation" /> {errors.potSize}</>}</div>
+                                    <div className='inputContainer'>
+                                        <input
+                                            type='number'
+                                            step='1'
+                                            min='0'
+                                            value={stockQty}
+                                            onChange={updateStockQty}
+                                            placeholder=''
+                                            id='stockQty'
+                                        />
+                                        <label htmlFor='stockQty' className='floating-label'>Stock Quantity*</label>
+                                    </div>
+                                    <div className='error'>{errors.stockQty &&
+                                        <><i className="fa-solid fa-circle-exclamation" /> {errors.stockQty}</>}</div>
+                                    {createForm &&
+                                        <>
+                                            <div className='inputContainer'>
+                                                <input
+                                                    type="file"
+                                                    accept=".jpg, .jpeg, .png"
+                                                    // multiple
+                                                    onChange={updateFile}
+                                                    id='image'
+                                                />
+                                                <label htmlFor='image' className='floating-label'>Image*</label>
+                                                <div className='error'>{errors.image &&
+                                                    <><i className="fa-solid fa-circle-exclamation" /> {errors.image}</>}</div>
+                                            </div>
+                                        </>}
+                                    <div className='inputContainer'>
+                                        <div>Select up to 3 guides to include:</div>
+                                        <Select
+                                            closeMenuOnSelect={false}
+                                            components={animatedComponents}
+                                            isMulti
+                                            value={selectedGuides}
+                                            onChange={(e) => setSelectedGuides(e)}
+                                            options={guideOptions}
+                                            name="guides"
+                                            isOptionDisabled={() => selectedGuides.length >= 3}
+                                            theme={(theme) => ({
+                                                ...theme,
+                                                borderRadius: 0,
+                                                colors: {
+                                                    ...theme.colors,
+                                                    primary25: '#FDAC8A',
+                                                    primary: '#FDAC8A',
+                                                    neutral80: '#28635A',
+                                                    color: '#28635A',
+                                                },
+                                            })}
+                                            styles={customSelectStyle}
+                                        />
 
-                            </div>
-                            {createForm &&
-                                <>
-                                    {imageLoading && (<div className="dots"></div>)}
-                                </>}
-                            <button
-                                type='submit'
-                                disabled={!!Object.values(errors).length}
-                            >
-                                {formType}
-                            </button>
-                        </form>
-                    )}
-                </div>
-            </div>
+                                    </div>
+                                    {createForm &&
+                                        <>
+                                            {imageLoading && (<div className="dots"></div>)}
+                                        </>}
+                                    <button
+                                        type='submit'
+                                        disabled={!!Object.values(errors).length}
+                                    >
+                                        {formType}
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+                </>
+            }
         </>
     );
 

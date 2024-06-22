@@ -7,6 +7,7 @@ import Menu from "../Menu";
 import ErrorHandling from "../../../ErrorHandling";
 import './ManageOrders.css';
 import ManageOrdersTabs from "./ManageOrdersTabs";
+import Sell from "../../SellPage/Sell";
 
 function FulfilledOrders() {
     const dispatch = useDispatch();
@@ -19,6 +20,9 @@ function FulfilledOrders() {
         transition: 'margin-left 0.2s ease-in-out'
     };
     const sessionUser = useSelector(state => state.session.user);
+    const user = useSelector(state => state.user[sessionUser?.id]?.User)
+    const currUser = user || sessionUser;
+    const isSeller = currUser && currUser.accountType === 'seller';
     const shopOrders = Object.values(useSelector((state) => state.sell));
 
     const fulfilled = shopOrders?.map(order => {
@@ -64,96 +68,103 @@ function FulfilledOrders() {
 
     return (
         <>
-            <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
-            <div>Purge your plants and plant babies on Plantera, and get paid!</div>
-            <br />
-            <div>
-                <div className="filterSort">
-                    <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
-                </div>
-                <div style={sellerContainerStyle} className="sellerDashContainer">
-                    <h2>Manage Orders</h2>
-                    {!sessionUser ? (
-                        <ErrorHandling />
-                    ) : (
-                        shopOrders && (
-                            <div className="manageListingsSection">
-                                {shopOrders.length === 0 ? (
-                                    <div>No orders yet!</div>
-                                ) : (
-                                    <div className="unfulfilledFulfilled">
-                                        <div>
-                                            <ManageOrdersTabs />
-                                            {fulfilled && fulfilled.length === 0 ? (
-                                                <div>No fulfilled orders!</div>
-                                            ) : (
-                                                <div style={{ paddingTop: "20px" }}>
-                                                    {fulfilled.map(order => {
-                                                        let orderTotalEarnings = 0;
-                                                        let orderTotalItems = 0;
-                                                        order?.CartItems?.forEach(item => {
-                                                            orderTotalEarnings += item.cartQty * item?.Listing?.price;
-                                                            orderTotalItems += item?.cartQty;
-                                                        });
-                                                        return (
-                                                            <div key={order.id} className="manageOrdersSection">
-                                                                <h4>Order #{order.id}</h4>
-                                                                <div className="orderInfo">
-                                                                    <div>
-                                                                        <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
-                                                                    </div>
-                                                                    <div className="shipTo">
-                                                                        <div>Ship to:</div>
-                                                                        <div>
-                                                                            <div>{order.firstName} {order.lastName}</div>
-                                                                            <div>{order.address}</div>
-                                                                            <div>{order.city}, {order.state} {order.zipCode}</div>
+            {(!sessionUser || (sessionUser && !isSeller)) &&
+                <Sell />
+            }
+            {sessionUser && isSeller &&
+                <>
+                    <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
+                    <div>Purge your plants and plant babies on Plantera, and get paid!</div>
+                    <br />
+                    <div>
+                        <div className="filterSort">
+                            <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
+                        </div>
+                        <div style={sellerContainerStyle} className="sellerDashContainer">
+                            <h2>Manage Orders</h2>
+                            {!sessionUser ? (
+                                <ErrorHandling />
+                            ) : (
+                                shopOrders && (
+                                    <div className="manageListingsSection">
+                                        {shopOrders.length === 0 ? (
+                                            <div>No orders yet!</div>
+                                        ) : (
+                                            <div className="unfulfilledFulfilled">
+                                                <div>
+                                                    <ManageOrdersTabs />
+                                                    {fulfilled && fulfilled.length === 0 ? (
+                                                        <div>No fulfilled orders!</div>
+                                                    ) : (
+                                                        <div style={{ paddingTop: "20px" }}>
+                                                            {fulfilled.map(order => {
+                                                                let orderTotalEarnings = 0;
+                                                                let orderTotalItems = 0;
+                                                                order?.CartItems?.forEach(item => {
+                                                                    orderTotalEarnings += item.cartQty * item?.Listing?.price;
+                                                                    orderTotalItems += item?.cartQty;
+                                                                });
+                                                                return (
+                                                                    <div key={order.id} className="manageOrdersSection">
+                                                                        <h4>Order #{order.id}</h4>
+                                                                        <div className="orderInfo">
+                                                                            <div>
+                                                                                <div>Order Date: {order.createdAt && dateFormat(order.createdAt)}</div>
+                                                                            </div>
+                                                                            <div className="shipTo">
+                                                                                <div>Ship to:</div>
+                                                                                <div>
+                                                                                    <div>{order.firstName} {order.lastName}</div>
+                                                                                    <div>{order.address}</div>
+                                                                                    <div>{order.city}, {order.state} {order.zipCode}</div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
+                                                                        <div className="items">
+                                                                            <table>
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Item</th>
+                                                                                        <th>Qty</th>
+                                                                                        <th>Price</th>
+                                                                                        <th>Order Item Status</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    {order.CartItems?.map(item => (
+                                                                                        <tr key={item.Listing?.id}>
+                                                                                            <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link> ({price(item.Listing?.price)}/ea)</td>
+                                                                                            <td>{item.cartQty}</td>
+                                                                                            <td>
+                                                                                                <div>{price(item.cartQty * item.Listing?.price)}</div>
+                                                                                            </td>
+                                                                                            <td>{item.orderStatus}</td>
+                                                                                        </tr>
+                                                                                    ))}
+                                                                                    <tr>
+                                                                                        <td>Total</td>
+                                                                                        <td>{orderTotalItems}</td>
+                                                                                        <td>{price(orderTotalEarnings)}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <hr />
                                                                     </div>
-                                                                </div>
-                                                                <div className="items">
-                                                                    <table>
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Item</th>
-                                                                                <th>Qty</th>
-                                                                                <th>Price</th>
-                                                                                <th>Order Item Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            {order.CartItems?.map(item => (
-                                                                                <tr key={item.Listing?.id}>
-                                                                                    <td><Link to={`/listings/${item.Listing?.id}`} target="_blank" rel="noopener noreferrer">{item.Listing?.plantName}</Link> ({price(item.Listing?.price)}/ea)</td>
-                                                                                    <td>{item.cartQty}</td>
-                                                                                    <td>
-                                                                                        <div>{price(item.cartQty * item.Listing?.price)}</div>
-                                                                                    </td>
-                                                                                    <td>{item.orderStatus}</td>
-                                                                                </tr>
-                                                                            ))}
-                                                                            <tr>
-                                                                                <td>Total</td>
-                                                                                <td>{orderTotalItems}</td>
-                                                                                <td>{price(orderTotalEarnings)}</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <hr />
-                                                            </div>
-                                                        );
-                                                    })}
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
-                                        </div>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        )
-                    )}
-                </div>
-            </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </>
+            }
         </>
     );
 }

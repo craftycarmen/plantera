@@ -11,7 +11,7 @@ function UserGuides() {
     const user = useSelector(state => state.user[userId]?.User);
     const guides = useSelector(state => state.user[userId]?.Guides);
     const sessionUser = useSelector(state => state.session.user);
-
+    console.log(guides);
     useEffect(() => {
         dispatch(fetchProfile(userId))
     }, [dispatch, userId])
@@ -27,7 +27,7 @@ function UserGuides() {
             </div>
             <div>
                 {guides.length === 0 ? (
-                    <div style={{ marginTop: '-284px' }}>This user does not have any guides.</div>
+                    <div className="numGuides">This user does not have any guides.</div>
                 ) :
                     (
                         <div className="userGuidesContainer" style={{ marginTop: "20px" }}>

@@ -11,10 +11,10 @@ function UnfulfilledOrders({ unfulfilled, shopOrders, dateFormat }) {
                 shopOrders && (
                     <div className="manageListingsSection">
                         {shopOrders.length === 0 ? (
-                            <div>No orders yet!</div>
+                            <div className="noOrders">No orders yet!</div>
                         ) : (
                             <div className="unfulfilledFulfilled">
-                                <div >
+                                <div>
                                     {unfulfilled && unfulfilled.length === 0 ? (
                                         <div>No unfulfilled orders!</div>
                                     ) : (

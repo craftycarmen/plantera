@@ -28,6 +28,10 @@
     border-radius: 50%;
 }
 
+.numGuides {
+    margin-top: -284px;
+}
+
 .userImage-outline {
     position: absolute;
     top: 5px;
@@ -222,6 +226,10 @@
         width: 75vw;
     }
 
+    .numGuides {
+        margin-top: auto;
+    }
+
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
@@ -272,6 +280,10 @@
 
     .shopListingsContainer {
         justify-content: center;
+    }
+
+    .numGuides {
+        margin-top: auto;
     }
 }
 
@@ -328,6 +340,10 @@
         grid-template-columns: 1fr 1fr;
         width: auto;
         justify-content: center;
+    }
+
+    .numGuides {
+        margin-top: auto;
     }
 
 }

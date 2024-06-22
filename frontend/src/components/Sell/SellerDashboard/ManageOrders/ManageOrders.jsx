@@ -8,6 +8,7 @@ import './ManageOrders.css';
 import UnfulfilledOrders from "./UnfulfilledOrders";
 import FulfilledOrders from "./FulfilledOrders";
 import ManageOrdersTabs from "./ManageOrdersTabs";
+import Sell from "../../SellPage/Sell";
 
 function ManageOrders() {
     const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function ManageOrders() {
         transition: 'margin-left 0.2s ease-in-out'
     };
     const sessionUser = useSelector(state => state.session.user);
+    const user = useSelector(state => state.user[sessionUser?.id]?.User)
+    const currUser = user || sessionUser;
+    const isSeller = currUser && currUser.accountType === 'seller';
     const shopOrders = Object.values(useSelector((state) => state.sell));
 
     const unfulfilled = shopOrders?.map(order => {
@@ -81,41 +85,48 @@ function ManageOrders() {
 
     return (
         <>
-            <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
-            <div>Purge your plants and plant babies on Plantera, and get paid!</div>
-            <br />
-            <div>
-                <div className="filterSort">
-                    <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
-                </div>
-                <div style={sellerContainerStyle} className="sellerDashContainer">
-                    <h2>Manage Orders</h2>
-                    {!sessionUser ? (
-                        <ErrorHandling />
-                    ) : (
-                        shopOrders && (
-                            <div className="manageListingsSection">
-                                {shopOrders.length === 0 ? (
-                                    <div>No orders yet!</div>
-                                ) : (
-                                    <div className="unfulfilledFulfilled">
-                                        <div className="ordersWrapper">
-                                            <ManageOrdersTabs />
-                                            <UnfulfilledOrders unfulfilled={unfulfilled} shopOrders={shopOrders} dateFormat={dateFormat} />
-                                        </div>
-                                        {location.pathname === '/sell/orders/fulfilled' &&
-                                            <div className="ordersWrapper">
-                                                <FulfilledOrders fulfilled={fulfilled} shopOrders={shopOrders} dateFormat={dateFormat} />
+            {(!sessionUser || (sessionUser && !isSeller)) &&
+                <Sell />
+            }
+            {sessionUser && isSeller &&
+                <>
+                    <h1>Sell(er Dashboard) for {sessionUser.username}</h1>
+                    <div>Purge your plants and plant babies on Plantera, and get paid!</div>
+                    <br />
+                    <div>
+                        <div className="filterSort">
+                            <Menu sessionUser={sessionUser} handleToggle={handleToggle} />
+                        </div>
+                        <div style={sellerContainerStyle} className="sellerDashContainer">
+                            <h2>Manage Orders</h2>
+                            {!sessionUser ? (
+                                <ErrorHandling />
+                            ) : (
+                                shopOrders && (
+                                    <div className="manageListingsSection">
+                                        {shopOrders.length === 0 ? (
+                                            <div>No orders yet!</div>
+                                        ) : (
+                                            <div className="unfulfilledFulfilled">
+                                                <div className="ordersWrapper">
+                                                    <ManageOrdersTabs />
+                                                    <UnfulfilledOrders unfulfilled={unfulfilled} shopOrders={shopOrders} dateFormat={dateFormat} />
+                                                </div>
+                                                {location.pathname === '/sell/orders/fulfilled' &&
+                                                    <div className="ordersWrapper">
+                                                        <FulfilledOrders fulfilled={fulfilled} shopOrders={shopOrders} dateFormat={dateFormat} />
+                                                    </div>
+                                                }
                                             </div>
-                                        }
-                                    </div>
 
-                                )}
-                            </div>
-                        )
-                    )}
-                </div>
-            </div>
+                                        )}
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </>
+            }
         </>
     );
 }

@@ -90,6 +90,10 @@
     cursor: default;
 }
 
+.noOrders {
+    width: 1000px;
+}
+
 .unfulfilled {
     padding-bottom: 20px;
 }

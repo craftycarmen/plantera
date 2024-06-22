@@ -34,7 +34,7 @@ function OrderConfirmation() {
         <>
             {!sessionUser?.id &&
                 <ErrorHandling />}
-            {sessionUser?.id !== buyerId &&
+            {sessionUser && sessionUser?.id !== buyerId &&
                 <>This isn&apos;t your order!</>}
             {sessionUser?.id === buyerId && order &&
                 <>

@@ -14,18 +14,48 @@
     box-shadow: #FDAC8A 4px 3px;
 }
 
-.logos {
-    display: flex;
-    gap: 10px;
+.footerSection {
+    display: grid;
+    gap: 5px;
     justify-content: center;
     align-items: center;
     padding-top: 5px;
-    flex-wrap: wrap;
-    height: 18px;
+    grid-template-areas:
+        "name"
+        "links"
+        "logos";
+}
+
+.footerSection span {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.name {
+    grid-area: name;
+    justify-self: center;
+}
+
+.links {
+    grid-area: links;
+}
+
+.logos {
+    grid-area: logos;
+    display: flex;
 }
 
 @media screen and (max-width: 480px) {
     .footer {
         padding-bottom: 40px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .footerSection {
+        grid-template-areas:
+            "name name"
+            "links logos";
     }
 }

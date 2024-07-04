@@ -57,14 +57,6 @@ module.exports = (sequelize, DataTypes) => {
           as: 'Reviews'
         }
       )
-
-      User.hasMany(
-        models.Review,
-        {
-          foreignKey: 'sellerId',
-          as: 'SellerReviews'
-        }
-      )
     }
   };
 

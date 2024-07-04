@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
 
       Review.belongsTo(
+        models.Listing,
+        {
+          foreignKey: 'listingId',
+          as: 'Listing'
+        }
+      )
+
+      Review.belongsTo(
         models.User,
         {
           foreignKey: 'buyerId',
@@ -20,22 +28,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       )
 
-      Review.belongsTo(
-        models.User,
-        {
-          foreignKey: 'sellerId',
-          as: 'Seller'
-        }
-      )
     }
   }
   Review.init({
-    sellerId: {
+    listingId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Seller ID is required'
+          msg: 'Listing ID is required'
         }
       }
     },

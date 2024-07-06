@@ -303,7 +303,12 @@ router.get('/:listingId/reviews', async (req, res) => {
             {
                 model: User,
                 as: 'Reviewer',
-                attributes: ['id', 'username']
+                attributes: ['id', 'username'],
+                include: {
+                    model: Image,
+                    as: 'UserImages',
+                    attributes: ['url', 'avatar']
+                }
             }
         ]
     })

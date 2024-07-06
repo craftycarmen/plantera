@@ -10,6 +10,7 @@ import ShoppingCartModal from "../../Cart/CartModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { price } from "../../../../utils";
 import Error404 from "../../ErrorHandling/Error404";
+import ListingReviews from "./ListingReviews";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -317,6 +318,7 @@ function ListingPage() {
                     <div className={`otherSection ${listing?.Guides?.length === 1 ? 'singleGuide' : ''}`}>
                         <LinkedGuides guides={listing.Guides} />
                         <MeetTheSeller sellerInfo={listing.Seller} />
+                        <ListingReviews listing={listing} />
                     </div>
                 </>
             ) : (

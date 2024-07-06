@@ -1,18 +1,18 @@
 import { csrfFetch } from "./csrf";
 
-const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS';
-// const LOAD_SHOP_REVIEWS = 'reviews/LOAD_SHOP_REVIEWS';
+const LOAD_LISTING_REVIEWS = 'reviews/LOAD_LISTING_REVIEWS';
+const LOAD_SHOP_REVIEWS = 'reviews/LOAD_SHOP_REVIEWS';
 const CREATE_REVIEW = 'reviews/CREATE_REVIEW';
 
-export const loadReviews = (reviews) => ({
+export const loadListingReviews = (reviews) => ({
     type: LOAD_LISTING_REVIEWS,
     reviews
 });
 
-// export const loadShopReviews = (reviews) => ({
-//     type: LOAD_SHOP_REVIEWS,
-//     reviews
-// });
+export const loadShopReviews = (reviews) => ({
+    type: LOAD_SHOP_REVIEWS,
+    reviews
+});
 
 export const createReview = (review) => ({
     type: CREATE_REVIEW,
@@ -24,7 +24,7 @@ export const fetchListingReviews = (listingId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json();
-        dispatch(loadReviews(reviews));
+        dispatch(loadListingReviews(reviews));
         return reviews
     } else {
         const errors = await res.json();
@@ -37,7 +37,7 @@ export const fetchShopReviews = (userId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json();
-        dispatch(loadReviews(reviews));
+        dispatch(loadShopReviews(reviews));
         return reviews
     } else {
         const errors = await res.json();
@@ -66,11 +66,11 @@ export const addReview = (listingId, review) => async (dispatch, getState) => {
 
 const reviewsReducer = (state = {}, action) => {
     switch (action.type) {
-        case LOAD_REVIEWS: {
+        case LOAD_LISTING_REVIEWS: {
             const reviewsState = {}
 
-            if (action.review.Reviews !== 'No reviews found') {
-                action.review.Reviews.forEach(review => {
+            if (action.reviews.Reviews !== 'No reviews found') {
+                action.reviews.Reviews.forEach(review => {
                     reviewsState[review.id] = review;
                 })
                 return reviewsState

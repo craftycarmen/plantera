@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
+import { monthYear } from "../../../../utils"
 
 function MeetTheSeller({ sellerInfo }) {
-    const memberSince = (createdAt) => {
-        const newDate = new Date(createdAt)
-        return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
-    }
+    // const memberSince = (createdAt) => {
+    //     const newDate = new Date(createdAt)
+    //     return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
+    // }
     return (sellerInfo &&
         <div className="meetTheSeller">
             <h2>Meet {sellerInfo.username}</h2>
@@ -22,7 +23,7 @@ function MeetTheSeller({ sellerInfo }) {
                 <div className="listingsPageShop">
                     <div>
                         <span style={{ fontWeight: "800" }}>Member Since:</span>
-                        <div>{sellerInfo.createdAt && memberSince(sellerInfo.createdAt)}</div>
+                        <div>{sellerInfo.createdAt && monthYear(sellerInfo.createdAt)}</div>
                     </div>
                     <div>
                         <span style={{ fontWeight: "800" }}>Location:</span>

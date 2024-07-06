@@ -32,7 +32,7 @@
     justify-content: center;
 }
 
-.name {
+.footerName {
     grid-area: name;
     justify-self: center;
 }

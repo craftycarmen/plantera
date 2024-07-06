@@ -2,7 +2,7 @@ const express = require('express')
 const bcrypt = require('bcryptjs');
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Image, ShoppingCart, Listing, Guide, CartItem } = require('../../db/models');
+const { User, Image, ShoppingCart, Listing, Guide, Review } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -235,6 +235,39 @@ router.put('/:userId', singleMulterUpload("image"), requireAuth, async (req, res
     return res.json(user);
 });
 
+router.get('/:userId/reviews', async (req, res) => {
+    const userId = Number(req.params.userId);
+    const user = await User.findByPk(userId);
 
+    if (!user) return res.status(404).json({ message: "User couldn't be found" });
+
+    let reviews = await Review.findAll({
+        attributes: {
+            exclude: ['listingId', 'buyerId']
+        },
+        include: [
+            {
+                model: Listing,
+                attributes: ['id', 'plantName'],
+                where: {
+                    sellerId: userId
+                },
+            },
+            {
+                model: User,
+                as: 'Reviewer',
+                attributes: ['id', 'username'],
+            }
+        ]
+    })
+
+    let reviewsList = [];
+
+    reviews.forEach(review => {
+        reviewsList.push(reviews = review.toJSON());
+    });
+
+    if (reviews) return res.json({ ShopReviews: reviewsList })
+});
 
 module.exports = router;

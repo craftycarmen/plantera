@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         models.Listing,
         {
           foreignKey: 'listingId',
-          as: 'Listing'
         }
       )
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const { Listing, Image, User, Guide, ListingGuide, CartItem } = require('../../db/models');
+const { Listing, Image, User, Guide, ListingGuide, CartItem, Review } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
@@ -263,6 +263,49 @@ router.delete('/:listingId', requireAuth, async (req, res) => {
         await listing.destroy();
 
         return res.json({ message: "Successfully deleted" })
+    }
+});
+
+router.get('/:listingId/reviews', async (req, res) => {
+    const listingId = Number(req.params.listingId);
+    const listing = await Listing.findByPk(listingId);
+
+    if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
+
+    let reviews = await Review.findAll({
+        where: {
+            listingId: listingId
+        },
+        include: [
+            {
+                model: Listing,
+                attributes: ['id', 'plantName'],
+                include: {
+                    model: User,
+                    as: 'Seller',
+                    attributes: ['id', 'username']
+                }
+            },
+            {
+                model: User,
+                as: 'Reviewer',
+                attributes: ['id', 'username']
+            }
+        ]
+    })
+
+    let reviewsList = [];
+
+    reviews.forEach(review => {
+        reviewsList.push(reviews = review.toJSON());
+    });
+
+    if (reviews) {
+        return res.json({ Reviews: reviews })
+    } else {
+        return res.status(404).json({
+            message: "No reviews found"
+        });
     }
 });
 

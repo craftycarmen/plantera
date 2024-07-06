@@ -314,7 +314,11 @@ router.get('/:listingId/reviews', async (req, res) => {
         reviewsList.push(reviews = review.toJSON());
     });
 
-    if (reviews) return res.json({ Reviews: reviewsList })
+    if (reviewsList.length === 0) {
+        return res.json({ Reviews: "No reviews found" })
+    } else {
+        return res.json({ Reviews: reviewsList })
+    }
 });
 
 router.post('/:listingId/reviews', requireAuth, validateReview, async (req, res) => {

@@ -7,7 +7,7 @@ function Footer() {
         <div className="footer">
             <hr />
             <div className='footerSection'>
-                <span className='name'><span style={{ gap: "0px" }}>&#169;<a href="https://carmenshiu.com" target="_blank" rel="noopener noreferrer">Carmen Shiu</a></span><a href="mailto:hi@carmenshiu.com" target="_blank" rel="noopener noreferrer"><i className='fa-solid fa-envelope' /></a>
+                <span className='footerName'><span style={{ gap: "0px" }}>&#169;<a href="https://carmenshiu.com" target="_blank" rel="noopener noreferrer">Carmen Shiu</a></span><a href="mailto:hi@carmenshiu.com" target="_blank" rel="noopener noreferrer"><i className='fa-solid fa-envelope' /></a>
                     <a href="https://linkedin.com/in/carmenshiu" target="_blank" rel="noopener noreferrer"><i className='fa-brands fa-linkedin-in' /></a></span>
                 <span className='links'>
                     [ <a href="https://github.com/craftycarmen/plantera" target="_blank" rel="noopener noreferrer">GitHub Repo</a> &#8226; <a href="https://github.com/craftycarmen/plantera/wiki" target="_blank" rel="noopener noreferrer">Wiki</a> ]</span>

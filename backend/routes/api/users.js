@@ -257,12 +257,16 @@ router.get('/:userId/reviews', async (req, res) => {
                 model: User,
                 as: 'Reviewer',
                 attributes: ['id', 'username'],
+                include: {
+                    model: Image,
+                    as: 'UserImages',
+                    attributes: ['url', 'avatar']
+                }
             }
         ]
     })
 
     let reviewsList = [];
-    let avgReviews = {};
 
     reviews.forEach(review => {
         reviewsList.push(review.toJSON());
@@ -277,12 +281,13 @@ router.get('/:userId/reviews', async (req, res) => {
         })
     }
 
-    reviewsList.push(avgReviews = {
+    const allReviews = {
         avgStars: avgStars,
-        numReviews: reviewsList.length
-    })
+        numReviews: reviewsList.length,
+        Reviews: reviewsList
+    }
 
-    if (reviews) return res.json({ ShopReviews: reviewsList })
+    if (reviews) return res.json({ ShopReviews: allReviews })
 });
 
 module.exports = router;

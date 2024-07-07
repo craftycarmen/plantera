@@ -35,6 +35,7 @@ function ListingReviews({ listing }) {
     return (
         <>
             <h2>Reviews</h2>
+            <h3>Listing Reviews ({reviews.length})</h3>
             {reviews?.map((review) => (
                 <div key={review.id}>
                     <div className="reviewer">

@@ -262,10 +262,25 @@ router.get('/:userId/reviews', async (req, res) => {
     })
 
     let reviewsList = [];
+    let avgReviews = {};
 
     reviews.forEach(review => {
-        reviewsList.push(reviews = review.toJSON());
+        reviewsList.push(review.toJSON());
     });
+
+    let avgStars = 0;
+
+    if (reviewsList.length > 0) {
+        reviewsList.forEach(review => {
+            let totalStars = reviewsList.reduce((sum, review) => (sum + review.stars), 0)
+            avgStars = totalStars / reviewsList.length
+        })
+    }
+
+    reviewsList.push(avgReviews = {
+        avgStars: avgStars,
+        numReviews: reviewsList.length
+    })
 
     if (reviews) return res.json({ ShopReviews: reviewsList })
 });

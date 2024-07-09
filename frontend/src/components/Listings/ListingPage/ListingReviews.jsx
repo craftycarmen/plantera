@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchShopReviews } from "../../../store/reviews";
-import { monthDayYear } from "../../../../utils";
+import { monthDayYear, stars } from "../../../../utils";
 
 function ListingReviews({ listing }) {
     const dispatch = useDispatch();
@@ -21,23 +21,6 @@ function ListingReviews({ listing }) {
         }
         fetchData()
     }, [dispatch, listing.Seller.id])
-
-    const stars = (num) => {
-        let filledStars = [];
-        let unfilledStars = [];
-
-        for (let i = 0; i < parseInt(num); i++) {
-            filledStars.push(<span className="stars">&#9733;</span>)
-        }
-
-        let remainingStars = 5 - num;
-
-        for (let i = 0; i < parseInt(remainingStars); i++) {
-            unfilledStars.push(<span className="stars">&#9734;</span>)
-        }
-
-        return [filledStars, unfilledStars]
-    }
 
     return (
         <>

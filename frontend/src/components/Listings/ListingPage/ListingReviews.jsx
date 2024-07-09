@@ -9,12 +9,9 @@ function ListingReviews({ listing }) {
     const dispatch = useDispatch();
     const listingReviews = Object.values(useSelector(state => state.reviews.reviews)).filter(review => review.Listing.id === listing.id).sort((a, b) => (b.id - a.id));
     const shopReviews = Object.values(useSelector(state => state.reviews.reviews)).sort((a, b) => (b.id - a.id));
-    // const reviews = useSelector(state => state.reviews)
-    console.log("REVIEWS", listingReviews)
+    const avgStars = useSelector(state => state.reviews.avgStars);
+    const numReviews = useSelector(state => state.reviews.numReviews)
 
-    listingReviews.map(review => {
-        console.log("HIIII", review.Reviewer.UserImages[0].url)
-    })
     useEffect(() => {
         const fetchData = async () => {
             // await dispatch(fetchListingReviews(listing.id));
@@ -26,6 +23,7 @@ function ListingReviews({ listing }) {
     return (
         <>
             <h2>Reviews</h2>
+            <div>{stars(avgStars)} ({numReviews})</div>
 
             <h3>Listing Reviews ({listingReviews.length})</h3>
             {listingReviews?.map((review) => (

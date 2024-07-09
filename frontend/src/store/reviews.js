@@ -37,7 +37,7 @@ export const fetchShopReviews = (userId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json();
-        console.log(reviews)
+        console.log("RESREVIEWS", reviews)
         dispatch(loadShopReviews(reviews));
         return reviews
     } else {
@@ -65,7 +65,13 @@ export const addReview = (listingId, review) => async (dispatch, getState) => {
     }
 }
 
-const reviewsReducer = (state = {}, action) => {
+const initialState = {
+    reviews: {},
+    avgStars: 0,
+    numReviews: 0
+};
+
+const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         // case LOAD_LISTING_REVIEWS: {
         //     const reviewsState = {}
@@ -81,8 +87,9 @@ const reviewsReducer = (state = {}, action) => {
         // }
 
         case LOAD_SHOP_REVIEWS: {
-            console.log("ACTIONS", action);
-            const shopReviewsState = {
+            console.log("ACTIONS", action.reviews.ShopReviews);
+
+            let shopReviewsState = {
                 reviews: {},
                 avgStars: 0,
                 numReviews: 0
@@ -90,17 +97,17 @@ const reviewsReducer = (state = {}, action) => {
 
             if (action.reviews.ShopReviews.Reviews.length > 0) {
                 action.reviews.ShopReviews.Reviews.forEach(review => {
-                    shopReviewsState.reviews[review.id] = review
-                })
+                    shopReviewsState.reviews[review.id] = review;
+                });
 
-                shopReviewsState.avgStars = action.reviews.ShopReviews.avgStars
-                shopReviewsState.numReviews = action.reviews.ShopReviews.numReviews
+                shopReviewsState.avgStars = action.reviews.ShopReviews.avgStars;
+                shopReviewsState.numReviews = action.reviews.ShopReviews.numReviews;
                 console.log("STATEE", shopReviewsState);
-                return shopReviewsState
+                return shopReviewsState;
             }
-            return { ...state }
-        }
 
+            return { ...state };
+        }
         case CREATE_REVIEW: {
             return { ...state, [action.review.id]: action.review };
         }

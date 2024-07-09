@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchShopReviews } from "../../../store/reviews";
-import { monthDayYear, stars } from "../../../../utils";
+import { monthDayYear } from "../../../../utils";
+import { stars } from "../../../../utils.jsx";
 
 function ListingReviews({ listing }) {
     const dispatch = useDispatch();

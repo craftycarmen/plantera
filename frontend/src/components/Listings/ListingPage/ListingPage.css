@@ -248,6 +248,7 @@
     color: #28635A;
     display: inline-block;
     position: relative;
+    cursor: default;
 }
 
 .stars .full-star,

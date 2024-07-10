@@ -11,6 +11,7 @@ import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { price } from "../../../../utils";
 import Error404 from "../../ErrorHandling/Error404";
 import ListingReviews from "./ListingReviews";
+import { stars } from "../../../../utils.jsx";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -23,6 +24,9 @@ function ListingPage() {
 
     const cart = useSelector(state => state.cart)
     const cartItems = useSelector(state => state.cart.cartItems)
+
+    const avgStars = useSelector(state => state.reviews.avgStars);
+    const numReviews = useSelector(state => state.reviews.numReviews)
 
     let [cartId, setCartId] = useState(() => {
         const storedCartId = localStorage.getItem('cartId');
@@ -242,7 +246,7 @@ function ListingPage() {
                         <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
                         <div>
                             <h1>{listing.plantName}</h1>
-                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link></div>
+                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link> {stars(avgStars)}</div>
                             <p className="price">{price(listing.price)}</p>
                             <p>{listing.description}</p>
                             <p>Pot Size: {listing.potSize}&ldquo;</p>
@@ -318,7 +322,7 @@ function ListingPage() {
                     <div className={`otherSection ${listing?.Guides?.length === 1 ? 'singleGuide' : ''}`}>
                         <LinkedGuides guides={listing.Guides} />
                         <MeetTheSeller sellerInfo={listing.Seller} />
-                        <ListingReviews listing={listing} />
+                        <ListingReviews listing={listing} avgStars={avgStars} numReviews={numReviews} />
                     </div>
                 </>
             ) : (

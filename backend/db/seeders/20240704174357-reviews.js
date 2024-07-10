@@ -48,7 +48,7 @@ const reviewsList = [
     listingId: 20,
     buyerId: 12,
     review: 'Awesome plant! Shipping was a tad slow',
-    stars: 3
+    stars: 4
   },
   {
     listingId: 47,

@@ -238,10 +238,42 @@
     padding-bottom: 10px;
 }
 
-.stars {
+/* .stars {
     font-size: x-large;
     cursor: default;
+} */
+
+.stars {
+    font-size: 24px;
+    color: #28635A;
+    display: inline-block;
+    position: relative;
 }
+
+.stars .full-star,
+.stars .half-star,
+.stars .empty-star {
+    position: relative;
+}
+
+.stars .empty-star {
+    color: #28635A;
+}
+
+.stars .half-star {
+    color: #28635A;
+    position: relative;
+}
+
+.stars .half-star::before {
+    content: '★';
+    color: #28635A;
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+}
+
 
 .reviewerImageContainer {
     width: 100px;

@@ -246,7 +246,7 @@ function ListingPage() {
                         <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
                         <div>
                             <h1>{listing.plantName}</h1>
-                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link> {stars(avgStars)}</div>
+                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link> {numReviews === 0 ? (<span></span>) : (<span>{stars(avgStars)}</span>)}</div>
                             <p className="price">{price(listing.price)}</p>
                             <p>{listing.description}</p>
                             <p>Pot Size: {listing.potSize}&ldquo;</p>

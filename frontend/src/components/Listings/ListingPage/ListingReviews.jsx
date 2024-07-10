@@ -21,31 +21,35 @@ function ListingReviews({ listing, avgStars, numReviews }) {
     }, [dispatch, listing])
 
     console.log(avgStars, numReviews);
-    return (
+    return (numReviews > 0 &&
         <>
             <h2>Reviews</h2>
             <div>{numReviews === 0 ? (<span></span>) : (<span>{stars(avgStars)} ({numReviews})</span>)}</div>
 
-            <h3>Listing Reviews ({listingReviews.length})</h3>
-            {listingReviews?.map((review) => (
-                <div key={review.id}>
-                    <div className="reviewer">
-                        <div className="reviewerImageContainer">
-                            <Link to={`/user/${review.Reviewer.id}`}>
-                                <img
-                                    className="reviewerImage"
-                                    src={review.Reviewer.UserImages[0].url} />
-                                <div className="reviewerImage-outline"></div>
-                            </Link>
+            {listingReviews.length > 0 &&
+                <>
+                    <h3>Listing Reviews ({listingReviews.length})</h3>
+                    {listingReviews?.map((review) => (
+                        <div key={review.id}>
+                            <div className="reviewer">
+                                <div className="reviewerImageContainer">
+                                    <Link to={`/user/${review.Reviewer.id}`}>
+                                        <img
+                                            className="reviewerImage"
+                                            src={review.Reviewer.UserImages[0].url} />
+                                        <div className="reviewerImage-outline"></div>
+                                    </Link>
+                                </div>
+                                <div>
+                                    <div><Link to={`/user/${review.Reviewer.id}`}>{review.Reviewer.username}</Link> &#183; {monthDayYear(review.updatedAt)}</div>
+                                    <div className="reviewStars">{stars(review.stars)}</div>
+                                    <div>{review.review}</div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <div><Link to={`/user/${review.Reviewer.id}`}>{review.Reviewer.username}</Link> &#183; {monthDayYear(review.updatedAt)}</div>
-                            <div className="reviewStars">{stars(review.stars)}</div>
-                            <div>{review.review}</div>
-                        </div>
-                    </div>
-                </div>
-            ))}
+                    ))}
+                </>
+            }
 
             <h3>Shop Reviews ({shopReviews.length})</h3>
             {shopReviews?.map((review) => (

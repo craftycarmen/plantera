@@ -13,15 +13,18 @@ function ListingReviews({ listing, avgStars, numReviews }) {
     useEffect(() => {
         const fetchData = async () => {
             // await dispatch(fetchListingReviews(listing.id));
-            await dispatch(fetchShopReviews(listing.Seller.id))
+            if (listing && listing.Seller && listing.Seller.id) {
+                await dispatch(fetchShopReviews(listing.Seller.id))
+            }
         }
         fetchData()
-    }, [dispatch, listing.Seller.id])
+    }, [dispatch, listing])
 
+    console.log(avgStars, numReviews);
     return (
         <>
             <h2>Reviews</h2>
-            <div>{stars(avgStars)} ({numReviews})</div>
+            <div>{numReviews === 0 ? (<span></span>) : (<span>{stars(avgStars)} ({numReviews})</span>)}</div>
 
             <h3>Listing Reviews ({listingReviews.length})</h3>
             {listingReviews?.map((review) => (

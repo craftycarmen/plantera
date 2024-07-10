@@ -73,40 +73,26 @@ const initialState = {
 
 const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case LOAD_LISTING_REVIEWS: {
-        //     const reviewsState = {}
-
-        //     if (action.reviews.Reviews !== 'No reviews found') {
-        //         action.reviews.Reviews.forEach(review => {
-        //             reviewsState[review.id] = review;
-        //         })
-        //         return reviewsState
-        //     } else {
-        //         return state
-        //     }
-        // }
 
         case LOAD_SHOP_REVIEWS: {
             console.log("ACTIONS", action.reviews.ShopReviews);
-
+            const { avgStars, numReviews, Reviews } = action.reviews.ShopReviews;
             let shopReviewsState = {
                 reviews: {},
-                avgStars: 0,
-                numReviews: 0
+                avgStars: avgStars,
+                numReviews: numReviews
             }
 
-            if (action.reviews.ShopReviews.Reviews.length > 0) {
-                action.reviews.ShopReviews.Reviews.forEach(review => {
+            if (Reviews.length > 0) {
+                Reviews.forEach(review => {
                     shopReviewsState.reviews[review.id] = review;
                 });
 
-                shopReviewsState.avgStars = action.reviews.ShopReviews.avgStars;
-                shopReviewsState.numReviews = action.reviews.ShopReviews.numReviews;
-                console.log("STATEE", shopReviewsState);
-                return shopReviewsState;
+                // shopReviewsState.avgStars = action.reviews.ShopReviews.avgStars;
+                // shopReviewsState.numReviews = action.reviews.ShopReviews.numReviews;
+                // console.log("STATEE", shopReviewsState);
             }
-
-            return { ...state };
+            return shopReviewsState;
         }
         case CREATE_REVIEW: {
             return { ...state, [action.review.id]: action.review };

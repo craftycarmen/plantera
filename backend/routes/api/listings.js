@@ -1,9 +1,23 @@
 const express = require('express')
-const { Listing, Image, User, Guide, ListingGuide, CartItem } = require('../../db/models');
+const { Listing, Image, User, Guide, ListingGuide, CartItem, Review } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation')
 const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
 
 const router = express.Router();
+
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
 
 router.get('/', async (req, res) => {
 
@@ -265,5 +279,87 @@ router.delete('/:listingId', requireAuth, async (req, res) => {
         return res.json({ message: "Successfully deleted" })
     }
 });
+
+router.get('/:listingId/reviews', async (req, res) => {
+    const listingId = Number(req.params.listingId);
+    const listing = await Listing.findByPk(listingId);
+
+    if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
+
+    let reviews = await Review.findAll({
+        where: {
+            listingId: listingId
+        },
+        include: [
+            {
+                model: Listing,
+                attributes: ['id', 'plantName'],
+                include: {
+                    model: User,
+                    as: 'Seller',
+                    attributes: ['id', 'username']
+                }
+            },
+            {
+                model: User,
+                as: 'Reviewer',
+                attributes: ['id', 'username'],
+                include: {
+                    model: Image,
+                    as: 'UserImages',
+                    attributes: ['url', 'avatar']
+                }
+            }
+        ]
+    })
+
+    let reviewsList = [];
+
+    reviews.forEach(review => {
+        reviewsList.push(reviews = review.toJSON());
+    });
+
+    if (reviewsList.length === 0) {
+        return res.json({ Reviews: "No reviews found" })
+    } else {
+        return res.json({ Reviews: reviewsList })
+    }
+});
+
+router.post('/:listingId/reviews', requireAuth, validateReview, async (req, res) => {
+
+    try {
+        const listingId = Number(req.params.listingId);
+
+        const userId = req.user.id;
+        const listing = await Listing.findByPk(listingId);
+
+        if (!listing) return res.status(404).json({ message: "Listing couldn't be found" });
+
+        const userReview = await Review.findAll({
+            where: {
+                buyerId: userId,
+                listingId: listingId
+            }
+        })
+
+        if (userReview.length === 0) {
+            const { review, stars } = req.body;
+
+            const newReview = await Review.create({
+                buyerId: userId,
+                listingId: listingId,
+                review: review,
+                stars: stars
+            })
+
+            return res.status(201).json(newReview)
+        } else {
+            return res.status(500).json({ message: 'Review already exists for this purchased item' })
+        }
+    } catch (err) {
+        return res.json(err.message)
+    }
+})
 
 module.exports = router;

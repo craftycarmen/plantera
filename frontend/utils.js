@@ -39,3 +39,13 @@ export const titleCase = (string) => {
 export const upperCaseFirst = (string) => {
     return string?.charAt(0).toUpperCase() + string?.substr(1)
 }
+
+export const monthYear = (date) => {
+    const newDate = new Date(date)
+    return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
+}
+
+export const monthDayYear = (date) => {
+    const newDate = new Date(date)
+    return newDate.toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric' })
+}

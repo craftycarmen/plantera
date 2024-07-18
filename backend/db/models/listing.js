@@ -54,7 +54,8 @@ module.exports = (sequelize, DataTypes) => {
         models.Review,
         {
           foreignKey: 'listingId',
-          as: 'Reviews'
+          as: 'Reviews',
+          onDelete: 'CASCADE'
         }
       )
     }

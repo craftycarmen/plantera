@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { price, listingName } from "../../../../utils";
 import FilterButton from "../../Filter/FilterButton";
 import SortListingsButton from "../SortListingsButton/SortListingsButton";
+import { stars } from "../../../../utils.jsx";
 
 function Listings() {
     const dispatch = useDispatch();
@@ -125,6 +126,10 @@ function Listings() {
 
     const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
 
+    const avgStars = Object.values(useSelector(state => state.reviews));
+    const numReviews = useSelector(state => state.reviews.numReviews)
+    console.log(avgStars);
+
     return (displayedListings &&
         <>
             <h1>Shop</h1>
@@ -154,7 +159,7 @@ function Listings() {
                                             <div className="listingInfo">
                                                 <h2>{listingName(listing.plantName)}</h2>
                                                 <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
-                                                <div>from {listing.Seller?.username}</div>
+                                                <div>from {listing.Seller?.username}  {numReviews === 0 ? (<span></span>) : (<span>{stars(avgStars)}</span>)}</div>
                                             </div>
                                         </Link>
                                     </div>

@@ -248,13 +248,17 @@
     color: #28635A;
     display: inline-block;
     position: relative;
-    cursor: default;
+    /* cursor: default; */
+    line-height: 1;
+    /* vertical-align: top; */
 }
 
 .stars .full-star,
 .stars .half-star,
 .stars .empty-star {
     position: relative;
+    line-height: 1;
+    /* vertical-align: middle; */
 }
 
 .stars .empty-star {

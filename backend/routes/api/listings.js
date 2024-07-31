@@ -33,7 +33,12 @@ router.get('/', async (req, res) => {
             {
                 model: User,
                 as: 'Seller',
-                attributes: ['id', 'username', 'shopDescription']
+                attributes: ['id', 'username', 'shopDescription'],
+            },
+            {
+                model: Review,
+                as: 'Reviews',
+                attributes: ['stars']
             },
             {
                 model: Guide
@@ -51,6 +56,18 @@ router.get('/', async (req, res) => {
         if (listing.Guides.length === 0) {
             listing.Guides = null
         }
+
+        if (listing.Reviews.length) {
+            listing.Reviews.forEach(review => {
+                if (review.stars) {
+                    let totalStars = listing.Reviews.reduce((sum, review) => (sum + review.stars), 0);
+                    avgStars = totalStars / listing.Reviews.length;
+                    listing.Seller.sellerRating = avgStars;
+                }
+            })
+        }
+
+        delete listing.Reviews;
     });
 
     return res.json({ Listings: listingsList });

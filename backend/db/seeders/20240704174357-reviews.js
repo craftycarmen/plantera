@@ -74,6 +74,12 @@ const reviewsList = [
     review: 'Plant was totally a goner by the time I got it :/',
     stars: 1
   },
+  {
+    listingId: 25,
+    buyerId: 1,
+    review: 'LOVE IT',
+    stars: 5
+  },
 ]
 
 /** @type {import('sequelize-cli').Migration} */

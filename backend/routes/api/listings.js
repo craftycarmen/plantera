@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
             {
                 model: Review,
                 as: 'Reviews',
-                attributes: ['stars']
+                // attributes: ['stars']
             },
             {
                 model: Guide
@@ -57,18 +57,55 @@ router.get('/', async (req, res) => {
             listing.Guides = null
         }
 
-        if (listing.Reviews.length) {
-            listing.Reviews.forEach(review => {
-                if (review.stars) {
-                    let totalStars = listing.Reviews.reduce((sum, review) => (sum + review.stars), 0);
-                    avgStars = totalStars / listing.Reviews.length;
-                    listing.Seller.sellerRating = avgStars;
-                }
-            })
+        // if (listing.Reviews.length) {
+        //     listing.Reviews.forEach(review => {
+        //         if (review.stars) {
+        //             let totalStars = listing.Reviews.reduce((sum, review) => (sum + review.stars), 0);
+        //             avgStars = totalStars / listing.Reviews.length;
+        //             listing.Seller.sellerRating = avgStars;
+        //         }
+        //     })
+        // }
+
+        // delete listing.Reviews;
+    });
+
+    const sellerIds = [...new Set(listingsList.map(listing => listing.Seller.id))];
+
+    const allReviews = await Review.findAll({
+        include: [
+            {
+                model: Listing,
+                where: {
+                    sellerId: sellerIds
+                },
+                attributes: ['sellerId']
+            }
+        ]
+    })
+
+    const sellerRatings = {};
+
+    allReviews.forEach(review => {
+        const sellerId = review.Listing.sellerId;
+        if (!sellerRatings[sellerId]) {
+            sellerRatings[sellerId] = { totalStars: 0, count: 0 }
         }
 
-        delete listing.Reviews;
-    });
+        sellerRatings[sellerId].totalStars += review.stars;
+        sellerRatings[sellerId].count++;
+    })
+
+    Object.keys(sellerRatings).forEach(sellerId => {
+        sellerRatings[sellerId].avgRating = sellerRatings[sellerId].totalStars / sellerRatings[sellerId].count
+    })
+
+    listingsList.forEach(listing => {
+        const sellerId = listing.Seller.id;
+        listing.Seller.sellerRating = sellerRatings[sellerId] ? sellerRatings[sellerId].avgRating : null;
+
+        // delete listing.Reviews
+    })
 
     return res.json({ Listings: listingsList });
 

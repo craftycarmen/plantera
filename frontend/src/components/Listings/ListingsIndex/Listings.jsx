@@ -126,10 +126,10 @@ function Listings() {
 
     const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
 
-    // const avgStars = Object.values(useSelector(state => state.reviews));
-    // const numReviews = useSelector(state => state.reviews.numReviews)
-    // console.log(avgStars);
-
+    displayedListings.map((listing) => {
+        let remainder = listing.Seller.sellerRating - Math.floor(listing.Seller.sellerRating);
+        console.log(listing.id, listing.Seller.sellerRating, remainder)
+    })
     return (displayedListings &&
         <>
             <h1>Shop</h1>

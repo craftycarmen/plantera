@@ -78,13 +78,17 @@ function SearchPage() {
         return rows * columns;
     };
 
-    const getSearchTerm = () => {
-        const queryParams = new URLSearchParams(window.location.search);
-        const searchTermFromURL = queryParams.get("search");
-        return searchTermFromURL || getSearchFromLocal() || '';
-    };
+    // const getSearchTerm = () => {
+    //     const queryParams = new URLSearchParams(window.location.search);
+    //     const searchTermFromURL = queryParams.get("search");
+    //     return searchTermFromURL || getSearchFromLocal() || '';
+    // };
 
-    const searchTerm = urlSearchTerm || searchTermRedux || getSearchTerm();
+    // const searchTerm = urlSearchTerm || searchTermRedux || getSearchTerm();
+
+    const getSearchTerm = () => urlSearchTerm || searchTermRedux || getSearchFromLocal() || ''
+
+    const searchTerm = getSearchTerm()
 
     const results = (length) => {
         if (length === 1) return `${length} result`;

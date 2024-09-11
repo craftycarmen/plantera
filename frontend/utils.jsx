@@ -45,9 +45,9 @@ export const stars = (num) => {
     // Check for half star
     let remainder = num - Math.floor(num);
     // console.log(remainder);
-    if (remainder >= 0.3 && remainder <= 0.69) {
+    if (remainder >= 0.26 && remainder <= 0.74) {
         filledStars.push(<span className="half-star" key="half">&#9734;</span>);
-    } else if (remainder >= 0.7) {
+    } else if (remainder >= 0.75) {
         filledStars.push(<span className="full-star">&#9733;</span>);
     }
 

@@ -45,9 +45,6 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
-            setTimeout(() => {
-                setLoading(false);
-            }, 500);
         }
         runDispatches();
     }, [dispatch, cartId])

@@ -30,12 +30,10 @@ _Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) fo
 [![image](https://github.com/craftycarmen/plantera/assets/131481577/865859cf-af43-42ed-8504-c8516f1babcd)](https://plantera.carmenshiu.com/listings)
 
 ### Listing Page
-[![listing-page](https://github.com/craftycarmen/plantera/assets/131481577/99e35961-67a1-49f3-9e5f-495dd7b5d0ac)](https://plantera.carmenshiu.com/listings/1)
-
+<a href="https://plantera.carmenshiu.com/listings/1"><img src="https://github.com/craftycarmen/plantera/assets/131481577/99e35961-67a1-49f3-9e5f-495dd7b5d0ac" width="1012px"></a>
 
 ### Shopping Cart
-[![shoppingcart](https://github.com/craftycarmen/plantera/assets/131481577/dacdba6b-35ca-40b8-9317-fcc1c2aa736b)](https://plantera.carmenshiu.com/listings/48)
-
+<img src="[https://github.com/craftycarmen/plantera/assets/131481577/99e35961-67a1-49f3-9e5f-495dd7b5d0ac](https://github.com/craftycarmen/plantera/assets/131481577/dacdba6b-35ca-40b8-9317-fcc1c2aa736b)" width="1012px">
 
 
 ### Search & Filter

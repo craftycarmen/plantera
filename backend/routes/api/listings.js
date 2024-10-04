@@ -206,6 +206,21 @@ router.get('/:listingId', async (req, res) => {
                         attributes: ['id', 'username']
                     }
                 ]
+            },
+            {
+                model: Review,
+                as: 'Reviews',
+                attributes: ['createdAt', 'review', 'stars'],
+                include: {
+                    model: User,
+                    as: 'Reviewer',
+                    attributes: ['id', 'username'],
+                    include: {
+                        model: Image,
+                        as: 'UserImages',
+                        attributes: ['url']
+                    }
+                }
             }
         ]
     })

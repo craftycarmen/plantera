@@ -10,7 +10,7 @@ import ShoppingCartModal from "../../Cart/CartModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { price } from "../../../../utils";
 import Error404 from "../../ErrorHandling/Error404";
-import ListingReviews from "./Reviews/ListingReviews.jsx";
+import ListingReviews from "./ListingReviews.jsx";
 import { stars } from "../../../../utils.jsx";
 
 function ListingPage() {
@@ -323,7 +323,7 @@ function ListingPage() {
                         <LinkedGuides guides={listing.Guides} />
                         <MeetTheSeller sellerInfo={listing.Seller} />
                     </div>
-                    <div className="otherSection">
+                    <div>
                         <ListingReviews listing={listing} avgStars={avgStars} numReviews={numReviews} />
                     </div>
                 </>

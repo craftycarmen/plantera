@@ -228,20 +228,20 @@
     /* align-self: center; */
 }
 
-.reviewsSection {
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 50px; */
+.reviewsContainer {
+    display: grid;
+    margin-top: 40px;
 }
 
-.shopReviewsOnly {
-    grid-template-columns: 1fr
+.reviewsHeader {
+    display: flex;
+    gap: 20px;
 }
 
 .reviewer {
     display: flex;
     gap: 20px;
-    padding-top: 30px;
+    padding-bottom: 30px;
     align-items: center;
 }
 
@@ -251,7 +251,7 @@
 
 .reviews {
     display: grid;
-    gap: 50px;
+    gap: 20px;
 }
 
 /* .stars {

@@ -229,9 +229,9 @@
 }
 
 .reviewsSection {
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 50px;
+    gap: 50px; */
 }
 
 .shopReviewsOnly {
@@ -241,7 +241,7 @@
 .reviewer {
     display: flex;
     gap: 20px;
-    padding-bottom: 50px;
+    padding-top: 30px;
     align-items: center;
 }
 

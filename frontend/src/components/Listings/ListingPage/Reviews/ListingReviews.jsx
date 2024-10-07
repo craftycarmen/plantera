@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchShopReviews } from "../../../store/reviews";
-import { monthDayYear } from "../../../../utils";
-import { stars } from "../../../../utils.jsx";
+import { fetchShopReviews } from "../../../../store/reviews.js";
+import { monthDayYear } from "../../../../../utils.js";
+import { stars } from "../../../../../utils.jsx";
+import ReviewTabs from "./ReviewTabs.jsx";
 
 function ListingReviews({ listing, avgStars, numReviews }) {
     const dispatch = useDispatch();
@@ -20,17 +21,15 @@ function ListingReviews({ listing, avgStars, numReviews }) {
         fetchData()
     }, [dispatch, listing])
 
-    console.log(listingReviews);
     return (numReviews > 0 &&
         <>
             <h2>Reviews</h2>
             <div>{numReviews === 0 ? (<span></span>) : (<span>{stars(avgStars)} ({numReviews})</span>)}</div>
             <div className={`reviewsSection ${listingReviews?.length === 0 ? 'shopReviewsOnly' : ''}`}>
-
+                <ReviewTabs listingId={listing?.id} listingReviews={listingReviews?.length} shopReviews={shopReviews?.length} />
                 <div>
-                    <h3>Listing Reviews ({listingReviews?.length})</h3>
                     {listingReviews?.length > 0 &&
-                        <section className="reviews">
+                        <>
                             {listingReviews?.map((review) => (
                                 <div key={review.id}>
                                     <div className="reviewer">
@@ -50,10 +49,10 @@ function ListingReviews({ listing, avgStars, numReviews }) {
                                     </div>
                                 </div>
                             ))}
-                        </section>
+                        </>
                     }
                 </div>
-                <div>
+                {/* <div>
                     <h3>Shop Reviews ({shopReviews.length})</h3>
                     {shopReviews?.map((review) => (
                         <div key={review.id} className="reviews">
@@ -76,7 +75,7 @@ function ListingReviews({ listing, avgStars, numReviews }) {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </div>
         </>
     )

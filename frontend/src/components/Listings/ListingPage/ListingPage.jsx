@@ -12,6 +12,7 @@ import { price } from "../../../../utils";
 import Error404 from "../../ErrorHandling/Error404";
 import ListingReviews from "./ListingReviews.jsx";
 import { stars } from "../../../../utils.jsx";
+import { fetchShopReviews } from "../../../store/reviews.js";
 
 function ListingPage() {
     const { listingId } = useParams();
@@ -27,6 +28,7 @@ function ListingPage() {
 
     const avgStars = useSelector(state => state.reviews.avgStars);
     const numReviews = useSelector(state => state.reviews.numReviews)
+
     const reviews = useRef(null);
     const scrollTo = (section) => {
         window.scrollTo({
@@ -42,12 +44,12 @@ function ListingPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-
+            await dispatch(fetchShopReviews(listing?.Seller?.id))
             await dispatch(fetchCart(cartId));
         };
         fetchData();
 
-    }, [dispatch, cartId]);
+    }, [dispatch, cartId, listing?.Seller?.id]);
 
     let [newCartItemId, setNewCartItemId] = useState(null);
     let existingItemId = null;

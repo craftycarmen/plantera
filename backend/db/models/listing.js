@@ -49,6 +49,15 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: 'CASCADE'
         }
       )
+
+      Listing.hasMany(
+        models.Review,
+        {
+          foreignKey: 'listingId',
+          as: 'Reviews',
+          onDelete: 'CASCADE'
+        }
+      )
     }
   }
   Listing.init({

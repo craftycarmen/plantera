@@ -56,10 +56,10 @@
 
 .userProfileInfo {
     display: grid;
-    grid-template-areas:
+    /* grid-template-areas:
         "name member"
         "location plant"
-        "bio bio";
+        "bio bio"; */
     gap: 20px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 2fr;
@@ -107,10 +107,20 @@
     width: fit-content;
 }
 
-.name {
+.shopDescription {
+    margin-top: 20px;
+}
+
+.shopReviewsHeader {
+    display: flex;
+    margin: 50px 0 20px 0;
+    gap: 20px;
+}
+
+/* .name {
     grid-area: name;
     justify-self: start !important;
-}
+} */
 
 .bio {
     grid-area: bio;

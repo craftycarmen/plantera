@@ -85,11 +85,6 @@
     border-bottom: 1px solid #8EBAA8;
 }
 
-.currentTab {
-    background-color: #8EBAA8;
-    cursor: default;
-}
-
 .noOrders {
     width: 1000px;
 }

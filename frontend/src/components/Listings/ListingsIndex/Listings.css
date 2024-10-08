@@ -55,6 +55,20 @@
     align-self: start;
 }
 
+.listingSeller {
+    grid-column: 1/3;
+    /* justify-self: end;
+    align-self: start; */
+    display: flex;
+    align-items: center;
+}
+
+.newSeller {
+    color: #28635A;
+    font-weight: 400;
+    font-style: italic;
+}
+
 .showMoreDiv {
     width: auto;
     text-align: center;

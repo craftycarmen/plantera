@@ -5,6 +5,7 @@ import { fetchProfile } from "../../store/user";
 import './User.css';
 import ProfileImage from "./ProfileImage";
 import Error404 from "../ErrorHandling/Error404";
+import { monthYear } from "../../../utils";
 
 function UserProfile() {
     const { userId } = useParams();
@@ -13,11 +14,10 @@ function UserProfile() {
     const user = useSelector(state => state.user[userId]?.User)
     const sessionUser = useSelector(state => state.session.user)
     const [loading, setLoading] = useState(false);
-    const memberSince = (createdAt) => {
-        const newDate = new Date(createdAt)
-        return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
-    }
-
+    // const memberSince = (createdAt) => {
+    //     const newDate = new Date(createdAt)
+    //     return newDate.toLocaleString('default', { month: 'long', year: 'numeric' })
+    // }
 
     const lastInitial = (lastName) => {
         let last = lastName.charAt(0)
@@ -54,7 +54,7 @@ function UserProfile() {
                             <div className="memberSince">
                                 <span style={{ fontWeight: "800" }}>Member Since:</span>
                                 <div>
-                                    {user.createdAt && memberSince(user.createdAt)}
+                                    {user.createdAt && monthYear(user.createdAt)}
                                 </div>
                             </div>
 

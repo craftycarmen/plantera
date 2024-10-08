@@ -55,6 +55,7 @@ h4 {
 }
 
 .modalMenuItem,
+.notCurrentTab,
 a {
     color: #E38251;
     font-weight: 800;
@@ -63,7 +64,9 @@ a {
     letter-spacing: 0px;
 }
 
+.shopStars:hover,
 .modalMenuItem:hover,
+.notCurrentTab:hover,
 a:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -265,6 +268,12 @@ form {
 form>button {
     margin-top: 15px;
     width: 100%;
+}
+
+
+.currentTab {
+    background-color: #8EBAA8;
+    cursor: default;
 }
 
 @media screen and (max-width: 480px) {

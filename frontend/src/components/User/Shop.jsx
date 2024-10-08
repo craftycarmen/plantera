@@ -31,7 +31,7 @@ function Shop() {
 
     const scrollTo = (section) => {
         window.scrollTo({
-            top: section.current.offsetTop,
+            top: section.current.offsetTop - 20,
             behavior: "smooth",
         });
     };

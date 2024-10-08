@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchOneListing } from "../../../store/listings";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import './ListingPage.css';
 import LinkedGuides from "./LinkedGuides";
 import MeetTheSeller from "./MeetTheSeller";
@@ -27,6 +27,13 @@ function ListingPage() {
 
     const avgStars = useSelector(state => state.reviews.avgStars);
     const numReviews = useSelector(state => state.reviews.numReviews)
+    const reviews = useRef(null);
+    const scrollTo = (section) => {
+        window.scrollTo({
+            top: section.current.offsetTop - 20,
+            behavior: "smooth",
+        });
+    };
 
     let [cartId, setCartId] = useState(() => {
         const storedCartId = localStorage.getItem('cartId');
@@ -246,7 +253,7 @@ function ListingPage() {
                         <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
                         <div>
                             <h1>{listing.plantName}</h1>
-                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link> {numReviews === 0 ? (<span></span>) : (<span>{stars(avgStars)}</span>)}</div>
+                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link> {numReviews === 0 ? (<span></span>) : (<span className="shopStars" onClick={() => scrollTo(reviews)}>{stars(avgStars)}</span>)}</div>
                             <p className="price">{price(listing.price)}</p>
                             <p>{listing.description}</p>
                             <p>Pot Size: {listing.potSize}&ldquo;</p>
@@ -323,7 +330,7 @@ function ListingPage() {
                         <LinkedGuides guides={listing.Guides} />
                         <MeetTheSeller sellerInfo={listing.Seller} />
                     </div>
-                    <div>
+                    <div ref={reviews}>
                         <ListingReviews listing={listing} avgStars={avgStars} numReviews={numReviews} />
                     </div>
                 </>

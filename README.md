@@ -30,16 +30,15 @@ _Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) fo
 [![image](https://github.com/user-attachments/assets/0519f9ab-ea21-4421-9dc4-5d451e3e8575)](https://plantera.carmenshiu.com/listings)
 
 ### Listing Page
-<a href="https://plantera.carmenshiu.com/listings/1"><img src="https://github.com/craftycarmen/plantera/assets/131481577/99e35961-67a1-49f3-9e5f-495dd7b5d0ac" width="1012px"></a>
+<a href="https://plantera.carmenshiu.com/listings/1"><img src="https://github.com/user-attachments/assets/9475851b-a2bf-4472-975f-03f3bfb333d7" width="1012px"></a>
 
 ### Shopping Cart
-<img src="https://github.com/craftycarmen/plantera/assets/131481577/dacdba6b-35ca-40b8-9317-fcc1c2aa736b" width="1012px">
+<img src="https://github.com/user-attachments/assets/596e7b89-feb1-4d8e-b7bd-57bb935e518e" width="1012px">
 
 ### Search & Filter
 [![image](https://github.com/user-attachments/assets/fd8aa46c-a8a4-4568-8460-e76693f33f95)](https://plantera.carmenshiu.com/search?search=monstera)
 
 ### Plant Guides
-
 [![image](https://github.com/craftycarmen/plantera/assets/131481577/b7f99746-dd16-407e-a9c8-0b1681402881)](https://plantera.carmenshiu.com/guides)
 
 ### Create Guide

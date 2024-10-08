@@ -126,10 +126,10 @@ function Listings() {
 
     const displayedListings = filters ? Object.values(filteredListings).slice(0, displayCount) : Object.values(listings).slice(0, displayCount);
 
-    displayedListings.map((listing) => {
-        let remainder = listing.Seller.sellerRating - Math.floor(listing.Seller.sellerRating);
-        // console.log(listing.id, listing.Seller.sellerRating, remainder)
-    })
+    // displayedListings.map((listing) => {
+    //     let remainder = listing.Seller.sellerRating - Math.floor(listing.Seller.sellerRating);
+    //     // console.log(listing.id, listing.Seller.sellerRating, remainder)
+    // })
     return (displayedListings &&
         <>
             <h1>Shop</h1>

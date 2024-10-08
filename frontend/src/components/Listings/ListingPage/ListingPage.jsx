@@ -253,7 +253,7 @@ function ListingPage() {
                         <img className="listingPageImage" src={listing.ListingImages?.[0]?.url} />
                         <div>
                             <h1>{listing.plantName}</h1>
-                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link> {numReviews === 0 ? (<span></span>) : (<span className="shopStars" onClick={() => scrollTo(reviews)}>{stars(avgStars)}</span>)}</div>
+                            <div>from <Link to={`/user/${listing.Seller?.id}/shop`}>{listing.Seller?.username}</Link> {numReviews === 0 ? (<span style={{ fontStyle: "italic" }}>New Seller!</span>) : (<span className="shopStars" onClick={() => scrollTo(reviews)}>{stars(avgStars)}</span>)}</div>
                             <p className="price">{price(listing.price)}</p>
                             <p>{listing.description}</p>
                             <p>Pot Size: {listing.potSize}&ldquo;</p>
@@ -330,9 +330,13 @@ function ListingPage() {
                         <LinkedGuides guides={listing.Guides} />
                         <MeetTheSeller sellerInfo={listing.Seller} />
                     </div>
-                    <div ref={reviews}>
-                        <ListingReviews listing={listing} avgStars={avgStars} numReviews={numReviews} />
-                    </div>
+                    {numReviews > 0 ? (
+                        <div ref={reviews}>
+                            <ListingReviews listing={listing} avgStars={avgStars} numReviews={numReviews} />
+                        </div>) : (
+                        null
+                    )
+                    }
                 </>
             ) : (
                 <Error404 type="Listing" />

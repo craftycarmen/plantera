@@ -128,7 +128,7 @@ function Listings() {
 
     displayedListings.map((listing) => {
         let remainder = listing.Seller.sellerRating - Math.floor(listing.Seller.sellerRating);
-        console.log(listing.id, listing.Seller.sellerRating, remainder)
+        // console.log(listing.id, listing.Seller.sellerRating, remainder)
     })
     return (displayedListings &&
         <>

@@ -5,6 +5,7 @@ import { price, listingName } from "../../../../utils";
 import { fetchListingResults } from "../../../store/search";
 import FilterButton from "../../Filter/FilterButton";
 import SortListingsButton from "../../Listings/SortListingsButton/SortListingsButton";
+import { stars } from "../../../../utils.jsx";
 
 function SearchPage() {
     const dispatch = useDispatch();
@@ -151,6 +152,7 @@ function SearchPage() {
         transition: 'margin-left 0.2s ease-in-out'
     };
 
+    // console.log(listings, "listings");
 
     const displayedListings = Object.values(listings).slice(0, displayCount);
 
@@ -199,7 +201,8 @@ function SearchPage() {
                                                 <div className="listingInfo">
                                                     <h2>{listingName(listing.plantName)}</h2>
                                                     <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
-                                                    <div>from {listing.Seller?.username}</div>
+                                                    <div>from {listing.Seller?.username}
+                                                        {listing.Seller?.sellerRating ? (<span style={{ marginTop: "-6px" }}>&nbsp;{stars(listing.Seller?.sellerRating)}</span>) : (<span className="newSeller">&nbsp;New seller!</span>)}</div>
                                                 </div>
                                             </Link>
                                         </div>

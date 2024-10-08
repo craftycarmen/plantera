@@ -11,7 +11,7 @@ function UserGuides() {
     const user = useSelector(state => state.user[userId]?.User);
     const guides = useSelector(state => state.user[userId]?.Guides);
     const sessionUser = useSelector(state => state.session.user);
-    console.log(guides);
+    // console.log(guides);
     useEffect(() => {
         dispatch(fetchProfile(userId))
     }, [dispatch, userId])

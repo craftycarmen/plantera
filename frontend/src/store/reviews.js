@@ -74,7 +74,7 @@ const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case LOAD_SHOP_REVIEWS: {
-            console.log("ACTIONS", action.reviews.ShopReviews);
+            // console.log("ACTIONS", action.reviews.ShopReviews);
             const { avgStars, numReviews, Reviews } = action.reviews.ShopReviews;
             let shopReviewsState = {
                 reviews: {},

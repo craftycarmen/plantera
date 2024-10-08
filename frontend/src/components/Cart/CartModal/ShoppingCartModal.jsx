@@ -14,7 +14,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     // const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
     const sessionUser = useSelector(state => state.session.user);
     const userId = sessionUser?.id;
-    const [loading] = useState(true);
+    const [loading, setLoading] = useState(true);
     // 
 
 
@@ -44,7 +44,12 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
 
     useEffect(() => {
         const runDispatches = async () => {
-            await dispatch(fetchCart(cartId))
+
+            setLoading(true);
+            await dispatch(fetchCart(cartId)).then(() => setTimeout(() => {
+                setLoading(false);
+            }, 500))
+
         }
         runDispatches();
     }, [dispatch, cartId])
@@ -56,11 +61,12 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
 
         // const updatedCartItemsLocalStorage = cartItemsLocalStorage.filter(item => item.id !== itemId);
         // localStorage.setItem('cartItems', JSON.stringify(updatedCartItemsLocalStorage));
-
+        setLoading(true)
         const updatedCartItems = cartItems.filter(item => item.id !== itemId)
         dispatch(loadCartItems())
         dispatch(fetchCart(cartId))
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        setLoading(false)
     };
 
     const sellerItems = (cartItems, userId) => {

@@ -14,7 +14,7 @@ function ShoppingCartModal({ cartId, navigate, updatedQty }) {
     // const cartItemsLocalStorage = JSON.parse(localStorage.getItem('cartItems')) || [];
     const sessionUser = useSelector(state => state.session.user);
     const userId = sessionUser?.id;
-    const [loading, setLoading] = useState(true);
+    const [loading] = useState(true);
     // 
 
 

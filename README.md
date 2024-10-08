@@ -27,7 +27,7 @@ _Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) fo
 
 ### Shop
 
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/865859cf-af43-42ed-8504-c8516f1babcd)](https://plantera.carmenshiu.com/listings)
+[![image](https://github.com/user-attachments/assets/0519f9ab-ea21-4421-9dc4-5d451e3e8575)](https://plantera.carmenshiu.com/listings)
 
 ### Listing Page
 <a href="https://plantera.carmenshiu.com/listings/1"><img src="https://github.com/craftycarmen/plantera/assets/131481577/99e35961-67a1-49f3-9e5f-495dd7b5d0ac" width="1012px"></a>
@@ -35,10 +35,8 @@ _Check out the [Plantera Wiki](https://github.com/craftycarmen/plantera/wiki) fo
 ### Shopping Cart
 <img src="https://github.com/craftycarmen/plantera/assets/131481577/dacdba6b-35ca-40b8-9317-fcc1c2aa736b" width="1012px">
 
-
 ### Search & Filter
-
-[![image](https://github.com/craftycarmen/plantera/assets/131481577/e946e775-e84e-41be-a67e-09291d25f4a0)](https://plantera.carmenshiu.com/search?search=monstera)
+[![image](https://github.com/user-attachments/assets/fd8aa46c-a8a4-4568-8460-e76693f33f95)](https://plantera.carmenshiu.com/search?search=monstera)
 
 ### Plant Guides
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const { Listing, Image, User, Guide } = require('../../db/models');
+const { Listing, Image, User, Guide, Review } = require('../../db/models');
 const { Op } = require('sequelize');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
@@ -163,6 +163,10 @@ router.get('/', validateQuery, async (req, res) => {
                 attributes: ['id', 'username', 'shopDescription']
             },
             {
+                model: Review,
+                as: 'Reviews',
+            },
+            {
                 model: Guide
             }
         ],
@@ -176,10 +180,44 @@ router.get('/', validateQuery, async (req, res) => {
         if (listing.stockQty > 0) listingsList.push(listing.toJSON());
     });
 
+    const sellerIds = [...new Set(listingsList.map(listing => listing.Seller.id))];
+
+    // console.log("SELLERIDDD", sellerIds);
+    const allReviews = await Review.findAll({
+        include: [
+            {
+                model: Listing,
+                where: {
+                    sellerId: sellerIds
+                },
+                attributes: ['sellerId']
+            }
+        ]
+    })
+
+    const sellerRatings = {};
+
+    allReviews.forEach(review => {
+        const sellerId = review.Listing.sellerId;
+        if (!sellerRatings[sellerId]) {
+            sellerRatings[sellerId] = { totalStars: 0, count: 0 }
+        }
+
+        sellerRatings[sellerId].totalStars += review.stars;
+        sellerRatings[sellerId].count++;
+    })
+
+    Object.keys(sellerRatings).forEach(sellerId => {
+        sellerRatings[sellerId].avgRating = sellerRatings[sellerId].totalStars / sellerRatings[sellerId].count
+    })
+
     listingsList.forEach(listing => {
         if (listing.Guides.length === 0) {
             listing.Guides = null
         }
+
+        const sellerId = listing.Seller.id;
+        listing.Seller.sellerRating = sellerRatings[sellerId] ? sellerRatings[sellerId].avgRating : null;
     });
 
     results.Listings = listingsList

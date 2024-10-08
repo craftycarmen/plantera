@@ -152,7 +152,7 @@ function SearchPage() {
         transition: 'margin-left 0.2s ease-in-out'
     };
 
-    // console.log(listings, "listings");
+    console.log(listings, "listings");
 
     const displayedListings = Object.values(listings).slice(0, displayCount);
 

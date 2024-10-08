@@ -1,5 +1,5 @@
 .listingPageContainer {
-    margin-top: 35px;
+    margin-top: 50px;
     display: grid;
     grid-template-columns: 2fr 2fr;
     gap: 50px;
@@ -122,7 +122,7 @@
     max-width: 1380px;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 50px;
+    column-gap: 50px;
 }
 
 .otherSection.singleGuide {
@@ -177,13 +177,13 @@
 }
 
 .meetTheSeller {
-    margin-top: 35px;
+    margin-top: 50px;
 }
 
 .meetTheSellerContainer {
     display: flex;
     gap: 50px;
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 .sellerImageContainer {
@@ -230,7 +230,7 @@
 
 .reviewsContainer {
     display: grid;
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 .reviewsHeader {
@@ -243,6 +243,7 @@
     gap: 20px;
     padding-bottom: 30px;
     align-items: center;
+    flex-wrap: nowrap;
 }
 
 .reviewStars {
@@ -342,12 +343,20 @@
         width: 75vw;
     }
 
-    .otherSection {
-        gap: 0px;
-    }
-
     .otherSection.singleGuide {
         grid-template-columns: auto;
+    }
+
+    .reviewerImageContainer {
+        width: 80px;
+        height: 80px;
+    
+    }
+
+    .reviewerImage {
+        width: 80px;
+        height: 80px;
+    
     }
 }
 
@@ -378,10 +387,6 @@
     .linkedGuides,
     .meetTheSeller {
         margin-top: 50px;
-    }
-
-    .otherSection {
-        gap: 0px;
     }
 
     .otherSection.singleGuide {
@@ -416,10 +421,6 @@
     .linkedGuides,
     .meetTheSeller {
         margin-top: 50px;
-    }
-
-    .otherSection {
-        gap: 0px;
     }
 
     .otherSection.singleGuide {

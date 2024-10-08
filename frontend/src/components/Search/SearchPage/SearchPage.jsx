@@ -202,7 +202,7 @@ function SearchPage() {
                                                     <h2>{listingName(listing.plantName)}</h2>
                                                     <div className="listingPrice" style={{ marginTop: "3px" }}>{price(listing.price)}</div>
                                                     <div>from {listing.Seller?.username}
-                                                        {listing.Seller?.sellerRating ? (<span style={{ marginTop: "-6px" }}>&nbsp;{stars(listing.Seller?.sellerRating)}</span>) : (<span className="newSeller">&nbsp;New seller!</span>)}</div>
+                                                        {listing.Seller?.sellerRating ? (<span style={{ marginTop: "-6px" }}>&nbsp;{stars(listing.Seller?.sellerRating, listing.id)}</span>) : (<span className="newSeller">&nbsp;New seller!</span>)}</div>
                                                 </div>
                                             </Link>
                                         </div>

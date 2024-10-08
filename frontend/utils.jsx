@@ -33,28 +33,27 @@
 // }
 
 
-export const stars = (num) => {
+export const stars = (num, listingId) => {
     let filledStars = [];
     let unfilledStars = [];
 
     // Add full stars
     for (let i = 0; i < Math.floor(num); i++) {
-        filledStars.push(<span className="full-star" key={`full-${i}`}>&#9733;</span>);
+        filledStars.push(<span className="full-star" key={`full-${listingId}-${i}`}>&#9733;</span>);
     }
 
     // Check for half star
     let remainder = num - Math.floor(num);
-    // console.log(remainder);
     if (remainder >= 0.26 && remainder <= 0.74) {
-        filledStars.push(<span className="half-star" key="half">&#9734;</span>);
+        filledStars.push(<span className="half-star" key={`half-${listingId}`}>&#9734;</span>);
     } else if (remainder >= 0.75) {
-        filledStars.push(<span className="full-star">&#9733;</span>);
+        filledStars.push(<span className="full-star" key={`full-${listingId}-${filledStars.length}`}>&#9733;</span>);
     }
 
     // Add empty stars
     let totalStars = filledStars.length;
     for (let i = totalStars; i < 5; i++) {
-        unfilledStars.push(<span className="empty-star" key={`empty-${i}`}>&#9734;</span>);
+        unfilledStars.push(<span className="empty-star" key={`empty-${listingId}-${i}`}>&#9734;</span>);
     }
 
     return (

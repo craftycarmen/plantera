@@ -1,11 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchProfile } from "../../store/user";
 import './User.css';
 import ProfileImage from "./ProfileImage";
-import { price, listingName } from "../../../utils";
+import { price, listingName } from "../../../utils.js";
+import { stars } from "../../../utils.jsx";
 import Error404 from "../ErrorHandling/Error404";
+import { fetchShopReviews } from "../../store/reviews";
+import ShopReviews from "./ShopReviews.jsx";
 
 function Shop() {
     const { userId } = useParams();
@@ -20,11 +23,28 @@ function Shop() {
         b = (new Date(b.updatedAt)).getTime();
         return b - a;
     })
-    const sessionUser = useSelector(state => state.session.user)
+
+    const avgStars = useSelector(state => state.reviews.avgStars);
+    const numReviews = useSelector(state => state.reviews.numReviews);
+    const sessionUser = useSelector(state => state.session.user);
+    const reviews = useRef(null);
+
+    const scrollTo = (section) => {
+        window.scrollTo({
+            top: section.current.offsetTop,
+            behavior: "smooth",
+        });
+    };
+
 
     useEffect(() => {
-        dispatch(fetchProfile(userId))
+        const runDispatches = async () => {
+            await dispatch(fetchProfile(userId))
+            await dispatch(fetchShopReviews(userId))
+        }
+        runDispatches()
     }, [dispatch, userId])
+
 
     return (
         <>
@@ -49,6 +69,7 @@ function Shop() {
                         ) :
                             (
                                 <>
+                                    <div>{numReviews === 0 ? (<span style={{ fontStyle: "italic" }}>New seller!</span>) : (<span className="shopStars" onClick={() => scrollTo(reviews)}>{stars(avgStars)} ({numReviews})</span>)}</div>
                                     <div className="shopDescription">
                                         <span style={{ fontWeight: "800" }}>About {user.username}&#39;s Shop:</span>
                                         <div>{user.shopDescription}</div>
@@ -56,7 +77,7 @@ function Shop() {
                                     <div>
 
                                         {activeListings?.length === 0 &&
-                                            <div></div>
+                                            null
                                         }
                                         {activeListings?.length > 0 &&
                                             <>
@@ -88,7 +109,7 @@ function Shop() {
                                         }
 
                                         {soldListings?.length === 0 &&
-                                            <div></div>
+                                            null
                                         }
                                         {soldListings?.length > 0 &&
                                             <>
@@ -119,6 +140,17 @@ function Shop() {
 
                                         }
 
+                                        {numReviews === 0 &&
+                                            null
+                                        }
+                                        {numReviews > 0 &&
+                                            <>
+                                                <div className="shopReviewsHeader">
+                                                    <h2 ref={reviews}>Reviews</h2> <span>{stars(avgStars)} ({numReviews})</span>
+                                                </div>
+                                                <ShopReviews />
+                                            </>
+                                        }
                                     </div>
                                 </>
 

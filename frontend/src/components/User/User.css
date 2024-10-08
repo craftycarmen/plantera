@@ -107,6 +107,16 @@
     width: fit-content;
 }
 
+.shopDescription {
+    margin-top: 20px;
+}
+
+.shopReviewsHeader {
+    display: flex;
+    margin: 50px 0 20px 0;
+    gap: 20px;
+}
+
 /* .name {
     grid-area: name;
     justify-self: start !important;

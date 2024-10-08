@@ -37,7 +37,6 @@ export const fetchShopReviews = (userId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json();
-        console.log("RESREVIEWS", reviews)
         dispatch(loadShopReviews(reviews));
         return reviews
     } else {

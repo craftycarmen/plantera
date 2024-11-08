@@ -1,7 +1,7 @@
 {
   "name": "express_starter",
   "version": "1.0.0",
-  "description": "",
+  "description": "[![image](https://github.com/craftycarmen/plantera/assets/131481577/09d40289-75e0-464c-a12a-6c568c65d06e)](https://plantera.carmenshiu.com)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,9 +10,13 @@
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend",
-    "build": "npm run --prefix backend build"
+    "build": "npm run --prefix backend build",
+    "node ": "node create_price.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "stripe": "^17.3.1"
+  }
 }

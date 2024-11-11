@@ -17,8 +17,6 @@ const ordersList = [
     city: 'New York',
     state: 'NY',
     zipCode: '10001',
-    paymentMethod: 'VIZZA',
-    paymentDetails: '1234',
     subTotal: 15.00,
     orderTotal: 16.24,
     createdAt: "2024-05-12T00:00:26.369Z"
@@ -47,8 +45,6 @@ const ordersList = [
     city: 'New York',
     state: 'NY',
     zipCode: '10001',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 85.00,
     orderTotal: 92.01,
     createdAt: "2024-05-19T00:00:26.369Z"
@@ -62,8 +58,6 @@ const ordersList = [
     city: "San Francisco",
     state: "CA",
     zipCode: '94107',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 128.00,
     orderTotal: 138.56,
     createdAt: "2024-05-19T00:00:00.369Z"
@@ -77,8 +71,6 @@ const ordersList = [
     city: "San Francisco",
     state: "CA",
     zipCode: '94016',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 5.00,
     orderTotal: 5.41,
     createdAt: "2024-05-25T00:00:26.369Z"
@@ -92,8 +84,6 @@ const ordersList = [
     city: "Phoenix",
     state: "AZ",
     zipCode: '85001',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 100.00,
     orderTotal: 108.25,
     createdAt: "2024-05-27T00:00:26.369Z"
@@ -107,8 +97,6 @@ const ordersList = [
     city: "San Francisco",
     state: "CA",
     zipCode: '94107',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 79.00,
     orderTotal: 85.52,
     createdAt: "2024-06-01T00:00:26.369Z"
@@ -122,8 +110,6 @@ const ordersList = [
     city: 'Austin',
     state: 'TX',
     zipCode: '73301',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 30.00,
     orderTotal: 32.48,
     createdAt: "2024-06-02T00:00:26.369Z"
@@ -137,8 +123,6 @@ const ordersList = [
     city: "Seattle",
     state: "WA",
     zipCode: '98040',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 48.00,
     orderTotal: 51.96,
     createdAt: "2024-06-02T00:00:26.369Z"
@@ -152,8 +136,6 @@ const ordersList = [
     city: "San Francisco",
     state: "CA",
     zipCode: '94107',
-    paymentMethod: 'Americano Expresso',
-    paymentDetails: '0000',
     subTotal: 18.00,
     orderTotal: 19.49
   },

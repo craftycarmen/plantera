@@ -56,14 +56,27 @@ module.exports = {
         type: Sequelize.STRING(5),
         allowNull: false,
       },
-      paymentMethod: {
-        type: Sequelize.STRING(25),
-        allowNull: false,
+      stripePaymentIntentId: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
-      paymentDetails: {
-        type: Sequelize.STRING(4),
-        allowNull: false,
+      paymentStatus: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: "Pending",
       },
+      transactionDate: {
+        type: Sequelize.DATE,
+        allowNull: true
+      },
+      // paymentMethod: {
+      //   type: Sequelize.STRING(25),
+      //   allowNull: false,
+      // },
+      // paymentDetails: {
+      //   type: Sequelize.STRING(4),
+      //   allowNull: false,
+      // },
       subTotal: {
         type: Sequelize.FLOAT,
         allowNull: false
@@ -72,11 +85,6 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      // orderStatus: {
-      //   type: Sequelize.STRING,
-      //   allowNull: false,
-      //   defaultValue: "Received"
-      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -110,24 +110,37 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    paymentMethod: {
+    stripePaymentIntentId: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Payment method is required'
-        }
-      }
+      allowNull: true
     },
-    paymentDetails: {
+    paymentStatus: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Payment details is required'
-        }
-      }
+      allowNull: true,
+      defaultValue: 'Pending'
     },
+    transactionDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    // paymentMethod: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   validate: {
+    //     notNull: {
+    //       msg: 'Payment method is required'
+    //     }
+    //   }
+    // },
+    // paymentDetails: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   validate: {
+    //     notNull: {
+    //       msg: 'Payment details is required'
+    //     }
+    //   }
+    // },
     subTotal: {
       type: DataTypes.FLOAT,
       allowNull: false,
@@ -146,16 +159,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    // orderStatus: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   defaultValue: "Received",
-    //   validate: {
-    //     notNull: {
-    //       msg: 'Order status is required'
-    //     }
-    //   }
-    // },
   }, {
     sequelize,
     modelName: 'Order',

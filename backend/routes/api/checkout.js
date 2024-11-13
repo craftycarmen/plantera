@@ -1,8 +1,10 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { ShoppingCart, Order, Listing, CartItem } = require('../../db/models');
+const Stripe = require('stripe');
 
 const router = express.Router();
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.get('/', requireAuth, async (req, res) => {
     const { user } = req;
@@ -15,57 +17,13 @@ router.get('/', requireAuth, async (req, res) => {
     if (!orders || orders.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
 
     return res.json(orders)
-})
-
-// router.get('/:orderId', requireAuth, async (req, res) => {
-//     const orderId = Number(req.params.orderId);
-
-//     const { user } = req;
-//     const order = await Order.findOne({
-//         attributes: ['id', 'buyerId'],
-//         where: {
-//             id: orderId
-//         }
-//     });
-
-//     if (!user) return res.status(403).json({ message: "Forbidden" })
-//     if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
-//     const cartItems = await CartItem.findAll({
-//         include: {
-//             model: Listing,
-//             attributes: ['plantName'],
-//         },
-//         attributes: ['buyerId'],
-//         where: {
-//             cartId: order.cartId
-//         }
-//     })
-
-//     cartItems.forEach(async (cartItem) => {
-//         let listingId = cartItem.listingId
-//         let cartQty = cartItem.cartQty
-
-//         const listing = await Listing.findByPk(listingId)
-
-//         let updatedQty = cartQty - listing.stockQty
-//         listing.set({
-//             stockQty: updatedQty
-//         })
-
-//         await listing.save();
-//     })
-
-
-
-//     return res.json({ Order: order, CartItems: cartItems })
-// })
-
+});
 
 router.post('/', requireAuth, async (req, res) => {
     try {
 
         const { user } = req
-        const { cartId, firstName, lastName, address, city, state, zipCode, paymentMethod, paymentDetails, subTotal, orderTotal } = req.body;
+        const { cartId, firstName, lastName, address, city, state, zipCode, subTotal } = req.body;
 
         const cart = await ShoppingCart.findOne({
             where: {
@@ -77,6 +35,31 @@ router.post('/', requireAuth, async (req, res) => {
 
         if (user.id !== cart.buyerId) return res.status(403).json({ message: "Forbidden" })
 
+        const shippingCost = 5;
+        const taxRate = 0.0925
+
+        const subTotalInCents = Math.round(subTotal * 100);
+        const shippingCostInCents = Math.round(shippingCost * 100);
+        const taxAmount = subTotal * taxRate;
+        const taxInCents = Math.round(taxAmount * 100);
+        const orderTotalInCents = subTotalInCents + shippingCostInCents + taxInCents;
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: orderTotalInCents,
+            currency: 'usd',
+            shipping: {
+                name: `${firstName} ${lastName}`,
+                address: {
+                    line1: address,
+                    city: city,
+                    state: state,
+                    postal_code: zipCode,
+                    country: 'US'
+                }
+            },
+            metadata: { cartId, userId: user.id }
+        })
+
         const order = await Order.create({
             buyerId: user.id,
             firstName,
@@ -86,10 +69,11 @@ router.post('/', requireAuth, async (req, res) => {
             city,
             state,
             zipCode,
-            paymentMethod,
-            paymentDetails,
-            subTotal,
-            orderTotal
+            stripePaymentIntentId: paymentIntent.id,
+            paymentStatus: 'Pending',
+            transactionDate: new Date(),
+            subTotal: subTotalInCents,
+            orderTotal: orderTotalInCents,
         });
 
         const cartItems = await CartItem.findAll({
@@ -129,6 +113,6 @@ router.post('/', requireAuth, async (req, res) => {
         return res.json(err.message)
     }
 
-})
+});
 
 module.exports = router;

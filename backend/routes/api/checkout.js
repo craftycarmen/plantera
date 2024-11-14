@@ -46,6 +46,7 @@ router.post('/', requireAuth, async (req, res) => {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: orderTotalInCents,
             currency: 'usd',
+            payment_method: 'pm_card_visa',
             payment_method_types: ['card'],
             shipping: {
                 name: `${firstName} ${lastName}`,

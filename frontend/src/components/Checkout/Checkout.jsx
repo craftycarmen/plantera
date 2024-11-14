@@ -27,6 +27,7 @@ function Checkout() {
     const [errors, setErrors] = useState({});
     const [isProcessing, setIsProcessing] = useState(false);
     const [setClientSecret] = useState("");
+    const [isCardValid, setIsCardValid] = useState(false);
 
     const updateFirstName = (e) => setFirstName(e.target.value);
     const updateLastName = (e) => setLastName(e.target.value);
@@ -58,13 +59,32 @@ function Checkout() {
         if (!zipCode) errs.zipCode = '';
 
         setErrors(errs);
+        setIsProcessing(false);
     }, [firstName, lastName, address, city, state, zipCode])
+
+    useEffect(() => {
+        if (elements) {
+            const cardElement = elements.getElement(CardElement);
+
+            if (cardElement) {
+                cardElement.on('change', (e) => {
+                    setIsCardValid(e.complete && !e.empty);
+                });
+            }
+        }
+    }, [elements]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         setErrors({});
         setIsProcessing(true);
+
+        if (!stripe || !elements) {
+            setErrors({ payment: 'Stripe not loaded properly' });
+            setIsProcessing(false);
+            return;
+        }
 
         const order = {
             buyerId: userId,
@@ -86,9 +106,36 @@ function Checkout() {
             const { clientSecret } = res;
             setClientSecret(clientSecret);
 
-            if (!stripe || !elements) return;
-
             const cardElement = elements.getElement(CardElement);
+
+            if (!cardElement) {
+                setErrors({ payment: 'Card element not found.' })
+                setIsProcessing(false);
+                return;
+            }
+
+            const { error: cardError, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+
+            if (cardError) {
+                setErrors({ payment: cardError.message });
+                setIsProcessing(false);
+                return;
+            }
+
+            const cardNumber = paymentMethod.card.number;
+            if (cardNumber.trim() !== '4242424242424242') {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    payment: 'Please use test card number 4242 4242 4242 4242',
+                }));
+
+                setIsProcessing(false);
+                return;
+            }
+
             const paymentResult = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: cardElement,
@@ -125,7 +172,9 @@ function Checkout() {
         }
     }
 
-
+    const copy = async () => {
+        await navigator.clipboard.writeText("4242 4242 4242 4242");
+    }
 
     return (
         <>
@@ -230,12 +279,27 @@ function Checkout() {
 
                             <br />
                             <h2>Payment Information</h2>
-                            <CardElement />
+                            <p>
+                                <strong>DEMO MODE:</strong> Use test card number <span className="copyUrl">
+                                    <a onClick={copy}>4242 4242 4242 4242<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a>
+                                </span> with any future date as the expiration and any three digits as the CVC to simulate a transaction.
+                            </p>
+
+                            <CardElement options={{
+                                hidePostalCode: true,
+                                style: {
+                                    base: {
+                                        fontFamily: '"Space Mono", monospace',
+                                        color: '#28635A'
+                                    }
+                                }
+                            }} />
                             <div className='error'>{errors.payment &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.payment}</>}</div>
+                            {errors.payment && <p>{errors.payment}</p>}
                             <button
                                 type="submit"
-                                disabled={isProcessing || !!Object.values(errors).length}
+                                disabled={isProcessing || !!Object.values(errors).length || !isCardValid}
                             >{isProcessing ? "Processing..." : "Place My Order"}</button>
                         </form >
                         <OrderSummary checkout={true} />

@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@stripe/react-stripe-js": "^2.8.1",
-    "@stripe/stripe-js": "^4.9.0",
+    "@stripe/react-stripe-js": "^2.9.0",
+    "@stripe/stripe-js": "^4.10.0",
     "html-react-parser": "^5.1.10",
     "js-cookie": "^3.0.5",
     "quill": "^2.0.2",

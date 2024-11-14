@@ -40,13 +40,13 @@ router.post('/', requireAuth, async (req, res) => {
 
         const subTotalInCents = Math.round(subTotal * 100);
         const shippingCostInCents = Math.round(shippingCost * 100);
-        const taxAmount = subTotal * taxRate;
-        const taxInCents = Math.round(taxAmount * 100);
+        const taxInCents = Math.round(subTotal * taxRate * 100);
         const orderTotalInCents = subTotalInCents + shippingCostInCents + taxInCents;
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: orderTotalInCents,
             currency: 'usd',
+            payment_method_types: ['card'],
             shipping: {
                 name: `${firstName} ${lastName}`,
                 address: {
@@ -108,7 +108,7 @@ router.post('/', requireAuth, async (req, res) => {
         })
 
 
-        return res.status(201).json({ order, deletedCartId: cartId })
+        return res.status(201).json({ order, clientSecret: paymentIntent.client_secret, deletedCartId: cartId })
     } catch (err) {
         return res.json(err.message)
     }

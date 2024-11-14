@@ -5,10 +5,14 @@ import { addOrder } from "../../store/order";
 import { Link, useNavigate } from "react-router-dom";
 import { clearCart } from "../../store/cart";
 import ErrorHandling from "../ErrorHandling";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 function Checkout() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const stripe = useStripe();
+    const elements = useElements();
 
     const cart = useSelector(state => state.cart);
 

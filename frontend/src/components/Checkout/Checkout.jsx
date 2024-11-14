@@ -24,9 +24,9 @@ function Checkout() {
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [zipCode, setZipCode] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("");
-    const [paymentDetails, setPaymentDetails] = useState("");
     const [errors, setErrors] = useState({});
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [setClientSecret] = useState("");
 
     const updateFirstName = (e) => setFirstName(e.target.value);
     const updateLastName = (e) => setLastName(e.target.value);
@@ -34,8 +34,6 @@ function Checkout() {
     const updateCity = (e) => setCity(e.target.value);
     const updateState = (e) => setState(e.target.value);
     const updateZipCode = (e) => setZipCode(e.target.value);
-    const updatePaymentMethod = (e) => setPaymentMethod(e.target.value);
-    const updatePaymentDetails = (e) => setPaymentDetails(e.target.value);
 
     const states = ['AL', 'AK', 'AZ', 'AR',
         'CA', 'CO', 'CT', 'DE', 'DC',
@@ -49,8 +47,6 @@ function Checkout() {
         'UT', 'VT', 'VI', 'VA', 'WA',
         'WV', 'WI', 'WY']
 
-    const cards = ['VIZZA', 'Plastercard', 'Americana Expresso']
-
     useEffect(() => {
         const errs = {};
 
@@ -60,20 +56,15 @@ function Checkout() {
         if (!city) errs.city = '';
         if (!state) errs.state = '';
         if (!zipCode) errs.zipCode = '';
-        if (!paymentMethod) errs.paymentMethod = '';
-        if (!paymentDetails) errs.paymentDetails = '';
-        if (paymentDetails && isNaN(paymentDetails)) errs.paymentDetails = 'Payment details must be 4 digits';
-        if (paymentDetails && paymentDetails.length !== 4) errs.paymentDetails = 'Payment details must be 4 digits';
 
         setErrors(errs);
-    }, [firstName, lastName, address, city, state, zipCode, paymentMethod, paymentDetails])
-
-    const cartTotal = (cart.cartTotal * 1.0825).toFixed(2);
+    }, [firstName, lastName, address, city, state, zipCode])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         setErrors({});
+        setIsProcessing(true);
 
         const order = {
             buyerId: userId,
@@ -83,11 +74,8 @@ function Checkout() {
             city,
             state,
             zipCode,
-            paymentMethod,
-            paymentDetails,
             cartId: cart.cartId,
-            subTotal: cart.cartTotal,
-            orderTotal: Number(cartTotal)
+            subTotal: cart.cartTotal
         }
 
         let orderId = null;
@@ -95,17 +83,45 @@ function Checkout() {
         const res = await dispatch(addOrder(order))
 
         if (res) {
+            const { clientSecret } = res;
+            setClientSecret(clientSecret);
 
-            orderId = res.order.id
+            if (!stripe || !elements) return;
 
-            localStorage.removeItem('cartId');
-            localStorage.removeItem('cartItems');
-            dispatch(clearCart());
-            // navigate('/orderconfirmation', { state: { orders: orderId } })
-            navigate(`/order/${orderId}`)
+            const cardElement = elements.getElement(CardElement);
+            const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: cardElement,
+                    billing_details: {
+                        name: `${firstName} ${lastName}`,
+                        address: {
+                            line1: address,
+                            city: city,
+                            state: state,
+                            postal_code: zipCode,
+                            country: "US"
+                        }
+                    }
+                }
+            });
+
+            if (paymentResult.error) {
+                console.error(paymentResult.error.message);
+                setErrors({ payment: paymentResult.error.message });
+                setIsProcessing(false);
+            } else if (paymentResult.paymentIntent.status === "succeeded") {
+                orderId = res.order.id
+
+                localStorage.removeItem('cartId');
+                localStorage.removeItem('cartItems');
+                dispatch(clearCart());
+                navigate(`/order/${orderId}`)
+            }
+
         } else {
             console.error('Error creating order:', res);
-            return;
+            setIsProcessing(false);
+            // return;
         }
     }
 
@@ -113,7 +129,12 @@ function Checkout() {
 
     return (
         <>
-            <h3><Link to="/">Home</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;<Link to="/cart">Shopping Cart</Link>&nbsp;&nbsp;<i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;Checkout</h3>
+            <h3>
+                <Link to="/">Home</Link>&nbsp;&nbsp;
+                <i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;
+                <Link to="/cart">Shopping Cart</Link>&nbsp;&nbsp;
+                <i className="fa-solid fa-angle-right" style={{ fontSize: "small" }} />&nbsp;&nbsp;Checkout
+            </h3>
             {cart.cartId === null && <div style={{ marginTop: "35px" }}>Your cart is empty!</div>}
             {!sessionUser && cart.cartId !== null && (<ErrorHandling />)}
             {sessionUser && cart.cartId !== null &&
@@ -209,46 +230,13 @@ function Checkout() {
 
                             <br />
                             <h2>Payment Information</h2>
-
-                            <div className='inputContainer'>
-                                <select
-                                    value={paymentMethod}
-                                    onChange={updatePaymentMethod}
-                                    name="paymentMethod"
-                                >
-                                    <option value="">-</option>
-                                    {cards.map(card => (
-                                        <option
-                                            key={card}
-                                            value={card}
-                                        >
-                                            {card}
-                                        </option>
-                                    ))}
-                                </select>
-                                <label htmlFor='paymentMethod' className='floating-label'>*Payment Method</label>
-                            </div>
-                            <div className='error'>{errors.paymentMethod &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentMethod}</>}</div>
-
-                            <div className='inputContainer'>
-                                <input
-                                    type='text'
-                                    value={paymentDetails}
-                                    onChange={updatePaymentDetails}
-                                    placeholder=''
-                                    id='paymentDetails'
-                                    minLength="4"
-                                    maxLength="4"
-                                />
-                                <label htmlFor='paymentDetails' className='floating-label'>*Payment Details (4 digits)</label>
-                            </div>
-                            <div className='error'>{errors.paymentDetails &&
-                                <><i className="fa-solid fa-circle-exclamation" /> {errors.paymentDetails}</>}</div>
+                            <CardElement />
+                            <div className='error'>{errors.payment &&
+                                <><i className="fa-solid fa-circle-exclamation" /> {errors.payment}</>}</div>
                             <button
                                 type="submit"
-                                disabled={!!Object.values(errors).length}
-                            >Place My Order</button>
+                                disabled={isProcessing || !!Object.values(errors).length}
+                            >{isProcessing ? "Processing..." : "Place My Order"}</button>
                         </form >
                         <OrderSummary checkout={true} />
                     </div>

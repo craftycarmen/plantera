@@ -26,6 +26,10 @@ import ManageSellerListings from './components/Sell/SellerDashboard/ManageListin
 import Orders from './components/Orders';
 import ManageOrders from './components/Sell/SellerDashboard/ManageOrders';
 import FulfilledOrders from './components/Sell/SellerDashboard/ManageOrders/FulfilledOrders';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe("pk_live_51QIbbJGrdPWSfcrQlTRQRB8mUHqz9jmHJl7gi3XTvcH7vKdoynjr5Vrxw4s4bCL7Zq1AsoMz12vTftQp70wHcOVU00xRzbOJSs")
 
 const router = createBrowserRouter([
     {
@@ -61,7 +65,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/checkout',
-                element: <Checkout />
+                element: (
+                    <Elements stripe={stripePromise}>
+                        <Checkout />
+                    </Elements >
+                ),
             },
             {
                 path: '/checkout/user',

@@ -68,6 +68,27 @@ router.get('/:orderId', requireAuth, async (req, res) => {
 
     return res.json({ Order: order, OrderItems: orderItems })
 
-})
+});
+
+// router.put('/:orderId/update-payment-status', requireAuth, async (req, res) => {
+//     const { orderId } = req.params;
+//     const { paymentStatus } = req.body;
+//     const { user } = req;
+
+//     try {
+//         const order = await Order.findByPk(orderId);
+
+//         if (!order) return res.json(404).json({ error: 'Order ID not found' })
+//         if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
+
+//         order.paymentStatus = paymentStatus;
+//         await order.save();
+
+//         res.json({ message: "Payment status updated successfully" });
+//     } catch (error) {
+//         console.error("Error updating payment status:", error);
+//         res.status(500).json({ message: "Internal server error" })
+//     }
+// })
 
 module.exports = router;

@@ -26,7 +26,7 @@ function Checkout() {
     const [zipCode, setZipCode] = useState("");
     const [errors, setErrors] = useState({});
     const [isProcessing, setIsProcessing] = useState(false);
-    const [setClientSecret] = useState("");
+    const [clientSecret, setClientSecret] = useState("");
     const [isCardValid, setIsCardValid] = useState(false);
 
     const updateFirstName = (e) => setFirstName(e.target.value);
@@ -100,76 +100,90 @@ function Checkout() {
 
         let orderId = null;
 
-        const res = await dispatch(addOrder(order))
+        const res = await dispatch(addOrder(order));
 
-        if (res) {
-            const { clientSecret } = res;
-            setClientSecret(clientSecret);
+        if (!res || !res.clientSecret) {
+            setErrors({ payment: 'Failed to create order' })
+            setIsProcessing(false);
+            return;
+        }
 
-            const cardElement = elements.getElement(CardElement);
+        setClientSecret(res.clientSecret)
+        const cardElement = elements.getElement(CardElement);
 
-            if (!cardElement) {
-                setErrors({ payment: 'Card element not found.' })
-                setIsProcessing(false);
-                return;
+        if (!cardElement) {
+            setErrors({ payment: 'Card element not found.' })
+            setIsProcessing(false);
+            return;
+        }
+
+        const { error: cardError, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                name: `${firstName} ${lastName}`,
+                address: {
+                    line1: address,
+                    city: city,
+                    state: state,
+                    postal_code: zipCode,
+                    country: "US"
+                }
             }
+        });
 
-            const { error: cardError, paymentMethod } = await stripe.createPaymentMethod({
-                type: 'card',
+        if (cardError) {
+            setErrors({ payment: cardError.message });
+            setIsProcessing(false);
+            return;
+        }
+
+        const cardNumber = paymentMethod.card.number;
+        if (cardNumber.trim() !== '4242424242424242') {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                payment: 'Please use test card number 4242 4242 4242 4242',
+            }));
+
+            setIsProcessing(false);
+            return;
+        }
+
+        const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
                 card: cardElement,
-            });
-
-            if (cardError) {
-                setErrors({ payment: cardError.message });
-                setIsProcessing(false);
-                return;
-            }
-
-            const cardNumber = paymentMethod.card.number;
-            if (cardNumber.trim() !== '4242424242424242') {
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    payment: 'Please use test card number 4242 4242 4242 4242',
-                }));
-
-                setIsProcessing(false);
-                return;
-            }
-
-            const paymentResult = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: cardElement,
-                    billing_details: {
-                        name: `${firstName} ${lastName}`,
-                        address: {
-                            line1: address,
-                            city: city,
-                            state: state,
-                            postal_code: zipCode,
-                            country: "US"
-                        }
+                billing_details: {
+                    name: `${firstName} ${lastName}`,
+                    address: {
+                        line1: address,
+                        city: city,
+                        state: state,
+                        postal_code: zipCode,
+                        country: "US"
                     }
                 }
-            });
-
-            if (paymentResult.error) {
-                console.error(paymentResult.error.message);
-                setErrors({ payment: paymentResult.error.message });
-                setIsProcessing(false);
-            } else if (paymentResult.paymentIntent.status === "succeeded") {
-                orderId = res.order.id
-
-                localStorage.removeItem('cartId');
-                localStorage.removeItem('cartItems');
-                dispatch(clearCart());
-                navigate(`/order/${orderId}`)
             }
+        });
 
-        } else {
-            console.error('Error creating order:', res);
+        if (paymentResult.error) {
+            console.error(paymentResult.error.message);
+            setErrors({ payment: paymentResult.error.message });
             setIsProcessing(false);
-            // return;
+        } else if (paymentResult.paymentIntent.status === "succeeded") {
+            orderId = res.order.id
+
+            // await fetch(`/api/orders/${orderId}/update-payment-status`, {
+            //     method: 'PUT',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ paymentStatus: "Succeeded" })
+            // })
+
+            localStorage.removeItem('cartId');
+            localStorage.removeItem('cartItems');
+            dispatch(clearCart());
+            navigate(`/order/${orderId}`)
         }
+
     }
 
     const copy = async () => {

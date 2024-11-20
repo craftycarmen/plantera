@@ -1,6 +1,16 @@
 import { removeCart } from "./cart";
 import { csrfFetch } from "./csrf";
 
+const getCsrfToken = () => {
+    const csrfToken = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('XSRF-TOKEN='))
+        ?.split('=')[1]; // Assuming the CSRF token is stored in the cookie as csrfToken
+
+    return csrfToken;
+};
+
+
 const CREATE_ORDER = 'orders/CREATE_ORDER';
 const SET_PAYMENT_INTENT = 'orders/SET_PAYMENT_INTENT';
 const LOAD_ORDER_ITEMS = 'orders/LOAD_ORDER_ITEMS';
@@ -28,15 +38,24 @@ export const loadOwnedBuyerOrders = (orders) => ({
 })
 
 export const addOrder = (order) => async (dispatch) => {
+    const csrfToken = getCsrfToken();
+    if (!csrfToken) {
+        // Handle case where CSRF token is not found
+        console.error('CSRF token not found!');
+        return;
+    }
+
     const res = await csrfFetch('/api/checkout', {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(order)
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken, },
+        body: JSON.stringify(order),
+        credentials: 'include',
     });
 
     if (res.ok) {
         const { order, paymentIntent, deletedCartId } = await res.json();
 
+        console.log("PI", res)
         dispatch(createOrder(order));
         dispatch(setPaymentIntent(paymentIntent.client_secret));
         dispatch(removeCart(deletedCartId));

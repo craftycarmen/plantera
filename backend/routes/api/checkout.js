@@ -20,6 +20,12 @@ router.get('/', requireAuth, async (req, res) => {
 });
 
 router.post('/', requireAuth, async (req, res) => {
+    const csrfHeader = req.headers['x-csrf-token'];
+    const csrfCookie = req.cookies['XSRF-TOKEN'];
+
+    console.log('CSRF Token from Header:', csrfHeader);
+    console.log('CSRF Token from Cookie:', csrfCookie);
+
     try {
 
         const { user } = req
@@ -115,5 +121,33 @@ router.post('/', requireAuth, async (req, res) => {
     }
 
 });
+
+router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+
+        if (event.type === 'payment_intent.succeeded') {
+            const paymentIntent = event.data.object;
+            const orderId = paymentIntent.metadata.cartId;
+
+            const order = await Order.findOne({ where: { cartId: orderId } });
+            if (order) {
+                order.paymentStatus = 'Succeeded';
+                await order.save();
+                console.log(`Payment status for Order ${orderId} updated to Succeeded`);
+            }
+        }
+
+        res.status(200).json({ received: true })
+    } catch (error) {
+        console.error('Webhook error:', error.message);
+        res.status(400).send(`Webhook error: ${error.message}`)
+    }
+})
 
 module.exports = router;

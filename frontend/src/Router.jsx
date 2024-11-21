@@ -29,7 +29,7 @@ import FulfilledOrders from './components/Sell/SellerDashboard/ManageOrders/Fulf
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe("pk_live_51QIbbJGrdPWSfcrQlTRQRB8mUHqz9jmHJl7gi3XTvcH7vKdoynjr5Vrxw4s4bCL7Zq1AsoMz12vTftQp70wHcOVU00xRzbOJSs")
+const stripePromise = loadStripe("pk_test_51QIbbJGrdPWSfcrQDrPAjloRpybQIcMhTJCYfAkaZTT7TJbobyq3nER4oSliHzYcZY5Ck2qdb4snbErQmN1tPBsD00c2i01MKq")
 
 const router = createBrowserRouter([
     {

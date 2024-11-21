@@ -26,7 +26,7 @@ function Checkout() {
     const [zipCode, setZipCode] = useState("");
     const [errors, setErrors] = useState({});
     const [isProcessing, setIsProcessing] = useState(false);
-    const [clientSecret, setClientSecret] = useState("");
+    // const [setClientSecret] = useState("");
     const [isCardValid, setIsCardValid] = useState(false);
 
     const updateFirstName = (e) => setFirstName(e.target.value);
@@ -108,7 +108,7 @@ function Checkout() {
             return;
         }
 
-        setClientSecret(res.clientSecret)
+        // setClientSecret(res.clientSecret)
         const cardElement = elements.getElement(CardElement);
 
         if (!cardElement) {
@@ -120,6 +120,7 @@ function Checkout() {
         const { error: cardError, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement,
+            // card: elements.getElement(CardElement),
             billing_details: {
                 name: `${firstName} ${lastName}`,
                 address: {
@@ -138,18 +139,18 @@ function Checkout() {
             return;
         }
 
-        const cardNumber = paymentMethod.card.number;
-        if (cardNumber.trim() !== '4242424242424242') {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                payment: 'Please use test card number 4242 4242 4242 4242',
-            }));
+        // const cardNumber = paymentMethod.card.number;
+        // if (cardNumber.trim() !== '4242424242424242') {
+        //     setErrors((prevErrors) => ({
+        //         ...prevErrors,
+        //         payment: 'Please use test card number 4242 4242 4242 4242',
+        //     }));
 
-            setIsProcessing(false);
-            return;
-        }
+        //     setIsProcessing(false);
+        //     return;
+        // }
 
-        const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+        const paymentResult = await stripe.confirmCardPayment(res.clientSecret, {
             payment_method: {
                 card: cardElement,
                 billing_details: {
@@ -165,6 +166,8 @@ function Checkout() {
             }
         });
 
+        console.log("PAYMENT RESULT", paymentResult);
+        console.log("RES CLIENT SECRET", res.clientSecret)
         if (paymentResult.error) {
             console.error(paymentResult.error.message);
             setErrors({ payment: paymentResult.error.message });

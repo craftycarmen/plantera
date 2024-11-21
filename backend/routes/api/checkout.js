@@ -66,7 +66,7 @@ router.post('/', requireAuth, async (req, res) => {
             },
             metadata: { cartId, userId: user.id },
             // automatic_payment_methods: { enabled: true },
-            confirm: true,
+            // confirm: true,
         })
 
         const order = await Order.create({
@@ -117,7 +117,12 @@ router.post('/', requireAuth, async (req, res) => {
         })
 
 
-        return res.status(201).json({ order, clientSecret: paymentIntent.client_secret, deletedCartId: cartId })
+        return res.status(201).json({
+            order,
+            clientSecret: paymentIntent.client_secret,
+            paymentIntent,
+            deletedCartId: cartId
+        })
     } catch (err) {
         return res.json(err.message)
     }

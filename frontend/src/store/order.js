@@ -55,7 +55,7 @@ export const addOrder = (order) => async (dispatch) => {
     if (res.ok) {
         const { order, paymentIntent, deletedCartId } = await res.json();
 
-        console.log("PI", res)
+        console.log("PI", paymentIntent)
         dispatch(createOrder(order));
         dispatch(setPaymentIntent(paymentIntent.client_secret));
         dispatch(removeCart(deletedCartId));

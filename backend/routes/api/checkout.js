@@ -62,9 +62,11 @@ router.post('/', requireAuth, async (req, res) => {
                     state: state,
                     postal_code: zipCode,
                     country: 'US'
-                }
+                },
             },
-            metadata: { cartId, userId: user.id }
+            metadata: { cartId, userId: user.id },
+            // automatic_payment_methods: { enabled: true },
+            confirm: true,
         })
 
         const order = await Order.create({

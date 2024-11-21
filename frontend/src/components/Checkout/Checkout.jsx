@@ -155,6 +155,7 @@ function Checkout() {
                 }
             }
         });
+        console.log("PAYMENRESLT", paymentResult);
 
         if (paymentResult.error) {
             console.error(paymentResult.error.message);

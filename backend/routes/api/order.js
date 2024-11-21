@@ -1,8 +1,10 @@
 const express = require('express');
 const { CartItem, Order, Listing, Image, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const Stripe = require('stripe');
 
 const router = express.Router();
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.get('/orders', requireAuth, async (req, res) => {
     const { user } = req;
@@ -48,7 +50,9 @@ router.get('/:orderId', requireAuth, async (req, res) => {
     });
 
     const { user } = req;
+    if (!order) return res.json(404).json({ error: 'Order ID not found' })
     if (order.buyerId !== user.id) return res.status(403).json({ message: "Forbidden" })
+
     const orderItems = await CartItem.findAll({
         include: {
             model: Listing,
@@ -64,9 +68,22 @@ router.get('/:orderId', requireAuth, async (req, res) => {
         }
     })
 
-    if (!order) return res.json(404).json({ error: 'Order ID not found' })
+    const paymentIntent = await stripe.paymentIntents.retrieve(order.stripePaymentIntentId);
+    const charge = await stripe.charges.retrieve(paymentIntent.latest_charge);
+    const paymentStatus = paymentIntent.status.charAt(0).toUpperCase() + paymentIntent.status.slice(1);
+    const paymentCard = charge.payment_method_details.card.brand.toUpperCase()
+    const paymentDetails = {
+        paymentStatus: paymentStatus,
+        paymentMethod: `${paymentCard} x${charge.payment_method_details.card.last4}`,
+        transactionId: paymentIntent.id
+    }
+    console.log("CHARGE", paymentDetails);
 
-    return res.json({ Order: order, OrderItems: orderItems })
+    return res.json({
+        Order: order,
+        OrderItems: orderItems,
+        PaymentDetails: paymentDetails
+    })
 
 });
 

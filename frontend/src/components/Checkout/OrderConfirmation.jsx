@@ -9,7 +9,8 @@ function OrderConfirmation() {
     const { orderId } = useParams();
     const orderItems = useSelector(state => state.orders[orderId]?.orderItems?.OrderItems)
     const buyerId = useSelector(state => state.orders[orderId]?.orderItems?.Order?.buyerId)
-    const order = useSelector(state => state.orders[orderId]?.orderItems?.Order)
+    const order = useSelector(state => state.orders[orderId]?.orderItems?.Order);
+    const payment = useSelector(state => state.orders[orderId]?.orderItems?.PaymentDetails);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
@@ -18,6 +19,7 @@ function OrderConfirmation() {
         return tax.toLocaleString('en-US', { maximumFractionDigits: 2 })
     }
 
+    console.log("ORDER", payment)
     useEffect(() => {
         const runDispatches = async () => {
             try {
@@ -46,14 +48,15 @@ function OrderConfirmation() {
                             <div className="orderDetails">
                                 <div>
                                     <h3>Shipping Details</h3>
-                                    <div>{sessionUser.firstName} {sessionUser.lastName}</div>
+                                    <div>{order.firstName} {order.lastName}</div>
                                     <div>{order.address}</div>
                                     <div>{order.city}, {order.state} {order.zipCode}</div>
                                 </div>
                                 <div>
                                     <h3>Payment Details</h3>
-                                    <div>{order.paymentMethod}</div>
-                                    <div>x{order.paymentDetails}</div>
+                                    <div><span style={{ fontWeight: "bold" }}>Payment Status:</span> {payment.paymentStatus}</div>
+                                    <div><span style={{ fontWeight: "bold" }}>Payment Method:</span> {payment.paymentMethod}</div>
+                                    <div><span style={{ fontWeight: "bold" }}>Transaction ID:</span> {payment.transactionId}</div>
                                 </div>
                             </div>
                         </div>

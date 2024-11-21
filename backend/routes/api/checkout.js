@@ -70,6 +70,7 @@ router.post('/', requireAuth, async (req, res) => {
             // automatic_payment_methods: { enabled: true },
             // confirm: true,
         })
+        console.log("PAYMENT INTENT", paymentIntent);
 
         const order = await Order.create({
             buyerId: user.id,

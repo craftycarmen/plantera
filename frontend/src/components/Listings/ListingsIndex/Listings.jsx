@@ -153,7 +153,9 @@ function Listings() {
                             <>
                                 {displayedListings.map((listing) => (
                                     <div key={listing.id}>
-                                        <Link to={`/listings/${listing.id}`} target="_blank" rel="noopener noreferrer">
+                                        <Link to={`/listings/${listing.id}`}
+                                        // target="_blank" rel="noopener noreferrer"
+                                        >
                                             <div className="listingImageContainer">
                                                 <img className="listingImage" src={listing.ListingImages?.[0]?.url} />
                                             </div>

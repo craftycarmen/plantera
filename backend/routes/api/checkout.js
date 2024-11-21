@@ -64,7 +64,9 @@ router.post('/', requireAuth, async (req, res) => {
                     country: 'US'
                 },
             },
-            metadata: { cartId, userId: user.id },
+            metadata: {
+                userId: user.id
+            },
             // automatic_payment_methods: { enabled: true },
             // confirm: true,
         })
@@ -93,6 +95,18 @@ router.post('/', requireAuth, async (req, res) => {
                 cartId: cartId
             }
         })
+
+        const listingsMetadata = cartItems.map(cartItem => ({
+            listingId: cartItem.listingId,
+            quantity: cartItem.cartQty
+        }));
+
+        await stripe.paymentIntents.update(paymentIntent.id, {
+            metadata: {
+                orderId: order.id,
+                listings: JSON.stringify(listingsMetadata)
+            }
+        });
 
         cartItems.forEach(async (cartItem) => {
             let listingId = cartItem.listingId
@@ -140,9 +154,9 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 
         if (event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object;
-            const orderId = paymentIntent.metadata.cartId;
+            const orderId = paymentIntent.metadata.orderId;
 
-            const order = await Order.findOne({ where: { cartId: orderId } });
+            const order = await Order.findOne(orderId);
             if (order) {
                 order.paymentStatus = 'Succeeded';
                 await order.save();

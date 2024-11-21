@@ -69,6 +69,7 @@ function Checkout() {
             if (cardElement) {
                 cardElement.on('change', (e) => {
                     setIsCardValid(e.complete && !e.empty);
+
                 });
             }
         }
@@ -117,7 +118,7 @@ function Checkout() {
             return;
         }
 
-        const { error: cardError, paymentMethod } = await stripe.createPaymentMethod({
+        const { error: cardError } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement,
             // card: elements.getElement(CardElement),
@@ -139,17 +140,6 @@ function Checkout() {
             return;
         }
 
-        // const cardNumber = paymentMethod.card.number;
-        // if (cardNumber.trim() !== '4242424242424242') {
-        //     setErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         payment: 'Please use test card number 4242 4242 4242 4242',
-        //     }));
-
-        //     setIsProcessing(false);
-        //     return;
-        // }
-
         const paymentResult = await stripe.confirmCardPayment(res.clientSecret, {
             payment_method: {
                 card: cardElement,
@@ -166,21 +156,19 @@ function Checkout() {
             }
         });
 
-        console.log("PAYMENT RESULT", paymentResult);
-        console.log("RES CLIENT SECRET", res.clientSecret)
         if (paymentResult.error) {
             console.error(paymentResult.error.message);
+
+            if (paymentResult.error.message === "Your card was declined. Your request was in test mode, but used a non test card. For a list of valid test cards, visit: https://stripe.com/docs/testing.") {
+                setErrors({
+                    payment: "DEMO MODE ONLY: Please use 4242 4242 4242 4242 as the card number."
+                });
+                setIsProcessing(false);
+            }
             setErrors({ payment: paymentResult.error.message });
             setIsProcessing(false);
         } else if (paymentResult.paymentIntent.status === "succeeded") {
             orderId = res.order.id
-
-            // await fetch(`/api/orders/${orderId}/update-payment-status`, {
-            //     method: 'PUT',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ paymentStatus: "Succeeded" })
-            // })
-
             localStorage.removeItem('cartId');
             localStorage.removeItem('cartItems');
             dispatch(clearCart());
@@ -189,8 +177,8 @@ function Checkout() {
 
     }
 
-    const copy = async () => {
-        await navigator.clipboard.writeText("4242 4242 4242 4242");
+    const copy = async (text) => {
+        await navigator.clipboard.writeText(text);
     }
 
     return (
@@ -297,23 +285,33 @@ function Checkout() {
                             <br />
                             <h2>Payment Information</h2>
                             <p>
-                                <strong>DEMO MODE:</strong> Use test card number <span className="copyUrl">
-                                    <a onClick={copy}>4242 4242 4242 4242<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a>
-                                </span> with any future date as the expiration and any three digits as the CVC to simulate a transaction.
-                            </p>
+                                <strong>DEMO MODE:</strong> Use the following test card details to simulate a transaction:
+                                <ul>
+                                    <li>Card Number:
+                                        <a onClick={() => copy("4242 4242 4242 4242")}>4242 4242 4242 4242<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a>
 
-                            <CardElement options={{
-                                hidePostalCode: true,
-                                style: {
-                                    base: {
-                                        fontFamily: '"Space Mono", monospace',
-                                        color: '#28635A'
+                                    </li>
+                                    <li>
+                                        Expiration Date: <a onClick={() => copy("1227")}>12/27<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a> (any future date works)
+                                    </li>
+                                    <li>
+                                        CVC: <a onClick={() => copy("000")}>000<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a> (any three digits work)
+                                    </li>
+                                </ul>
+                            </p>
+                            <br />
+                            <CardElement
+                                options={{
+                                    hidePostalCode: true,
+                                    style: {
+                                        base: {
+                                            fontFamily: '"Space Mono", monospace',
+                                            color: '#28635A',
+                                        }
                                     }
-                                }
-                            }} />
+                                }} />
                             <div className='error'>{errors.payment &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.payment}</>}</div>
-                            {errors.payment && <p>{errors.payment}</p>}
                             <button
                                 type="submit"
                                 disabled={isProcessing || !!Object.values(errors).length || !isCardValid}

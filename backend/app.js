@@ -7,16 +7,17 @@ const cookieParser = require('cookie-parser');
 const csurf = require('csurf');
 const routes = require('./routes');
 const { ValidationError } = require('sequelize');
-
 const { environment } = require('./config');
-const isProduction = environment === 'production';
 
+const isProduction = environment === 'production';
 const app = express();
+
+app.post('/api/checkout/webhook', express.raw({ type: 'application/json' }));
+
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-
-
+app.use(express.json());
 
 // Security Middleware
 if (!isProduction) {
@@ -33,24 +34,63 @@ app.use(
 
 app.use((req, res, next) => {
     if (req.originalUrl === '/api/checkout/webhook') {
-        express.raw({ type: 'application/json' })(req, res, next);
-    } else {
-        next();
-    }
-});
-
-app.use((req, res, next) => {
-    if (req.originalUrl === '/api/checkout/webhook') {
         return next();
     }
     csurf({
         cookie: {
             secure: isProduction,
-            sameSite: isProduction && 'Lax',
-            httpOnly: true
-        }
+            sameSite: isProduction ? 'Lax' : 'Strict',
+            httpOnly: true,
+        },
     })(req, res, next);
 });
+
+// Add CSRF token to cookies (exclude webhook route)
+app.use((req, res, next) => {
+    if (req.originalUrl === '/api/checkout/webhook') {
+        return next();
+    }
+    if (req.csrfToken) {
+        res.cookie('XSRF-TOKEN', req.csrfToken(), {
+            secure: isProduction,
+            sameSite: isProduction ? 'Lax' : 'Strict',
+        });
+    }
+    next();
+});
+// app.use((req, res, next) => {
+//     if (req.originalUrl === '/api/checkout/webhook') {
+//         express.raw({ type: 'application/json' })(req, res, next);
+//     } else {
+//         next();
+//     }
+// });
+
+
+// app.use((req, res, next) => {
+//     if (req.originalUrl === '/api/checkout/webhook') {
+//         express.raw({ type: 'application/json' })(req, res, next);
+//         // return next();
+//     } else {
+//         csurf({
+//             cookie: {
+//                 secure: isProduction,
+//                 sameSite: isProduction && 'Lax',
+//                 httpOnly: true
+//             }
+//         })(req, res, next);
+//     }
+// });
+
+// app.use((req, res, next) => {
+//     if (req.originalUrl !== '/api/checkout/webhook') {
+//         res.cookie('XSRF-TOKEN', req.csrfToken(), {
+//             secure: isProduction,
+//             sameSite: isProduction ? 'Lax' : 'Strict',
+//         });
+//     }
+//     next();
+// });
 
 // Set the _csrf token and create req.csrfToken method
 // app.use(
@@ -63,7 +103,7 @@ app.use((req, res, next) => {
 //     })
 // );
 
-app.use(express.json());
+// app.use(express.json());
 app.use(routes); // Connect all the routes
 
 app.use((_req, res, next) => {

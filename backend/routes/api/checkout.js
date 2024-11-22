@@ -82,7 +82,6 @@ router.post('/', requireAuth, async (req, res) => {
             state,
             zipCode,
             stripePaymentIntentId: paymentIntent.id,
-            paymentStatus: 'Pending',
             transactionDate: new Date(),
             subTotal: subTotalInCents,
             orderTotal: orderTotalInCents,
@@ -155,11 +154,14 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 
         if (event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object;
-            const orderId = paymentIntent.metadata.orderId;
+            console.log('Payment Intent Succeeded:', paymentIntent);
 
-            const order = await Order.findOne(orderId);
+            const orderId = paymentIntent.metadata.orderId;
+            console.log('Order Id:', orderId);
+
+            const order = await Order.findOne({ where: { id: orderId } });
             if (order) {
-                order.paymentStatus = 'Succeeded';
+                order.paymentStatus = 'Paid';
                 await order.save();
                 console.log(`Payment status for Order ${orderId} updated to Succeeded`);
             }

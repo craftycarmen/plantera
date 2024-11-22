@@ -74,7 +74,7 @@ router.get('/:orderId', requireAuth, async (req, res) => {
     const paymentCard = charge.payment_method_details.card.brand.toUpperCase()
     const paymentDetails = {
         paymentStatus: paymentStatus,
-        paymentMethod: `${paymentCard} x${charge.payment_method_details.card.last4}`,
+        paymentMethod: `${paymentCard} ending in ${charge.payment_method_details.card.last4}`,
         transactionId: paymentIntent.id
     }
     console.log("CHARGE", paymentDetails);

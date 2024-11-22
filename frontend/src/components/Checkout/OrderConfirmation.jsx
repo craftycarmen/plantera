@@ -54,7 +54,7 @@ function OrderConfirmation() {
                                 </div>
                                 <div>
                                     <h3>Payment Details</h3>
-                                    <div><span style={{ fontWeight: "bold" }}>Payment Status:</span> {payment.paymentStatus}</div>
+                                    <div><span style={{ fontWeight: "bold" }}>Payment Status:</span> {order.paymentStatus}</div>
                                     <div><span style={{ fontWeight: "bold" }}>Payment Method:</span> {payment.paymentMethod}</div>
                                     <div><span style={{ fontWeight: "bold" }}>Transaction ID:</span> {payment.transactionId}</div>
                                 </div>

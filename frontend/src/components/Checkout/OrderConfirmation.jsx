@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchOrderItems } from "../../store/order";
@@ -12,17 +12,18 @@ function OrderConfirmation() {
     const buyerId = useSelector(state => state.orders[orderId]?.orderItems?.Order?.buyerId)
     const order = useSelector(state => state.orders[orderId]?.orderItems?.Order);
     const payment = useSelector(state => state.orders[orderId]?.orderItems?.PaymentDetails);
+    const [loading, setLoading] = useState(true);
 
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    // const estimatedTax = (total) => {
-    //     let tax = (total * 0.0825).toFixed(2)
-    //     return tax.toLocaleString('en-US', { maximumFractionDigits: 2 })
-    // }
+
     useEffect(() => {
         const runDispatches = async () => {
             try {
-                await dispatch(fetchOrderItems(orderId));
+                setLoading(true);
+                await dispatch(fetchOrderItems(orderId)).then(() => setTimeout(() => {
+                    setLoading(false);
+                }, 500));
             } catch (error) {
                 console.error("Error fetching order:", error);
             }
@@ -33,11 +34,12 @@ function OrderConfirmation() {
 
     return (
         <>
-            {!sessionUser?.id &&
-                <ErrorHandling />}
-            {sessionUser && sessionUser?.id !== buyerId &&
+            {loading && <div style={{ marginTop: "40px" }} className="dots smDots"></div>}
+            {!loading && sessionUser && sessionUser?.id !== buyerId &&
                 <>This isn&apos;t your order!</>}
-            {sessionUser?.id === buyerId && order &&
+            {!loading && !sessionUser?.id &&
+                <ErrorHandling />}
+            {!loading && sessionUser?.id === buyerId && order &&
                 <>
 
                     <h1 style={{ marginBottom: "20px" }}>Thank you for your order! <i className="fa-regular fa-hand-peace" /></h1>

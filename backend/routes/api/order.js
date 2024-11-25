@@ -77,7 +77,6 @@ router.get('/:orderId', requireAuth, async (req, res) => {
         paymentMethod: `${paymentCard} ending in ${charge.payment_method_details.card.last4}`,
         transactionId: paymentIntent.id
     }
-    console.log("CHARGE", paymentDetails);
 
     return res.json({
         Order: order,

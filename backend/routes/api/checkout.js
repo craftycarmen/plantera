@@ -2,9 +2,12 @@ const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { ShoppingCart, Order, Listing, CartItem } = require('../../db/models');
 const Stripe = require('stripe');
+const { SHIPPING_COST, TAX_RATE } = require('../../config/constants');
 
 const router = express.Router();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+// const processedEventIds = new Set();
 
 router.get('/', requireAuth, async (req, res) => {
     const { user } = req;
@@ -41,14 +44,11 @@ router.post('/', requireAuth, async (req, res) => {
 
         if (user.id !== cart.buyerId) return res.status(403).json({ message: "Forbidden" })
 
-        const shippingCost = 5;
-        const taxRate = 0.0925
-
         const subTotalInCents = Math.round(subTotal * 100);
-        const shippingCostInCents = Math.round(shippingCost * 100);
-        const taxInCents = Math.round(subTotal * taxRate * 100);
+        const shippingCostInCents = Math.round(SHIPPING_COST * 100);
+        const taxInCents = Math.round(subTotal * TAX_RATE * 100);
         const orderTotalInCents = subTotalInCents + shippingCostInCents + taxInCents;
-
+        console.log("TAX IN CENTS", taxInCents);
         const paymentIntent = await stripe.paymentIntents.create({
             amount: orderTotalInCents,
             currency: 'usd',
@@ -70,7 +70,6 @@ router.post('/', requireAuth, async (req, res) => {
             // automatic_payment_methods: { enabled: true },
             // confirm: true,
         })
-        console.log("PAYMENT INTENT", paymentIntent);
 
         const order = await Order.create({
             buyerId: user.id,
@@ -85,6 +84,8 @@ router.post('/', requireAuth, async (req, res) => {
             transactionDate: new Date(),
             subTotal: subTotalInCents,
             orderTotal: orderTotalInCents,
+            shippingCost: shippingCostInCents,
+            taxAmount: taxInCents
         });
 
         const cartItems = await CartItem.findAll({
@@ -133,6 +134,12 @@ router.post('/', requireAuth, async (req, res) => {
 
         return res.status(201).json({
             order,
+            orderSummary: {
+                subTotal: order.subTotal,
+                shippingCost: SHIPPING_COST,
+                taxAmount: taxInCents / 100,
+                orderTotal: order.orderTotal
+            },
             clientSecret: paymentIntent.client_secret,
             paymentIntent,
             deletedCartId: cartId
@@ -143,35 +150,90 @@ router.post('/', requireAuth, async (req, res) => {
 
 });
 
-router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
-    const sig = req.headers['stripe-signature'];
-    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+router.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
+    let event = request.body;
+    // Only verify the event if you have an endpoint secret defined.
+    // Otherwise use the basic event deserialized with JSON.parse
+    if (endpointSecret) {
+        // Get the signature sent by Stripe
+        const signature = request.headers['stripe-signature'];
+        try {
+            event = stripe.webhooks.constructEvent(
+                request.body,
+                signature,
+                endpointSecret
+            );
+        } catch (err) {
+            console.log(`⚠️  Webhook signature verification failed.`, err.message);
+            return response.sendStatus(400);
+        }
+    }
 
-    let event;
-
-    try {
-        event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-
-        if (event.type === 'payment_intent.succeeded') {
+    // Handle the event
+    switch (event.type) {
+        case 'payment_intent.succeeded':
             const paymentIntent = event.data.object;
-            console.log('Payment Intent Succeeded:', paymentIntent);
-
+            console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
             const orderId = paymentIntent.metadata.orderId;
             console.log('Order Id:', orderId);
 
-            const order = await Order.findOne({ where: { id: orderId } });
-            if (order) {
-                order.paymentStatus = 'Paid';
-                await order.save();
-                console.log(`Payment status for Order ${orderId} updated to Succeeded`);
+            const order = async () => {
+                await Order.findOne({ where: { id: orderId } });
+                if (order) {
+                    order.paymentStatus = 'Paid';
+                    await order.save();
+                    console.log(`Payment status for Order ${orderId} updated to Succeeded`);
+                }
             }
-        }
+            break;
 
-        res.status(200).json({ received: true })
-    } catch (error) {
-        console.error('Webhook error:', error.message);
-        res.status(400).send(`Webhook error: ${error.message}`)
+        default:
+            // Unexpected event type
+            console.log(`Unhandled event type ${event.type}.`);
     }
-})
+
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+});
+
+
+// router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+//     const sig = req.headers['stripe-signature'];
+//     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+//     console.log('Raw Payload:', req.body.toString());
+//     let event;
+
+//     try {
+//         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+//         console.log('Stripe Signature:', req.headers['stripe-signature']);
+//         console.log('Webhook Secret:', process.env.STRIPE_WEBHOOK_SECRET);
+//         // if (processedEventIds.has(event.id)) {
+//         //     console.log('Duplicate event detected:', event.id);
+//         //     return res.status(200).json({ received: true })
+//         // }
+
+//         // processedEventIds.add(event.id);
+
+//         if (event.type === 'payment_intent.succeeded') {
+//             const paymentIntent = event.data.object;
+//             console.log('Payment Intent Succeeded:', paymentIntent);
+
+//             const orderId = paymentIntent.metadata.orderId;
+//             console.log('Order Id:', orderId);
+
+//             const order = await Order.findOne({ where: { id: orderId } });
+//             if (order) {
+//                 order.paymentStatus = 'Paid';
+//                 await order.save();
+//                 console.log(`Payment status for Order ${orderId} updated to Succeeded`);
+//             }
+//         }
+
+//         res.status(200).json({ received: true })
+//     } catch (error) {
+//         console.error('Webhook error:', error.message);
+//         res.status(400).send(`Webhook error: ${error.message}`)
+//     }
+// })
 
 module.exports = router;

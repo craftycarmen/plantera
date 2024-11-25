@@ -66,7 +66,7 @@ function OrderSummary({ cartId, checkout }) {
                                         {plantName(item.Listing?.plantName)}
                                     </div>
                                     <div className="orderSummaryItemSub">
-                                        ${item.cartItemsTotal}</div>
+                                        {price(item.cartItemsTotal)}</div>
                                     <div className="orderPot">{item.Listing?.potSize}&#34;</div>
                                 </div>
 

@@ -12,18 +12,33 @@ const { environment } = require('./config');
 const isProduction = environment === 'production';
 const app = express();
 
-app.post('/api/checkout/webhook', express.raw({ type: 'application/json' }));
+const corsOptions = {
+    origin: 'http://localhost:5173',  // Allow localhost for testing
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
+};
 
-app.use(morgan('dev'));
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+if (!isProduction) {
+    app.use(cors(corsOptions));  // Allow CORS in development (or for your testing environment)
+}
+
+app.use((req, res, next) => {
+    if (req.originalUrl === '/api/checkout/webhook') {
+        return next(); // Skip JSON parsing for the webhook
+    }
+    express.json()(req, res, next);
+});
+
 
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development
     app.use(cors());
 }
+
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 // helmet helps set a variety of headers to better secure your app
 app.use(
@@ -32,10 +47,13 @@ app.use(
     })
 );
 
+
 app.use((req, res, next) => {
     if (req.originalUrl === '/api/checkout/webhook') {
+        console.log('CSRF skipped for webhook');
         return next();
     }
+    console.log('CSRF applied for:', req.originalUrl);
     csurf({
         cookie: {
             secure: isProduction,
@@ -50,60 +68,13 @@ app.use((req, res, next) => {
     if (req.originalUrl === '/api/checkout/webhook') {
         return next();
     }
-    if (req.csrfToken) {
-        res.cookie('XSRF-TOKEN', req.csrfToken(), {
-            secure: isProduction,
-            sameSite: isProduction ? 'Lax' : 'Strict',
-        });
-    }
+    res.cookie('XSRF-TOKEN', req.csrfToken(), {
+        secure: isProduction,
+        sameSite: isProduction ? 'Lax' : 'Strict',
+    });
     next();
 });
-// app.use((req, res, next) => {
-//     if (req.originalUrl === '/api/checkout/webhook') {
-//         express.raw({ type: 'application/json' })(req, res, next);
-//     } else {
-//         next();
-//     }
-// });
 
-
-// app.use((req, res, next) => {
-//     if (req.originalUrl === '/api/checkout/webhook') {
-//         express.raw({ type: 'application/json' })(req, res, next);
-//         // return next();
-//     } else {
-//         csurf({
-//             cookie: {
-//                 secure: isProduction,
-//                 sameSite: isProduction && 'Lax',
-//                 httpOnly: true
-//             }
-//         })(req, res, next);
-//     }
-// });
-
-// app.use((req, res, next) => {
-//     if (req.originalUrl !== '/api/checkout/webhook') {
-//         res.cookie('XSRF-TOKEN', req.csrfToken(), {
-//             secure: isProduction,
-//             sameSite: isProduction ? 'Lax' : 'Strict',
-//         });
-//     }
-//     next();
-// });
-
-// Set the _csrf token and create req.csrfToken method
-// app.use(
-//     csurf({
-//         cookie: {
-//             secure: isProduction,
-//             sameSite: isProduction && "Lax",
-//             httpOnly: true
-//         }
-//     })
-// );
-
-// app.use(express.json());
 app.use(routes); // Connect all the routes
 
 app.use((_req, res, next) => {

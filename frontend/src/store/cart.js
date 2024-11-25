@@ -86,7 +86,6 @@ export const fetchCart = () => async (dispatch) => {
                 return null;
             } else {
                 const cart = data.ShoppingCart;
-                console.log("CART!!!!", cart);
                 const cartTotal = cart.cartTotal;
                 const numCartItems = cart.numCartItems;
                 const cartSummary = {
@@ -95,7 +94,6 @@ export const fetchCart = () => async (dispatch) => {
                     taxAmount: cart.taxAmount,
                     totalAmount: cart.cartTotal + cart.shippingCost + cart.taxAmount
                 }
-                console.log("CART SUMMARY!", cartSummary);
                 dispatch(loadCart(cartId, cart.CartItems, cartTotal, numCartItems, cartSummary));
                 return cart
             }
@@ -380,7 +378,7 @@ const initialState = {
 }
 
 const cartReducer = (state = initialState, action) => {
-    console.log("!!!ACTION", action);
+
     switch (action.type) {
         case LOAD_CART: {
 

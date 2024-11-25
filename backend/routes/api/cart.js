@@ -1,5 +1,6 @@
 const express = require('express');
 const { User, ShoppingCart, CartItem, Listing, Image, Order } = require('../../db/models');
+const { SHIPPING_COST, TAX_RATE } = require('../../config/constants');
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
@@ -106,6 +107,8 @@ router.get('/:cartId', async (req, res) => {
         createdAt: shoppingCart.createdAt,
         updatedAt: shoppingCart.updatedAt,
         cartTotal: cartTotal,
+        shippingCost: SHIPPING_COST,
+        taxAmount: Math.round(cartTotal * TAX_RATE * 100) / 100,
         numCartItems: numCartItems,
         CartItems: cartItemsList
     }

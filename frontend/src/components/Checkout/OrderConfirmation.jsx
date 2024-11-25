@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchOrderItems } from "../../store/order";
 import ErrorHandling from "../ErrorHandling";
 import './Checkout.css'
+import { price } from "../../../utils";
 
 function OrderConfirmation() {
     const { orderId } = useParams();
@@ -11,15 +12,13 @@ function OrderConfirmation() {
     const buyerId = useSelector(state => state.orders[orderId]?.orderItems?.Order?.buyerId)
     const order = useSelector(state => state.orders[orderId]?.orderItems?.Order);
     const payment = useSelector(state => state.orders[orderId]?.orderItems?.PaymentDetails);
+    console.log("ORDER!!", order);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-
-    const estimatedTax = (total) => {
-        let tax = (total * 0.0825).toFixed(2)
-        return tax.toLocaleString('en-US', { maximumFractionDigits: 2 })
-    }
-
-    console.log("ORDER", payment)
+    // const estimatedTax = (total) => {
+    //     let tax = (total * 0.0825).toFixed(2)
+    //     return tax.toLocaleString('en-US', { maximumFractionDigits: 2 })
+    // }
     useEffect(() => {
         const runDispatches = async () => {
             try {
@@ -92,19 +91,19 @@ function OrderConfirmation() {
 
                                 <div className="subTotalSummary">
                                     <span>Subtotal:</span>
-                                    <span>${order.subTotal?.toFixed(2)}</span>
+                                    <span>{price(order.subTotal / 100)}</span>
                                 </div>
                                 <div className="subTotalSummary">
                                     <span>Shipping:</span>
-                                    <span>Free <i className="fa-regular fa-face-laugh-wink" /></span>
+                                    <span>{price(order.shippingCost / 100)}</span>
                                 </div>
                                 <div className="subTotalSummary">
                                     <span>Taxes:</span>
-                                    <span>${estimatedTax(order.orderTotal)}</span>
+                                    <span>{price(order.taxAmount / 100)}</span>
                                 </div>
                                 <div className="subTotalSummary">
                                     <h2>Total:</h2>
-                                    <h2>${order.orderTotal.toFixed(2)}</h2>
+                                    <h2>{price(order.orderTotal / 100)}</h2>
                                 </div>
                             </div >
                         </div>

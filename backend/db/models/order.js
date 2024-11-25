@@ -150,6 +150,16 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    taxAmount: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    shippingCost: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue: 0,
+    },
     orderTotal: {
       type: DataTypes.FLOAT,
       allowNull: false,

@@ -12,12 +12,13 @@ const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
 const CLEAR_CART = 'cart/CLEAR_CART';
 const RESET_CART_ID = 'cart/RESET_CART_ID';
 
-export const loadCart = (cartId, cartItems, cartTotal, numCartItems) => ({
+export const loadCart = (cartId, cartItems, cartTotal, numCartItems, cartSummary) => ({
     type: LOAD_CART,
     cartId,
     cartItems,
     cartTotal,
-    numCartItems
+    numCartItems,
+    cartSummary
 });
 
 export const createCart = (cartId) => ({
@@ -85,9 +86,17 @@ export const fetchCart = () => async (dispatch) => {
                 return null;
             } else {
                 const cart = data.ShoppingCart;
+                console.log("CART!!!!", cart);
                 const cartTotal = cart.cartTotal;
-                const numCartItems = cart.numCartItems
-                dispatch(loadCart(cartId, cart.CartItems, cartTotal, numCartItems));
+                const numCartItems = cart.numCartItems;
+                const cartSummary = {
+                    cartTotal: cart.cartTotal,
+                    shippingCost: cart.shippingCost,
+                    taxAmount: cart.taxAmount,
+                    totalAmount: cart.cartTotal + cart.shippingCost + cart.taxAmount
+                }
+                console.log("CART SUMMARY!", cartSummary);
+                dispatch(loadCart(cartId, cart.CartItems, cartTotal, numCartItems, cartSummary));
                 return cart
             }
         }
@@ -366,11 +375,12 @@ const initialState = {
     cartItems: [],
     cartId: null,
     cartTotal: 0,
-    numCartItems: 0
+    numCartItems: 0,
+    cartSummary: null
 }
 
 const cartReducer = (state = initialState, action) => {
-
+    console.log("!!!ACTION", action);
     switch (action.type) {
         case LOAD_CART: {
 
@@ -379,7 +389,8 @@ const cartReducer = (state = initialState, action) => {
                 cartId: action.cartId,
                 cartItems: action.cartItems,
                 cartTotal: action.cartTotal,
-                numCartItems: action.numCartItems
+                numCartItems: action.numCartItems,
+                cartSummary: action.cartSummary,
             }
         }
         case CREATE_CART: {

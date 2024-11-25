@@ -7,10 +7,11 @@ import { price, plantName } from "../../../../utils";
 function OrderSummary({ cartId, checkout }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const cartSummary = useSelector(state => state.cart.cartSummary);
     const cartTotal = useSelector(state => state.cart.cartTotal);
     const sessionUser = useSelector(state => state.session.user);
     const cartItems = useSelector(state => state.cart.cartItems)
-
+    console.log("CART TOTAL", cartSummary);
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))
@@ -18,16 +19,6 @@ function OrderSummary({ cartId, checkout }) {
         }
         runDispatches();
     }, [dispatch, cartId])
-
-    const estimatedTax = (total) => {
-        const tax = (total * 0.0825)
-        return tax.toFixed(2).toLocaleString('en-US', { maximumFractionDigits: 2 })
-    }
-
-    const orderTotal = (subtotal, tax) => {
-        const total = subtotal + parseFloat(tax)
-        return price(total)
-    }
 
     const sellerItems = (cartItems) => {
         return cartItems.some(item => {
@@ -75,7 +66,7 @@ function OrderSummary({ cartId, checkout }) {
                                         {plantName(item.Listing?.plantName)}
                                     </div>
                                     <div className="orderSummaryItemSub">
-                                        ${item.cartItemsTotal.toFixed(2)}</div>
+                                        ${item.cartItemsTotal}</div>
                                     <div className="orderPot">{item.Listing?.potSize}&#34;</div>
                                 </div>
 
@@ -87,19 +78,19 @@ function OrderSummary({ cartId, checkout }) {
                 {cartTotal &&
                     <div className="subTotalSummary">
                         <span>Subtotal:</span>
-                        <span>{price(cartTotal)}</span>
+                        <span>{price(cartSummary.cartTotal)}</span>
                     </div>}
                 <div className="subTotalSummary">
                     <span>Shipping:</span>
-                    <span>Free <i className="fa-regular fa-face-laugh-wink" /></span>
+                    <span>{price(cartSummary.shippingCost)}</span>
                 </div>
                 <div className="subTotalSummary">
-                    <span>Estimated Taxes:</span>
-                    <span>${estimatedTax(cartTotal)}</span>
+                    <span>Taxes:</span>
+                    <span>{price(cartSummary.taxAmount)}</span>
                 </div>
                 <div className="subTotalSummary">
                     <h2>Total:</h2>
-                    <h2>{orderTotal(cartTotal, estimatedTax(cartTotal))}</h2>
+                    <h2>{price(cartSummary.totalAmount)}</h2>
                 </div>
                 {checkout ? (<div></div>) : (<><button style={{ width: "100%", marginTop: "15px" }} onClick={handleCheckOut}>Check Out</button></>)}
             </div >

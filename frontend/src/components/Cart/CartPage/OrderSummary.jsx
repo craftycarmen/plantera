@@ -11,7 +11,7 @@ function OrderSummary({ cartId, checkout }) {
     const cartTotal = useSelector(state => state.cart.cartTotal);
     const sessionUser = useSelector(state => state.session.user);
     const cartItems = useSelector(state => state.cart.cartItems)
-    console.log("CART TOTAL", cartSummary);
+
     useEffect(() => {
         const runDispatches = async () => {
             await dispatch(fetchCart(cartId))

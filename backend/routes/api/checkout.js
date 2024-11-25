@@ -150,50 +150,61 @@ router.post('/', requireAuth, async (req, res) => {
 
 });
 
-router.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
-    let event = request.body;
-    // Only verify the event if you have an endpoint secret defined.
-    // Otherwise use the basic event deserialized with JSON.parse
+router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+    let event = req.body;
+
     if (endpointSecret) {
-        // Get the signature sent by Stripe
-        const signature = request.headers['stripe-signature'];
+        const signature = req.headers['stripe-signature'];
         try {
             event = stripe.webhooks.constructEvent(
-                request.body,
+                req.body,
                 signature,
                 endpointSecret
             );
-        } catch (err) {
-            console.log(`⚠️  Webhook signature verification failed.`, err.message);
-            return response.sendStatus(400);
-        }
-    }
 
-    // Handle the event
-    switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-            const orderId = paymentIntent.metadata.orderId;
-            console.log('Order Id:', orderId);
+            if (event.type === 'payment_intent.succeeded') {
+                const paymentIntent = event.data.object;
+                console.log('Payment Intent Succeeded:', paymentIntent);
 
-            const order = async () => {
-                await Order.findOne({ where: { id: orderId } });
+                const orderId = paymentIntent.metadata.orderId;
+                console.log('Order Id:', orderId);
+
+                const order = await Order.findOne({ where: { id: orderId } });
                 if (order) {
                     order.paymentStatus = 'Paid';
                     await order.save();
                     console.log(`Payment status for Order ${orderId} updated to Succeeded`);
                 }
             }
-            break;
-
-        default:
-            // Unexpected event type
-            console.log(`Unhandled event type ${event.type}.`);
+        } catch (err) {
+            console.log(`Webhook signature verification failed.`, err.message);
+            return res.sendStatus(400);
+        }
     }
 
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
+    // switch (event.type) {
+    //     case 'payment_intent.succeeded':
+    //         const paymentIntent = event.data.object;
+    //         console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+    //         const orderId = paymentIntent.metadata.orderId;
+    //         console.log('Order Id:', orderId);
+
+    //         const order = async () => {
+    //             await Order.findOne({ where: { id: orderId } });
+    //         }
+    //         console.log("ORDER???", order);
+    //         if (order) {
+    //             order.paymentStatus = 'Paid';
+    //             await order.save();
+    //             console.log(`Payment status for Order ${orderId} updated to Succeeded`);
+    //         }
+    //         break;
+
+    //     default:
+    //         console.log(`Unhandled event type ${event.type}.`);
+    // }
+
+    res.send();
 });
 
 

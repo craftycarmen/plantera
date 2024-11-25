@@ -12,7 +12,7 @@ function OrderConfirmation() {
     const buyerId = useSelector(state => state.orders[orderId]?.orderItems?.Order?.buyerId)
     const order = useSelector(state => state.orders[orderId]?.orderItems?.Order);
     const payment = useSelector(state => state.orders[orderId]?.orderItems?.PaymentDetails);
-    console.log("ORDER!!", order);
+
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     // const estimatedTax = (total) => {

@@ -12,10 +12,29 @@ function OrderConfirmation() {
     const buyerId = useSelector(state => state.orders[orderId]?.orderItems?.Order?.buyerId)
     const order = useSelector(state => state.orders[orderId]?.orderItems?.Order);
     const payment = useSelector(state => state.orders[orderId]?.orderItems?.PaymentDetails);
+    const [polling, setPolling] = useState(true);
     const [loading, setLoading] = useState(true);
 
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+
+    useEffect(() => {
+        const pollPaymentStatus = async () => {
+            if (!polling) return;
+
+            const items = await dispatch(fetchOrderItems(orderId));
+
+            if (items?.Order?.paymentStatus === "Paid") {
+                setPolling(false);
+            } else {
+                setTimeout(pollPaymentStatus, 2000);
+            }
+        }
+
+        pollPaymentStatus();
+
+        return () => setPolling(false);
+    }, [polling, orderId, dispatch]);
 
     useEffect(() => {
         const runDispatches = async () => {
@@ -23,7 +42,8 @@ function OrderConfirmation() {
                 setLoading(true);
                 await dispatch(fetchOrderItems(orderId)).then(() => setTimeout(() => {
                     setLoading(false);
-                }, 500));
+                }, 500))
+
             } catch (error) {
                 console.error("Error fetching order:", error);
             }
@@ -35,10 +55,10 @@ function OrderConfirmation() {
     return (
         <>
             {loading && <div style={{ marginTop: "40px" }} className="dots smDots"></div>}
-            {!loading && sessionUser && sessionUser?.id !== buyerId &&
-                <>This isn&apos;t your order!</>}
             {!loading && !sessionUser?.id &&
                 <ErrorHandling />}
+            {!loading && sessionUser?.id !== buyerId &&
+                <>This isn&apos;t your order!</>}
             {!loading && sessionUser?.id === buyerId && order &&
                 <>
 

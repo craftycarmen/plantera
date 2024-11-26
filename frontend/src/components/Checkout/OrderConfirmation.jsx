@@ -13,7 +13,7 @@ function OrderConfirmation() {
     const order = useSelector(state => state.orders[orderId]?.orderItems?.Order);
     const payment = useSelector(state => state.orders[orderId]?.orderItems?.PaymentDetails);
     const [polling, setPolling] = useState(true);
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
@@ -39,7 +39,10 @@ function OrderConfirmation() {
     useEffect(() => {
         const runDispatches = async () => {
             try {
-                await dispatch(fetchOrderItems(orderId))
+                setLoading(true);
+                await dispatch(fetchOrderItems(orderId)).then(() => setTimeout(() => {
+                    setLoading(false);
+                }, 500))
 
             } catch (error) {
                 console.error("Error fetching order:", error);
@@ -51,12 +54,12 @@ function OrderConfirmation() {
 
     return (
         <>
-            {/* {loading && <div style={{ marginTop: "40px" }} className="dots smDots"></div>} */}
-            {!sessionUser?.id &&
+            {loading && <div style={{ marginTop: "40px" }} className="dots smDots"></div>}
+            {!loading && !sessionUser?.id &&
                 <ErrorHandling />}
-            {sessionUser?.id !== buyerId &&
+            {!loading && sessionUser?.id !== buyerId &&
                 <>This isn&apos;t your order!</>}
-            {sessionUser?.id === buyerId && order &&
+            {!loading && sessionUser?.id === buyerId && order &&
                 <>
 
                     <h1 style={{ marginBottom: "20px" }}>Thank you for your order! <i className="fa-regular fa-hand-peace" /></h1>

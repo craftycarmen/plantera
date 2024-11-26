@@ -284,20 +284,20 @@ function Checkout() {
 
                             <br />
                             <h2>Payment Information</h2>
-                            <p>
-                                <strong>DEMO MODE:</strong> Use the following test card details to simulate a transaction:
-                                <ul>
-                                    <li>Card Number: <a onClick={() => copy("4242 4242 4242 4242")}>4242 4242 4242 4242<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a>
 
-                                    </li>
-                                    <li>
-                                        Expiration Date: <a onClick={() => copy("1227")}>12/27<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a> (or any future date)
-                                    </li>
-                                    <li>
-                                        CVC: <a onClick={() => copy("000")}>000<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a> (or any three digits)
-                                    </li>
-                                </ul>
-                            </p>
+                            <strong>DEMO MODE:</strong> Use the following test card details to simulate a transaction:
+                            <ul>
+                                <li>Card Number: <a onClick={() => copy("4242 4242 4242 4242")}>4242 4242 4242 4242<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a>
+
+                                </li>
+                                <li>
+                                    Expiration Date: <a onClick={() => copy("1227")}>12/27<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a> (or any future date)
+                                </li>
+                                <li>
+                                    CVC: <a onClick={() => copy("000")}>000<sup><i className="fa-regular fa-copy" style={{ marginLeft: "5px" }} /></sup></a> (or any three digits)
+                                </li>
+                            </ul>
+
                             <br />
                             <CardElement
                                 options={{

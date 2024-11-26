@@ -299,17 +299,18 @@ function Checkout() {
                             </ul>
 
                             <br />
-                            <CardElement
-                                aria-hidden="undefined"
-                                options={{
-                                    hidePostalCode: true,
-                                    style: {
-                                        base: {
-                                            fontFamily: '"Space Mono", monospace',
-                                            color: '#28635A',
-                                        }
-                                    },
-                                }} />
+                            <div aria-modal="true">
+                                <CardElement
+                                    options={{
+                                        hidePostalCode: true,
+                                        style: {
+                                            base: {
+                                                fontFamily: '"Space Mono", monospace',
+                                                color: '#28635A',
+                                            }
+                                        },
+                                    }} />
+                            </div>
                             <div className='error'>{errors.payment &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.payment}</>}</div>
                             <button

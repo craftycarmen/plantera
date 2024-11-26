@@ -300,6 +300,7 @@ function Checkout() {
 
                             <br />
                             <CardElement
+                                aria-hidden="undefined"
                                 options={{
                                     hidePostalCode: true,
                                     style: {
@@ -307,7 +308,7 @@ function Checkout() {
                                             fontFamily: '"Space Mono", monospace',
                                             color: '#28635A',
                                         }
-                                    }
+                                    },
                                 }} />
                             <div className='error'>{errors.payment &&
                                 <><i className="fa-solid fa-circle-exclamation" /> {errors.payment}</>}</div>
